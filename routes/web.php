@@ -8,6 +8,10 @@ use App\Http\Controllers\Master\MeetingController;
 use App\Http\Controllers\Master\WardController;
 use App\Http\Controllers\Master\MemberController;
 use App\Http\Controllers\Master\HomeDepartmentController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\RoleController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +33,10 @@ Route::get('/', function () {
 
 // Guest Users
 Route::middleware(['guest', 'PreventBackHistory'])->group(function () {
-    Route::get('login', [App\Http\Controllers\Admin\AuthController::class, 'showLogin'])->name('login');
-    Route::post('login', [App\Http\Controllers\Admin\AuthController::class, 'login'])->name('signin');
-    Route::get('register', [App\Http\Controllers\Admin\AuthController::class, 'showRegister'])->name('register');
-    Route::post('register', [App\Http\Controllers\Admin\AuthController::class, 'register'])->name('signup');
+    Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [AuthController::class, 'login'])->name('signin');
+    // Route::get('register', [AuthController::class, 'showRegister'])->name('register');
+    // Route::post('register', [AuthController::class, 'register'])->name('signup');
 });
 
 
@@ -43,11 +47,11 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     // Auth Routes
     Route::get('home', fn () => redirect()->route('dashboard'))->name('home');
-    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-    Route::post('logout', [App\Http\Controllers\Admin\AuthController::class, 'Logout'])->name('logout');
-    Route::get('change-theme-mode', [App\Http\Controllers\Admin\DashboardController::class, 'changeThemeMode'])->name('change-theme-mode');
-    Route::get('show-change-password', [App\Http\Controllers\Admin\AuthController::class, 'showChangePassword'])->name('show-change-password');
-    Route::post('change-password', [App\Http\Controllers\Admin\AuthController::class, 'changePassword'])->name('change-password');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('logout', [AuthController::class, 'Logout'])->name('logout');
+    Route::get('change-theme-mode', [DashboardController::class, 'changeThemeMode'])->name('change-theme-mode');
+    Route::get('show-change-password', [AuthController::class, 'showChangePassword'])->name('show-change-password');
+    Route::post('change-password', [AuthController::class, 'changePassword'])->name('change-password');
 
 
 
@@ -58,13 +62,13 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
 
     // Users Roles n Permissions
-    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
-    Route::get('users/{user}/toggle', [App\Http\Controllers\Admin\UserController::class, 'toggle'])->name('users.toggle');
-    Route::get('users/{user}/retire', [App\Http\Controllers\Admin\UserController::class, 'retire'])->name('users.retire');
-    Route::put('users/{user}/change-password', [App\Http\Controllers\Admin\UserController::class, 'changePassword'])->name('users.change-password');
-    Route::get('users/{user}/get-role', [App\Http\Controllers\Admin\UserController::class, 'getRole'])->name('users.get-role');
-    Route::put('users/{user}/assign-role', [App\Http\Controllers\Admin\UserController::class, 'assignRole'])->name('users.assign-role');
-    Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::get('users/{user}/toggle', [UserController::class, 'toggle'])->name('users.toggle');
+    Route::get('users/{user}/retire', [UserController::class, 'retire'])->name('users.retire');
+    Route::put('users/{user}/change-password', [UserController::class, 'changePassword'])->name('users.change-password');
+    Route::get('users/{user}/get-role', [UserController::class, 'getRole'])->name('users.get-role');
+    Route::put('users/{user}/assign-role', [UserController::class, 'assignRole'])->name('users.assign-role');
+    Route::resource('roles', RoleController::class);
 
     Route::prefix('master')->name('master.')->group(function () {
         Route::resource('department', DepartmentController::class);

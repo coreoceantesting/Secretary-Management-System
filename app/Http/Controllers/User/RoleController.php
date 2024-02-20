@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Admin\Controller;
-use App\Http\Requests\Admin\StoreRoleRequest;
-use App\Http\Requests\Admin\UpdateRoleRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ class RoleController extends Controller
         $roles = Role::orderBy('id', 'DESC')->get();
         $permissions = Permission::get();
 
-        return view('admin.roles', compact('roles', 'permissions'));
+        return view('user.roles', compact('roles', 'permissions'));
     }
 
     /**

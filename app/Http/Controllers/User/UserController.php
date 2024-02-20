@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Admin\Controller;
-use App\Http\Requests\Admin\AssignUserRoleRequest;
-use App\Http\Requests\Admin\ChangeUserPasswordRequest;
-use App\Http\Requests\Admin\StoreUserRequest;
-use App\Http\Requests\Admin\UpdateUserRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\AssignUserRoleRequest;
+use App\Http\Requests\ChangeUserPasswordRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Department;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class UserController extends Controller
         $users = User::whereNot('id', Auth::user()->id)->latest()->get();
         $roles = Role::orderBy('id', 'DESC')->whereNot('name', 'like', '%super%')->get();
 
-        return view('admin.users')->with(['users' => $users, 'roles' => $roles]);
+        return view('user.users')->with(['users' => $users, 'roles' => $roles]);
     }
 
     /**

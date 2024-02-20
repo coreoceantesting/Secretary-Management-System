@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cookie;
@@ -10,14 +10,14 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard');
+        return view('dashboard');
     }
 
     public function changeThemeMode()
     {
         $mode = request()->cookie('theme-mode');
 
-        if($mode == 'dark')
+        if ($mode == 'dark')
             Cookie::queue('theme-mode', 'light', 43800);
         else
             Cookie::queue('theme-mode', 'dark', 43800);
