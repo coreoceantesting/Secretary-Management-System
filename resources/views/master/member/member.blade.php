@@ -17,6 +17,17 @@
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="ward_id">Select Ward <span class="text-danger">*</span></label>
+                                    <select name="ward_id" id="ward_id" class="form-select">
+                                        <option value="">Select Ward</option>
+                                        @foreach($wards as $ward)
+                                        <option value="{{ $ward->id }}">{{ $ward->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid ward_id_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="name">Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name">
                                     <span class="text-danger is-invalid name_err"></span>
@@ -76,6 +87,17 @@
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="ward_id">Select Ward <span class="text-danger">*</span></label>
+                                    <select name="ward_id" id="ward_id" class="form-select">
+                                        <option value="">Select Ward</option>
+                                        @foreach($wards as $ward)
+                                        <option value="{{ $ward->id }}">{{ $ward->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid ward_id_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="name">Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name">
                                     <span class="text-danger is-invalid name_err"></span>
@@ -128,7 +150,9 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="">
+                                    @can('member.create')
                                     <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+                                    @endcan
                                     <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
                                 </div>
                             </div>
@@ -140,6 +164,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
+                                        <th>Ward</th>
                                         <th>Name</th>
                                         <th>Contact Number</th>
                                         <th>Email</th>
@@ -153,6 +178,7 @@
                                     @foreach ($members as $member)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $member->ward?->name }}</td>
                                             <td>{{ $member->name }}</td>
                                             <td>{{ $member->contact_number }}</td>
                                             <td>{{ $member->email }}</td>
@@ -160,8 +186,12 @@
                                             <td>{{ $member->address }}</td>
                                             <td>{{ $member->designation }}</td>
                                             <td>
+                                                @can('member.edit')
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit Member" data-id="{{ $member->id }}"><i data-feather="edit"></i></button>
+                                                @endcan
+                                                @can('member.delete')
                                                 <button class="btn text-danger rem-element px-2 py-1" title="Delete Member" data-id="{{ $member->id }}"><i data-feather="trash-2"></i> </button>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
@@ -237,6 +267,7 @@
                 if (!data.error)
                 {
                     $("#editForm input[name='edit_model_id']").val(data.member.id);
+                    $("#editForm select[name='ward_id']").val(data.member.ward_id).change();
                     $("#editForm input[name='name']").val(data.member.name);
                     $("#editForm input[name='contact_number']").val(data.member.contact_number);
                     $("#editForm input[name='email']").val(data.member.email);

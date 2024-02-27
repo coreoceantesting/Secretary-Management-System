@@ -88,7 +88,7 @@
 
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" value="" id="remember_me" name="remember_me">
-                                                    <label class="form-check-label" for="auth-remember-check">Remember me</label>
+                                                    <label class="form-check-label" for="remember_me">Remember me</label>
                                                 </div>
 
                                                 <div class="mt-4">

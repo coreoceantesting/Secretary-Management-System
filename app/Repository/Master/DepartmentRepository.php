@@ -10,7 +10,7 @@ class DepartmentRepository
 {
     public function index()
     {
-        $departments = Department::select('id', 'name', 'initial')->get();
+        $departments = Department::select('id', 'name', 'initial')->where('is_home_department', 0)->get();
 
         return $departments;
     }
@@ -19,6 +19,7 @@ class DepartmentRepository
     {
         DB::beginTransaction();
         try {
+            $request['is_home_department'] = "0";
             Department::create($request->all());
 
             DB::commit();

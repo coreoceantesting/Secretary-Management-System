@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Member;
 
 class Ward extends BaseModel
 {
@@ -13,6 +13,10 @@ class Ward extends BaseModel
 
     protected $fillable = ['name', 'initial', 'deleted_at'];
 
+    public function members()
+    {
+        return $this->hasMany(Member::class, 'ward_id', 'id');
+    }
 
     public static function booted()
     {

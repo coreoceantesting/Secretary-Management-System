@@ -10,7 +10,7 @@ class MemberRepository
 {
     public function index()
     {
-        $members = Member::select('id', 'name', 'contact_number', 'email', 'political_party', 'address', 'designation')->get();
+        $members = Member::with(['ward'])->select('id', 'ward_id', 'name', 'contact_number', 'email', 'political_party', 'address', 'designation')->get();
 
         return $members;
     }
@@ -68,5 +68,9 @@ class MemberRepository
             Log::info($e);
             return false;
         }
+    }
+
+    public function assignMemberToMeeting($id)
+    {
     }
 }

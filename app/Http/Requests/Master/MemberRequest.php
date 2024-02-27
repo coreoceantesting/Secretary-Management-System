@@ -22,6 +22,7 @@ class MemberRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'ward_id' => 'required',
             'name' => 'required',
             'contact_number' => 'required|numeric',
             'email' => 'required|email',
@@ -34,6 +35,7 @@ class MemberRequest extends FormRequest
     public function messages()
     {
         return [
+            'ward_id.required' => 'Please select ward',
             'name.required' => 'Please enter name',
             'contact_number.required' => 'Please enter contact number',
             'contact_number.numeric' => 'Please enter only number',

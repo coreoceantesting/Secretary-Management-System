@@ -39,7 +39,7 @@
                     </a>
                 </li>
 
-
+                @canany(['department.view', 'home_department.view', 'wards.view', 'member.view', 'meeting.view'])
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i class="ri-layout-3-line"></i>
@@ -47,24 +47,35 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
+                            @can('department.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.department.index') }}" class="nav-link" data-key="t-horizontal">Department</a>
                             </li>
+                            @endcan
+                            @can('home_department.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.home-department.index') }}" class="nav-link" data-key="t-horizontal">Home Department</a>
                             </li>
+                            @endcan
+                            @can('wards.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.ward.index') }}" class="nav-link" data-key="t-horizontal">Ward</a>
                             </li>
+                            @endcan
+                            @can('member.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.member.index') }}" class="nav-link" data-key="t-horizontal">Member</a>
                             </li>
+                            @endcan
+                            @can('meeting.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.meeting.index') }}" class="nav-link" data-key="t-horizontal">Meeting</a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
+                @endcan
 
 
                 @canany(['users.view', 'roles.view'])
@@ -89,6 +100,13 @@
                     </div>
                 </li>
                 @endcan
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('goshwara.index') }}" >
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">Goshwara</span>
+                    </a>
+                </li>
 
             </ul>
         </div>

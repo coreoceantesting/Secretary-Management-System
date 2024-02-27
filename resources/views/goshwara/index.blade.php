@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Home Department</x-slot>
-    <x-slot name="heading">Home Department</x-slot>
+    <x-slot name="title">Goshwara</x-slot>
+    <x-slot name="heading">Goshwara</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,19 +12,19 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Home Department</h4>
+                            <h4 class="card-title">Add Goshwara</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Home Department Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Home Department Name">
-                                    <span class="text-danger is-invalid name_err"></span>
+                                    <label class="col-form-label" for="goshwarafile">Select Goshwara <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara">
+                                    <span class="text-danger is-invalid goshwarafile_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial">
-                                    <span class="text-danger is-invalid initial_err"></span>
+                                    <label class="col-form-label" for="remark">Remark <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="remark" name="remark" type="text" placeholder="Enter remark"></textarea>
+                                    <span class="text-danger is-invalid remark_err"></span>
                                 </div>
                             </div>
 
@@ -47,20 +47,20 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Home Department</h4>
+                            <h4 class="card-title">Edit Goshwara</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Home Department Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Home Department Name">
-                                    <span class="text-danger is-invalid name_err"></span>
+                                    <label class="col-form-label" for="goshwarafile">Select Goshwara <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara">
+                                    <span class="text-danger is-invalid goshwarafile_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial">
-                                    <span class="text-danger is-invalid initial_err"></span>
+                                    <label class="col-form-label" for="remark">Remark <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="remark" name="remark" placeholder="Enter remark"></textarea>
+                                    <span class="text-danger is-invalid remark_err"></span>
                                 </div>
                             </div>
 
@@ -82,7 +82,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="">
-                                    @can('home_department.create')
+                                    @can('goshwara.create')
                                     <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
                                     @endcan
                                     <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
@@ -96,23 +96,25 @@
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
-                                        <th>Name</th>
-                                        <th>Initial</th>
+                                        <th>View Goshwara</th>
+                                        <th>Remark</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($homeDepartments as $homeDepartment)
+                                    @foreach ($goshwaras as $goshwara)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $homeDepartment->name }}</td>
-                                            <td>{{ $homeDepartment->initial }}</td>
                                             <td>
-                                                @can('home_department.edit')
-                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit home department" data-id="{{ $homeDepartment->id }}"><i data-feather="edit"></i></button>
+                                                <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary" target="_blank">View Goshwara</a>
+                                            </td>
+                                            <td>{{ $goshwara->remark }}</td>
+                                            <td>
+                                                @can('goshwara.edit')
+                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit Goshwara" data-id="{{ $goshwara->id }}"><i data-feather="edit"></i></button>
                                                 @endcan
-                                                @can('home_department.delete')
-                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete home department" data-id="{{ $homeDepartment->id }}"><i data-feather="trash-2"></i> </button>
+                                                @can('goshwara.delete')
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete Goshwara" data-id="{{ $goshwara->id }}"><i data-feather="trash-2"></i> </button>
                                                 @endcan
                                             </td>
                                         </tr>
@@ -138,7 +140,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('master.home-department.store') }}',
+            url: '{{ route('goshwara.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -149,10 +151,11 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('master.home-department.store') }}';
+                            window.location.href = '{{ route('goshwara.store') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");
+
             },
             statusCode: {
                 422: function(responseObject, textStatus, jqXHR) {
@@ -176,7 +179,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('master.home-department.edit', ":model_id") }}";
+        var url = "{{ route('goshwara.edit', ":model_id") }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
@@ -188,9 +191,9 @@
                 editFormBehaviour();
                 if (!data.error)
                 {
-                    $("#editForm input[name='edit_model_id']").val(data.homeDepartment.id);
-                    $("#editForm input[name='name']").val(data.homeDepartment.name);
-                    $("#editForm input[name='initial']").val(data.homeDepartment.initial);
+                    $("#editForm input[name='edit_model_id']").val(data.goshwara.id);
+                    // $("#editForm input[name='name']").val(data.goshwara.name);
+                    $("#editForm textarea[name='remark']").html(data.goshwara.remark);
                 }
                 else
                 {
@@ -214,7 +217,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('master.home-department.update', ":model_id") }}";
+            var url = "{{ route('goshwara.update', ":model_id") }}";
             //
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -228,7 +231,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('master.home-department.index') }}';
+                                window.location.href = '{{ route('goshwara.index') }}';
                             });
                     else
                         swal("Error!", data.error2, "error");
@@ -266,7 +269,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('master.home-department.destroy', ":model_id") }}";
+                var url = "{{ route('goshwara.destroy', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),

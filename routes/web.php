@@ -12,6 +12,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GoshwaraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +78,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::resource('member', MemberController::class);
         Route::resource('meeting', MeetingController::class);
     });
+
+    Route::resource('goshwara', GoshwaraController::class);
 });
 
 

@@ -94,10 +94,129 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'wards.delete',
                 'group' => 'wards',
             ],
+            [
+                'id' => 17,
+                'name' => 'department.view',
+                'group' => 'department',
+            ],
+            [
+                'id' => 18,
+                'name' => 'department.create',
+                'group' => 'department',
+            ],
+            [
+                'id' => 19,
+                'name' => 'department.edit',
+                'group' => 'department',
+            ],
+            [
+                'id' => 20,
+                'name' => 'department.delete',
+                'group' => 'department',
+            ],
+            [
+                'id' => 21,
+                'name' => 'home_department.view',
+                'group' => 'home_department',
+            ],
+            [
+                'id' => 22,
+                'name' => 'home_department.create',
+                'group' => 'home_department',
+            ],
+            [
+                'id' => 23,
+                'name' => 'home_department.edit',
+                'group' => 'home_department',
+            ],
+            [
+                'id' => 24,
+                'name' => 'home_department.delete',
+                'group' => 'home_department',
+            ],
+            [
+                'id' => 25,
+                'name' => 'member.view',
+                'group' => 'member',
+            ],
+            [
+                'id' => 26,
+                'name' => 'member.create',
+                'group' => 'member',
+            ],
+            [
+                'id' => 27,
+                'name' => 'member.edit',
+                'group' => 'member',
+            ],
+            [
+                'id' => 28,
+                'name' => 'member.delete',
+                'group' => 'member',
+            ],
+            [
+                'id' => 29,
+                'name' => 'meeting.view',
+                'group' => 'meeting',
+            ],
+            [
+                'id' => 30,
+                'name' => 'meeting.create',
+                'group' => 'meeting',
+            ],
+            [
+                'id' => 31,
+                'name' => 'meeting.edit',
+                'group' => 'meeting',
+            ],
+            [
+                'id' => 32,
+                'name' => 'meeting.delete',
+                'group' => 'meeting',
+            ],
+            [
+                'id' => 33,
+                'name' => 'goshwara.view',
+                'group' => 'goshwara',
+            ],
+            [
+                'id' => 34,
+                'name' => 'goshwara.create',
+                'group' => 'goshwara',
+            ],
+            [
+                'id' => 35,
+                'name' => 'goshwara.edit',
+                'group' => 'goshwara',
+            ],
+            [
+                'id' => 36,
+                'name' => 'goshwara.delete',
+                'group' => 'goshwara',
+            ],
+            [
+                'id' => 37,
+                'name' => 'agenda.view',
+                'group' => 'agenda',
+            ],
+            [
+                'id' => 38,
+                'name' => 'agenda.create',
+                'group' => 'agenda',
+            ],
+            [
+                'id' => 39,
+                'name' => 'agenda.edit',
+                'group' => 'agenda',
+            ],
+            [
+                'id' => 40,
+                'name' => 'agenda.delete',
+                'group' => 'agenda',
+            ]
         ];
 
-        foreach ($permissions as $permission)
-        {
+        foreach ($permissions as $permission) {
             Permission::updateOrCreate([
                 'id' => $permission['id']
             ], [

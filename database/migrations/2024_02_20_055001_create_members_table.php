@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ward_id')->nullable()->constrained('wards');
             $table->string('name', 100);
             $table->string('contact_number', 13)->nullable();
             $table->string('email', 150);
-            $table->string('political_party', 10)->nullable();
+            $table->string('political_party', 100)->nullable();
             $table->text('address')->nullable();
             $table->string('designation')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users');

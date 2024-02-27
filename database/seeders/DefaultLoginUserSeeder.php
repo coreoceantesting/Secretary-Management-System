@@ -54,5 +54,11 @@ class DefaultLoginUserSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
         $user->assignRole([$adminRole->id]);
+
+
+        Role::create(['name' => 'DMC']);
+        Role::create(['name' => 'Mayor']);
+        Role::create(['name' => 'Department']);
+        Role::create(['name' => 'Home Department']);
     }
 }

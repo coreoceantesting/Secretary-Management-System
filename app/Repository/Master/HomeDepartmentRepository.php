@@ -2,7 +2,7 @@
 
 namespace App\Repository\Master;
 
-use App\Models\HomeDepartment;
+use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -10,7 +10,7 @@ class HomeDepartmentRepository
 {
     public function index()
     {
-        $homeDepartments = HomeDepartment::select('id', 'name', 'initial')->get();
+        $homeDepartments = Department::select('id', 'name', 'initial')->where('is_home_department', 1)->get();
 
         return $homeDepartments;
     }
@@ -19,7 +19,8 @@ class HomeDepartmentRepository
     {
         DB::beginTransaction();
         try {
-            HomeDepartment::create($request->all());
+            $request['is_home_department'] = "1";
+            Department::create($request->all());
 
             DB::commit();
             return true;
@@ -33,7 +34,7 @@ class HomeDepartmentRepository
 
     public function edit($id)
     {
-        $homeDepartment = HomeDepartment::find($id);
+        $homeDepartment = Department::find($id);
 
         return $homeDepartment;
     }
@@ -42,7 +43,7 @@ class HomeDepartmentRepository
     {
         DB::beginTransaction();
         try {
-            $homeDepartment = HomeDepartment::find($id);
+            $homeDepartment = Department::find($id);
             $homeDepartment->update($request->all());
 
             DB::commit();
@@ -59,7 +60,7 @@ class HomeDepartmentRepository
     {
         try {
             DB::beginTransaction();
-            $homeDepartment = HomeDepartment::find($id);
+            $homeDepartment = Department::find($id);
             $homeDepartment->delete();
             DB::commit();
 

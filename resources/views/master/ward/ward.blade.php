@@ -82,7 +82,9 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="">
+                                    @can('wards.create')
                                     <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+                                    @endcan
                                     <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
                                 </div>
                             </div>
@@ -106,8 +108,12 @@
                                             <td>{{ $ward->name }}</td>
                                             <td>{{ $ward->initial }}</td>
                                             <td>
+                                                @can('wards.edit')
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit Ward" data-id="{{ $ward->id }}"><i data-feather="edit"></i></button>
+                                                @endcan
+                                                @can('wards.delete')
                                                 <button class="btn text-danger rem-element px-2 py-1" title="Delete Ward" data-id="{{ $ward->id }}"><i data-feather="trash-2"></i> </button>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach

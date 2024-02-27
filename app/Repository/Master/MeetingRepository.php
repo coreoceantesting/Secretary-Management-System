@@ -3,6 +3,7 @@
 namespace App\Repository\Master;
 
 use App\Models\Meeting;
+use App\Models\AssignMemberToMeeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -19,7 +20,9 @@ class MeetingRepository
     {
         DB::beginTransaction();
         try {
-            Meeting::create($request->all());
+            $memberId = Meeting::create($request->all());
+
+            $this->insertMember($request, $memberId->id); // insert member to meeting
 
             DB::commit();
             return true;
@@ -68,5 +71,26 @@ class MeetingRepository
             Log::info($e);
             return false;
         }
+    }
+
+    public function insertMember($request, $meetingId)
+    {
+        $data = [];
+        if (isset($request->member_id)) {
+            if (count($request->member_id) > 0) {
+                for ($i = 0; $i < count($request->member_id); $i++) {
+                    $data = [
+                        'meeting_id' => $meetingId,
+                        'member_id' => $request->member_id[$i]
+                    ];
+                    AssignMemberToMeeting::create($data);
+                }
+            }
+        }
+    }
+
+    public function assignMemberToMeeting($id)
+    {
+        return AssignMemberToMeeting::where('meeting_id', $id)->pluck('member_id', 'member_id')->all();
     }
 }

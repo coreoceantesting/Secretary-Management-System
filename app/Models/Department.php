@@ -11,7 +11,7 @@ class Department extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'initial', 'deleted_at'];
+    protected $fillable = ['name', 'initial', 'is_home_department', 'deleted_at'];
 
     public static function booted()
     {

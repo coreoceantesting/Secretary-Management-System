@@ -31,6 +31,22 @@
                                     <input class="form-control" id="head_person_designation" name="head_person_designation" type="text" placeholder="Enter Department Head Person Designation">
                                     <span class="text-danger is-invalid head_person_designation_err"></span>
                                 </div>
+
+                            </div>
+
+                            <div class="mb-3 row">
+                                @foreach($wardMembers as $wardMember)
+                                <div class="form-group m-t-15 row roles-checkbox-group">
+                                    <strong class="mt-2"> {{ $wardMember->name }} </strong>
+                                    @foreach($wardMember?->members as $member)
+                                    <div class="col-3 py-2 form-check">
+                                        <label class="d-block form-check-label" for="chk-ani{{str_replace(' ', '-', $member->name)}}">
+                                            <input class="checkbox_animated form-check-input" id="chk-ani{{str_replace(' ', '-', $member->name)}}" type="checkbox" name="member_id[]" value="{{$member->id}}">{{ $member->name }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                @endforeach
                             </div>
 
                         </div>
@@ -73,6 +89,7 @@
                                     <span class="text-danger is-invalid head_person_designation_err"></span>
                                 </div>
                             </div>
+                            <div class="mb-3 row" id="assignMemberToMeeting"></div>
 
                         </div>
                         <div class="card-footer">
@@ -92,7 +109,9 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="">
+                                    @can('meeting.create')
                                     <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+                                    @endcan
                                     <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
                                 </div>
                             </div>
@@ -118,8 +137,12 @@
                                             <td>{{ $meeting->head_person_name }}</td>
                                             <td>{{ $meeting->head_person_designation }}</td>
                                             <td>
+                                                @can('meeting.edit')
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit Meeting" data-id="{{ $meeting->id }}"><i data-feather="edit"></i></button>
+                                                @endcan
+                                                @can('meeting.delete')
                                                 <button class="btn text-danger rem-element px-2 py-1" title="Delete Meeting" data-id="{{ $meeting->id }}"><i data-feather="trash-2"></i> </button>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
@@ -198,6 +221,7 @@
                     $("#editForm input[name='name']").val(data.meeting.name);
                     $("#editForm input[name='head_person_name']").val(data.meeting.head_person_name);
                     $("#editForm input[name='head_person_designation']").val(data.meeting.head_person_designation);
+                    $('#assignMemberToMeeting').html(data.memberHtml)
                 }
                 else
                 {

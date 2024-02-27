@@ -65,7 +65,7 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="role">Select User Type / Role <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-single col-sm-12" id="role" name="role">
+                                <select class="form-select col-sm-12" id="role" name="role">
                                     <option value="">--Select Role--</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
