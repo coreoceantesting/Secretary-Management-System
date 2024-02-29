@@ -21,10 +21,18 @@ class HomeDepartmentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required',
-            'initial' => 'required',
-        ];
+        if ($this->id) {
+            $rule = [
+                'name' => "required|regex:/^[a-zA-Z0-9 ]+$/u|unique:departments,name,$this->id",
+                'initial' => 'required'
+            ];
+        } else {
+            $rule = [
+                'name' => 'required|unique:departments,name|regex:/^[a-zA-Z0-9 ]+$/u',
+                'initial' => 'required'
+            ];
+        }
+        return $rule;
     }
 
     public function messages()

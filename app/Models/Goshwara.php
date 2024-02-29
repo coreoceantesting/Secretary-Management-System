@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Meeting;
 use App\Models\Department;
+use App\Models\User;
 
 class Goshwara extends Model
 {
@@ -21,5 +22,10 @@ class Goshwara extends Model
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+
+    public function sentBy()
+    {
+        return $this->belongsTo(User::class, 'sent_by', 'id');
     }
 }

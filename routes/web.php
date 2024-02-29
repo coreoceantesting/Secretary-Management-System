@@ -13,6 +13,9 @@ use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoshwaraController;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\ScheduleMeetingController;
+use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +73,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('users/{user}/get-role', [UserController::class, 'getRole'])->name('users.get-role');
     Route::put('users/{user}/assign-role', [UserController::class, 'assignRole'])->name('users.assign-role');
     Route::resource('roles', RoleController::class);
+    Route::get('users/{isHomeDepartment}/get-department', [UserController::class, 'getDepartment'])->name('users.get-department');
 
     Route::prefix('master')->name('master.')->group(function () {
         Route::resource('department', DepartmentController::class);
@@ -79,7 +83,15 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::resource('meeting', MeetingController::class);
     });
 
+    Route::get('goshwara/sent', [GoshwaraController::class, 'sent'])->name('goshwara.sent');
+    Route::post('goshwara/sent', [GoshwaraController::class, 'postSent'])->name('goshwara.post-sent');
     Route::resource('goshwara', GoshwaraController::class);
+
+    Route::resource('agenda', AgendaController::class);
+    Route::resource('schedule-meeting', ScheduleMeetingController::class);
+
+    Route::get('question/schedule_meeting/{id}', [QuestionController::class, 'getScheduleMeeting'])->name('question.getScheduleMeeting');
+    Route::resource('question', QuestionController::class);
 });
 
 

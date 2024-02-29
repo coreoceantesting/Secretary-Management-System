@@ -22,9 +22,10 @@ class MeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'head_person_name' => 'required',
-            'head_person_designation' => 'required'
+            'name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+            'head_person_name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+            'head_person_designation' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+            'member_id.*' => 'required'
         ];
     }
 

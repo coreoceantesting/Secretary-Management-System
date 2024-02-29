@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schedule_meetings', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('meeting_id')->nullable()->constrained('meetings');
-            $table->integer('schedule_meeting_id')->nullable();
-            $table->date('date')->nullable();
-            $table->time('time')->nullable();
-            $table->string('place')->nullable();
-            $table->string('file')->nullable();
-            $table->datetime('datetime')->nullable();
-            $table->boolean('is_meeting_reschedule')->default(0);
+            $table->foreignId('schedule_meeting_id')->nullable()->constrained('schedule_meetings');
+            $table->string('question')->nullable();
+            $table->string('question_file')->nullable();
+            $table->text('description')->nullable();
+            $table->string('response_file')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schedule_meetings');
+        Schema::dropIfExists('questions');
     }
 };

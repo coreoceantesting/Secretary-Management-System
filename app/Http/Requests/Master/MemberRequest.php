@@ -22,7 +22,7 @@ class MemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ward_id' => 'required',
+            'ward_id' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
             'name' => 'required',
             'contact_number' => 'required|numeric',
             'email' => 'required|email',

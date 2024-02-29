@@ -18,8 +18,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('id', 'DESC')->get();
-        $permissions = Permission::get();
+        $roles = Role::get();
+        $permissions = Permission::orderBy('name')->get();
 
         return view('user.roles', compact('roles', 'permissions'));
     }
@@ -66,7 +66,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $permissions = Permission::get();
+        $permissions = Permission::orderBy('name')->get();
         if ($role) {
             $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $role->id)
                 ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')

@@ -23,6 +23,7 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'department_id' => 'nullable',
             'fname' => 'required',
             'mname' => 'required',
             'lname' => 'required',

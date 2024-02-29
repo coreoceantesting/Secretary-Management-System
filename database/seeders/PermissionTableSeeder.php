@@ -117,22 +117,22 @@ class PermissionTableSeeder extends Seeder
             [
                 'id' => 21,
                 'name' => 'home_department.view',
-                'group' => 'home_department',
+                'group' => 'home department',
             ],
             [
                 'id' => 22,
                 'name' => 'home_department.create',
-                'group' => 'home_department',
+                'group' => 'home department',
             ],
             [
                 'id' => 23,
                 'name' => 'home_department.edit',
-                'group' => 'home_department',
+                'group' => 'home department',
             ],
             [
                 'id' => 24,
                 'name' => 'home_department.delete',
-                'group' => 'home_department',
+                'group' => 'home department',
             ],
             [
                 'id' => 25,
@@ -213,6 +213,51 @@ class PermissionTableSeeder extends Seeder
                 'id' => 40,
                 'name' => 'agenda.delete',
                 'group' => 'agenda',
+            ],
+            [
+                'id' => 37,
+                'name' => 'schedule_meeting.view',
+                'group' => 'schedule meeting',
+            ],
+            [
+                'id' => 38,
+                'name' => 'schedule_meeting.create',
+                'group' => 'schedule meeting',
+            ],
+            [
+                'id' => 39,
+                'name' => 'schedule_meeting.edit',
+                'group' => 'schedule meeting',
+            ],
+            [
+                'id' => 40,
+                'name' => 'schedule_meeting.delete',
+                'group' => 'schedule meeting',
+            ],
+            [
+                'id' => 37,
+                'name' => 'question.view',
+                'group' => 'question',
+            ],
+            [
+                'id' => 38,
+                'name' => 'question.create',
+                'group' => 'question',
+            ],
+            [
+                'id' => 39,
+                'name' => 'question.edit',
+                'group' => 'question',
+            ],
+            [
+                'id' => 40,
+                'name' => 'question.delete',
+                'group' => 'question',
+            ],
+            [
+                'id' => 41,
+                'name' => 'goshwara.sent',
+                'group' => 'goshwara',
             ]
         ];
 

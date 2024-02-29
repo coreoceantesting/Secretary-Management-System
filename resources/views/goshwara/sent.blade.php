@@ -1,8 +1,7 @@
 <x-admin.layout>
-    <x-slot name="title">Goshwara</x-slot>
-    <x-slot name="heading">Goshwara</x-slot>
+    <x-slot name="title">Sent Goshwara</x-slot>
+    <x-slot name="heading">Sent Goshwara</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
-
 
         {{-- Edit Form --}}
         <div class="row" id="editContainer" style="display:none;">
@@ -38,31 +37,11 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <form action="{{ route('goshwara.index') }}" method="get">
-                            <div class="row">
-                                <div class="col-sm-12 col-lg-4 col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="from">From Date</label>
-                                        <input type="date" value="@if(isset(request()->from) && request()->from != ""){{ date('Y-m-d', strtotime(request()->from)) }}@endif" id="from" class="form-control" name="from" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-lg-4 col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="to">To Date</label>
-                                        <input type="date" value="@if(isset(request()->to) && request()->to != ""){{ date('Y-m-d', strtotime(request()->to)) }}@endif" id="to" class="form-control" name="to" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-lg-4 col-md-4 col-12">
-                                    <label for="" class="w-100">&nbsp;</label>
-                                    <button class="btn btn-primary">Search</button>
-                                </div>
-                            </div>
-                        </form>
+                        <h4 class="card-title">Sent Goshwara List</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -70,9 +49,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
-                                        <th>Department</th>
-                                        <th>Sent By</th>
-                                        <th>Sent Date</th>
+                                        <th>Goshwara</th>
                                         <th>Remark</th>
                                         <th>Action</th>
                                     </tr>
@@ -81,12 +58,22 @@
                                     @foreach ($goshwaras as $goshwara)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $goshwara->department?->name ?? '-' }}</td>
-                                            <td>{{ ($goshwara->sent_by) ? $goshwara->sentBy?->fname." ".$goshwara->sentBy?->mname." ".$goshwara->sentBy?->lname : '-' }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($goshwara->date)) }}</td>
+                                            <td><a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm">View Goshwara</a></td>
                                             <td>{{ $goshwara->remark }}</td>
                                             <td>
-                                                <a href="{{ route('goshwara.show', $goshwara->id) }}" class="btn btn-primary btn-sm">View</a>
+                                                <div class="d-flex">
+                                                    <form action="{{ route('goshwara.post-sent') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" value="{{ $goshwara->id }}" name="id">
+                                                        <button type="submit" onclick="return confirm('Are you sure you want to sent this goshwara')" class="btn btn-primary btn-sm px-2 py-1">Sent</button>
+                                                    </form>
+                                                    @can('goshwara.edit')
+                                                    <button class="edit-element btn text-secondary px-2 py-1" title="Edit Goshwara" data-id="{{ $goshwara->id }}"><i data-feather="edit"></i></button>
+                                                    @endcan
+                                                    @can('goshwara.delete')
+                                                    <button class="btn text-danger rem-element px-2 py-1" title="Delete Goshwara" data-id="{{ $goshwara->id }}"><i data-feather="trash-2"></i> </button>
+                                                    @endcan
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -97,10 +84,9 @@
             </div>
         </div>
 
-
-
-
 </x-admin.layout>
+
+
 
 
 <!-- Edit -->

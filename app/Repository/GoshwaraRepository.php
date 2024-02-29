@@ -10,9 +10,13 @@ use App\Models\Goshwara;
 
 class GoshwaraRepository
 {
-    public function index()
+    public function index($request)
     {
-        $goshwara = Goshwara::with(['department', 'meeting'])->get();
+        $goshwara = Goshwara::when(isset($request->from) && $request->from != "", function ($q) use ($request) {
+            return $q->whereDate('date', '>=', date('Y-m-d', strtotime($request->from)));
+        })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
+            return $q->whereDate('date', '<=', date('Y-m-d', strtotime($request->to)));
+        })->where('is_sent', 1)->with(['department', 'sentBy'])->latest()->get();
 
         return $goshwara;
     }
@@ -49,7 +53,7 @@ class GoshwaraRepository
         DB::beginTransaction();
         try {
             $goshwara = Goshwara::find($id);
-            $file = $goshwara->goshwarafile;
+            $file = $goshwara->file;
             if ($request->hasFile('goshwarafile')) {
                 if ($goshwara->file != "") {
                     if (Storage::exists($goshwara->file)) {
@@ -90,5 +94,37 @@ class GoshwaraRepository
             Log::info($e);
             return false;
         }
+    }
+
+    // function to get sent list
+    public function sent($request)
+    {
+        $goshwara = Goshwara::where('is_sent', 0)->latest()->get();
+
+        return $goshwara;
+    }
+
+    public function postSent($request)
+    {
+        try {
+            DB::beginTransaction();
+            $goshwara = Goshwara::find($request->id);
+            $goshwara->sent_by = Auth::user()->id;
+            $goshwara->date = date('Y-m-d');
+            $goshwara->is_sent = 1;
+            $goshwara->department_id = Auth::user()->department?->id;
+            $goshwara->save();
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            Log::info($e);
+            return false;
+        }
+    }
+
+    public function show($id)
+    {
+        return Goshwara::with(['department', 'sentBy'])->where('id', $id)->first();
     }
 }

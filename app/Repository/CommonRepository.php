@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Ward;
+use App\Models\Meeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,5 +12,19 @@ class CommonRepository
     public function getWardMember()
     {
         return Ward::with(['members'])->get();
+    }
+
+    public function getMeeting()
+    {
+        return Meeting::get();
+    }
+
+    public function getSeventDayMeeting()
+    {
+        $meeting = Meeting::whereHas('scheduleMeeting', function ($q) {
+            return $q->whereDate('date', '>=', date('Y-m-d', strtotime('+7 days')));
+        })->get();
+
+        return $meeting;
     }
 }

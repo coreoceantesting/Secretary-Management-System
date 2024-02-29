@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
-    <link rel="shortcut icon" href="{{ asset('admin/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('admin/images/favicon.png') }}">
     <script src="{{ asset('admin/js/layout.js') }}"></script>
     <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -33,7 +33,7 @@
                                         <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mb-4">
                                                 <a href="index.html" class="d-block">
-                                                    <img src="{{ asset('admin/images/logo-light.png') }}" alt="" height="18">
+                                                    <img src="{{ asset('admin/images/logo-light.png') }}" alt="" style="width: 250px">
                                                 </a>
                                             </div>
                                             <div class="mt-auto">

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Master;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WardRequest extends FormRequest
+class AgendaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,13 @@ class WardRequest extends FormRequest
     {
         if ($this->id) {
             $rule = [
-                'name' => "required|regex:/^[a-zA-Z0-9 ]+$/u|unique:wards,name,$this->id",
-                'initial' => 'required'
+                'agendafile' => "nullable|mimes:png,jpg,jpeg,PNG,JPG,JPEG,pdf,PDF,doc,DOC,docx,DOCX,xlsx,xls|max:2010",
+                'name' => 'required'
             ];
         } else {
             $rule = [
-                'name' => 'required|unique:wards,name|regex:/^[a-zA-Z0-9 ]+$/u',
-                'initial' => 'required'
+                'agendafile' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG,pdf,PDF,doc,DOC,docx,DOCX,xlsx,xls|max:2010',
+                'name' => 'required'
             ];
         }
 
@@ -39,8 +39,10 @@ class WardRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Please enter name',
-            'initial.required' => 'Please enter initial',
+            'agendafile.required' => 'Please select file',
+            'agendafile.mimes' => 'Only jpg, png, pdf, doc and xls file supported only',
+            'agendafile.max' => 'File must be less than 2mb',
+            'name.required' => 'Please enter name'
         ];
     }
 }

@@ -65,7 +65,7 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="role">Select User Type / Role <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="role" name="role">
+                                <select class="form-select col-sm-12 selectRole" id="role" name="role">
                                     <option value="">--Select Role--</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -73,6 +73,7 @@
                                 </select>
                                 <span class="text-danger is-invalid role_err"></span>
                             </div>
+                            <div class="col-md-4 mt-3 d-none selectDepartment"></div>
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="username">Username <span class="text-danger">*</span></label>
@@ -167,7 +168,7 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="role">Select User Type / Role <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-single col-sm-12" id="role" name="role">
+                                <select class="js-example-basic-single col-sm-12 selectRole" id="role" name="role">
                                     <option value="">--Select Role--</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -175,6 +176,8 @@
                                 </select>
                                 <span class="text-danger is-invalid role_err"></span>
                             </div>
+
+                            <div class="col-md-4 mt-3 d-none selectDepartment"></div>
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="username">Username <span class="text-danger">*</span></label>
@@ -217,6 +220,7 @@
                                     <th>Full Name</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
+                                    <th>Role</th>
                                     {{-- <th style="min-width: 100px;">Status</th> --}}
                                     <th>Username</th>
                                     <th>Gender</th>
@@ -230,6 +234,7 @@
                                         <td>{{ $user->fname. " ". $user->mname. " ". $user->lname }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->contact }}</td>
+                                        <td>{{ $user->roles[0]?->name }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>{{ ($user->gender) ? ['m' => 'Male', 'f' => 'Female'][$user->gender] : '' }}</td>
                                         <td>
@@ -512,7 +517,13 @@
                     $("#editForm input[name='email']").val(data.user.email);
                     $("#editForm input[name='contact']").val(data.user.contact);
                     $("#editForm input[name='username']").val(data.user.username);
-                    $("#editForm select[name='gender']").val(data.user.gender);
+                    $("#editForm select[name='gender']").val(data.user.gender).change();
+                    if(data.departmentHtml != ""){
+                        $('body').find('.selectDepartment').removeClass('d-none');
+                        $('body').find('.selectDepartment').html(data.departmentHtml)
+                    }else{
+                        $('body').find('.selectDepartment').addClass('d-none');
+                    }
                 } else {
                     swal("Error!", data.error, "error");
                 }
@@ -662,4 +673,48 @@
         }
 
     });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('body').on('change', '.selectRole', function(){
+            let role = $(this).find('option:selected').text();
+
+            if(role == "Department" || role == "Home Department"){
+                let isHomeDepartment = "";
+                if(role == "Department"){
+                    isHomeDepartment = 0;
+                }else{
+                    isHomeDepartment = 1;
+                }
+                getDepartment(isHomeDepartment);
+                $('body').find('.selectDepartment').removeClass('d-none');
+            }else{
+                $('body').find('.selectDepartment').addClass('d-none');
+                $('body').find('.selectDepartment').html("");
+            }
+        });
+
+        function getDepartment(isHomeDepartment){
+            var url = "{{ route('users.get-department', ':model_id') }}";
+            $.ajax({
+                url: url.replace(':model_id', isHomeDepartment),
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    let html = `<label class="col-form-label" for="department_id">Select Department <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12" id="department_id" name="department_id">
+                                    <option value="">--Select Department--</option>
+                                `;
+                    $.each(data, function(key, val){
+                        html += `<option value="${val.id}">${val.name}</option>`;
+                    });
+                    html += `</select>
+                                <span class="text-danger is-invalid department_id_err"></span>`;
+                    $('body').find('.selectDepartment').html(html);
+                }
+            });
+        }
+    })
 </script>

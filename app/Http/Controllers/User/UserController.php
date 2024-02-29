@@ -83,11 +83,28 @@ class UserController extends Controller
             endforeach;
             $roleHtml .= '</span>';
 
+            $departmentHtml = "";
+
+            if ($user->department_id) {
+                $isDepartment = $user->roles[0]->name == "Department" ? '0' : '1';
+                $departments = Department::where('is_home_department', $isDepartment)->select('id', 'name')->latest()->get();
+
+                $departmentHtml .= '<label class="col-form-label" for="department_id">Select Department <span class="text-danger">*</span></label>
+                <select class="form-select col-sm-12" id="department_id" name="department_id">
+                    <option value="">--Select Department--</option>';
+                foreach ($departments as $department) :
+                    $isDepartmentSelect = ($user->department_id && $user->department_id == $department->id) ? "selected" : "";
+                    $departmentHtml .= '<option value="' . $department->id . '" ' . $isDepartmentSelect . '>' . $department->name . '</option>';
+                endforeach;
+                $departmentHtml .= '</select>
+                <span class="text-danger is-invalid department_id_err"></span>';
+            }
 
             $response = [
                 'result' => 1,
                 'user' => $user,
                 'roleHtml' => $roleHtml,
+                'departmentHtml' => $departmentHtml
             ];
         } else {
             $response = ['result' => 0];
@@ -201,6 +218,14 @@ class UserController extends Controller
             return response()->json(['success' => 'Role updated successfully']);
         } catch (\Exception $e) {
             return $this->respondWithAjax($e, 'changing', 'User\'s role');
+        }
+    }
+
+    // function to getDepartment
+    public function getDepartment(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            return Department::where('is_home_department', $id)->select('id', 'name')->latest()->get();
         }
     }
 }

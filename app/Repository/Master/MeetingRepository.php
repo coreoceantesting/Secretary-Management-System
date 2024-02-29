@@ -48,6 +48,9 @@ class MeetingRepository
             $meeting = Meeting::find($id);
             $meeting->update($request->all());
 
+            AssignMemberToMeeting::where('meeting_id', $id)->delete();
+            $this->insertMember($request, $id); // insert member to meeting
+
             DB::commit();
             return true;
         } catch (\Exception $e) {

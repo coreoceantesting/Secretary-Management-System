@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('goshwaras', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id')->nullable()->constrained('departments');
-            $table->foreignId('meeting_id')->nullable()->constrained('meetings');
             $table->string('file')->nullable();
             $table->text('remark')->nullable();
-            $table->string('sent_by')->nullable();
+            $table->foreignId('sent_by')->nullable()->constrained('users');
             $table->date('date')->nullable();
             $table->boolean('is_sent')->default(0);
             $table->timestamps();
