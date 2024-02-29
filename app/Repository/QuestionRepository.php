@@ -94,4 +94,36 @@ class QuestionRepository
     {
         return ScheduleMeeting::where('meeting_id', $id)->get();
     }
+
+    public function show($id)
+    {
+        return Question::with(['meeting', 'scheduleMeeting'])->where('id', $id)->first();
+    }
+
+    public function response($request)
+    {
+        DB::beginTransaction();
+        try {
+            $question = Question::find($request->id);
+            $file = $question->response_file;
+            if ($request->hasFile('responsefile')) {
+                if ($question->response_file != "") {
+                    if (Storage::exists($question->response_file)) {
+                        Storage::delete($question->response_file);
+                    }
+                }
+                $file = $request->responsefile->store('questions');
+            }
+
+            $request['response_file'] = $file;
+            $question->update($request->all());
+
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            Log::info($e);
+            return false;
+        }
+    }
 }

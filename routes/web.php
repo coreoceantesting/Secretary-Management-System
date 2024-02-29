@@ -91,6 +91,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('schedule-meeting', ScheduleMeetingController::class);
 
     Route::get('question/schedule_meeting/{id}', [QuestionController::class, 'getScheduleMeeting'])->name('question.getScheduleMeeting');
+    Route::post('question/response', [QuestionController::class, 'response'])->name('question.response');
     Route::resource('question', QuestionController::class);
 });
 

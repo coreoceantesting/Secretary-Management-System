@@ -101,4 +101,24 @@ class QuestionController extends Controller
             ]);
         }
     }
+
+    public function show($id)
+    {
+        $question = $this->questionRepository->show($id);
+
+        return view('question.show')->with([
+            'question' => $question
+        ]);
+    }
+
+    public function response(Request $request)
+    {
+        $question = $this->questionRepository->response($request);
+
+        if ($question) {
+            return redirect()->route('question.index')->with(['success' => 'Schedule meeting deleted successfully!']);
+        } else {
+            return redirect()->route('question.index')->with(['error' => 'Something went wrong please try again']);
+        }
+    }
 }

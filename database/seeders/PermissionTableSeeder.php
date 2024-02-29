@@ -258,6 +258,11 @@ class PermissionTableSeeder extends Seeder
                 'id' => 41,
                 'name' => 'goshwara.sent',
                 'group' => 'goshwara',
+            ],
+            [
+                'id' => 42,
+                'name' => 'question.response',
+                'group' => 'question',
             ]
         ];
 
