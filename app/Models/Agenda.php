@@ -9,5 +9,5 @@ class Agenda extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'file'];
+    protected $fillable = ['is_meeting_schedule', 'name', 'file'];
 }

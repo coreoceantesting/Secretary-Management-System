@@ -3,38 +3,66 @@
 namespace App\Repository;
 
 use App\Models\ScheduleMeeting;
-use App\Models\Agenda;
 use App\Models\AssignMemberToMeeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class ScheduleMeetingRepository
+class RescheduleMeetingRepository
 {
     public function index()
     {
-        return ScheduleMeeting::with(['meeting', 'agenda'])->where('is_meeting_reschedule', 0)->get();
+        return ScheduleMeeting::with(['meeting', 'agenda'])
+            ->where('is_meeting_reschedule', 0)
+            ->whereNotNull('schedule_meeting_id')
+            ->get();
+    }
+
+    public function getScheduleMeeting($meetingId)
+    {
+        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0])
+            ->whereDate('date', '>', date('Y-m-d', strtotime('+7 days')))->select('id', 'datetime')->get();
+    }
+
+    public function getEditScheduleMeeting($meetingId, $scheduleMeetingId, $id)
+    {
+        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_completed' => 0])
+            ->where('id', '!=', $id)
+            ->where(function ($q) use ($scheduleMeetingId) {
+                return $q->where('is_meeting_reschedule', 0)->orWhere('id', $scheduleMeetingId);
+            })
+            ->whereDate('date', '>', date('Y-m-d', strtotime('+7 days')))
+            ->select('id', 'datetime')
+            ->get();
+    }
+
+    public function getScheduleMeetingDetails($scheduleMeetingId)
+    {
+        return ScheduleMeeting::with(['meeting', 'agenda'])->where('id', $scheduleMeetingId)->first();
     }
 
     public function store($request)
     {
         DB::beginTransaction();
         try {
+            $meeting = ScheduleMeeting::find($request->schedule_meeting_id);
+
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
-            $file = null;
+            $file = $meeting->file;
             if ($request->hasFile('agendafile')) {
-                $file = $request->agendafile->store('schedulemeeting');
+                $file = $request->agendafile->store('reschedulemeeting');
             }
+            $request['agenda_id'] = $meeting->agenda_id;
             $request['file'] = $file;
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;
             ScheduleMeeting::create($request->all());
 
-            // change agenda schedule meeting status
-            Agenda::where('id', $request->agenda_id)->update([
-                'is_meeting_schedule' => 1
+
+            ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
+                'is_meeting_reschedule' => 1
             ]);
 
             // logic to send sms and email
@@ -45,6 +73,7 @@ class ScheduleMeetingRepository
                 Log::info('email Send to id' . $member->member->email);
             }
             // end of send sms and email login
+
 
             DB::commit();
             return true;
@@ -66,8 +95,8 @@ class ScheduleMeetingRepository
         try {
             $scheduleMeeting = ScheduleMeeting::find($id);
             // change agenda schedule meeting status
-            Agenda::where('id', $scheduleMeeting->agenda_id)->update([
-                'is_meeting_schedule' => 0
+            ScheduleMeeting::where('id', $scheduleMeeting->schedule_meeting_id)->update([
+                'is_meeting_reschedule' => 0
             ]);
 
             $file = $scheduleMeeting->file;
@@ -90,8 +119,8 @@ class ScheduleMeetingRepository
             $scheduleMeeting->update($request->all());
 
             // change agenda schedule meeting status
-            Agenda::where('id', $request->agenda_id)->update([
-                'is_meeting_schedule' => 1
+            ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
+                'is_meeting_reschedule' => 1
             ]);
 
             DB::commit();
@@ -104,15 +133,17 @@ class ScheduleMeetingRepository
         }
     }
 
+
     public function destroy($id)
     {
         try {
             DB::beginTransaction();
             $scheduleMeeting = ScheduleMeeting::find($id);
             // change agenda schedule meeting status
-            Agenda::where('id', $scheduleMeeting->agenda_id)->update([
-                'is_meeting_schedule' => 0
+            ScheduleMeeting::where('id', $scheduleMeeting->schedule_meeting_id)->update([
+                'is_meeting_reschedule' => 0
             ]);
+
 
             if ($scheduleMeeting->file != "") {
                 if (Storage::exists($scheduleMeeting->file)) {

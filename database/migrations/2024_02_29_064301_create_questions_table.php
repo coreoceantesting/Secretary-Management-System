@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('meeting_id')->nullable()->constrained('meetings');
+            $table->foreignId('department_id')->nullable()->constrained('departments');
             $table->foreignId('schedule_meeting_id')->nullable()->constrained('schedule_meetings');
             $table->string('question')->nullable();
             $table->string('question_file')->nullable();

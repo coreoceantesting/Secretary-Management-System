@@ -34,9 +34,9 @@ class GoshwaraController extends Controller
         $goshwara = $this->goshwaraRepository->store($request);
 
         if ($goshwara) {
-            return redirect()->route('goshwara.sent')->with('success', 'Goshwara created successfully!');
+            return redirect()->route('goshwara.send')->with('success', 'Goshwara created successfully!');
         } else {
-            return redirect()->route('goshwara.sent')->with('error', 'Something went wrong please try again');
+            return redirect()->route('goshwara.send')->with('error', 'Something went wrong please try again');
         }
     }
 
@@ -80,22 +80,22 @@ class GoshwaraController extends Controller
         }
     }
 
-    public function sent(Request $request)
+    public function send(Request $request)
     {
-        $goshwaras = $this->goshwaraRepository->sent($request);
+        $goshwaras = $this->goshwaraRepository->send($request);
 
-        return view('goshwara.sent')->with([
+        return view('goshwara.send')->with([
             'goshwaras' => $goshwaras
         ]);
     }
 
-    // function to update sent request
-    public function postSent(Request $request)
+    // function to update send request
+    public function postSend(Request $request)
     {
-        $goshwara = $this->goshwaraRepository->postSent($request);
+        $goshwara = $this->goshwaraRepository->postSend($request);
 
         if ($goshwara) {
-            return redirect()->route('goshwara.index')->with('success', 'Goshwara sent successfully!');
+            return redirect()->route('goshwara.index')->with('success', 'Goshwara send successfully!');
         } else {
             return back()->with('error', 'Something went wrong please try again');
         }

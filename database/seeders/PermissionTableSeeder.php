@@ -256,7 +256,7 @@ class PermissionTableSeeder extends Seeder
             ],
             [
                 'id' => 41,
-                'name' => 'goshwara.sent',
+                'name' => 'goshwara.send',
                 'group' => 'goshwara',
             ],
             [

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('file')->nullable();
+            $table->boolean('is_meeting_schedule')->default(0);
             $table->timestamps();
         });
     }

@@ -24,9 +24,12 @@ class ScheduleMeetingController extends Controller
 
         $meetings = $this->commonRepository->getMeeting();
 
+        $agendas = $this->commonRepository->getNotScheduleMeetingAgenda();
+
         return view('schedule-meeting.index')->with([
             'scheduleMeetings' => $scheduleMeetings,
             'meetings' => $meetings,
+            'agendas' => $agendas
         ]);
     }
 
@@ -45,10 +48,19 @@ class ScheduleMeetingController extends Controller
     {
         $scheduleMeeting = $this->scheduleMeetingRepository->edit($id);
 
+        $agendaHtml = '<option value="">--Select Agenda--</option>';
+        $agendas = $this->commonRepository->getNotScheduleMeetingAgenda($scheduleMeeting->agenda_id);
+
+        foreach ($agendas as $agenda) :
+            $isSelected = $agenda->id == $scheduleMeeting->agenda_id ? 'selected' : '';
+            $agendaHtml .= '<option value="' . $agenda->id . '" ' . $isSelected . '>' . $agenda->name . '</option>';
+        endforeach;
+
         if ($scheduleMeeting) {
             $response = [
                 'result' => 1,
                 'scheduleMeeting' => $scheduleMeeting,
+                'agendaHtml' => $agendaHtml
             ];
         } else {
             $response = ['result' => 0];

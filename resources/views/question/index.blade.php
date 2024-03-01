@@ -37,6 +37,16 @@
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="department_id">Select Department <span class="text-danger">*</span></label>
+                                <select name="department_id" id="department_id" class="form-select">
+                                    <option value="">Select Department</option>
+                                    @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid department_id_err"></span>
+                            </div>
                         </div>
 
                     </div>
@@ -82,6 +92,17 @@
                                 <label class="col-form-label" for="uploadfile">Upload File <span class="text-danger">*</span></label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="department_id">Select Department <span class="text-danger">*</span></label>
+                                <select name="department_id" id="department_id" class="form-select selectMeetingId">
+                                    <option value="">Select Department</option>
+                                    @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid department_id_err"></span>
                             </div>
                         </div>
 
@@ -138,18 +159,16 @@
                                         <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         @canany(['question.edit', 'question.delete', 'question.response'])
                                         <td>
+                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm btn-primary px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
+                                                @can('question.response') Response @else View @endif
+                                            </a>
                                             @if($question->description == "")
-                                            @can('question.response')
-                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm btn-primary px-2 py-1" title="Response Question" data-id="{{ $question->id }}">Response</a>
-                                            @endcan
                                             @can('question.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Question" data-id="{{ $question->id }}"><i data-feather="edit"></i></button>
                                             @endcan
                                             @can('question.delete')
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete Question" data-id="{{ $question->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan
-                                            @else
-                                            -
                                             @endif
                                         </td>
                                         @endcan
@@ -230,6 +249,7 @@
                 {
                     $("#editForm input[name='edit_model_id']").val(data.question.id);
                     $("#editForm select[name='meeting_id']").val(data.question.meeting_id);
+                    $("#editForm select[name='department_id']").val(data.question.department_id);
                     $("#editForm input[name='question']").val(data.question.question);
                     $('body').find('.selectScheduleMeeting').html(data.scheduleMeeting);
                     $('body').find('.selectScheduleMeeting').removeClass('d-none');
@@ -367,7 +387,7 @@
                                     <option value="">--Select Schedule Meeting--</option>
                                 `;
                     $.each(data.scheduleMeetings, function(key, val){
-                        html += `<option value="${val.id}">${val.date}</option>`;
+                        html += `<option value="${val.id}">${val.datetime}</option>`;
                     });
                     html += `</select>
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>`;

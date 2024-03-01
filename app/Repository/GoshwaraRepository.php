@@ -96,15 +96,15 @@ class GoshwaraRepository
         }
     }
 
-    // function to get sent list
-    public function sent($request)
+    // function to get send list
+    public function send($request)
     {
         $goshwara = Goshwara::where('is_sent', 0)->latest()->get();
 
         return $goshwara;
     }
 
-    public function postSent($request)
+    public function postSend($request)
     {
         try {
             DB::beginTransaction();

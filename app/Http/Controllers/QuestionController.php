@@ -23,9 +23,12 @@ class QuestionController extends Controller
 
         $questions = $this->questionRepository->index();
 
+        $departments = $this->commonRepository->getDepartments();
+
         return view('question.index')->with([
             'questions' => $questions,
-            'meetings' => $meetings
+            'meetings' => $meetings,
+            'departments' => $departments
         ]);
     }
 
@@ -52,7 +55,7 @@ class QuestionController extends Controller
                 $scheduleMeetings = $this->questionRepository->getScheduleMeeting($id);
                 foreach ($scheduleMeetings as $scheduleMeeting) :
                     $isSelected = $scheduleMeeting->id == $question->schedule_meeting_id ? 'selected' : '';
-                    $scheduleMeetingHtml .= '<option ' . $isSelected . ' value="' . $scheduleMeeting->id . '">' . $scheduleMeeting->date . '</option>';
+                    $scheduleMeetingHtml .= '<option ' . $isSelected . ' value="' . $scheduleMeeting->id . '">' . date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) . '</option>';
                 endforeach;
             }
             $scheduleMeetingHtml .= `</select>
@@ -96,8 +99,14 @@ class QuestionController extends Controller
         if ($request->ajax()) {
             $scheduleMeetings = $this->questionRepository->getScheduleMeeting($id);
 
+            $results = $scheduleMeetings->map(function ($item, $key) {
+                $item["datetime"] =  date('d-m-Y h:i A', strtotime($item["datetime"]));
+                $item["id"] =  $item["id"];
+                return $item;
+            });
+
             return response()->json([
-                'scheduleMeetings' => $scheduleMeetings
+                'scheduleMeetings' => $results
             ]);
         }
     }

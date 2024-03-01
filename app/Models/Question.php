@@ -11,7 +11,7 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['meeting_id', 'schedule_meeting_id', 'question', 'question_file', 'description', 'response_file'];
+    protected $fillable = ['meeting_id', 'schedule_meeting_id', 'question', 'question_file', 'description', 'response_file', 'department_id'];
 
     public function meeting()
     {

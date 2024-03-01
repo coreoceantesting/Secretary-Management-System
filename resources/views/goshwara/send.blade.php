@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Sent Goshwara</x-slot>
-    <x-slot name="heading">Sent Goshwara</x-slot>
+    <x-slot name="title">Send Goshwara</x-slot>
+    <x-slot name="heading">Send Goshwara</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
         {{-- Edit Form --}}
@@ -41,7 +41,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Sent Goshwara List</h4>
+                        <h4 class="card-title">Send Goshwara List</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -62,10 +62,10 @@
                                             <td>{{ $goshwara->remark }}</td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <form action="{{ route('goshwara.post-sent') }}" method="post">
+                                                    <form action="{{ route('goshwara.post-send') }}" method="post">
                                                         @csrf
                                                         <input type="hidden" value="{{ $goshwara->id }}" name="id">
-                                                        <button type="submit" onclick="return confirm('Are you sure you want to sent this goshwara')" class="btn btn-primary btn-sm px-2 py-1">Sent</button>
+                                                        <button type="submit" onclick="return confirm('Are you sure you want to send this goshwara')" class="btn btn-primary btn-sm px-2 py-1">Send</button>
                                                     </form>
                                                     @can('goshwara.edit')
                                                     <button class="edit-element btn text-secondary px-2 py-1" title="Edit Goshwara" data-id="{{ $goshwara->id }}"><i data-feather="edit"></i></button>

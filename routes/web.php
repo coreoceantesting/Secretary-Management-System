@@ -16,6 +16,7 @@ use App\Http\Controllers\GoshwaraController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\ScheduleMeetingController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\RescheduleMeetingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,8 +84,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::resource('meeting', MeetingController::class);
     });
 
-    Route::get('goshwara/sent', [GoshwaraController::class, 'sent'])->name('goshwara.sent');
-    Route::post('goshwara/sent', [GoshwaraController::class, 'postSent'])->name('goshwara.post-sent');
+    Route::get('goshwara/send', [GoshwaraController::class, 'send'])->name('goshwara.send');
+    Route::post('goshwara/send', [GoshwaraController::class, 'postSend'])->name('goshwara.post-send');
     Route::resource('goshwara', GoshwaraController::class);
 
     Route::resource('agenda', AgendaController::class);
@@ -93,6 +94,10 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('question/schedule_meeting/{id}', [QuestionController::class, 'getScheduleMeeting'])->name('question.getScheduleMeeting');
     Route::post('question/response', [QuestionController::class, 'response'])->name('question.response');
     Route::resource('question', QuestionController::class);
+
+    Route::get('reschedule-meeting/schedule_meeting/{id}', [RescheduleMeetingController::class, 'getScheduleMeeting'])->name('reschedule-meeting.getScheduleMeeting');
+    Route::get('reschedule-meeting/get-schedule_meeting-details/{id}', [RescheduleMeetingController::class, 'getScheduleMeetingDetails'])->name('reschedule-meeting.getScheduleMeetingDetails');
+    Route::resource('reschedule-meeting', RescheduleMeetingController::class);
 });
 
 

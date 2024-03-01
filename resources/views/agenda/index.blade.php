@@ -109,6 +109,7 @@
                                         <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                         @canany(['agenda.edit', 'agenda.delete'])
                                         <td>
+                                            @if($agenda->is_meeting_schedule == 0)
                                             @can('agenda.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Agenda" data-id="{{ $agenda->id }}"><i data-feather="edit"></i></button>
                                             @endcan
@@ -116,6 +117,9 @@
                                             @can('agenda.delete')
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete Agenda" data-id="{{ $agenda->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan
+                                            @else
+                                            -
+                                            @endif
                                         </td>
                                         @endcan
                                     </tr>

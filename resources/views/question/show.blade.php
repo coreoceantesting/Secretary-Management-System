@@ -45,9 +45,27 @@
                                                 <th>File</th>
                                                 <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                             </tr>
+
+                                            @if(!Auth::user()->can('question.response'))
+                                            <tr>
+                                                <th>Question</th>
+                                                <td>{{ ($question->description) ? $question->description : '-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>File</th>
+                                                <td>
+                                                    @if($question->response_file)
+                                                    <a href="{{ asset('storage/'.$question->response_file) }}" class="btn btn-primary btn-sm">View File</a>
+                                                    @else
+                                                    -
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
+                                @can('question.response')
                                 <div class="col-md-6">
                                     <label class="col-form-label" for="description">Response Answer <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="description" name="description" placeholder="Enter response answer">{{ $question->description }}</textarea>
@@ -62,13 +80,16 @@
                                     <input class="form-control" id="responsefile" name="responsefile" type="file">
                                     <span class="text-danger is-invalid responsefile_err"></span>
                                 </div>
+                                @endcan
                             </div>
 
                         </div>
+                        @can('question.response')
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary" id="addSubmit">Submit</button>
                             <a href="{{ route('question.index') }}" class="btn btn-warning">Cancel</a>
                         </div>
+                        @endcan
                     </form>
                 </div>
             </div>

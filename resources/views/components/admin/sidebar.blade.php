@@ -111,7 +111,7 @@
                         <ul class="nav nav-sm flex-column">
                             @can('goshwara.view')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.index') }}" class="nav-link" data-key="t-horizontal">Goshwara</a>
+                                <a href="{{ route('goshwara.index') }}" class="nav-link" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Goshwara @else Received Goshwara @endif</a>
                             </li>
                             @endcan
 
@@ -121,9 +121,9 @@
                             </li>
                             @endcan
 
-                            @can('goshwara.sent')
+                            @can('goshwara.send')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.sent') }}" class="nav-link" data-key="t-horizontal">Sent Goshwara</a>
+                                <a href="{{ route('goshwara.send') }}" class="nav-link" data-key="t-horizontal">Send Goshwara</a>
                             </li>
                             @endcan
                         </ul>
@@ -154,6 +154,15 @@
                     <a class="nav-link menu-link {{ request()->routeIs('question.*') ? 'active' : '' }}" href="{{ route('question.index') }}" >
                         <i class="ri-dashboard-2-line"></i>
                         <span data-key="t-dashboards">Question</span>
+                    </a>
+                </li>
+                @endcan
+
+                @can('schedule_meeting.view')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('reschedule-meeting.*') ? 'active' : '' }}" href="{{ route('reschedule-meeting.index') }}" >
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">Reschedule Meeting</span>
                     </a>
                 </li>
                 @endcan
