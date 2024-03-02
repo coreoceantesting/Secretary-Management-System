@@ -124,7 +124,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                @can('schedule_meeting.create')
+                @can('reschedule_meeting.create')
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6">
@@ -148,7 +148,7 @@
                                     <th>Time</th>
                                     <th>Place</th>
                                     <th>Upload File</th>
-                                    @canany(['schedule_meeting.edit', 'schedule_meeting.delete'])<th>Action</th>@endcan
+                                    @canany(['reschedule_meeting.edit', 'reschedule_meeting.delete'])<th>Action</th>@endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,13 +161,13 @@
                                         <td>{{ date('h:i A', strtotime($rescheduleMeeting->time)) }}</td>
                                         <td>{{ $rescheduleMeeting->place }}</td>
                                         <td><a href="{{ asset('storage/'.$rescheduleMeeting->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
-                                        @canany(['schedule_meeting.edit', 'schedule_meeting.delete'])
+                                        @canany(['reschedule_meeting.edit', 'reschedule_meeting.delete'])
                                         <td>
                                             @if($rescheduleMeeting->is_meeting_reschedule == "0" && $rescheduleMeeting->date > date('Y-m-d', strtotime('+7 days')))
-                                            @can('schedule_meeting.edit')
+                                            @can('reschedule_meeting.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Schedule Meeting" data-id="{{ $rescheduleMeeting->id }}"><i data-feather="edit"></i></button>
                                             @endcan
-                                            @can('schedule_meeting.delete')
+                                            @can('reschedule_meeting.delete')
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete Schedule Meeting" data-id="{{ $rescheduleMeeting->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan
                                             @else

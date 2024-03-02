@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\ScheduleMeeting;
 use App\Models\Agenda;
 use App\Models\AssignMemberToMeeting;
+use App\Models\AssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +31,18 @@ class ScheduleMeetingRepository
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;
-            ScheduleMeeting::create($request->all());
+            $scheduleMeeting = ScheduleMeeting::create($request->all());
+
+            // logic to assign schedule meeting to department
+            if (isset($request->department_id)) {
+                for ($i = 0; $i < count($request->department_id); $i++) {
+                    $assignScheduleMeetingDepartment = new AssignScheduleMeetingDepartment;
+                    $assignScheduleMeetingDepartment->schedule_meeting_id = $scheduleMeeting->id;
+                    $assignScheduleMeetingDepartment->department_id = $request->department_id[$i];
+                    $assignScheduleMeetingDepartment->save();
+                }
+            }
+            // end of logic to assign schedule meeting to department
 
             // change agenda schedule meeting status
             Agenda::where('id', $request->agenda_id)->update([
@@ -58,6 +70,11 @@ class ScheduleMeetingRepository
     public function edit($id)
     {
         return ScheduleMeeting::find($id);
+    }
+
+    public function assignScheduleMeetingDepartments($id)
+    {
+        return AssignScheduleMeetingDepartment::where('schedule_meeting_id', $id)->pluck('department_id');
     }
 
     public function update($request, $id)
@@ -88,6 +105,19 @@ class ScheduleMeetingRepository
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;
             $scheduleMeeting->update($request->all());
+
+            // logic to assign schedule meeting to department
+            if (isset($request->department_id)) {
+                AssignScheduleMeetingDepartment::where('schedule_meeting_id', $id)->delete();
+
+                for ($i = 0; $i < count($request->department_id); $i++) {
+                    $assignScheduleMeetingDepartment = new AssignScheduleMeetingDepartment;
+                    $assignScheduleMeetingDepartment->schedule_meeting_id = $scheduleMeeting->id;
+                    $assignScheduleMeetingDepartment->department_id = $request->department_id[$i];
+                    $assignScheduleMeetingDepartment->save();
+                }
+            }
+            // end of logic to assign schedule meeting to department
 
             // change agenda schedule meeting status
             Agenda::where('id', $request->agenda_id)->update([
@@ -121,6 +151,9 @@ class ScheduleMeetingRepository
             }
 
             $scheduleMeeting->delete();
+
+            AssignScheduleMeetingDepartment::where('schedule_meeting_id', $id)->delete();
+
             DB::commit();
 
             return true;

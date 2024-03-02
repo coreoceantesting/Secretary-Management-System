@@ -17,23 +17,23 @@ class UserRolesAndPermissionSeeder extends Seeder
 
         $dmc = Role::where('name', 'DMC')->first();
 
-        $dmc->syncPermissions(['agenda.view', 'question.view', 'question.create', 'question.edit', 'question.delete']);
+        $dmc->syncPermissions(['dashboard.view', 'agenda.view', 'question.view']);
 
 
         $mayor = Role::where('name', 'Mayor')->first();
 
-        $mayor->syncPermissions(['agenda.view', 'question.view', 'question.create', 'question.edit', 'question.delete']);
+        $mayor->syncPermissions(['dashboard.view', 'agenda.view', 'question.view']);
 
 
 
         $department = Role::where('name', 'Department')->first();
 
-        $department->syncPermissions(['goshwara.view', 'goshwara.create', 'goshwara.edit', 'goshwara.delete', 'goshwara.sent']);
+        $department->syncPermissions(['dashboard.view', 'goshwara.view', 'goshwara.create', 'goshwara.edit', 'goshwara.delete', 'goshwara.send', 'question.response', 'question.view']);
 
 
 
         $homeDepartment = Role::where('name', 'Home Department')->first();
 
-        $homeDepartment->syncPermissions(['goshwara.view', 'agenda.view', 'agenda.create', 'agenda.edit', 'agenda.delete', 'schedule_meeting.view', 'schedule_meeting.create', 'schedule_meeting.edit', 'schedule_meeting.delete', 'question.view']);
+        $homeDepartment->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'agenda.create', 'agenda.edit', 'agenda.delete', 'schedule_meeting.view', 'schedule_meeting.create', 'schedule_meeting.edit', 'schedule_meeting.delete', 'question.view', 'question.create', 'question.edit', 'question.delete', 'attendance.view', 'attendance.create', 'attendance.edit', 'attendance.delete', 'reschedule_meeting.view', 'reschedule_meeting.create', 'reschedule_meeting.edit', 'reschedule_meeting.delete', 'suplimentry-agenda.view', 'suplimentry-agenda.create', 'suplimentry-agenda.edit', 'suplimentry-agenda.delete']);
     }
 }

@@ -26,10 +26,13 @@ class ScheduleMeetingController extends Controller
 
         $agendas = $this->commonRepository->getNotScheduleMeetingAgenda();
 
+        $departments = $this->commonRepository->getDepartments();
+
         return view('schedule-meeting.index')->with([
             'scheduleMeetings' => $scheduleMeetings,
             'meetings' => $meetings,
-            'agendas' => $agendas
+            'agendas' => $agendas,
+            'departments' => $departments
         ]);
     }
 
@@ -48,6 +51,8 @@ class ScheduleMeetingController extends Controller
     {
         $scheduleMeeting = $this->scheduleMeetingRepository->edit($id);
 
+        $assignScheduleMeetingDepartments = $this->scheduleMeetingRepository->assignScheduleMeetingDepartments($id);
+
         $agendaHtml = '<option value="">--Select Agenda--</option>';
         $agendas = $this->commonRepository->getNotScheduleMeetingAgenda($scheduleMeeting->agenda_id);
 
@@ -60,7 +65,8 @@ class ScheduleMeetingController extends Controller
             $response = [
                 'result' => 1,
                 'scheduleMeeting' => $scheduleMeeting,
-                'agendaHtml' => $agendaHtml
+                'agendaHtml' => $agendaHtml,
+                'assignScheduleMeetingDepartments' => $assignScheduleMeetingDepartments
             ];
         } else {
             $response = ['result' => 0];

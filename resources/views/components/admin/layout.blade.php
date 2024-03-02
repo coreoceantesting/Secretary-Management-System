@@ -141,6 +141,7 @@
             $("#addContainer").slideDown();
             $("#editContainer").slideUp();
             $("#btnCancel").show();
+            $("html, body").animate({ scrollTop: 0 }, "slow");
 
         });
     });
@@ -190,6 +191,15 @@
         $("#editContainer").slideDown();
         $("html, body").animate({ scrollTop: 0 }, "slow");
     }
+
+    $(document).ready(function(){
+        $('body').find('.nav-item ul').each(function(){
+            let ultext = $(this).text();
+            if(ultext == ""){
+                $(this).closest('.nav-item').addClass('d-none')
+            }
+        })
+    });
 </script>
 
 

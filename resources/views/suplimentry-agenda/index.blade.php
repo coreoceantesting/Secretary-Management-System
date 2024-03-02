@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Agenda</x-slot>
-    <x-slot name="heading">Agenda</x-slot>
+    <x-slot name="title">Suplimentry Agenda</x-slot>
+    <x-slot name="heading">Suplimentry Agenda</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,13 +12,22 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Agenda</h4>
+                        <h4 class="card-title">Add Suplimentry Agenda</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Agenda Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Agenda Name">
+                                <label for="schedule_meeting_id" class="col-form-label">Select Schedule Meeting</label>
+                                <select name="schedule_meeting_id" id="schedule_meeting_id" class="form-select">
+                                    <option value="">Select Schedule Meeting</option>
+                                    @foreach($scheduleMeetings as $scheduleMeeting)
+                                    <option value="{{ $scheduleMeeting->id }}">{{ date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="name">Suplimentry Agenda Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Suplimentry Agenda Name">
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>
                             <div class="col-md-4">
@@ -47,18 +56,27 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Agenda</h4>
+                        <h4 class="card-title">Edit Suplimentry Agenda</h4>
                     </div>
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Agenda Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Agenda Name">
+                                <label for="schedule_meeting_id" class="col-form-label">Select Schedule Meeting</label>
+                                <select name="schedule_meeting_id" id="schedule_meeting_id" class="form-select">
+                                    <option value="">Select Schedule Meeting</option>
+                                    @foreach($scheduleMeetings as $scheduleMeeting)
+                                    <option value="{{ $scheduleMeeting->id }}">{{ date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="name">Suplimentry Agenda Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Suplimentry Agenda Name">
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Select File</label>
+                                <label class="col-form-label" for="agendafile">Select File <span class="text-danger">*</span></label>
                                 <input class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
@@ -78,7 +96,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                @can('agenda.create')
+                @can('suplimentry-agenda.create')
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6">
@@ -96,32 +114,33 @@
                             <thead>
                                 <tr>
                                     <th>Sr no.</th>
+                                    <th>Meeting Name</th>
+                                    <th>Datetime</th>
+                                    <th>Place</th>
                                     <th>Name</th>
                                     <th>File</th>
-                                    @canany(['agenda.edit', 'agenda.delete'])<th>Action</th>@endcan
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($agendas as $agenda)
+                                @foreach ($suplimentryAgendas as $agenda)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $agenda->scheduleMeeting?->meeting?->name }}</td>
+                                        <td>{{ date('d-m-Y h:i A', strtotime($agenda->scheduleMeeting->datetime)) }}</td>
+                                        <td>{{ $agenda->scheduleMeeting?->place }}</td>
                                         <td>{{ $agenda->name }}</td>
                                         <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
-                                        @canany(['agenda.edit', 'agenda.delete'])
+
                                         <td>
-                                            @if($agenda->is_meeting_schedule == 0)
-                                            @can('agenda.edit')
+                                            @can('suplimentry-agenda.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Agenda" data-id="{{ $agenda->id }}"><i data-feather="edit"></i></button>
                                             @endcan
 
-                                            @can('agenda.delete')
+                                            @can('suplimentry-agenda.delete')
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete Agenda" data-id="{{ $agenda->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan
-                                            @else
-                                            -
-                                            @endif
                                         </td>
-                                        @endcan
                                     </tr>
                                 @endforeach
                         </table>
@@ -142,7 +161,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('agenda.store') }}',
+            url: '{{ route('suplimentry-agenda.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -153,7 +172,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('agenda.store') }}';
+                            window.location.href = '{{ route('suplimentry-agenda.store') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");
@@ -181,7 +200,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('agenda.edit', ":model_id") }}";
+        var url = "{{ route('suplimentry-agenda.edit', ":model_id") }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
@@ -193,9 +212,9 @@
                 editFormBehaviour();
                 if (!data.error)
                 {
-                    $("#editForm input[name='edit_model_id']").val(data.agenda.id);
-                    $("#editForm input[name='name']").val(data.agenda.name);
-                    $("#editForm input[name='initial']").val(data.agenda.initial);
+                    $("#editForm input[name='edit_model_id']").val(data.suplimentryAgenda.id);
+                    $("#editForm select[name='schedule_meeting_id']").val(data.suplimentryAgenda.schedule_meeting_id);
+                    $("#editForm input[name='name']").val(data.suplimentryAgenda.name);
                 }
                 else
                 {
@@ -219,7 +238,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('agenda.update', ":model_id") }}";
+            var url = "{{ route('suplimentry-agenda.update', ":model_id") }}";
             //
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -233,7 +252,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('agenda.index') }}';
+                                window.location.href = '{{ route('suplimentry-agenda.index') }}';
                             });
                     else
                         swal("Error!", data.error2, "error");
@@ -271,7 +290,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('agenda.destroy', ":model_id") }}";
+                var url = "{{ route('suplimentry-agenda.destroy', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),

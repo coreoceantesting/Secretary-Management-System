@@ -32,12 +32,14 @@
                     <span data-key="t-menu">Menu</span>
                 </li>
 
+                @can('dashboard.view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}" >
                         <i class="ri-dashboard-2-line"></i>
                         <span data-key="t-dashboards">Dashboard</span>
                     </a>
                 </li>
+                @endcan
 
                 @canany(['department.view', 'home_department.view', 'wards.view', 'member.view', 'meeting.view'])
                 <li class="nav-item">
@@ -54,7 +56,7 @@
                             @endcan
                             @can('home_department.view')
                             <li class="nav-item">
-                                <a href="{{ route('master.home-department.index') }}" class="nav-link {{ request()->routeIs('master.home-department.*') ? 'active' : '' }}" data-key="t-horizontal">Home Department</a>
+                                <a href="{{ route('master.home-department.index') }}" class="nav-link {{ request()->routeIs('master.home-department.*') ? 'active' : '' }}" data-key="t-horizontal">Home&nbsp;Department</a>
                             </li>
                             @endcan
                             @can('wards.view')
@@ -82,7 +84,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUserManagement" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarUserManagement">
                         <i class="bx bx-user-circle"></i>
-                        <span data-key="t-layouts">User Management</span>
+                        <span data-key="t-layouts">User&nbsp;Management</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarUserManagement">
                         <ul class="nav nav-sm flex-column">
@@ -111,19 +113,19 @@
                         <ul class="nav nav-sm flex-column">
                             @can('goshwara.view')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.index') }}" class="nav-link" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Goshwara @else Received Goshwara @endif</a>
+                                <a href="{{ route('goshwara.index') }}" class="nav-link" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Goshwara&nbsp;List @else Received&nbsp;Goshwara @endif</a>
                             </li>
                             @endcan
 
                             @can('goshwara.create')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.create') }}" class="nav-link" data-key="t-horizontal">Upload Goshwara</a>
+                                <a href="{{ route('goshwara.create') }}" class="nav-link" data-key="t-horizontal">Upload&nbsp;Goshwara</a>
                             </li>
                             @endcan
 
                             @can('goshwara.send')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.send') }}" class="nav-link" data-key="t-horizontal">Send Goshwara</a>
+                                <a href="{{ route('goshwara.send') }}" class="nav-link" data-key="t-horizontal">Send&nbsp;Goshwara</a>
                             </li>
                             @endcan
                         </ul>
@@ -144,7 +146,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('schedule-meeting.*') ? 'active' : '' }}" href="{{ route('schedule-meeting.index') }}" >
                         <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Schedule Meeting</span>
+                        <span data-key="t-dashboards">Schedule&nbsp;Meeting</span>
                     </a>
                 </li>
                 @endcan
@@ -158,14 +160,33 @@
                 </li>
                 @endcan
 
-                @can('schedule_meeting.view')
+                @can('reschedule_meeting.view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('reschedule-meeting.*') ? 'active' : '' }}" href="{{ route('reschedule-meeting.index') }}" >
                         <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Reschedule Meeting</span>
+                        <span data-key="t-dashboards">Reschedule&nbsp;Meeting</span>
                     </a>
                 </li>
                 @endcan
+
+                @can('suplimentry_agenda.view')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('suplimentry-agenda.*') ? 'active' : '' }}" href="{{ route('suplimentry-agenda.index') }}">
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">Suplimentry&nbsp;Agenda</span>
+                    </a>
+                </li>
+                @endcan
+
+                @can('attendance.view')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('attendance.*') ? 'active' : '' }}" href="{{ route('attendance.index') }}">
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">Attendance</span>
+                    </a>
+                </li>
+                @endcan
+
 
             </ul>
         </div>

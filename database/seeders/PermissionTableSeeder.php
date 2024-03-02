@@ -215,54 +215,114 @@ class PermissionTableSeeder extends Seeder
                 'group' => 'agenda',
             ],
             [
-                'id' => 37,
+                'id' => 41,
                 'name' => 'schedule_meeting.view',
                 'group' => 'schedule meeting',
             ],
             [
-                'id' => 38,
+                'id' => 42,
                 'name' => 'schedule_meeting.create',
                 'group' => 'schedule meeting',
             ],
             [
-                'id' => 39,
+                'id' => 43,
                 'name' => 'schedule_meeting.edit',
                 'group' => 'schedule meeting',
             ],
             [
-                'id' => 40,
+                'id' => 44,
                 'name' => 'schedule_meeting.delete',
                 'group' => 'schedule meeting',
             ],
             [
-                'id' => 37,
+                'id' => 45,
                 'name' => 'question.view',
                 'group' => 'question',
             ],
             [
-                'id' => 38,
+                'id' => 46,
                 'name' => 'question.create',
                 'group' => 'question',
             ],
             [
-                'id' => 39,
+                'id' => 47,
                 'name' => 'question.edit',
                 'group' => 'question',
             ],
             [
-                'id' => 40,
+                'id' => 48,
                 'name' => 'question.delete',
                 'group' => 'question',
             ],
             [
-                'id' => 41,
+                'id' => 49,
                 'name' => 'goshwara.send',
                 'group' => 'goshwara',
             ],
             [
-                'id' => 42,
+                'id' => 50,
                 'name' => 'question.response',
                 'group' => 'question',
+            ],
+            [
+                'id' => 51,
+                'name' => 'attendance.view',
+                'group' => 'attendance',
+            ],
+            [
+                'id' => 52,
+                'name' => 'attendance.create',
+                'group' => 'attendance',
+            ],
+            [
+                'id' => 53,
+                'name' => 'attendance.edit',
+                'group' => 'attendance',
+            ],
+            [
+                'id' => 54,
+                'name' => 'attendance.delete',
+                'group' => 'attendance',
+            ],
+            [
+                'id' => 55,
+                'name' => 'reschedule_meeting.view',
+                'group' => 'reschedule meeting',
+            ],
+            [
+                'id' => 56,
+                'name' => 'reschedule_meeting.create',
+                'group' => 'reschedule meeting',
+            ],
+            [
+                'id' => 57,
+                'name' => 'reschedule_meeting.edit',
+                'group' => 'reschedule meeting',
+            ],
+            [
+                'id' => 58,
+                'name' => 'reschedule_meeting.delete',
+                'group' => 'reschedule meeting',
+            ],
+            [
+                'id' => 59,
+                'name' => 'suplimentry-agenda.view',
+                'group' => 'suplimentry agenda',
+            ],
+            [
+                'id' => 60,
+                'name' => 'suplimentry-agenda.create',
+                'group' => 'suplimentry agenda',
+            ],
+            [
+                'id' => 61,
+                'name' => 'suplimentry-agenda.edit',
+                'group' => 'suplimentry agenda',
+            ],
+            [
+                'id' => 62,
+                'name' => 'suplimentry-agenda.delete',
+                'group' => 'suplimentry agenda',
             ]
         ];
 

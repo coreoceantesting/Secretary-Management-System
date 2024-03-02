@@ -17,6 +17,8 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\ScheduleMeetingController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RescheduleMeetingController;
+use App\Http\Controllers\SuplimentryAgendaController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +100,9 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('reschedule-meeting/schedule_meeting/{id}', [RescheduleMeetingController::class, 'getScheduleMeeting'])->name('reschedule-meeting.getScheduleMeeting');
     Route::get('reschedule-meeting/get-schedule_meeting-details/{id}', [RescheduleMeetingController::class, 'getScheduleMeetingDetails'])->name('reschedule-meeting.getScheduleMeetingDetails');
     Route::resource('reschedule-meeting', RescheduleMeetingController::class);
+
+    Route::resource('suplimentry-agenda', SuplimentryAgendaController::class);
+    Route::resource('attendance', AttendanceController::class);
 });
 
 

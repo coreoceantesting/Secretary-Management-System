@@ -3,6 +3,9 @@
     <x-slot name="heading">Schedule Meeting</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
+    @push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    @endpush
 
     <!-- Add Form -->
     <div class="row" id="addContainer" style="display:none;">
@@ -28,7 +31,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="meeting_id" name="meeting_id">
+                                <select class="js-example-basic-multiple form-select col-sm-12" id="meeting_id" name="meeting_id">
                                     <option value="">--Select Meeting--</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -55,6 +58,16 @@
                                 <label class="col-form-label" for="agendafile">Upload Agenda <span class="text-danger">*</span></label>
                                 <input class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="department_id1">Select Department <span class="text-danger">*</span></label>
+                                <select multiple class="js-example-basic-multiple form-select col-sm-12" id="department_id1" name="department_id[]">
+                                    <option value="">--Select Department--</option>
+                                    @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid department_id_err"></span>
                             </div>
                         </div>
 
@@ -91,7 +104,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="meeting_id" name="meeting_id">
+                                <select class="js-example-basic-multiple form-select col-sm-12" id="meeting_id" name="meeting_id">
                                     <option value="">--Select Meeting--</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -115,9 +128,19 @@
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Upload Agenda <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="agendafile">Upload Agenda</label>
                                 <input class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="department_id">Select Department <span class="text-danger">*</span></label>
+                                <select multiple class="js-example-basic-multiple col-sm-12" id="department_id" name="department_id[]">
+                                    <option value="">--Select Department--</option>
+                                    @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid department_id_err"></span>
                             </div>
                         </div>
 
@@ -195,6 +218,10 @@
         </div>
     </div>
 
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @endpush
+
 </x-admin.layout>
 
 
@@ -257,12 +284,14 @@
                 editFormBehaviour();
                 if (!data.error)
                 {
+                    console.log(data.assignScheduleMeetingDepartments)
                     $("#editForm input[name='edit_model_id']").val(data.scheduleMeeting.id);
                     $("#editForm select[name='agenda_id']").html(data.agendaHtml);
                     $("#editForm select[name='meeting_id']").val(data.scheduleMeeting.meeting_id).change();
                     $("#editForm input[name='date']").val(data.scheduleMeeting.date);
                     $("#editForm input[name='time']").val(data.scheduleMeeting.time);
                     $("#editForm input[name='place']").val(data.scheduleMeeting.place);
+                    $("#editForm .js-example-basic-multiple").val(data.assignScheduleMeetingDepartments).change();
                 }
                 else
                 {
