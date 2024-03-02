@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('schedule_meeting_id')->nullable()->constrained('schedule_meetings');
             $table->foreignId('meeting_id')->nullable()->constrained('meetings');
+            $table->foreignId('member_id')->nullable()->constrained('members');
             $table->time('in_time')->nullable();
             $table->time('out_time')->nullable();
             $table->timestamps();

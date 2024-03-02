@@ -102,6 +102,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('reschedule-meeting', RescheduleMeetingController::class);
 
     Route::resource('suplimentry-agenda', SuplimentryAgendaController::class);
+
     Route::resource('attendance', AttendanceController::class);
 });
 

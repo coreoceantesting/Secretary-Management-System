@@ -12,7 +12,7 @@
                         @csrf
                         <input type="hidden" name="id" value="{{ $question->id }}">
                         <div class="card-header">
-                            <h4 class="card-title">Response Question</h4>
+                            <h4 class="card-title">Question</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">

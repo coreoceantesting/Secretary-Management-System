@@ -22,11 +22,23 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $attendances = $this->attendanceRepository->store($request);
     }
 
-    public function show()
+    public function show($id)
     {
+        $attendance = $this->attendanceRepository->show($id);
+
+        $members = $this->attendanceRepository->getMeetingMembers($attendance->meeting_id);
+
+        $attendanceMarks = $this->attendanceRepository->getPresentAttendence($id);
+
+        return view('attendance.show')->with([
+            'attendance' => $attendance,
+            'members' => $members,
+            'attendanceMarks' => $attendanceMarks
+        ]);
     }
 }
