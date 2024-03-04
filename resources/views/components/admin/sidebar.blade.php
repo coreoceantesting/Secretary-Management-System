@@ -133,6 +133,7 @@
                 </li>
                 @endcan
 
+
                 @can('agenda.view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('agenda.*') ? 'active' : '' }}" href="{{ route('agenda.index') }}" >
@@ -142,38 +143,46 @@
                 </li>
                 @endcan
 
-                @can('schedule_meeting.view')
+                @can('suplimentry-agenda.view')
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('schedule-meeting.*') ? 'active' : '' }}" href="{{ route('schedule-meeting.index') }}" >
+                    <a class="nav-link menu-link {{ request()->routeIs('suplimentry-agenda.*') ? 'active' : '' }}" href="{{ route('suplimentry-agenda.index') }}">
                         <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Schedule&nbsp;Meeting</span>
+                        <span data-key="t-dashboards">Suplimentry&nbsp;Agenda</span>
                     </a>
                 </li>
                 @endcan
+
+                @canany(['schedule_meeting.view', 'reschedule_meeting.view'])
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarGoshwara" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGoshwara">
+                        <i class="bx bx-user-circle"></i>
+                        <span data-key="t-layouts">Meeting</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarGoshwara">
+                        <ul class="nav nav-sm flex-column">
+                            @can('schedule_meeting.view')
+                            <li class="nav-item">
+                                <a href="{{ route('schedule-meeting.index') }}" class="nav-link" data-key="t-horizontal">Schedule&nbsp;Meeting</a>
+                            </li>
+                            @endcan
+
+                            @can('reschedule_meeting.view')
+                            <li class="nav-item">
+                                <a href="{{ route('reschedule-meeting.index') }}" class="nav-link" data-key="t-horizontal">Reschedule&nbsp;Meeting</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+                @endcan
+
+
 
                 @can('question.view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('question.*') ? 'active' : '' }}" href="{{ route('question.index') }}" >
                         <i class="ri-dashboard-2-line"></i>
                         <span data-key="t-dashboards">Question</span>
-                    </a>
-                </li>
-                @endcan
-
-                @can('reschedule_meeting.view')
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('reschedule-meeting.*') ? 'active' : '' }}" href="{{ route('reschedule-meeting.index') }}" >
-                        <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Reschedule&nbsp;Meeting</span>
-                    </a>
-                </li>
-                @endcan
-
-                @can('suplimentry_agenda.view')
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('suplimentry-agenda.*') ? 'active' : '' }}" href="{{ route('suplimentry-agenda.index') }}">
-                        <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Suplimentry&nbsp;Agenda</span>
                     </a>
                 </li>
                 @endcan

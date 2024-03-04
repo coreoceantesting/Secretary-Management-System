@@ -44,11 +44,6 @@
                                 <input class="form-control" id="place" name="place" type="text">
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Upload Agenda <span class="text-danger">*</span></label>
-                                <input class="form-control" id="agendafile" name="agendafile" type="file">
-                                <span class="text-danger is-invalid agendafile_err"></span>
-                            </div>
                         </div>
 
                     </div>
@@ -102,11 +97,6 @@
                                 <label class="col-form-label" for="place">Place <span class="text-danger">*</span></label>
                                 <input class="form-control" id="place" name="place" type="text">
                                 <span class="text-danger is-invalid place_err"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Upload Agenda <span class="text-danger">*</span></label>
-                                <input class="form-control" id="agendafile" name="agendafile" type="file">
-                                <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
                         </div>
 
@@ -289,13 +279,13 @@
                 success: function(data)
                 {
                     $("#editSubmit").prop('disabled', false);
-                    if (!data.error2)
+                    if (!data.error)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
                                 window.location.href = '{{ route('reschedule-meeting.index') }}';
                             });
                     else
-                        swal("Error!", data.error2, "error");
+                        swal("Error!", data.error, "error");
                 },
                 statusCode: {
                     422: function(responseObject, textStatus, jqXHR) {

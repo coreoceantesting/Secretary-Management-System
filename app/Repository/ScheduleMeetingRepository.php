@@ -8,13 +8,23 @@ use App\Models\AssignMemberToMeeting;
 use App\Models\AssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ScheduleMeetingRepository
 {
     public function index()
     {
-        return ScheduleMeeting::with(['meeting', 'agenda'])->where('is_meeting_reschedule', 0)->get();
+        $scheduleMeeting = ScheduleMeeting::with(['meeting', 'agenda'])->whereNull('schedule_meeting_id');
+
+        if (Auth::user()->hasRole('Department')) {
+            $scheduleMeeting = $scheduleMeeting->whereHas('assignScheduleMeetingDepartment', function ($q) {
+                $q->where('department_id', Auth::user()->department_id);
+            });
+        }
+        $scheduleMeeting = $scheduleMeeting->latest()->get();
+
+        return $scheduleMeeting;
     }
 
     public function store($request)
@@ -161,5 +171,11 @@ class ScheduleMeetingRepository
             Log::info($e);
             return false;
         }
+    }
+
+    // function to show
+    public function show($id)
+    {
+        return ScheduleMeeting::with(['meeting', 'agenda'])->where('id', $id)->first();
     }
 }

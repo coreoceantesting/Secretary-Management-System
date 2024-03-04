@@ -23,7 +23,7 @@ class ScheduleMeetingRequest extends FormRequest
     {
         if ($this->id) {
             $rule = [
-                'agendafile' => "nullable|mimes:png,jpg,jpeg,PNG,JPG,JPEG,pdf,PDF,doc,DOC,docx,DOCX,xlsx, xls|max:2010",
+                'agendafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
                 'meeting_id' => 'required',
                 'date' => 'required',
                 'time' => 'required',
@@ -31,7 +31,7 @@ class ScheduleMeetingRequest extends FormRequest
             ];
         } else {
             $rule = [
-                'agendafile' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG,pdf,PDF,doc,DOC,docx,DOCX,xlsx, xls|max:2010',
+                'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
                 'meeting_id' => 'required',
                 'date' => 'required',
                 'time' => 'required',
@@ -46,7 +46,7 @@ class ScheduleMeetingRequest extends FormRequest
     {
         return [
             'agendafile.required' => 'Please select file',
-            'agendafile.mimes' => 'Only jpg, png, pdf, doc and xls file supported only',
+            'agendafile.mimes' => 'Only pdf and doc file supported',
             'agendafile.max' => 'File must be less than 2mb',
             'meeting_id.required' => 'Please select meeting',
             'date.required' => 'Please select date',

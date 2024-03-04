@@ -25,6 +25,8 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         $attendances = $this->attendanceRepository->store($request);
+
+        return redirect()->route('attendance.index')->with('success', 'Attendance taken successfully');
     }
 
     public function show($id)
@@ -40,5 +42,19 @@ class AttendanceController extends Controller
             'members' => $members,
             'attendanceMarks' => $attendanceMarks
         ]);
+    }
+
+    public function saveSingleMark(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $attendance = $this->attendanceRepository->updateSingleMemberAttandance($request);
+
+            if ($attendance) {
+                return response()->json(['success' => 'Goshwara updated successfully!', 'id' => $request->id]);
+            } else {
+                return response()->json(['error' => 'Something went wrong please try again', 'id' => $request->id]);
+            }
+        }
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Meeting;
 use App\Models\Agenda;
+use App\Models\SuplimentryAgenda;
+use App\Models\AssignScheduleMeetingDepartment;
 
 class ScheduleMeeting extends Model
 {
@@ -21,5 +23,15 @@ class ScheduleMeeting extends Model
     public function agenda()
     {
         return $this->belongsTo(Agenda::class, 'agenda_id', 'id');
+    }
+
+    public function suplimentryAgenda()
+    {
+        return $this->hasMany(SuplimentryAgenda::class, 'schedule_meeting_id', 'id');
+    }
+
+    public function assignScheduleMeetingDepartment()
+    {
+        return $this->hasMany(AssignScheduleMeetingDepartment::class, 'schedule_meeting_id', 'id');
     }
 }

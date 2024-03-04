@@ -75,7 +75,7 @@ class AttendanceRepository
 
     public function show($id)
     {
-        return ScheduleMeeting::with(['agenda', 'meeting'])->where('date', date('Y-m-d'))->where('id', $id)->first();
+        return ScheduleMeeting::with(['agenda', 'meeting', 'suplimentryAgenda'])->where('date', date('Y-m-d'))->where('id', $id)->first();
     }
 
     public function getMeetingMembers($meetingId)
@@ -102,5 +102,30 @@ class AttendanceRepository
     public function getPresentAttendence($id)
     {
         return Attendance::where('schedule_meeting_id', $id)->get();
+    }
+
+
+    public function updateSingleMemberAttandance($request)
+    {
+        DB::beginTransaction();
+        try {
+            DB::commit();
+            Attendance::updateOrCreate([
+                'member_id' => $request->memberId,
+                'schedule_meeting_id' => $request->schedule_meeting_id,
+                'meeting_id' => $request->meeting_id
+            ], [
+                'schedule_meeting_id' => $request->schedule_meeting_id,
+                'meeting_id' => $request->meeting_id,
+                'member_id' => $request->memberId,
+                'in_time' => date('h:i:s', strtotime($request->inTime)),
+                'out_time' => date('h:i:s', strtotime($request->outTime)),
+            ]);
+            return true;
+        } catch (\Exception $e) {
+            Log::info($e);
+            DB::rollback();
+            return false;
+        }
     }
 }

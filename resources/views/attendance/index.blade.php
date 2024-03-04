@@ -29,6 +29,7 @@
                                     <th>Meeting Name</th>
                                     <th>Datetime</th>
                                     <th>Place</th>
+                                    <th>Agenda File</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,9 @@
                                         <td>{{ $attendance->agenda?->name }}</td>
                                         <td>{{ date('d-m-Y h:i A', strtotime($attendance->datetime)) }}</td>
                                         <td>{{ $attendance->place }}</td>
+                                        <td>
+                                            <a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->file) }}" class="btn btn-primary btn-sm">View File</a>
+                                        </td>
                                         <td>
                                             <a href="{{ route('attendance.show', $attendance->id) }}" class="btn btn-primary btn-sm">Mark</a>
                                         </td>

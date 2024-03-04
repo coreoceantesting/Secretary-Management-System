@@ -119,7 +119,7 @@
                                     <th>Place</th>
                                     <th>Name</th>
                                     <th>File</th>
-                                    <th>Action</th>
+                                    @canany(['suplimentry-agenda.edit', 'suplimentry-agenda.delete'])<th>Action</th>@endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -131,7 +131,7 @@
                                         <td>{{ $agenda->scheduleMeeting?->place }}</td>
                                         <td>{{ $agenda->name }}</td>
                                         <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
-
+                                        @canany(['suplimentry-agenda.edit', 'suplimentry-agenda.delete'])
                                         <td>
                                             @can('suplimentry-agenda.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Agenda" data-id="{{ $agenda->id }}"><i data-feather="edit"></i></button>
@@ -141,6 +141,7 @@
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete Agenda" data-id="{{ $agenda->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                         </table>

@@ -1,6 +1,7 @@
 <x-admin.layout>
     <x-slot name="title">Attendance</x-slot>
     <x-slot name="heading">Attendance</x-slot>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -10,8 +11,8 @@
                 <div class="card">
                     <form class="theme-form" method="post" action="{{ route('attendance.store') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="schedule_meeting_id" value="{{ $attendance->id }}">
-                        <input type="hidden" name="meeting_id" value="{{ $attendance->meeting_id }}">
+                        <input type="hidden" id="scheduleMeetingId" name="schedule_meeting_id" value="{{ $attendance->id }}">
+                        <input type="hidden" id="meetingId" name="meeting_id" value="{{ $attendance->meeting_id }}">
                         <div class="card-header">
                             <h4 class="card-title">Attendance</h4>
                         </div>
@@ -21,12 +22,25 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Agenda Name</th>
+                                                <th style="width: 25%">Agenda Name</th>
                                                 <td>{{ $attendance->meeting?->name }}</td>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <tr>
+                                                <th>Agenda File</th>
+                                                <td><a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                            </tr>
 
+
+                                            <tr>
+                                                <th>Suplimentry Agenda</th>
+                                                <td>
+                                                    @foreach($attendance->suplimentryAgenda as $suplimentryAgenda)
+                                                    <a target="_blank" href="{{ asset('storage/'. $suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">{{ $suplimentryAgenda->name }}</a>
+                                                    @endforeach
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <th>Meeting Name</th>
                                                 <td>{{ $attendance->meeting?->name }}</td>
@@ -51,7 +65,7 @@
 
                             <h4>Mark Attendance</h4>
                             <div class="mb-3 row">
-                                <div class="col-8">
+                                <div class="col-12">
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
@@ -60,10 +74,11 @@
                                                     <th>Member Name</th>
                                                     <th>In time</th>
                                                     <th>Out Time</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <thead>
-                                                @foreach($members as $member)
+                                                @foreach($members as $key => $member)
                                                     @php
                                                         $memberId = "";
                                                         $inTime = "";
@@ -80,12 +95,14 @@
                                                     @endforeach
                                                     <tr>
                                                         <td>
-                                                            <input type="hidden" name="member_id[]" value="{{ $member->member?->id }}">
-                                                            <input type="checkbox" class="form-check-input memberCheckbox" {{ $memberId }} /> {{ $inTime }}
+                                                            <input type="hidden" class="memberId" name="member_id[]" value="{{ $member->member?->id }}">
+                                                            <input type="hidden" class="dataId" value="{{ $key+1 }}">
+                                                            <input type="checkbox" class="form-check-input memberCheckbox" {{ $memberId }} />
                                                         </td>
                                                         <td>{{ $member->member?->name }}</td>
                                                         <td><input type="time" name="in_time[]" class="form-control inTime {{ ($inTime) ? $inTime : 'd-none' }}" value="{{ $inTime }}"></td>
                                                         <td><input type="time" name="out_time[]" class="form-control outTime {{ ($outTime) ? $outTime : 'd-none' }}" value="{{ $outTime }}"></td>
+                                                        <td><button type="button" class="btn btn-primary btn-sm  {{ ($inTime) ? $inTime : 'd-none' }} markButton" id="markButton{{ $key+1 }}">Mark</button></td>
                                                     </tr>
                                                 @endforeach
                                             </thead>
@@ -106,6 +123,11 @@
 
         @push('scripts')
         <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $(document).ready(function(){
                 $(".memberCheckbox").click(function() {
                     if($(this).is(":checked")) {
@@ -114,6 +136,54 @@
                         $(this).closest('tr').find('.inTime').addClass('d-none')
                     }
                 });
+
+                $('body').on('change', '.inTime', function(){
+                    $(this).closest('tr').find('.outTime').removeClass('d-none')
+                    $(this).closest('tr').find('.markButton').removeClass('d-none')
+                });
+
+                $('body').on('click', '.markButton', function(){
+                    $(this).prop('disabled', true);
+                    let dataId = $(this).closest('tr').find('.dataId').val();
+                    let memberId = $(this).closest('tr').find('.memberId').val();
+                    let inTime = $(this).closest('tr').find('.inTime').val();
+                    let outTime = $(this).closest('tr').find('.outTime').val();
+                    let scheduleMeetingId = $('#scheduleMeetingId').val();
+                    let meetingId = $('#meetingId').val();
+                    $.ajax({
+                        url: "{{ route('attendance.saveSingleMark') }}",
+                        type: 'POST',
+                        data: {
+                            id: dataId,
+                            schedule_meeting_id: scheduleMeetingId,
+                            meeting_id: meetingId,
+                            memberId: memberId,
+                            inTime: inTime,
+                            outTime: outTime
+                        },
+                        success: function(data)
+                        {
+                            if (!data.error2)
+                                swal("Successful!", data.success, "success")
+                                    .then((action) => {
+                                        $('#markButton'+data.id).prop('disabled', false);
+                                    });
+                            else
+                                swal("Error!", data.error2, "error");
+                        },
+                        statusCode: {
+                            422: function(responseObject, textStatus, jqXHR) {
+                                $("#editSubmit").prop('disabled', false);
+                                resetErrors();
+                                printErrMsg(responseObject.responseJSON.errors);
+                            },
+                            500: function(responseObject, textStatus, errorThrown) {
+                                $("#editSubmit").prop('disabled', false);
+                                swal("Error occured!", "Something went wrong please try again", "error");
+                            }
+                        }
+                    });
+                })
             })
         </script>
         @endpush

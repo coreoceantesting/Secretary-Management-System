@@ -6,6 +6,7 @@ use App\Models\Ward;
 use App\Models\Meeting;
 use App\Models\Agenda;
 use App\Models\Department;
+use App\Models\ScheduleMeeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,5 +47,21 @@ class CommonRepository
     public function getDepartments()
     {
         return Department::where('is_home_department', 0)->get();
+    }
+
+    public function checkMeetingExist($request)
+    {
+        $check = ScheduleMeeting::whereDate('date', date('Y-m-d', strtotime($request->date)))
+            ->whereDate('meeting_id', $request->meeting_id)->exists();
+
+        return $check;
+    }
+
+    public function checkEditMeetingExist($request, $id)
+    {
+        $check = ScheduleMeeting::whereDate('date', date('Y-m-d', strtotime($request->date)))
+            ->whereDate('meeting_id', $request->meeting_id)->where('id', '!=', $id)->exists();
+
+        return $check;
     }
 }

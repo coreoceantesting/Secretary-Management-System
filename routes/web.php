@@ -103,6 +103,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     Route::resource('suplimentry-agenda', SuplimentryAgendaController::class);
 
+    Route::post('attendance/update/singleMark', [AttendanceController::class, 'saveSingleMark'])->name('attendance.saveSingleMark');
     Route::resource('attendance', AttendanceController::class);
 });
 

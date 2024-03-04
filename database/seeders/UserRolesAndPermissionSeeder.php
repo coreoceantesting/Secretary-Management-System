@@ -28,7 +28,7 @@ class UserRolesAndPermissionSeeder extends Seeder
 
         $department = Role::where('name', 'Department')->first();
 
-        $department->syncPermissions(['dashboard.view', 'goshwara.view', 'goshwara.create', 'goshwara.edit', 'goshwara.delete', 'goshwara.send', 'question.response', 'question.view']);
+        $department->syncPermissions(['dashboard.view', 'goshwara.view', 'goshwara.create', 'goshwara.edit', 'goshwara.delete', 'goshwara.send', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'reschedule_meeting.view', 'question.response', 'question.view']);
 
 
 

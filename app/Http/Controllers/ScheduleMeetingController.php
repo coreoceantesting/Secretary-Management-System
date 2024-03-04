@@ -38,6 +38,12 @@ class ScheduleMeetingController extends Controller
 
     public function store(ScheduleMeetingRequest $request)
     {
+        $check = $this->commonRepository->checkMeetingExist($request);
+
+        if ($check) {
+            return response()->json(['error' => 'Meeting Already Exists on date ' . date('d-m-Y', strtotime($request->date))]);
+        }
+
         $scheduleMeeting = $this->scheduleMeetingRepository->store($request);
 
         if ($scheduleMeeting) {
@@ -76,6 +82,12 @@ class ScheduleMeetingController extends Controller
 
     public function update(ScheduleMeetingRequest $request, $id)
     {
+        $check = $this->commonRepository->checkEditMeetingExist($request, $id);
+
+        if ($check) {
+            return response()->json(['error' => 'Meeting Already Exists on date ' . date('d-m-Y', strtotime($request->date))]);
+        }
+
         $scheduleMeeting = $this->scheduleMeetingRepository->update($request, $id);
 
         if ($scheduleMeeting) {
@@ -94,5 +106,12 @@ class ScheduleMeetingController extends Controller
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
         }
+    }
+
+    public function show($id)
+    {
+        $scheduleMeeting = $this->scheduleMeetingRepository->show($id);
+
+        return view('schedule-meeting.show')->with(['scheduleMeeting' => $scheduleMeeting]);
     }
 }

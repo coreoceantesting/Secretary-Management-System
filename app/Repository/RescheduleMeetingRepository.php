@@ -13,8 +13,8 @@ class RescheduleMeetingRepository
     public function index()
     {
         return ScheduleMeeting::with(['meeting', 'agenda'])
-            ->where('is_meeting_reschedule', 0)
             ->whereNotNull('schedule_meeting_id')
+            ->latest()
             ->get();
     }
 
@@ -49,12 +49,8 @@ class RescheduleMeetingRepository
 
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
-            $file = $meeting->file;
-            if ($request->hasFile('agendafile')) {
-                $file = $request->agendafile->store('reschedulemeeting');
-            }
             $request['agenda_id'] = $meeting->agenda_id;
-            $request['file'] = $file;
+            $request['file'] = $meeting->file;
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;
@@ -99,20 +95,9 @@ class RescheduleMeetingRepository
                 'is_meeting_reschedule' => 0
             ]);
 
-            $file = $scheduleMeeting->file;
-            if ($request->hasFile('agendafile')) {
-                if ($scheduleMeeting->file != "") {
-                    if (Storage::exists($scheduleMeeting->file)) {
-                        Storage::delete($scheduleMeeting->file);
-                    }
-                }
-                $file = $request->agendafile->store('schedulemeeting');
-            }
-            $request['file'] = $file;
-
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
-            $request['file'] = $file;
+            $request['file'] = $scheduleMeeting->file;
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;

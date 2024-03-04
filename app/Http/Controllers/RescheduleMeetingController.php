@@ -69,7 +69,12 @@ class RescheduleMeetingController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        $check = $this->commonRepository->checkMeetingExist($request);
+
+        if ($check) {
+            return response()->json(['error' => 'Meeting Already Exists on date ' . date('d-m-Y', strtotime($request->date))]);
+        }
+
         $rescheduleMeeting = $this->rescheduleMeetingRepository->store($request);
 
         if ($rescheduleMeeting) {
@@ -139,6 +144,12 @@ class RescheduleMeetingController extends Controller
 
     public function update(Request $request, $id)
     {
+        $check = $this->commonRepository->checkEditMeetingExist($request, $id);
+
+        if ($check) {
+            return response()->json(['error' => 'Meeting Already Exists on date ' . date('d-m-Y', strtotime($request->date))]);
+        }
+
         $scheduleMeeting = $this->rescheduleMeetingRepository->update($request, $id);
 
         if ($scheduleMeeting) {
