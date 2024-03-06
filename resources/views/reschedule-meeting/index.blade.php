@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Schedule Meeting</x-slot>
-    <x-slot name="heading">Schedule Meeting</x-slot>
+    <x-slot name="title">Reschedule Meeting</x-slot>
+    <x-slot name="heading">Reschedule Meeting</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,7 +12,7 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Schedule Meeting</h4>
+                        <h4 class="card-title">Add Reschedule Meeting</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -27,6 +27,13 @@
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
+                            <div class="col-md-4 selectDepartment d-none">
+                                <label class="col-form-label" for="department_id1">Select Department <span class="text-danger">*</span></label>
+                                <select multiple class="js-example-basic-multiple col-sm-12" id="department_id1" name="department_id[]">
+
+                                </select>
+                                <span class="text-danger is-invalid department_id_err"></span>
+                            </div>
                             <div class="col-md-12 selectScheduleMeetingDetails d-none"></div>
                             <div class="col-md-12 mt-3"><h5>Select New Details</h5></div>
                             <div class="col-md-4">
@@ -65,7 +72,7 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Schedule Meeting</h4>
+                        <h4 class="card-title">Edit Reschedule Meeting</h4>
                     </div>
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
@@ -151,20 +158,15 @@
                                         <td>{{ date('h:i A', strtotime($rescheduleMeeting->time)) }}</td>
                                         <td>{{ $rescheduleMeeting->place }}</td>
                                         <td><a href="{{ asset('storage/'.$rescheduleMeeting->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
-                                        @canany(['reschedule_meeting.edit', 'reschedule_meeting.delete'])
+
                                         <td>
-                                            @if($rescheduleMeeting->is_meeting_reschedule == "0" && $rescheduleMeeting->date > date('Y-m-d', strtotime('+7 days')))
-                                            @can('reschedule_meeting.edit')
-                                            <button class="edit-element btn text-secondary px-2 py-1" title="Edit Schedule Meeting" data-id="{{ $rescheduleMeeting->id }}"><i data-feather="edit"></i></button>
-                                            @endcan
-                                            @can('reschedule_meeting.delete')
-                                            <button class="btn text-danger rem-element px-2 py-1" title="Delete Schedule Meeting" data-id="{{ $rescheduleMeeting->id }}"><i data-feather="trash-2"></i> </button>
-                                            @endcan
-                                            @else
-                                            -
+                                            <a href="{{ route('reschedule-meeting.show', $rescheduleMeeting->id) }}" class="btn text-secondary px-1 py-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </a>
+                                            @if(!$rescheduleMeeting->is_meeting_cancel)
+                                            <button class="btn btn-primary btn-sm text-cancel rem-cancel px-2 py-1" title="Cancel Schedule Meeting" data-id="{{ $rescheduleMeeting->id }}">Cancel Meeting </button>
                                             @endif
                                         </td>
-                                        @endcan
                                     </tr>
                                 @endforeach
                         </table>
@@ -193,13 +195,13 @@
             success: function(data)
             {
                 $("#addSubmit").prop('disabled', false);
-                if (!data.error2)
+                if (!data.error)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
                             window.location.href = '{{ route('reschedule-meeting.index') }}';
                         });
                 else
-                    swal("Error!", data.error2, "error");
+                    swal("Error!", data.error, "error");
 
             },
             statusCode: {
@@ -376,9 +378,9 @@
                 processData: false,
                 success: function(data) {
                     if(data.status == 200){
-                        let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date <span class="text-danger">*</span></label>
+                        let html = `<label class="col-form-label" for="schedule_meeting_id">Select Reschedule Meeting Date <span class="text-danger">*</span></label>
                                     <select class="form-select col-sm-12 selectChnageScheduleMeetingDetails" id="schedule_meeting_id" name="schedule_meeting_id">
-                                        <option value="">--Select Schedule Meeting--</option>
+                                        <option value="">--Select Reschedule Meeting--</option>
                                     `;
                         $.each(data.data, function(key, val){
                             html += `<option value="${val.id}">${val.datetime}</option>`;
@@ -398,9 +400,11 @@
             if(scheduleMeetingId != ""){
                 getScheduleMeetingDetails(scheduleMeetingId);
                 $('body').find('.selectScheduleMeetingDetails').removeClass('d-none');
+                $('body').find('.selectDepartment').removeClass('d-none')
             }else{
                 $('body').find('.selectScheduleMeetingDetails').html('');
                 $('body').find('.selectScheduleMeetingDetails').addClass('d-none');
+                $('body').find('.selectDepartment').addClass('d-none')
             }
         });
 
@@ -412,7 +416,6 @@
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    console.log(data)
                     if(data.status == 200){
                         let html = `<table class="table table-bordered mt-3">
                                     <thead>
@@ -438,9 +441,57 @@
                                     </tbody>
                                 </table>`;
                         $('body').find('.selectScheduleMeetingDetails').html(html);
+                        $('body').find('.selectDepartment').find('.js-example-basic-multiple').html(data.departments);
                     }
                 }
             });
         }
+    });
+</script>
+
+<!-- Cancel -->
+<script>
+    $("#buttons-datatables").on("click", ".rem-cancel", function(e) {
+        e.preventDefault();
+        swal({
+            title: "Are you sure to cancel this Schedule Meeting?",
+            // text: "Make sure if you have filled Vendor details before proceeding further",
+            icon: "info",
+            buttons: ["Cancel", "Confirm"]
+        })
+        .then((justTransfer) =>
+        {
+            if (justTransfer)
+            {
+                var model_id = $(this).attr("data-id");
+                var url = "{{ route('schedule-meeting.cancel', ":model_id") }}";
+
+                $.ajax({
+                    url: url.replace(':model_id', model_id),
+                    type: 'POST',
+                    data: {
+                        '_method': "POST",
+                        '_token': "{{ csrf_token() }}"
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (!data.error && !data.error2) {
+                            swal("Success!", data.success, "success")
+                                .then((action) => {
+                                    window.location.reload();
+                                });
+                        } else {
+                            if (data.error) {
+                                swal("Error!", data.error, "error");
+                            } else {
+                                swal("Error!", data.error2, "error");
+                            }
+                        }
+                    },
+                    error: function(error, jqXHR, textStatus, errorThrown) {
+                        swal("Error!", "Something went wrong", "error");
+                    },
+                });
+            }
+        });
     });
 </script>

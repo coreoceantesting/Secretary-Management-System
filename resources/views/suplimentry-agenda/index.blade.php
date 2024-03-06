@@ -76,7 +76,7 @@
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Select File <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="agendafile">Select File</label>
                                 <input class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>

@@ -105,7 +105,7 @@
 
                 @canany(['goshwara.view', 'goshwara.create', 'goshwara.send'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarGoshwara" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGoshwara">
+                    <a class="nav-link menu-link {{ request()->routeIs('goshwara.*') ? 'active' : '' }}" href="#sidebarGoshwara" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGoshwara">
                         <i class="bx bx-user-circle"></i>
                         <span data-key="t-layouts">Goshwara</span>
                     </a>
@@ -113,19 +113,19 @@
                         <ul class="nav nav-sm flex-column">
                             @can('goshwara.view')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.index') }}" class="nav-link" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Goshwara&nbsp;List @else Received&nbsp;Goshwara @endif</a>
+                                <a href="{{ route('goshwara.index') }}" class="nav-link {{ request()->routeIs('goshwara.index') ? 'active' : '' }}" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Goshwara&nbsp;List @else Received&nbsp;Goshwara @endif</a>
                             </li>
                             @endcan
 
                             @can('goshwara.create')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.create') }}" class="nav-link" data-key="t-horizontal">Upload&nbsp;Goshwara</a>
+                                <a href="{{ route('goshwara.create') }}" class="nav-link {{ request()->routeIs('goshwara.create') ? 'active' : '' }}" data-key="t-horizontal">Upload&nbsp;Goshwara</a>
                             </li>
                             @endcan
 
                             @can('goshwara.send')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.send') }}" class="nav-link" data-key="t-horizontal">Send&nbsp;Goshwara</a>
+                                <a href="{{ route('goshwara.send') }}" class="nav-link {{ request()->routeIs('goshwara.send') ? 'active' : '' }}" data-key="t-horizontal">Send&nbsp;Goshwara</a>
                             </li>
                             @endcan
                         </ul>

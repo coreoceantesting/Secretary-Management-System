@@ -18,50 +18,50 @@
                                     <thead>
                                         <tr>
                                             <th class="w-25">Agenda Name</th>
-                                            <td>{{ $scheduleMeeting->agenda?->name }}</td>
+                                            <td>{{ $rescheduleMeeting->agenda?->name }}</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <th>Agenda File</th>
-                                            <td><a href="{{ asset('storage/'.$scheduleMeeting->agenda?->file) }}" class="btn btn-primary btn-sm">View</a></td>
+                                            <td><a href="{{ asset('storage/'.$rescheduleMeeting->agenda?->file) }}" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
                                         <tr>
                                             <th>Meeting Name</th>
-                                            <td>{{ $scheduleMeeting->meeting?->name }}</td>
+                                            <td>{{ $rescheduleMeeting->meeting?->name }}</td>
                                         </tr>
                                         <tr>
                                             <th>Department</th>
                                             <td>
-                                                @foreach($scheduleMeeting->assignScheduleMeetingDepartment as $department)
+                                                @foreach($rescheduleMeeting->assignScheduleMeetingDepartment as $department)
                                                 {{ $department?->department->name }},&nbsp;
                                                 @endforeach
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Date</th>
-                                            <td>{{ date('d-m-Y', strtotime($scheduleMeeting->date)) }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($rescheduleMeeting->date)) }}</td>
                                         </tr>
                                         <tr>
                                             <th>Time</th>
-                                            <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($rescheduleMeeting->time)) }}</td>
                                         </tr>
                                         <tr>
                                             <th>Place</th>
-                                            <td>{{ $scheduleMeeting->place }}</td>
+                                            <td>{{ $rescheduleMeeting->place }}</td>
                                         </tr>
                                         <tr>
                                             <th>File</th>
-                                            <td><a href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                            <td><a href="{{ asset('storage/'.$rescheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                         </tr>
-                                        @if($scheduleMeeting->is_meeting_cancel)
+                                        @if($rescheduleMeeting->is_meeting_cancel)
                                         <tr>
                                             <th>Cancel Meeting</th>
                                             <td>Yes</td>
                                         </tr>
                                         <tr>
                                             <th>Cancel Date</th>
-                                            <td>{{ date('d-m-Y', strtotime($scheduleMeeting->cancel_meeting_date)) }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($rescheduleMeeting->cancel_meeting_date)) }}</td>
                                         </tr>
                                         @endif
                                     </tbody>

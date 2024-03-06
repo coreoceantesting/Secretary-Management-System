@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Models\ScheduleMeeting;
 use App\Models\AssignMemberToMeeting;
+use App\Models\AssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -41,6 +42,11 @@ class RescheduleMeetingRepository
         return ScheduleMeeting::with(['meeting', 'agenda'])->where('id', $scheduleMeetingId)->first();
     }
 
+    public function assignScheduleMeetingDepartments($id)
+    {
+        return AssignScheduleMeetingDepartment::where('schedule_meeting_id', $id)->pluck('department_id');
+    }
+
     public function store($request)
     {
         DB::beginTransaction();
@@ -54,12 +60,23 @@ class RescheduleMeetingRepository
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;
-            ScheduleMeeting::create($request->all());
+            $reScheduleMeeting = ScheduleMeeting::create($request->all());
 
 
             ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
                 'is_meeting_reschedule' => 1
             ]);
+
+            // logic to assign schedule meeting to department
+            if (isset($request->department_id)) {
+                for ($i = 0; $i < count($request->department_id); $i++) {
+                    $assignScheduleMeetingDepartment = new AssignScheduleMeetingDepartment;
+                    $assignScheduleMeetingDepartment->schedule_meeting_id = $reScheduleMeeting->id;
+                    $assignScheduleMeetingDepartment->department_id = $request->department_id[$i];
+                    $assignScheduleMeetingDepartment->save();
+                }
+            }
+            // end of logic to assign schedule meeting to department
 
             // logic to send sms and email
             $members = AssignMemberToMeeting::with(['member'])->where('meeting_id', $request->meeting_id)->get();
@@ -144,5 +161,11 @@ class RescheduleMeetingRepository
             Log::info($e);
             return false;
         }
+    }
+
+    // function to show
+    public function show($id)
+    {
+        return ScheduleMeeting::with(['meeting', 'agenda', 'assignScheduleMeetingDepartment.department'])->where('id', $id)->first();
     }
 }

@@ -176,6 +176,32 @@ class ScheduleMeetingRepository
     // function to show
     public function show($id)
     {
-        return ScheduleMeeting::with(['meeting', 'agenda'])->where('id', $id)->first();
+        return ScheduleMeeting::with(['meeting', 'agenda', 'assignScheduleMeetingDepartment.department'])->where('id', $id)->first();
+    }
+
+    public function cancel($id)
+    {
+        try {
+            DB::beginTransaction();
+            $scheduleMeeting = ScheduleMeeting::find($id);
+            $scheduleMeeting->is_meeting_cancel = 1;
+            $scheduleMeeting->cancel_meeting_date = date('Y-m-d');
+            $scheduleMeeting->save();
+
+            // logic to send sms and email
+            $members = AssignMemberToMeeting::with(['member'])->where('meeting_id', $scheduleMeeting->meeting_id)->get();
+
+            foreach ($members as $member) {
+                Log::info('Meeting Cancel on date &  time ' . date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) . ' ' . $member->member->contact_number);
+                Log::info('Meeting Cancel on date &  time ' . date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) . ' ' . $member->member->email);
+            }
+            // end of send sms and email login
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            Log::info($e);
+            return false;
+        }
     }
 }

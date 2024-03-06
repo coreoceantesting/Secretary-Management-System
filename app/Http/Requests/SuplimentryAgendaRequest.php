@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Master;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WardRequest extends FormRequest
+class SuplimentryAgendaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,26 +21,21 @@ class WardRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->edit_model_id) {
-            $rule = [
-                'name' => "required|regex:/^[a-zA-Z0-9 ]+$/u|unique:wards,name,$this->id",
-                'initial' => 'required'
-            ];
-        } else {
-            $rule = [
-                'name' => 'required|unique:wards,name|regex:/^[a-zA-Z0-9 ]+$/u',
-                'initial' => 'required'
-            ];
-        }
-
-        return $rule;
+        return [
+            'schedule_meeting_id' => 'required',
+            'name' => 'required',
+            'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+        ];
     }
 
     public function messages()
     {
         return [
+            'agendafile.required' => 'Please select file',
+            'agendafile.mimes' => 'Only pdf and doc file supported',
+            'agendafile.max' => 'File must be less than 2mb',
             'name.required' => 'Please enter name',
-            'initial.required' => 'Please enter initial',
+            'schedule_meeting_id' => 'Please Select Schedule Meeting'
         ];
     }
 }

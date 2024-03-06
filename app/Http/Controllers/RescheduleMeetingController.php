@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\RescheduleMeetingRepository;
 use App\Repository\CommonRepository;
+use App\Http\Requests\RescheduleMeetingRequest;
 
 class RescheduleMeetingController extends Controller
 {
@@ -60,14 +61,28 @@ class RescheduleMeetingController extends Controller
                 'place' => $rescheduleMeeting->place,
             ];
 
+            // to get department
+            $departmentHtml = "";
+            $assignScheduleMeetingDepartments = $this->rescheduleMeetingRepository->assignScheduleMeetingDepartments($id)->toArray();
+            $departments = $this->commonRepository->getDepartments();
+            foreach ($departments as $department) {
+                $isSelected = "";
+                if (in_array($department->id, $assignScheduleMeetingDepartments)) {
+                    $isSelected = "selected";
+                }
+
+                $departmentHtml .= '<option value="' . $department->id . '" ' . $isSelected . '>' . $department->name . '</option>';
+            }
+
             return response()->json([
                 'status' => 200,
-                'data' => $result
+                'data' => $result,
+                'departments' => $departmentHtml
             ]);
         }
     }
 
-    public function store(Request $request)
+    public function store(RescheduleMeetingRequest $request)
     {
         $check = $this->commonRepository->checkMeetingExist($request);
 
@@ -142,7 +157,7 @@ class RescheduleMeetingController extends Controller
         return $response;
     }
 
-    public function update(Request $request, $id)
+    public function update(RescheduleMeetingRequest $request, $id)
     {
         $check = $this->commonRepository->checkEditMeetingExist($request, $id);
 
@@ -157,6 +172,13 @@ class RescheduleMeetingController extends Controller
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
         }
+    }
+
+    public function show($id)
+    {
+        $rescheduleMeeting = $this->rescheduleMeetingRepository->show($id);
+
+        return view('reschedule-meeting.show')->with(['rescheduleMeeting' => $rescheduleMeeting]);
     }
 
     public function destroy($id)

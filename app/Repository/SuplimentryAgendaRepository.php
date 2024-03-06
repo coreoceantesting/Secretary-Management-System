@@ -90,6 +90,6 @@ class SuplimentryAgendaRepository
 
     public function getScheduleMeeting()
     {
-        return ScheduleMeeting::where('is_meeting_completed', 0)->get();
+        return ScheduleMeeting::where(['is_meeting_completed' => 0, 'is_meeting_reschedule' => 0])->get();
     }
 }

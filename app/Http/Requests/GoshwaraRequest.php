@@ -21,7 +21,7 @@ class GoshwaraRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->id) {
+        if ($this->edit_model_id) {
             $rule = [
                 'goshwarafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
                 'remark' => 'required'

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\QuestionRepository;
 use App\Repository\CommonRepository;
+use App\Http\Requests\QuestionRequest;
 
 class QuestionController extends Controller
 {
@@ -32,7 +33,7 @@ class QuestionController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
         $question = $this->questionRepository->store($request);
 
@@ -72,7 +73,7 @@ class QuestionController extends Controller
         return $response;
     }
 
-    public function update(Request $request, $id)
+    public function update(QuestionRequest $request, $id)
     {
         $question = $this->questionRepository->update($request, $id);
 

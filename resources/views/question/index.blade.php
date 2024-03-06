@@ -89,7 +89,7 @@
                                 <span class="text-danger is-invalid question_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload File <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="uploadfile">Upload File</label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>

@@ -21,13 +21,14 @@ class ScheduleMeetingRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->id) {
+        if ($this->edit_model_id) {
             $rule = [
                 'agendafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
                 'meeting_id' => 'required',
                 'date' => 'required',
                 'time' => 'required',
                 'place' => 'required',
+                'department_id.*' => 'required'
             ];
         } else {
             $rule = [
@@ -36,6 +37,7 @@ class ScheduleMeetingRequest extends FormRequest
                 'date' => 'required',
                 'time' => 'required',
                 'place' => 'required',
+                'department_id.*' => 'required'
             ];
         }
 

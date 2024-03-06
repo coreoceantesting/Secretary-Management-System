@@ -200,14 +200,17 @@
                                             <a href="{{ route('schedule-meeting.show', $scheduleMeeting->id) }}" class="btn text-secondary px-1 py-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                             </a>
-                                            @if($scheduleMeeting->date > date('Y-m-d', strtotime('+7 days')))
+                                            @if(!$scheduleMeeting->is_meeting_cancel)
+                                            <button class="btn btn-primary btn-sm text-cancel rem-cancel px-2 py-1" title="Cancel Schedule Meeting" data-id="{{ $scheduleMeeting->id }}">Cancel Meeting </button>
+                                            @endif
+                                            {{-- @if($scheduleMeeting->date > date('Y-m-d', strtotime('+7 days')))
                                             @can('schedule_meeting.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Schedule Meeting" data-id="{{ $scheduleMeeting->id }}"><i data-feather="edit"></i></button>
                                             @endcan
                                             @can('schedule_meeting.delete')
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete Schedule Meeting" data-id="{{ $scheduleMeeting->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan
-                                            @endif
+                                            @endif --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -241,13 +244,13 @@
             success: function(data)
             {
                 $("#addSubmit").prop('disabled', false);
-                if (!data.error2)
+                if (!data.error)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
                             window.location.href = '{{ route('schedule-meeting.index') }}';
                         });
                 else
-                    swal("Error!", data.error2, "error");
+                    swal("Error!", data.error, "error");
 
             },
             statusCode: {
@@ -326,13 +329,13 @@
                 success: function(data)
                 {
                     $("#editSubmit").prop('disabled', false);
-                    if (!data.error2)
+                    if (!data.error)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
                                 window.location.href = '{{ route('schedule-meeting.index') }}';
                             });
                     else
-                        swal("Error!", data.error2, "error");
+                        swal("Error!", data.error, "error");
                 },
                 statusCode: {
                     422: function(responseObject, textStatus, jqXHR) {
@@ -374,6 +377,54 @@
                     type: 'POST',
                     data: {
                         '_method': "DELETE",
+                        '_token': "{{ csrf_token() }}"
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (!data.error && !data.error2) {
+                            swal("Success!", data.success, "success")
+                                .then((action) => {
+                                    window.location.reload();
+                                });
+                        } else {
+                            if (data.error) {
+                                swal("Error!", data.error, "error");
+                            } else {
+                                swal("Error!", data.error2, "error");
+                            }
+                        }
+                    },
+                    error: function(error, jqXHR, textStatus, errorThrown) {
+                        swal("Error!", "Something went wrong", "error");
+                    },
+                });
+            }
+        });
+    });
+</script>
+
+
+<!-- Cancel -->
+<script>
+    $("#buttons-datatables").on("click", ".rem-cancel", function(e) {
+        e.preventDefault();
+        swal({
+            title: "Are you sure to cancel this Schedule Meeting?",
+            // text: "Make sure if you have filled Vendor details before proceeding further",
+            icon: "info",
+            buttons: ["Cancel", "Confirm"]
+        })
+        .then((justTransfer) =>
+        {
+            if (justTransfer)
+            {
+                var model_id = $(this).attr("data-id");
+                var url = "{{ route('schedule-meeting.cancel', ":model_id") }}";
+
+                $.ajax({
+                    url: url.replace(':model_id', model_id),
+                    type: 'POST',
+                    data: {
+                        '_method': "POST",
                         '_token': "{{ csrf_token() }}"
                     },
                     success: function(data, textStatus, jqXHR) {

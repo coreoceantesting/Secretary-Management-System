@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schedule_meetings', function (Blueprint $table) {
+        Schema::create('proceeding_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agenda_id')->nullable()->constrained('agendas');
             $table->foreignId('meeting_id')->nullable()->constrained('meetings');
-            $table->integer('schedule_meeting_id')->nullable();
+            $table->foreignId('schedule_meeting_id')->nullable()->constrained('schedule_meetings');
             $table->date('date')->nullable();
             $table->time('time')->nullable();
-            $table->string('place')->nullable();
-            $table->string('file')->nullable();
             $table->datetime('datetime')->nullable();
-            $table->boolean('is_meeting_reschedule')->default(0);
-            $table->boolean('is_meeting_completed')->default(0);
-            $table->boolean('is_record_proceeding')->default(0);
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schedule_meetings');
+        Schema::dropIfExists('proceeding_records');
     }
 };

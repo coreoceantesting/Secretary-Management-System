@@ -23,6 +23,7 @@ class AttendanceRepository
 
             if (isset($request->member_id)) {
                 Attendance::where('schedule_meeting_id', $request->schedule_meeting_id)->delete();
+                ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
                 for ($i = 0; $i < count($request->member_id); $i++) {
                     $inTime = null;
                     if ($request->in_time[$i] != "") {
@@ -110,6 +111,8 @@ class AttendanceRepository
         DB::beginTransaction();
         try {
             DB::commit();
+            ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
+
             Attendance::updateOrCreate([
                 'member_id' => $request->memberId,
                 'schedule_meeting_id' => $request->schedule_meeting_id,

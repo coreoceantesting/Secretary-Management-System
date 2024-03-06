@@ -21,7 +21,7 @@ class DepartmentRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->id) {
+        if ($this->edit_model_id) {
             $rule = [
                 'name' => "required|regex:/^[a-zA-Z0-9 ]+$/u|unique:departments,name,$this->id",
                 'initial' => 'required'

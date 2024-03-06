@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\SuplimentryAgendaRepository;
+use App\Http\Requests\SuplimentryAgendaRequest;
 
 class SuplimentryAgendaController extends Controller
 {
@@ -26,7 +27,7 @@ class SuplimentryAgendaController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(SuplimentryAgendaRequest $request)
     {
         $suplimentryAgenda = $this->suplimentryAgendaRepository->store($request);
 
@@ -52,7 +53,7 @@ class SuplimentryAgendaController extends Controller
         return $response;
     }
 
-    public function update(Request $request, $id)
+    public function update(SuplimentryAgendaRequest $request, $id)
     {
         $suplimentryAgenda = $this->suplimentryAgendaRepository->update($request, $id);
 
