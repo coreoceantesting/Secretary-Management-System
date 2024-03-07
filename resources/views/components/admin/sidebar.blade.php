@@ -196,6 +196,13 @@
                 </li>
                 @endcan
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('proceeding-record.*') ? 'active' : '' }}" href="{{ route('proceeding-record.index') }}">
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">Proceeding Records</span>
+                    </a>
+                </li>
+
 
             </ul>
         </div>

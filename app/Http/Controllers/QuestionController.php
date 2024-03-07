@@ -23,7 +23,7 @@ class QuestionController extends Controller
         $meetings = $this->commonRepository->getSeventDayMeeting();
 
         $questions = $this->questionRepository->index();
-        // return $questions;
+
         $departments = $this->commonRepository->getDepartments();
 
         return view('question.index')->with([

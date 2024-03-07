@@ -19,6 +19,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RescheduleMeetingController;
 use App\Http\Controllers\SuplimentryAgendaController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\ProceedingRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,6 +107,9 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     Route::post('attendance/update/singleMark', [AttendanceController::class, 'saveSingleMark'])->name('attendance.saveSingleMark');
     Route::resource('attendance', AttendanceController::class);
+
+    Route::get('proceeding-record/getScheduleMeeting/{id}', [ProceedingRecordController::class, 'getScheduleMeeting'])->name('proceeding-record.getScheduleMeeting');
+    Route::resource('proceeding-record', ProceedingRecordController::class);
 });
 
 

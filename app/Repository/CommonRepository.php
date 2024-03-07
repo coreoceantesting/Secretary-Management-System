@@ -22,6 +22,15 @@ class CommonRepository
         return Meeting::get();
     }
 
+    public function getCompletedMeeting()
+    {
+        $meeting = Meeting::whereHas('scheduleMeeting', function ($q) {
+            return $q->where('is_meeting_completed', 1);
+        })->get();
+
+        return $meeting;
+    }
+
     public function getSeventDayMeeting()
     {
         $meeting = Meeting::whereHas('scheduleMeeting', function ($q) {
