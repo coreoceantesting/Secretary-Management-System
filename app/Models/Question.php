@@ -22,4 +22,9 @@ class Question extends Model
     {
         return $this->belongsTo(ScheduleMeeting::class, 'schedule_meeting_id', 'id');
     }
+
+    public function parentScheduleMeeting()
+    {
+        return $this->belongsTo(ScheduleMeeting::class, 'schedule_meeting_id', 'id')->latestOfMany();
+    }
 }

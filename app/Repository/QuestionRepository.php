@@ -13,7 +13,7 @@ class QuestionRepository
 {
     public function index()
     {
-        return Question::with(['meeting', 'scheduleMeeting'])->latest()->get();
+        return Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting'])->latest()->get();
     }
 
     public function store($request)
@@ -92,12 +92,18 @@ class QuestionRepository
 
     public function getScheduleMeeting($id)
     {
-        return ScheduleMeeting::where('meeting_id', $id)->get();
+        return ScheduleMeeting::where('meeting_id', $id)->where([
+            'is_meeting_reschedule' => 0,
+            'is_meeting_completed' => 0,
+            'is_meeting_cancel' => 0,
+        ])->get();
     }
 
     public function show($id)
     {
-        return Question::with(['meeting', 'scheduleMeeting'])->where('id', $id)->first();
+        return Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting'])
+            ->where('id', $id)
+            ->first();
     }
 
     public function response($request)

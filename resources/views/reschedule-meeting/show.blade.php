@@ -60,6 +60,10 @@
                                             <td>Yes</td>
                                         </tr>
                                         <tr>
+                                            <th>Cancel Remark</th>
+                                            <td>{{ ($rescheduleMeeting->cancel_remark) ? $rescheduleMeeting->cancel_remark : '-' }}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Cancel Date</th>
                                             <td>{{ date('d-m-Y', strtotime($rescheduleMeeting->cancel_meeting_date)) }}</td>
                                         </tr>

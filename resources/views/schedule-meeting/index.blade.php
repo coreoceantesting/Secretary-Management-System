@@ -201,7 +201,8 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                             </a>
                                             @if(!$scheduleMeeting->is_meeting_cancel)
-                                            <button class="btn btn-primary btn-sm text-cancel rem-cancel px-2 py-1" title="Cancel Schedule Meeting" data-id="{{ $scheduleMeeting->id }}">Cancel Meeting </button>
+                                            <button class="btn btn-primary btn-sm text-cancel px-2 py-1" title="Cancel Schedule Meeting"  data-bs-toggle="modal" data-bs-target="#signupModals" data-id="{{ $scheduleMeeting->id }}">Cancel Meeting </button>
+
                                             @endif
                                             {{-- @if($scheduleMeeting->date > date('Y-m-d', strtotime('+7 days')))
                                             @can('schedule_meeting.edit')
@@ -221,9 +222,37 @@
         </div>
     </div>
 
+
+    {{-- cancel meeting popup --}}
+    <!-- The Modal -->
+    <div id="signupModals" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 overflow-hidden">
+                <div class="modal-header p-3 border-bottom">
+                    <h4 class="card-title mb-0">Cancel Meeting</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" name="id" id="cancelId">
+                        <div class="mb-3">
+                            <label for="cancel_remark" class="form-label">Remark</label>
+                            <textarea name="cancel_remark" class="form-control" placeholder="Enter remark"  required id="cancel_remark"></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn rem-cancel btn-primary saveRemCancel">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    {{-- end of cancel meeting popup --}}
+
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @endpush
+
 
 </x-admin.layout>
 
@@ -405,47 +434,42 @@
 
 <!-- Cancel -->
 <script>
-    $("#buttons-datatables").on("click", ".rem-cancel", function(e) {
+    $('body').on('click', '.text-cancel', function(){
+        var model_id = $(this).attr("data-id");
+        $('#cancelId').val(model_id)
+    })
+    $("body").on("click", ".rem-cancel", function(e) {
         e.preventDefault();
-        swal({
-            title: "Are you sure to cancel this Schedule Meeting?",
-            // text: "Make sure if you have filled Vendor details before proceeding further",
-            icon: "info",
-            buttons: ["Cancel", "Confirm"]
-        })
-        .then((justTransfer) =>
-        {
-            if (justTransfer)
-            {
-                var model_id = $(this).attr("data-id");
-                var url = "{{ route('schedule-meeting.cancel', ":model_id") }}";
+        var model_id = $('#cancelId').val();
+        var remark = $('#cancel_remark').val();
 
-                $.ajax({
-                    url: url.replace(':model_id', model_id),
-                    type: 'POST',
-                    data: {
-                        '_method': "POST",
-                        '_token': "{{ csrf_token() }}"
-                    },
-                    success: function(data, textStatus, jqXHR) {
-                        if (!data.error && !data.error2) {
-                            swal("Success!", data.success, "success")
-                                .then((action) => {
-                                    window.location.reload();
-                                });
-                        } else {
-                            if (data.error) {
-                                swal("Error!", data.error, "error");
-                            } else {
-                                swal("Error!", data.error2, "error");
-                            }
-                        }
-                    },
-                    error: function(error, jqXHR, textStatus, errorThrown) {
-                        swal("Error!", "Something went wrong", "error");
-                    },
-                });
-            }
+        var url = "{{ route('schedule-meeting.cancel', ":model_id") }}";
+
+        $.ajax({
+            url: url.replace(':model_id', model_id),
+            type: 'POST',
+            data: {
+                '_method': "POST",
+                '_token': "{{ csrf_token() }}",
+                'remark': remark,
+            },
+            success: function(data, textStatus, jqXHR) {
+                if (!data.error && !data.error2) {
+                    swal("Success!", data.success, "success")
+                        .then((action) => {
+                            window.location.reload();
+                        });
+                } else {
+                    if (data.error) {
+                        swal("Error!", data.error, "error");
+                    } else {
+                        swal("Error!", data.error2, "error");
+                    }
+                }
+            },
+            error: function(error, jqXHR, textStatus, errorThrown) {
+                swal("Error!", "Something went wrong", "error");
+            },
         });
     });
 </script>

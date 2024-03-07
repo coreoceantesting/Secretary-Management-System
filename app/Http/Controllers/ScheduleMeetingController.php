@@ -115,9 +115,9 @@ class ScheduleMeetingController extends Controller
         return view('schedule-meeting.show')->with(['scheduleMeeting' => $scheduleMeeting]);
     }
 
-    public function cancel($id)
+    public function cancel(Request $request, $id)
     {
-        $scheduleMeeting = $this->scheduleMeetingRepository->cancel($id);
+        $scheduleMeeting = $this->scheduleMeetingRepository->cancel($request, $id);
 
         if ($scheduleMeeting) {
             return response()->json(['success' => 'Schedule meeting cancel successfully!']);

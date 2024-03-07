@@ -13,7 +13,7 @@ class ScheduleMeeting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['schedule_meeting_id', 'agenda_id', 'meeting_id', 'place', 'date', 'time', 'file', 'datetime', 'is_meeting_reschedule', 'is_meeting_completed'];
+    protected $fillable = ['schedule_meeting_id', 'agenda_id', 'meeting_id', 'place', 'date', 'time', 'file', 'datetime', 'is_meeting_reschedule', 'is_meeting_completed', 'parent_id'];
 
     public function meeting()
     {
@@ -33,5 +33,10 @@ class ScheduleMeeting extends Model
     public function assignScheduleMeetingDepartment()
     {
         return $this->hasMany(AssignScheduleMeetingDepartment::class, 'schedule_meeting_id', 'id');
+    }
+
+    public function parentLatestScheduleMeeting()
+    {
+        return $this->hasOne(ScheduleMeeting::class, 'parent_id', 'id')->latest();
     }
 }

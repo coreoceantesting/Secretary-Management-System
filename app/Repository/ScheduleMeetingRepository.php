@@ -15,7 +15,7 @@ class ScheduleMeetingRepository
 {
     public function index()
     {
-        $scheduleMeeting = ScheduleMeeting::with(['meeting', 'agenda'])->whereNull('schedule_meeting_id');
+        $scheduleMeeting = ScheduleMeeting::with(['meeting', 'agenda'])->whereNull('schedule_meeting_id')->where('is_meeting_reschedule', 0);
 
         if (Auth::user()->hasRole('Department')) {
             $scheduleMeeting = $scheduleMeeting->whereHas('assignScheduleMeetingDepartment', function ($q) {
@@ -42,6 +42,9 @@ class ScheduleMeetingRepository
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;
             $scheduleMeeting = ScheduleMeeting::create($request->all());
+
+            // update parent_id
+            ScheduleMeeting::where('id', $scheduleMeeting->id)->update(['parent_id' => $scheduleMeeting->id]);
 
             // logic to assign schedule meeting to department
             if (isset($request->department_id)) {
@@ -179,12 +182,13 @@ class ScheduleMeetingRepository
         return ScheduleMeeting::with(['meeting', 'agenda', 'assignScheduleMeetingDepartment.department'])->where('id', $id)->first();
     }
 
-    public function cancel($id)
+    public function cancel($request, $id)
     {
         try {
             DB::beginTransaction();
             $scheduleMeeting = ScheduleMeeting::find($id);
             $scheduleMeeting->is_meeting_cancel = 1;
+            $scheduleMeeting->cancel_remark = $request->remark;
             $scheduleMeeting->cancel_meeting_date = date('Y-m-d');
             $scheduleMeeting->save();
 

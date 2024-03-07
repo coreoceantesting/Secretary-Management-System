@@ -20,14 +20,14 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Meeting</th>
+                                                <th class="w-25">Meeting</th>
                                                 <td>{{ $question->meeting?->name }}</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th>Date</th>
-                                                <td>{{ date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</td>
+                                                <td>{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Place</th>
@@ -46,13 +46,12 @@
                                                 <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                             </tr>
 
-                                            @if(!Auth::user()->can('question.response'))
                                             <tr>
-                                                <th>Question</th>
+                                                <th>Response Question</th>
                                                 <td>{{ ($question->description) ? $question->description : '-' }}</td>
                                             </tr>
                                             <tr>
-                                                <th>File</th>
+                                                <th>Response File</th>
                                                 <td>
                                                     @if($question->response_file)
                                                     <a href="{{ asset('storage/'.$question->response_file) }}" class="btn btn-primary btn-sm">View File</a>
@@ -61,11 +60,11 @@
                                                     @endif
                                                 </td>
                                             </tr>
-                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
                                 @can('question.response')
+                                @if($question->scheduleMeeting?->parentLatestScheduleMeeting?->is_meeting_completed == "0" && $question->scheduleMeeting?->parentLatestScheduleMeeting?->is_meeting_cancel == "0")
                                 <div class="col-md-6">
                                     <label class="col-form-label" for="description">Response Answer <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="description" name="description" placeholder="Enter response answer">{{ $question->description }}</textarea>
@@ -80,6 +79,7 @@
                                     <input class="form-control" id="responsefile" name="responsefile" type="file">
                                     <span class="text-danger is-invalid responsefile_err"></span>
                                 </div>
+                                @endif
                                 @endcan
                             </div>
 

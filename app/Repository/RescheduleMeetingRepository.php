@@ -15,6 +15,7 @@ class RescheduleMeetingRepository
     {
         return ScheduleMeeting::with(['meeting', 'agenda'])
             ->whereNotNull('schedule_meeting_id')
+            ->where('is_meeting_reschedule', 0)
             ->latest()
             ->get();
     }
@@ -53,6 +54,7 @@ class RescheduleMeetingRepository
         try {
             $meeting = ScheduleMeeting::find($request->schedule_meeting_id);
 
+            $request['parent_id'] = $meeting->parent_id;
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
             $request['agenda_id'] = $meeting->agenda_id;
