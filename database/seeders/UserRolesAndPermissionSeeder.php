@@ -28,12 +28,12 @@ class UserRolesAndPermissionSeeder extends Seeder
 
         $department = Role::where('name', 'Department')->first();
 
-        $department->syncPermissions(['dashboard.view', 'goshwara.view', 'goshwara.create', 'goshwara.edit', 'goshwara.delete', 'goshwara.send', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'reschedule_meeting.view', 'question.response', 'question.view']);
+        $department->syncPermissions(['dashboard.view', 'goshwara.view', 'goshwara.create', 'goshwara.edit', 'goshwara.delete', 'goshwara.send', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'schedule_meeting.show', 'reschedule_meeting.view', 'reschedule_meeting.show', 'question.response', 'question.view', 'proceeding-record.show', 'proceeding-record.view', 'tharav.view']);
 
 
 
         $homeDepartment = Role::where('name', 'Home Department')->first();
 
-        $homeDepartment->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'agenda.create', 'agenda.edit', 'agenda.delete', 'schedule_meeting.view', 'schedule_meeting.create', 'question.view', 'question.create', 'question.edit', 'question.delete', 'attendance.view', 'attendance.mark', 'reschedule_meeting.view', 'reschedule_meeting.create', 'suplimentry-agenda.view', 'suplimentry-agenda.create', 'suplimentry-agenda.edit', 'suplimentry-agenda.delete']);
+        $homeDepartment->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'agenda.create', 'agenda.edit', 'agenda.delete', 'schedule_meeting.view', 'schedule_meeting.create', 'schedule_meeting.cancel', 'schedule_meeting.show', 'question.view', 'question.create', 'question.edit', 'question.delete', 'attendance.view', 'attendance.mark', 'reschedule_meeting.view', 'reschedule_meeting.create', 'reschedule_meeting.cancel', 'reschedule_meeting.show', 'suplimentry-agenda.view', 'suplimentry-agenda.create', 'suplimentry-agenda.edit', 'suplimentry-agenda.delete', 'proceeding-record.show', 'proceeding-record.view', 'proceeding-record.create', 'tharav.view', 'tharav.create']);
     }
 }

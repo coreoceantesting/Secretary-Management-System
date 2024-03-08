@@ -29,9 +29,8 @@
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4 selectDepartment d-none">
                                 <label class="col-form-label" for="department_id1">Select Department <span class="text-danger">*</span></label>
-                                <select multiple class="js-example-basic-multiple col-sm-12" id="department_id1" name="department_id[]">
+                                <div class="selectDepartmentDynamic"></div>
 
-                                </select>
                                 <span class="text-danger is-invalid department_id_err"></span>
                             </div>
                             <div class="col-md-12 selectScheduleMeetingDetails d-none"></div>
@@ -160,12 +159,17 @@
                                         <td><a href="{{ asset('storage/'.$rescheduleMeeting->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
 
                                         <td>
+                                            @can('reschedule_meeting.show')
                                             <a href="{{ route('reschedule-meeting.show', $rescheduleMeeting->id) }}" class="btn text-secondary px-1 py-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                             </a>
+                                            @endcan
+
+                                            @can('reschedule_meeting.cancel')
                                             @if(!$rescheduleMeeting->is_meeting_cancel)
                                             <button class="btn btn-primary btn-sm text-cancel px-2 py-1" title="Cancel Schedule Meeting"  data-bs-toggle="modal" data-bs-target="#signupModals" data-id="{{ $rescheduleMeeting->id }}">Cancel Meeting </button>
                                             @endif
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -468,7 +472,7 @@
                                     </tbody>
                                 </table>`;
                         $('body').find('.selectScheduleMeetingDetails').html(html);
-                        $('body').find('.selectDepartment').find('.js-example-basic-multiple').html(data.departments);
+                        $('body').find('.selectDepartment').find('.selectDepartmentDynamic').html(data.departments);
                     }
                 }
             });

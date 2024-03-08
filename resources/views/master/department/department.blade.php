@@ -18,12 +18,12 @@
                             <div class="mb-3 row">
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="name">Department Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Department Name">
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Department Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial">
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial" required>
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
@@ -54,12 +54,12 @@
                             <div class="mb-3 row">
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="name">Department Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Department Name">
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Department Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial">
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial" required>
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>

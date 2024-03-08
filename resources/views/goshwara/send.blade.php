@@ -58,7 +58,7 @@
                                     @foreach ($goshwaras as $goshwara)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td><a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm">View Goshwara</a></td>
+                                            <td><a target="_blank" href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm">View Goshwara</a></td>
                                             <td>{{ $goshwara->remark }}</td>
                                             <td>
                                                 <div class="d-flex">

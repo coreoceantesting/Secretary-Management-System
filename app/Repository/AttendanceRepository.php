@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\ScheduleMeeting;
 use App\Models\Attendance;
 use App\Models\AssignMemberToMeeting;
+use App\Models\SuplimentryAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -24,6 +25,10 @@ class AttendanceRepository
             if (isset($request->member_id)) {
                 Attendance::where('schedule_meeting_id', $request->schedule_meeting_id)->delete();
                 ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
+
+                SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
+                    'is_meeting_completed' => 1
+                ]);
                 for ($i = 0; $i < count($request->member_id); $i++) {
                     $inTime = null;
                     if ($request->in_time[$i] != "") {
@@ -112,6 +117,10 @@ class AttendanceRepository
         try {
             DB::commit();
             ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
+
+            SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
+                'is_meeting_completed' => 1
+            ]);
 
             Attendance::updateOrCreate([
                 'member_id' => $request->memberId,

@@ -63,16 +63,15 @@ class RescheduleMeetingController extends Controller
 
             // to get department
             $departmentHtml = "";
-            $assignScheduleMeetingDepartments = $this->rescheduleMeetingRepository->assignScheduleMeetingDepartments($id)->toArray();
-            $departments = $this->commonRepository->getDepartments();
+            $value = "";
+            $departments = $this->rescheduleMeetingRepository->assignScheduleMeetingDepartments($id);
+            // $departments = $this->commonRepository->getDepartments();
             foreach ($departments as $department) {
-                $isSelected = "";
-                if (in_array($department->id, $assignScheduleMeetingDepartments)) {
-                    $isSelected = "selected";
-                }
 
-                $departmentHtml .= '<option value="' . $department->id . '" ' . $isSelected . '>' . $department->name . '</option>';
+                $departmentHtml .= '<input type="hidden" name="department_id[]" value="' . $department->department_id . '" />';
+                $value .= $department->department->name . ", ";
             }
+            $departmentHtml .= '<input type="text" value="' . $value . '" class="form-control" readonly />';
 
             return response()->json([
                 'status' => 200,

@@ -23,7 +23,7 @@ class RescheduleMeetingRepository
     public function getScheduleMeeting($meetingId)
     {
         return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0])
-            ->whereDate('date', '>', date('Y-m-d', strtotime('+7 days')))->select('id', 'datetime')->get();
+            ->whereDate('date', '>=', date('Y-m-d', strtotime('+7 days')))->select('id', 'datetime')->get();
     }
 
     public function getEditScheduleMeeting($meetingId, $scheduleMeetingId, $id)
@@ -45,7 +45,7 @@ class RescheduleMeetingRepository
 
     public function assignScheduleMeetingDepartments($id)
     {
-        return AssignScheduleMeetingDepartment::where('schedule_meeting_id', $id)->pluck('department_id');
+        return AssignScheduleMeetingDepartment::with('department')->where('schedule_meeting_id', $id)->get();
     }
 
     public function store($request)

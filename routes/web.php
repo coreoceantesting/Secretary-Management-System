@@ -113,6 +113,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('proceeding-record', ProceedingRecordController::class);
 
     Route::get('tharav/getScheduleMeeting/{id}', [TharavController::class, 'getScheduleMeeting'])->name('tharav.getScheduleMeeting');
+    Route::get('tharav/get-schedule_meeting-department/{id}', [TharavController::class, 'getScheduleMeetingDepartment'])->name('tharav.getScheduleMeetingDepartment');
     Route::resource('tharav', TharavController::class);
 });
 

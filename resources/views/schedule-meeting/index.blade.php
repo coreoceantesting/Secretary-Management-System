@@ -197,21 +197,17 @@
                                         <td><a href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
 
                                         <td>
+                                            @can('schedule_meeting.show')
                                             <a href="{{ route('schedule-meeting.show', $scheduleMeeting->id) }}" class="btn text-secondary px-1 py-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                             </a>
+                                            @endcan
+                                            @can('schedule_meeting.cancel')
                                             @if(!$scheduleMeeting->is_meeting_cancel)
                                             <button class="btn btn-primary btn-sm text-cancel px-2 py-1" title="Cancel Schedule Meeting"  data-bs-toggle="modal" data-bs-target="#signupModals" data-id="{{ $scheduleMeeting->id }}">Cancel Meeting </button>
 
                                             @endif
-                                            {{-- @if($scheduleMeeting->date > date('Y-m-d', strtotime('+7 days')))
-                                            @can('schedule_meeting.edit')
-                                            <button class="edit-element btn text-secondary px-2 py-1" title="Edit Schedule Meeting" data-id="{{ $scheduleMeeting->id }}"><i data-feather="edit"></i></button>
                                             @endcan
-                                            @can('schedule_meeting.delete')
-                                            <button class="btn text-danger rem-element px-2 py-1" title="Delete Schedule Meeting" data-id="{{ $scheduleMeeting->id }}"><i data-feather="trash-2"></i> </button>
-                                            @endcan
-                                            @endif --}}
                                         </td>
                                     </tr>
                                 @endforeach

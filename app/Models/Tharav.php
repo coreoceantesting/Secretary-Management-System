@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Meeting;
 use App\Models\ScheduleMeeting;
+use App\Models\AssignDepartmentToTharav;
 
 class Tharav extends Model
 {
@@ -21,5 +22,10 @@ class Tharav extends Model
     public function scheduleMeeting()
     {
         return $this->belongsTo(ScheduleMeeting::class, 'schedule_meeting_id', 'id');
+    }
+
+    public function assignTharavDepartment()
+    {
+        return $this->hasMany(AssignDepartmentToTharav::class, 'tharav_id', 'id');
     }
 }

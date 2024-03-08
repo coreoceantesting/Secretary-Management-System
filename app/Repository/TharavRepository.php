@@ -5,13 +5,15 @@ namespace App\Repository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Tharav;
+use App\Models\AssignScheduleMeetingDepartment;
 use App\Models\ScheduleMeeting;
+use App\Models\AssignDepartmentToTharav;
 
 class TharavRepository
 {
     public function index()
     {
-        return Tharav::with(['meeting', 'scheduleMeeting'])->latest()->get();
+        return Tharav::with(['meeting', 'assignTharavDepartment.department'])->latest()->get();
     }
 
     public function getScheduleMeeting($id)
@@ -19,6 +21,11 @@ class TharavRepository
         return ScheduleMeeting::where('meeting_id', $id)->where([
             'is_record_proceeding' => 1
         ])->get();
+    }
+
+    public function getScheduleMeetingDepartment($id)
+    {
+        return AssignScheduleMeetingDepartment::with(['department'])->where('schedule_meeting_id', $id)->get();
     }
 
     public function store($request)
@@ -36,7 +43,16 @@ class TharavRepository
             }
             $request['file'] = $file;
 
-            Tharav::create($request->all());
+            $tharav = Tharav::create($request->all());
+
+            if (isset($request->department_id)) {
+                for ($i = 0; $i < count($request->department_id); $i++) {
+                    AssignDepartmentToTharav::create([
+                        'tharav_id' => $tharav->id,
+                        'department_id' => $request->department_id[$i]
+                    ]);
+                }
+            }
 
             ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
                 'is_tharav_uploaded' => 1

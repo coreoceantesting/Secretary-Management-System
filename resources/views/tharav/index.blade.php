@@ -47,6 +47,13 @@
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
+                            <div class="col-md-4 selectDepartment d-none">
+                                <label class="col-form-label" for="department_id1">Select Department <span class="text-danger">*</span></label>
+                                <select multiple class="js-example-basic-multiple col-sm-12" id="department_id1" name="department_id[]">
+
+                                </select>
+                                <span class="text-danger is-invalid department_id_err"></span>
+                            </div>
                         </div>
 
                     </div>
@@ -84,6 +91,7 @@
                                     <th>Sr no.</th>
                                     <th>Meeting Name</th>
                                     <th>Date</th>
+                                    <th>Department</th>
                                     <th>Remark</th>
                                     <th>File</th>
                                 </tr>
@@ -94,6 +102,12 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $tharav->meeting?->name ?? '-' }}</td>
                                         <td>{{ ($tharav->date) ? date('d-m-Y', strtotime($tharav->date)) : '-' }}</td>
+                                        <td>
+                                            @foreach($tharav->assignTharavDepartment as $department)
+                                            {{ $department?->department->name }},
+                                            @endforeach
+                                            {{-- {{ $tharav->meeting?->name ?? '-' }} --}}
+                                        </td>
                                         <td>{{ ($tharav->remark) ? $tharav->remark : '-' }}</td>
                                         <td><a target="_blank" href="{{ asset('storage/'.$tharav->file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                     </tr>
@@ -177,7 +191,7 @@
                 processData: false,
                 success: function(data) {
                     let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="schedule_meeting_id" name="schedule_meeting_id">
+                                <select class="form-select col-sm-12 selectChnageScheduleMeetingDetails" id="schedule_meeting_id" name="schedule_meeting_id">
                                     <option value="">--Select Schedule Meeting--</option>
                                 `;
                     $.each(data.scheduleMeetings, function(key, val){
@@ -186,6 +200,36 @@
                     html += `</select>
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>`;
                     $('body').find('.selectScheduleMeeting').html(html);
+                }
+            });
+        }
+
+
+        $('body').on('change', '.selectChnageScheduleMeetingDetails', function(){
+            let scheduleMeetingId = $(this).val();
+
+            if(scheduleMeetingId != ""){
+                getScheduleMeetingDetails(scheduleMeetingId);
+                $('body').find('.selectScheduleMeetingDetails').removeClass('d-none');
+                $('body').find('.selectDepartment').removeClass('d-none')
+            }else{
+                $('body').find('.selectScheduleMeetingDetails').html('');
+                $('body').find('.selectScheduleMeetingDetails').addClass('d-none');
+                $('body').find('.selectDepartment').addClass('d-none')
+            }
+        });
+
+        function getScheduleMeetingDetails(id){
+            var url = "{{ route('tharav.getScheduleMeetingDepartment', ':model_id') }}";
+            $.ajax({
+                url: url.replace(':model_id', id),
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if(data.status == 200){
+                        $('body').find('.selectDepartment').find('.js-example-basic-multiple').html(data.department);
+                    }
                 }
             });
         }

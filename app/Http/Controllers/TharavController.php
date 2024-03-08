@@ -47,6 +47,24 @@ class TharavController extends Controller
         }
     }
 
+    public function getScheduleMeetingDepartment(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $scheduleMeetings = $this->tharavRepository->getScheduleMeetingDepartment($id);
+            $departmentHtml = "";
+
+            $departmentHtml .= '<option value="" disabled>Select Department</option>';
+            foreach ($scheduleMeetings as $scheduleMeeting) {
+                $departmentHtml .= '<option value="' . $scheduleMeeting->department_id . '">' . $scheduleMeeting->department?->name . '</option>';
+            }
+
+            return response()->json([
+                'status' => 200,
+                'department' => $departmentHtml
+            ]);
+        }
+    }
+
     public function store(TharavRequest $request)
     {
         $tharavRepository = $this->tharavRepository->store($request);
