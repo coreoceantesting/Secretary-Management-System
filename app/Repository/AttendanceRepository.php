@@ -12,7 +12,7 @@ class AttendanceRepository
 {
     public function index()
     {
-        return ScheduleMeeting::with(['agenda', 'meeting'])->where('date', date('Y-m-d'))->get();
+        return ScheduleMeeting::with(['agenda', 'meeting'])->where('date', date('Y-m-d'))->latest()->get();
     }
 
     public function store($request)

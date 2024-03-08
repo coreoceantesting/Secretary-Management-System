@@ -13,6 +13,7 @@ use App\Models\Question;
 use App\Models\ScheduleMeeting;
 use App\Models\AssignScheduleMeetingDepartment;
 use App\Models\ProceedingRecord;
+use App\Http\Requests\ProceedingRecordRequest;
 
 class ProceedingRecordController extends Controller
 {
@@ -54,7 +55,7 @@ class ProceedingRecordController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(ProceedingRecordRequest $request)
     {
         $proceedingRecord = $this->proceedingRecordRepository->store($request);
 

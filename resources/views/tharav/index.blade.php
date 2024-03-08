@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Proceeding Records</x-slot>
-    <x-slot name="heading">Proceeding Records</x-slot>
+    <x-slot name="title">Tharav</x-slot>
+    <x-slot name="heading">Tharav</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,13 +12,13 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Proceeding Records</h4>
+                        <h4 class="card-title">Add Tharav</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select name="meeting_id" required id="meeting_id" class="form-select selectMeetingId">
+                                <select name="meeting_id" id="meeting_id" required class="form-select selectMeetingId">
                                     <option value="">Select Meeting</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -66,7 +66,6 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                @can('proceeding-record.create')
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6">
@@ -77,7 +76,6 @@
                         </div>
                     </div>
                 </div>
-                @endcan
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="buttons-datatables" class="table table-bordered nowrap align-middle" style="width:100%">
@@ -88,24 +86,16 @@
                                     <th>Date</th>
                                     <th>Remark</th>
                                     <th>File</th>
-                                    @can('proceeding-record.show')<th>Action</th>@endcan
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($proceedingRecords as $proceedingRecord)
+                                @foreach ($tharavs as $tharav)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $proceedingRecord->meeting?->name ?? '-' }}</td>
-                                        <td>{{ ($proceedingRecord->date) ? date('d-m-Y', strtotime($proceedingRecord->date)) : '-' }}</td>
-                                        <td>{{ ($proceedingRecord->remark) ? $proceedingRecord->remark : '-' }}</td>
-                                        <td><a href="{{ asset('storage/'.$proceedingRecord->file) }}" class="btn btn-sm btn-primary">View File</a></td>
-                                        @can('proceeding-record.show')
-                                        <td>
-                                            <a href="{{ route('proceeding-record.show', $proceedingRecord->id) }}" class="btn btn-sm btn-primary px-2 py-1">
-                                                view
-                                            </a>
-                                        </td>
-                                        @endcan
+                                        <td>{{ $tharav->meeting?->name ?? '-' }}</td>
+                                        <td>{{ ($tharav->date) ? date('d-m-Y', strtotime($tharav->date)) : '-' }}</td>
+                                        <td>{{ ($tharav->remark) ? $tharav->remark : '-' }}</td>
+                                        <td><a target="_blank" href="{{ asset('storage/'.$tharav->file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                     </tr>
                                 @endforeach
                         </table>
@@ -130,7 +120,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('proceeding-record.store') }}',
+            url: '{{ route('tharav.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -141,7 +131,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('proceeding-record.index') }}';
+                            window.location.href = '{{ route('tharav.index') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");
@@ -179,7 +169,7 @@
         });
 
         function getScheduleMeeting(id){
-            var url = "{{ route('proceeding-record.getScheduleMeeting', ':model_id') }}";
+            var url = "{{ route('tharav.getScheduleMeeting', ':model_id') }}";
             $.ajax({
                 url: url.replace(':model_id', id),
                 type: 'GET',

@@ -34,6 +34,6 @@ class UserRolesAndPermissionSeeder extends Seeder
 
         $homeDepartment = Role::where('name', 'Home Department')->first();
 
-        $homeDepartment->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'agenda.create', 'agenda.edit', 'agenda.delete', 'schedule_meeting.view', 'schedule_meeting.create', 'schedule_meeting.edit', 'schedule_meeting.delete', 'question.view', 'question.create', 'question.edit', 'question.delete', 'attendance.view', 'attendance.create', 'attendance.edit', 'attendance.delete', 'reschedule_meeting.view', 'reschedule_meeting.create', 'reschedule_meeting.edit', 'reschedule_meeting.delete', 'suplimentry-agenda.view', 'suplimentry-agenda.create', 'suplimentry-agenda.edit', 'suplimentry-agenda.delete']);
+        $homeDepartment->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'agenda.create', 'agenda.edit', 'agenda.delete', 'schedule_meeting.view', 'schedule_meeting.create', 'question.view', 'question.create', 'question.edit', 'question.delete', 'attendance.view', 'attendance.mark', 'reschedule_meeting.view', 'reschedule_meeting.create', 'suplimentry-agenda.view', 'suplimentry-agenda.create', 'suplimentry-agenda.edit', 'suplimentry-agenda.delete']);
     }
 }

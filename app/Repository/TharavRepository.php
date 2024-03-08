@@ -2,28 +2,22 @@
 
 namespace App\Repository;
 
-use App\Models\ProceedingRecord;
-use App\Models\ScheduleMeeting;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Tharav;
+use App\Models\ScheduleMeeting;
 
-class ProceedingRecordRepository
+class TharavRepository
 {
     public function index()
     {
-        $proceddingRecords = ProceedingRecord::with(['meeting', 'scheduleMeeting'])->latest()->get();
-
-        return $proceddingRecords;
+        return Tharav::with(['meeting', 'scheduleMeeting'])->latest()->get();
     }
 
     public function getScheduleMeeting($id)
     {
         return ScheduleMeeting::where('meeting_id', $id)->where([
-            'is_meeting_reschedule' => 0,
-            'is_meeting_completed' => 1,
-            'is_meeting_cancel' => 0,
-            'is_record_proceeding' => 0
+            'is_record_proceeding' => 1
         ])->get();
     }
 
@@ -31,25 +25,28 @@ class ProceedingRecordRepository
     {
         DB::beginTransaction();
         try {
+
             $request['date'] = date('Y-m-d', strtotime($request->date));
             $request['time'] = date('h:i:s', strtotime($request->time));
             $request['datetime'] = date('Y-m-d', strtotime($request->date)) . " " . date('h:i:s', strtotime($request->time));
 
             $file = null;
             if ($request->hasFile('uploadfile')) {
-                $file = $request->uploadfile->store('procedding-records');
+                $file = $request->uploadfile->store('tharav');
             }
             $request['file'] = $file;
-            ProceedingRecord::create($request->all());
+
+            Tharav::create($request->all());
 
             ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
-                'is_record_proceeding' => 1
+                'is_tharav_uploaded' => 1
             ]);
 
             DB::commit();
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }

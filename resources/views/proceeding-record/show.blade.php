@@ -24,7 +24,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>{{ $agenda->name }}</th>
+                                    <td>{{ $agenda->name }}</td>
                                     <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                             </tbody>

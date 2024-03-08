@@ -35,7 +35,7 @@ class SuplimentryAgendaRequest extends FormRequest
             'agendafile.mimes' => 'Only pdf and doc file supported',
             'agendafile.max' => 'File must be less than 2mb',
             'name.required' => 'Please enter name',
-            'schedule_meeting_id' => 'Please Select Schedule Meeting'
+            'schedule_meeting_id.required' => 'Please Select Schedule Meeting'
         ];
     }
 }

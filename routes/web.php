@@ -20,6 +20,7 @@ use App\Http\Controllers\RescheduleMeetingController;
 use App\Http\Controllers\SuplimentryAgendaController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProceedingRecordController;
+use App\Http\Controllers\TharavController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,6 +111,9 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     Route::get('proceeding-record/getScheduleMeeting/{id}', [ProceedingRecordController::class, 'getScheduleMeeting'])->name('proceeding-record.getScheduleMeeting');
     Route::resource('proceeding-record', ProceedingRecordController::class);
+
+    Route::get('tharav/getScheduleMeeting/{id}', [TharavController::class, 'getScheduleMeeting'])->name('tharav.getScheduleMeeting');
+    Route::resource('tharav', TharavController::class);
 });
 
 

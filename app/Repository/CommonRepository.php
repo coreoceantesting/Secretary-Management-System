@@ -31,6 +31,19 @@ class CommonRepository
         return $meeting;
     }
 
+    public function getGeneratedProceedingRecordMeeting()
+    {
+        $meeting = Meeting::whereHas('scheduleMeeting', function ($q) {
+            return $q->where([
+                'is_meeting_completed' => 1,
+                'is_record_proceeding' => 1,
+                'is_tharav_uploaded' => 0,
+            ]);
+        })->get();
+
+        return $meeting;
+    }
+
     public function getSeventDayMeeting()
     {
         $meeting = Meeting::whereHas('scheduleMeeting', function ($q) {
