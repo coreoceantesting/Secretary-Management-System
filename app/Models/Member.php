@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ward;
+use App\Models\Attendance;
 
 class Member extends Model
 {
@@ -17,6 +18,11 @@ class Member extends Model
     public function ward()
     {
         return $this->belongsTo(Ward::class, 'ward_id', 'id');
+    }
+
+    public function attendance()
+    {
+        return $this->hasOne(Attendance::class, 'member_id', 'id');
     }
 
     public static function booted()

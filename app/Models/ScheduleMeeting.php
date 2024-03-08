@@ -8,6 +8,7 @@ use App\Models\Meeting;
 use App\Models\Agenda;
 use App\Models\SuplimentryAgenda;
 use App\Models\AssignScheduleMeetingDepartment;
+use App\Models\Question;
 
 class ScheduleMeeting extends Model
 {
@@ -38,5 +39,10 @@ class ScheduleMeeting extends Model
     public function parentLatestScheduleMeeting()
     {
         return $this->hasOne(ScheduleMeeting::class, 'parent_id', 'id')->latest();
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'schedule_meeting_id', 'id');
     }
 }

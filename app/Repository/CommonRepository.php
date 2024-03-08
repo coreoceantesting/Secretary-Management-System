@@ -25,7 +25,7 @@ class CommonRepository
     public function getCompletedMeeting()
     {
         $meeting = Meeting::whereHas('scheduleMeeting', function ($q) {
-            return $q->where('is_meeting_completed', 1);
+            return $q->where('is_meeting_completed', 1)->where('is_record_proceeding', 0);
         })->get();
 
         return $meeting;

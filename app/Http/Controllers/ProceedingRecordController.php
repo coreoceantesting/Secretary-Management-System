@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\ProceedingRecordRepository;
 use App\Repository\CommonRepository;
+use App\Models\Agenda;
+use App\Models\SuplimentryAgenda;
+use App\Models\AssignMemberToMeeting;
+use App\Models\Member;
+use App\Models\Question;
+use App\Models\ScheduleMeeting;
+use App\Models\AssignScheduleMeetingDepartment;
+use App\Models\ProceedingRecord;
 
 class ProceedingRecordController extends Controller
 {
@@ -41,7 +49,7 @@ class ProceedingRecordController extends Controller
             });
 
             return response()->json([
-                'scheduleMeetings' => $results
+                'scheduleMeetings' => $scheduleMeetings
             ]);
         }
     }
@@ -55,5 +63,42 @@ class ProceedingRecordController extends Controller
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
         }
+    }
+
+    public function show($id)
+    {
+        $proceedingRecord = ProceedingRecord::with(['meeting'])->find($id);
+
+        $scheduleMeeting = ScheduleMeeting::where('id', $proceedingRecord->schedule_meeting_id)->first();
+
+        $agenda = Agenda::where('id', $scheduleMeeting->agenda_id)->first();
+
+        $scheduleMeetings = ScheduleMeeting::with(['meeting'])
+            ->where('parent_id', $scheduleMeeting->parent_id)
+            ->get();
+        $ids = $scheduleMeetings->pluck('id')->toArray();
+
+        $members = AssignMemberToMeeting::with(['member.attendance' => function ($q) use ($proceedingRecord) {
+            return $q->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id);
+        }])->where('meeting_id', $proceedingRecord->meeting_id)->get();
+
+
+        $departments = AssignScheduleMeetingDepartment::with(['department'])
+            ->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id)
+            ->get();
+
+        $suplimentryAgendas = SuplimentryAgenda::whereIn('schedule_meeting_id', $ids)->get();
+
+        $questions = Question::whereIn('schedule_meeting_id', $ids)->get();
+
+        return view('proceeding-record.show')->with([
+            'agenda' => $agenda,
+            'scheduleMeetings' => $scheduleMeetings,
+            'proceedingRecord' => $proceedingRecord,
+            'members' => $members,
+            'departments' => $departments,
+            'suplimentryAgendas' => $suplimentryAgendas,
+            'questions' => $questions
+        ]);
     }
 }
