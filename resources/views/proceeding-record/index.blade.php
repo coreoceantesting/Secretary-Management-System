@@ -101,6 +101,9 @@
                                         <td><a href="{{ asset('storage/'.$proceedingRecord->file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         @can('proceeding-record.show')
                                         <td>
+                                            <a href="{{ route('proceeding-record.pdf', $proceedingRecord->id) }}" class="btn btn-sm btn-primary px-2 py-1" target="_blank">
+                                                Pdf
+                                            </a>
                                             <a href="{{ route('proceeding-record.show', $proceedingRecord->id) }}" class="btn btn-sm btn-primary px-2 py-1">
                                                 view
                                             </a>

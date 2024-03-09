@@ -4,7 +4,18 @@
   <title>Proceeding record pdf</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    table {
+    		    font-family: arial, sans-serif;
+    		    border-collapse: collapse;
+    		    width: 100%;
+    		}
+    		td, th {
+    		    border: 1px solid #dddddd;
+    		    text-align: left;
+    		    padding: 8px;
+    		}
+  </style>
 </head>
 <body>
     <!-- Add Form -->
