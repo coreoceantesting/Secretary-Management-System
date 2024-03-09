@@ -22,7 +22,7 @@ class RescheduleMeetingController extends Controller
     {
         $rescheduleMeetings = $this->rescheduleMeetingRepository->index();
 
-        $meetings = $this->commonRepository->getMeeting();
+        $meetings = $this->commonRepository->getRescheduleMeeting();
 
         return view('reschedule-meeting.index')->with([
             'rescheduleMeetings' => $rescheduleMeetings,

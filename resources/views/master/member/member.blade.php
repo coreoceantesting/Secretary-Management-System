@@ -35,7 +35,7 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="contact_number">Contact Number <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number">
+                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
                                     <span class="text-danger is-invalid contact_number_err"></span>
                                 </div>
 
@@ -105,7 +105,7 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="contact_number">Contact Number <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number">
+                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
                                     <span class="text-danger is-invalid contact_number_err"></span>
                                 </div>
 

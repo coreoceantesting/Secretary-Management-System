@@ -14,6 +14,7 @@ use App\Models\ScheduleMeeting;
 use App\Models\AssignScheduleMeetingDepartment;
 use App\Models\ProceedingRecord;
 use App\Http\Requests\ProceedingRecordRequest;
+use PDF;
 
 class ProceedingRecordController extends Controller
 {
@@ -101,5 +102,44 @@ class ProceedingRecordController extends Controller
             'suplimentryAgendas' => $suplimentryAgendas,
             'questions' => $questions
         ]);
+    }
+
+    public function pdf($id){
+        $proceedingRecord = ProceedingRecord::with(['meeting'])->find($id);
+
+        $scheduleMeeting = ScheduleMeeting::where('id', $proceedingRecord->schedule_meeting_id)->first();
+
+        $agenda = Agenda::where('id', $scheduleMeeting->agenda_id)->first();
+
+        $scheduleMeetings = ScheduleMeeting::with(['meeting'])
+            ->where('parent_id', $scheduleMeeting->parent_id)
+            ->get();
+        $ids = $scheduleMeetings->pluck('id')->toArray();
+
+        $members = AssignMemberToMeeting::with(['member.attendance' => function ($q) use ($proceedingRecord) {
+            return $q->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id);
+        }])->where('meeting_id', $proceedingRecord->meeting_id)->get();
+
+
+        $departments = AssignScheduleMeetingDepartment::with(['department'])
+            ->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id)
+            ->get();
+
+        $suplimentryAgendas = SuplimentryAgenda::whereIn('schedule_meeting_id', $ids)->get();
+
+        $questions = Question::whereIn('schedule_meeting_id', $ids)->get();
+
+        $pdf = PDF::loadView('proceeding-record.pdf', [
+            'agenda' => $agenda,
+            'scheduleMeetings' => $scheduleMeetings,
+            'proceedingRecord' => $proceedingRecord,
+            'members' => $members,
+            'departments' => $departments,
+            'suplimentryAgendas' => $suplimentryAgendas,
+            'questions' => $questions
+        ]);
+		return $pdf->stream('document.pdf');
+
+        // return view('proceeding-record.pdf')->with();
     }
 }

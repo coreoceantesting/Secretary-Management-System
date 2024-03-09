@@ -24,7 +24,7 @@ class MemberRequest extends FormRequest
         return [
             'ward_id' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
             'name' => 'required',
-            'contact_number' => 'required|numeric',
+            'contact_number' => 'required|numeric|digits:10',
             'email' => 'required|email',
             'political_party' => 'required',
             'address' => 'required',

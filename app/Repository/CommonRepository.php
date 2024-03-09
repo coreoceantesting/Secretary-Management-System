@@ -19,6 +19,11 @@ class CommonRepository
 
     public function getMeeting()
     {
+        return Meeting::get();
+    }
+
+    public function getRescheduleMeeting()
+    {
         return Meeting::whereHas('scheduleMeeting', function ($q) {
             return $q->where([
                 'is_meeting_cancel' => 0,

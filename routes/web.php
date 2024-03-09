@@ -109,6 +109,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::post('attendance/update/singleMark', [AttendanceController::class, 'saveSingleMark'])->name('attendance.saveSingleMark');
     Route::resource('attendance', AttendanceController::class);
 
+    Route::get('proceeding-record/pdf/{id}', [ProceedingRecordController::class, 'pdf'])->name('proceeding-record.pdf');
     Route::get('proceeding-record/getScheduleMeeting/{id}', [ProceedingRecordController::class, 'getScheduleMeeting'])->name('proceeding-record.getScheduleMeeting');
     Route::resource('proceeding-record', ProceedingRecordController::class);
 

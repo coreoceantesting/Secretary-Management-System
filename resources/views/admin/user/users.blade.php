@@ -36,7 +36,7 @@
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="mobile">User Mobile <span class="text-danger">*</span></label>
                                 <input class="form-control" id="contact" name="contact" type="number" min="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
-                                    placeholder="Enter User Mobile">
+                                    placeholder="Enter User Mobile" maxlength="10">
                                 <span class="text-danger is-invalid contact_err"></span>
                             </div>
 
@@ -138,7 +138,7 @@
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="mobile">User Mobile <span class="text-danger">*</span></label>
                                 <input class="form-control" id="contact" name="contact" type="number" min="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
-                                    placeholder="Enter User Mobile">
+                                    placeholder="Enter User Mobile" maxlength="10">
                                 <span class="text-danger is-invalid contact_err"></span>
                             </div>
 
