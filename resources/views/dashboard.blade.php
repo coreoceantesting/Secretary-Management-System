@@ -7,7 +7,6 @@
         <div class="col-xxl-5">
             <div class="d-flex flex-column h-100">
 
-                @for($i=0; $i <=1; $i++)
                 <div class="row">
                     <div class="col-md-3">
                         <div class="card card-animate">
@@ -18,15 +17,8 @@
                                             Total Goshwara
                                         </p>
                                         <h2 class="mt-4 ff-secondary fw-semibold">
-                                            <span class="counter-value" data-target="28.05">0</span>k
+                                            <span class="counter-value" data-target="{{ $goshwara }}">{{ round($goshwara) }}</span>
                                         </h2>
-                                        {{-- <p class="mb-0 text-muted">
-                                            <span class="badge bg-light text-success mb-0"><i class="ri-arrow-up-line align-middle"></i>
-                                                16.24 %
-                                            </span>
-                                            vs. previous
-                                            month
-                                        </p> --}}
                                     </div>
                                     <div>
                                         <div class="avatar-sm flex-shrink-0">
@@ -52,16 +44,8 @@
                                             Total Agenda
                                         </p>
                                         <h2 class="mt-4 ff-secondary fw-semibold">
-                                            <span class="counter-value" data-target="97.66">0</span>k
+                                            <span class="counter-value" data-target="{{ $agenda }}">{{ round($agenda) }}</span>
                                         </h2>
-                                        {{-- <p class="mb-0 text-muted">
-                                            <span class="badge bg-light text-danger mb-0">
-                                                <i class="ri-arrow-down-line align-middle"></i>
-                                                3.96 %
-                                            </span>
-                                            vs. previous
-                                            month
-                                        </p> --}}
                                     </div>
                                     <div>
                                         <div class="avatar-sm flex-shrink-0">
@@ -85,20 +69,11 @@
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <p class="fw-medium text-muted mb-0">
-                                            Total Schedule Meeting
+                                            Total Suplimentry Agenda
                                         </p>
                                         <h2 class="mt-4 ff-secondary fw-semibold">
-                                            <span class="counter-value" data-target="3">0</span>m
-                                            <span class="counter-value" data-target="40">0</span>sec
+                                            <span class="counter-value" data-target="{{ round($suplimentryAgenda) }}">{{ round($suplimentryAgenda) }}</span>
                                         </h2>
-                                        {{-- <p class="mb-0 text-muted">
-                                            <span class="badge bg-light text-danger mb-0">
-                                                <i class="ri-arrow-down-line align-middle"></i>
-                                                0.24 %
-                                            </span>
-                                            vs. previous
-                                            month
-                                        </p> --}}
                                     </div>
                                     <div>
                                         <div class="avatar-sm flex-shrink-0">
@@ -121,19 +96,11 @@
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <p class="fw-medium text-muted mb-0">
-                                            Total Question
+                                            Total Schedule Meeting
                                         </p>
                                         <h2 class="mt-4 ff-secondary fw-semibold">
-                                            <span class="counter-value" data-target="33.48">0</span>%
+                                            <span class="counter-value" data-target="{{ round($scheduleMeeting) }}">{{ round($scheduleMeeting) }}</span>
                                         </h2>
-                                        {{-- <p class="mb-0 text-muted">
-                                            <span class="badge bg-light text-success mb-0">
-                                                <i class="ri-arrow-up-line align-middle"></i>
-                                                7.05 %
-                                            </span>
-                                            vs. previous
-                                            month
-                                        </p> --}}
                                     </div>
                                     <div>
                                         <div class="avatar-sm flex-shrink-0">
@@ -149,8 +116,125 @@
                         <!-- end card-->
                     </div>
                     <!-- end col-->
+
+
+
+
+                    <div class="col-md-3">
+                        <div class="card card-animate">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="fw-medium text-muted mb-0">
+                                            Total Reschedule Meeting
+                                        </p>
+                                        <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <span class="counter-value" data-target="{{ round($rescheduleMeeting) }}">{{ round($rescheduleMeeting) }}</span>
+                                        </h2>
+                                    </div>
+                                    <div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-info-subtle rounded-circle fs-2">
+                                                <i data-feather="external-link" class="text-info"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card-->
+                    </div>
+                    <!-- end col-->
+
+                    <div class="col-md-3">
+                        <div class="card card-animate">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="fw-medium text-muted mb-0">
+                                            Total Question
+                                        </p>
+                                        <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <span class="counter-value" data-target="{{ round($question) }}">{{ round($question) }}</span>
+                                        </h2>
+                                    </div>
+                                    <div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-info-subtle rounded-circle fs-2">
+                                                <i data-feather="external-link" class="text-info"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card-->
+                    </div>
+                    <!-- end col-->
+
+                    <div class="col-md-3">
+                        <div class="card card-animate">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="fw-medium text-muted mb-0">
+                                            Total Proceeding Record
+                                        </p>
+                                        <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <span class="counter-value" data-target="{{ round($proceedingRecord) }}">{{ round($proceedingRecord) }}</span>
+                                        </h2>
+                                    </div>
+                                    <div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-info-subtle rounded-circle fs-2">
+                                                <i data-feather="external-link" class="text-info"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card-->
+                    </div>
+                    <!-- end col-->
+
+                    <div class="col-md-3">
+                        <div class="card card-animate">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="fw-medium text-muted mb-0">
+                                            Total Tharav
+                                        </p>
+                                        <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <span class="counter-value" data-target="{{ round($tharav) }}">{{ round($tharav) }}</span>
+                                        </h2>
+                                    </div>
+                                    <div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-info-subtle rounded-circle fs-2">
+                                                <i data-feather="external-link" class="text-info"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card-->
+                    </div>
+                    <!-- end col-->
+
+
+
+
+
+
+
                 </div>
-                @endfor
             </div>
         </div>
 
