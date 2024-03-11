@@ -53,7 +53,7 @@ class DefaultLoginUserSeeder extends Seeder
             'contact' => '9999999992',
             'password' => Hash::make('12345678')
         ]);
-        $user->assignRole([$adminRole->id]);
+        // $user->assignRole([$adminRole->id]);
 
 
         Role::create(['name' => 'DMC']);
