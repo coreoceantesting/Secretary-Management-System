@@ -17,10 +17,10 @@ class UserRolesAndPermissionSeeder extends Seeder
         $admin = Role::where('name', 'Admin')->first();
 
         $admin->syncPermissions(['dashboard.view', 'department.view', 'department.create', 'department.edit', 'department.delete', 'home_department.view', 'home_department.create', 'home_department.edit', 'home_department.delete', 'wards.view', 'wards.create', 'wards.edit', 'wards.delete', 'member.view', 'member.create', 'member.edit', 'member.delete', 'meeting.view', 'meeting.create', 'meeting.edit', 'meeting.delete', 'users.view', 'users.create', 'users.edit', 'users.delete', 'users.toggle_status', 'users.change_password', 'roles.view', 'roles.create', 'roles.edit', 'roles.delete', 'roles.assign', 'goshwara.view', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'schedule_meeting.show', 'reschedule_meeting.view', 'reschedule_meeting.show', 'question.view', 'proceeding-record.show', 'proceeding-record.view', 'tharav.view']);
-        
-        $admin = Role::where('name', 'Admin')->first();
 
-        $admin->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'schedule_meeting.show', 'reschedule_meeting.view', 'reschedule_meeting.show', 'question.view', 'proceeding-record.show', 'proceeding-record.view', 'tharav.view']);
+        // $admin = Role::where('name', 'Admin')->first();
+
+        // $admin->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'schedule_meeting.show', 'reschedule_meeting.view', 'reschedule_meeting.show', 'question.view', 'proceeding-record.show', 'proceeding-record.view', 'tharav.view']);
 
 
         $dmc = Role::where('name', 'DMC')->first();

@@ -81,7 +81,7 @@
                             <img class="rounded-circle header-profile-user" src="{{ asset('admin/images/user.png') }}" alt="Header Avatar" style="height:40px;width:40px;" />
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-semibold user-name-text">{{ ucfirst(auth()->user()->name) }}</span>
-                                <h6 class="d-none d-xl-block ms-1 text-white user-name-sub-text">{{ auth()->user()->roles[0]->name }}</h6>
+                                <h6 class="d-none d-xl-block ms-1 text-white user-name-sub-text">{{ (auth()->user()->roles[0]->name) ? auth()->user()->roles[0]->name : Auth::user()->name }}</h6>
                             </span>
                         </span>
                     </button>

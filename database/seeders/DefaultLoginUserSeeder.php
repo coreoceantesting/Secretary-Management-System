@@ -39,8 +39,8 @@ class DefaultLoginUserSeeder extends Seeder
 
         // Admin Seeder ##
         $adminRole = Role::updateOrCreate(['name' => 'Admin']);
-        $permissions = Permission::pluck('id', 'id')->all();
-        $adminRole->syncPermissions($permissions);
+        // $permissions = Permission::pluck('id', 'id')->all();
+        // $adminRole->syncPermissions($permissions);
 
         $user = User::updateOrCreate([
             'email' => 'admin@gmail.com'
@@ -53,7 +53,7 @@ class DefaultLoginUserSeeder extends Seeder
             'contact' => '9999999992',
             'password' => Hash::make('12345678')
         ]);
-        // $user->assignRole([$adminRole->id]);
+        $user->assignRole([$adminRole->id]);
 
 
         Role::create(['name' => 'DMC']);
