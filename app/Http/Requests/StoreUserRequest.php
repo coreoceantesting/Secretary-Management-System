@@ -32,7 +32,7 @@ class StoreUserRequest extends FormRequest
             'gender' => 'required',
             'dob' => 'required',
             'role' => 'required',
-            'username' => 'required',
+            'username' => 'required|unique:users,username',
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password',
         ];

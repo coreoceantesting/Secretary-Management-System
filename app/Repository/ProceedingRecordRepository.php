@@ -4,9 +4,12 @@ namespace App\Repository;
 
 use App\Models\ProceedingRecord;
 use App\Models\ScheduleMeeting;
+use App\Models\AssignMemberToMeeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ProceedingRecordMail;
 
 class ProceedingRecordRepository
 {
@@ -40,11 +43,23 @@ class ProceedingRecordRepository
                 $file = $request->uploadfile->store('procedding-records');
             }
             $request['file'] = $file;
-            ProceedingRecord::create($request->all());
+            $proceedingRecord = ProceedingRecord::create($request->all());
 
             ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
                 'is_record_proceeding' => 1
             ]);
+
+
+            // logic to send sms and email
+            $members = AssignMemberToMeeting::with(['member'])->where('meeting_id', $request->meeting_id)->get();
+
+            $proceedingRecord = ProceedingRecord::with(['meeting'])->where('id', $proceedingRecord->id)->first();
+
+            foreach ($members as $member) {
+                Log::info('Sms Send to number' . $member->member->contact_number);
+                Mail::to($member->member->email)->send(new ProceedingRecordMail($proceedingRecord));
+            }
+            // end of send sms and email login
 
             DB::commit();
             return true;

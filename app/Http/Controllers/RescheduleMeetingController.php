@@ -83,6 +83,8 @@ class RescheduleMeetingController extends Controller
 
     public function store(RescheduleMeetingRequest $request)
     {
+        set_time_limit(0);
+
         $check = $this->commonRepository->checkMeetingExist($request);
 
         if ($check) {

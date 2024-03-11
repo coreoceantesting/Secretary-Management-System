@@ -29,7 +29,7 @@ class DefaultLoginUserSeeder extends Seeder
             'lname' => 'Super Admin',
             'mname' => 'Super Admin',
             'email' => 'superadmin@gmail.com',
-            'username' => 'superadmin@gmail.com',
+            'username' => 'superadmin',
             'contact' => '9999999991',
             'password' => Hash::make('12345678'),
         ]);
@@ -49,7 +49,7 @@ class DefaultLoginUserSeeder extends Seeder
             'lname' => 'Admin',
             'mname' => 'Admin',
             'email' => 'admin@gmail.com',
-            'username' => 'admin@gmail.com',
+            'username' => 'admin',
             'contact' => '9999999992',
             'password' => Hash::make('12345678')
         ]);

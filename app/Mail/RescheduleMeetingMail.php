@@ -16,9 +16,12 @@ class RescheduleMeetingMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    protected $oldData;
+    protected $newData;
+    public function __construct($oldData, $newData)
     {
-        //
+        $this->oldData = $oldData;
+        $this->newData = $newData;
     }
 
     /**
@@ -37,7 +40,11 @@ class RescheduleMeetingMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'reschedule-meeting.mail',
+            with: [
+                'oldData' => $this->oldData,
+                'newData' => $this->newData
+            ]
         );
     }
 

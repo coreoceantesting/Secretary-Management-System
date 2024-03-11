@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\ScheduleMeetingMail;
+use Illuminate\Support\Facades\Mail;
 
 class ScheduleMeetingRepository
 {
@@ -65,9 +67,11 @@ class ScheduleMeetingRepository
             // logic to send sms and email
             $members = AssignMemberToMeeting::with(['member'])->where('meeting_id', $request->meeting_id)->get();
 
+            $scheduleMeeting = ScheduleMeeting::with(['agenda', 'meeting'])->where('id', $scheduleMeeting->id)->first();
+
             foreach ($members as $member) {
                 Log::info('Sms Send to number' . $member->member->contact_number);
-                Log::info('email Send to id' . $member->member->email);
+                Mail::to($member->member->email)->send(new ScheduleMeetingMail($scheduleMeeting));
             }
             // end of send sms and email login
 

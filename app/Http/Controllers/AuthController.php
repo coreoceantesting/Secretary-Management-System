@@ -44,7 +44,7 @@ class AuthController extends Controller
             $remember_me = $request->has('remember_me') ? true : false;
 
             try {
-                $user = User::where('email', $username)->first();
+                $user = User::where('username', $username)->first();
 
                 if (!$user)
                     return response()->json(['error2' => 'No user found with this username']);
@@ -52,7 +52,7 @@ class AuthController extends Controller
                 if ($user->active_status == '0' && !$user->roles)
                     return response()->json(['error2' => 'You are not authorized to login, contact HOD']);
 
-                if (!auth()->attempt(['email' => $username, 'password' => $password], $remember_me))
+                if (!auth()->attempt(['username' => $username, 'password' => $password], $remember_me))
                     return response()->json(['error2' => 'Your entered credentials are invalid']);
 
                 $userType = '';

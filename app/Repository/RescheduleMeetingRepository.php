@@ -8,6 +8,8 @@ use App\Models\AssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\mail\RescheduleMeetingMail;
+use Illuminate\Support\Facades\Mail;
 
 class RescheduleMeetingRepository
 {
@@ -83,9 +85,12 @@ class RescheduleMeetingRepository
             // logic to send sms and email
             $members = AssignMemberToMeeting::with(['member'])->where('meeting_id', $request->meeting_id)->get();
 
+            $scheduleMeeting = ScheduleMeeting::with(['agenda', 'meeting'])->where('id', $request->schedule_meeting_id)->first();
+            $rescheduleMeeting = ScheduleMeeting::with(['agenda', 'meeting'])->where('id', $reScheduleMeeting->id)->first();
+
             foreach ($members as $member) {
                 Log::info('Sms Send to number' . $member->member->contact_number);
-                Log::info('email Send to id' . $member->member->email);
+                Mail::to($member->member->email)->send(new RescheduleMeetingMail($scheduleMeeting, $rescheduleMeeting));
             }
             // end of send sms and email login
 

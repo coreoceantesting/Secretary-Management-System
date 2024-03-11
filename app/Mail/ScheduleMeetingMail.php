@@ -16,9 +16,10 @@ class ScheduleMeetingMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    protected $data;
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -37,7 +38,10 @@ class ScheduleMeetingMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'schedule-meeting.mail',
+            with: [
+                'data' => $this->data
+            ]
         );
     }
 
@@ -48,6 +52,8 @@ class ScheduleMeetingMail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            storage_path('app/public/' . $this->data->file),
+        ];
     }
 }
