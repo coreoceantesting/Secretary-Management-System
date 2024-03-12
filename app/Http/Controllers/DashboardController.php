@@ -34,6 +34,8 @@ class DashboardController extends Controller
 
         $tharav = Tharav::count();
 
+        $scheduleMeetings = ScheduleMeeting::with(['meeting', 'proceedingRecord'])->where('is_meeting_reschedule', 0)->get();
+        // return $scheduleMeetings;
         return view('dashboard')->with([
             'goshwara' => $goshwara,
             'agenda' => $agenda,
@@ -43,6 +45,7 @@ class DashboardController extends Controller
             'question' => $question,
             'proceedingRecord' => $proceedingRecord,
             'tharav' => $tharav,
+            'scheduleMeetings' => $scheduleMeetings
         ]);
     }
 

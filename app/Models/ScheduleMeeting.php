@@ -9,6 +9,7 @@ use App\Models\Agenda;
 use App\Models\SuplimentryAgenda;
 use App\Models\AssignScheduleMeetingDepartment;
 use App\Models\Question;
+use App\Models\ProceedingRecord;
 
 class ScheduleMeeting extends Model
 {
@@ -44,5 +45,10 @@ class ScheduleMeeting extends Model
     public function questions()
     {
         return $this->hasMany(Question::class, 'schedule_meeting_id', 'id');
+    }
+
+    public function proceedingRecord()
+    {
+        return $this->hasOne(ProceedingRecord::class, 'schedule_meeting_id', 'id');
     }
 }
