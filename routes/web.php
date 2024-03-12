@@ -21,6 +21,7 @@ use App\Http\Controllers\SuplimentryAgendaController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProceedingRecordController;
 use App\Http\Controllers\TharavController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,6 +117,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('tharav/getScheduleMeeting/{id}', [TharavController::class, 'getScheduleMeeting'])->name('tharav.getScheduleMeeting');
     Route::get('tharav/get-schedule_meeting-department/{id}', [TharavController::class, 'getScheduleMeetingDepartment'])->name('tharav.getScheduleMeetingDepartment');
     Route::resource('tharav', TharavController::class);
+
+    Route::get('report/schedule-meeting', [ReportController::class, 'scheduleMeetingReport'])->name('report.schedule-meeting');
 });
 
 

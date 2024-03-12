@@ -222,6 +222,12 @@
                 </li>
                 @endcan
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('report.*') ? 'active' : '' }}" href="{{ route('report.schedule-meeting') }}">
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">Meeting Report</span>
+                    </a>
+                </li>
 
             </ul>
         </div>
