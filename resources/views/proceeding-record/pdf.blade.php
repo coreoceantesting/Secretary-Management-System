@@ -157,7 +157,7 @@
                                 @foreach($suplimentryAgendas as $suplimentryAgenda)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <th>{{ $suplimentryAgenda->name }}</th>
+                                    <td>{{ $suplimentryAgenda->name }}</td>
                                     <td><a href="{{ asset('storage/'.$suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach

@@ -16,15 +16,15 @@
 
                 <div class="col-xl-4 col-lg-4 col-sm-12 col-12">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="fw-medium text-muted mb-0">
+                                    <div>
+                                        <div class="text-center">
+                                            <p class="fw-medium text-dark mb-0">
                                                 Total Goshwara
                                             </p>
-                                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <h2 class="mt-2 ff-secondary fw-semibold">
                                                 <span class="counter-value" data-target="{{ $goshwara }}">{{ round($goshwara) }}</span>
                                             </h2>
                                         </div>
@@ -43,15 +43,15 @@
                         </div>
                         <!-- end col-->
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="fw-medium text-muted mb-0">
+                                    <div>
+                                        <div class="text-center">
+                                            <p class="fw-medium text-dark mb-0">
                                                 Total Agenda
                                             </p>
-                                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <h2 class="mt-2 ff-secondary fw-semibold">
                                                 <span class="counter-value" data-target="{{ $agenda }}">{{ round($agenda) }}</span>
                                             </h2>
                                         </div>
@@ -71,15 +71,15 @@
                         <!-- end col-->
 
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="fw-medium text-muted mb-0">
+                                    <div>
+                                        <div class="text-center">
+                                            <p class="fw-medium text-dark mb-0">
                                                 Total Suplimentry Agenda
                                             </p>
-                                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <h2 class="mt-2 ff-secondary fw-semibold">
                                                 <span class="counter-value" data-target="{{ round($suplimentryAgenda) }}">{{ round($suplimentryAgenda) }}</span>
                                             </h2>
                                         </div>
@@ -98,15 +98,15 @@
                         </div>
                         <!-- end col-->
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="fw-medium text-muted mb-0">
+                                    <div>
+                                        <div class="text-center">
+                                            <p class="fw-medium text-dark mb-0">
                                                 Total Schedule Meeting
                                             </p>
-                                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <h2 class="mt-2 ff-secondary fw-semibold">
                                                 <span class="counter-value" data-target="{{ round($scheduleMeeting) }}">{{ round($scheduleMeeting) }}</span>
                                             </h2>
                                         </div>
@@ -125,15 +125,15 @@
                         </div>
                         <!-- end col-->
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="fw-medium text-muted mb-0">
+                                    <div>
+                                        <div class="text-center">
+                                            <p class="fw-medium text-dark mb-0">
                                                 Total Reschedule Meeting
                                             </p>
-                                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <h2 class="mt-2 ff-secondary fw-semibold">
                                                 <span class="counter-value" data-target="{{ round($rescheduleMeeting) }}">{{ round($rescheduleMeeting) }}</span>
                                             </h2>
                                         </div>
@@ -152,15 +152,15 @@
                         </div>
                         <!-- end col-->
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="fw-medium text-muted mb-0">
+                                    <div>
+                                        <div class="text-center">
+                                            <p class="fw-medium text-dark mb-0">
                                                 Total Question
                                             </p>
-                                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <h2 class="mt-2 ff-secondary fw-semibold">
                                                 <span class="counter-value" data-target="{{ round($question) }}">{{ round($question) }}</span>
                                             </h2>
                                         </div>
@@ -179,15 +179,15 @@
                         </div>
                         <!-- end col-->
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="fw-medium text-muted mb-0">
+                                    <div>
+                                        <div class="text-center">
+                                            <p class="fw-medium text-dark mb-0">
                                                 Total Proceeding Record
                                             </p>
-                                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <h2 class="mt-2 ff-secondary fw-semibold">
                                                 <span class="counter-value" data-target="{{ round($proceedingRecord) }}">{{ round($proceedingRecord) }}</span>
                                             </h2>
                                         </div>
@@ -206,15 +206,15 @@
                         </div>
                         <!-- end col-->
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="fw-medium text-muted mb-0">
+                                    <div>
+                                        <div class="text-center">
+                                            <p class="fw-medium text-dark mb-0">
                                                 Total Tharav
                                             </p>
-                                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                            <h2 class="mt-2 ff-secondary fw-semibold">
                                                 <span class="counter-value" data-target="{{ round($tharav) }}">{{ round($tharav) }}</span>
                                             </h2>
                                         </div>
