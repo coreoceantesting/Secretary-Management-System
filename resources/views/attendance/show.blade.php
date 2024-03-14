@@ -161,6 +161,11 @@
                             inTime: inTime,
                             outTime: outTime
                         },
+                        beforeSend: function()
+                        {
+                            $('#preloader').css('opacity', '0.5');
+                            $('#preloader').css('visibility', 'visible');
+                        },
                         success: function(data)
                         {
                             if (!data.error2)
@@ -176,12 +181,24 @@
                                 $("#editSubmit").prop('disabled', false);
                                 resetErrors();
                                 printErrMsg(responseObject.responseJSON.errors);
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
                             },
                             500: function(responseObject, textStatus, errorThrown) {
                                 $("#editSubmit").prop('disabled', false);
                                 swal("Error occured!", "Something went wrong please try again", "error");
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
                             }
-                        }
+                        },
+                        error: function(xhr) {
+                            $('#preloader').css('opacity', '0');
+                            $('#preloader').css('visibility', 'hidden');
+                        },
+                        complete: function() {
+                            $('#preloader').css('opacity', '0');
+                            $('#preloader').css('visibility', 'hidden');
+                        },
                     });
                 })
             })

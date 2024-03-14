@@ -138,6 +138,11 @@
             data: formdata,
             contentType: false,
             processData: false,
+            beforeSend: function()
+            {
+                $('#preloader').css('opacity', '0.5');
+                $('#preloader').css('visibility', 'visible');
+            },
             success: function(data)
             {
                 $("#addSubmit").prop('disabled', false);
@@ -155,12 +160,24 @@
                     $("#addSubmit").prop('disabled', false);
                     resetErrors();
                     printErrMsg(responseObject.responseJSON.errors);
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
                 },
                 500: function(responseObject, textStatus, errorThrown) {
                     $("#addSubmit").prop('disabled', false);
                     swal("Error occured!", "Something went wrong please try again", "error");
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
                 }
-            }
+            },
+            error: function(xhr) {
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
+            complete: function() {
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
         });
 
     });
@@ -188,6 +205,11 @@
                 type: 'GET',
                 contentType: false,
                 processData: false,
+                beforeSend: function()
+                {
+                    $('#preloader').css('opacity', '0.5');
+                    $('#preloader').css('visibility', 'visible');
+                },
                 success: function(data) {
                     let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date <span class="text-danger">*</span></label>
                                 <select class="form-select col-sm-12" id="schedule_meeting_id" name="schedule_meeting_id">
@@ -199,7 +221,15 @@
                     html += `</select>
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>`;
                     $('body').find('.selectScheduleMeeting').html(html);
-                }
+                },
+                error: function(xhr) {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+                complete: function() {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
             });
         }
     });
