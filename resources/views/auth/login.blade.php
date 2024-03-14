@@ -28,7 +28,8 @@
                         <div class="card overflow-hidden card-bg-fill border-0 card-border-effect-none">
                             <div class="row g-0">
                                 <div class="col-lg-6">
-                                    <div class="p-lg-5 p-4 auth-one-bg h-100">
+                                    <img src="https://mycounto.com/wp-content/uploads/2023/02/how-has-the-role-of-a-company-secretary-evolved-over-time.jpg" alt="" width="100%" height="100%">
+                                    <div class="p-lg-5 p-4 auth-one-bg h-100 d-none">
                                         <div class="bg-overlay"></div>
                                         <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mb-4">
@@ -62,24 +63,22 @@
 
                                 <div class="col-lg-6">
                                     <div class="p-lg-5 p-4">
-                                        <div>
-                                            <h5 class="text-primary">Welcome Back !</h5>
-                                            <p class="text-muted">Sign in to continue to {{ config('app.name') }}.</p>
+                                        <div class="text-center">
+                                            <img  src="{{ asset('admin/images/login-logo.png') }}" height="50%" width="50%" alt="">
+                                            <h5 class="text-white text-center pt-3">लॉगिन मध्ये आपले स्वागत आहे</h5>
+
                                         </div>
 
                                         <div class="mt-4">
                                             <form id="loginForm">
                                                 @csrf
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Username</label>
+                                                    <label for="username" class="form-label">Username (वापरकर्तानाव)</label>
                                                     <input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <div class="float-end">
-                                                        <a href="auth-pass-reset-cover.html" class="text-muted">Forgot password?</a>
-                                                    </div>
-                                                    <label class="form-label" for="password-input">Password</label>
+                                                    <label class="form-label" for="password-input">Password (पासवर्ड)</label>
                                                     <div class="position-relative auth-pass-inputgroup mb-3">
                                                         <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" id="password" name="password" >
                                                         <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
@@ -98,9 +97,6 @@
                                             </form>
                                         </div>
 
-                                        <div class="mt-5 text-center">
-                                            <p class="mb-0">Don't have an account ? <a href="auth-signup-cover.html" class="fw-semibold text-primary text-decoration-underline"> Signup</a> </p>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +116,7 @@
                             <p class="mb-0">&copy;
                                 <script>
                                     document.write(new Date().getFullYear())
-                                </script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                                </script> Panvel. Crafted with <i class="mdi mdi-heart text-danger"></i>
                             </p>
                         </div>
                     </div>
