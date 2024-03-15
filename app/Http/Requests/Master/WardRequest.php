@@ -23,12 +23,12 @@ class WardRequest extends FormRequest
     {
         if ($this->edit_model_id) {
             $rule = [
-                'name' => "required|regex:/^[a-zA-Z0-9 ]+$/u",
+                'name' => "required|unique:wards,name,$this->edit_model_id,id,deleted_at,NULL|regex:/^[a-zA-Z0-9 ]+$/u",
                 'initial' => 'required'
             ];
         } else {
             $rule = [
-                'name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+                'name' => 'required|unique:wards,name,NULL,NULL,deleted_at,NULL|regex:/^[a-zA-Z0-9 ]+$/u',
                 'initial' => 'required'
             ];
         }

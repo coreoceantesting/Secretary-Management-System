@@ -407,13 +407,13 @@
             },
             success: function(data) {
                 $("#addSubmit").prop('disabled', false);
-                if (!data.error2)
+                if (!data.error)
                     swal("Successful!", data.success, "success")
                     .then((action) => {
                         window.location.href = '{{ route('users.index') }}';
                     });
                 else
-                    swal("Error!", data.error2, "error");
+                    swal("Error!", data.error, "error");
             },
             statusCode: {
                 422: function(responseObject, textStatus, jqXHR) {
@@ -478,14 +478,14 @@
             },
             success: function(data) {
                 $("#changePasswordSubmit").prop('disabled', false);
-                if (!data.error2)
+                if (!data.error)
                     swal("Successful!", data.success, "success")
                     .then((action) => {
                         $("#change-password-modal").modal('hide');
                         $("#changePasswordSubmit").prop('disabled', false);
                     });
                 else
-                    swal("Error!", data.error2, "error");
+                    swal("Error!", data.error, "error");
             },
             statusCode: {
                 422: function(responseObject, textStatus, jqXHR) {
@@ -620,13 +620,13 @@
                 },
                 success: function(data) {
                     $("#editSubmit").prop('disabled', false);
-                    if (!data.error2)
+                    if (!data.error)
                         swal("Successful!", data.success, "success")
                         .then((action) => {
                             window.location.href = '{{ route('users.index') }}';
                         });
                     else
-                        swal("Error!", data.error2, "error");
+                        swal("Error!", data.error, "error");
                 },
                 statusCode: {
                     422: function(responseObject, textStatus, jqXHR) {
@@ -710,13 +710,13 @@
             processData: false,
             success: function(data) {
                 $("#assignRoleSubmit").prop('disabled', false);
-                if (!data.error2)
+                if (!data.error)
                     swal("Successful!", data.success, "success")
                     .then((action) => {
                         $("#assign-role-modal").modal('hide');
                     });
                 else
-                    swal("Error!", data.error2, "error");
+                    swal("Error!", data.error, "error");
             },
             statusCode: {
                 422: function(responseObject, textStatus, jqXHR) {

@@ -168,13 +168,13 @@
                         },
                         success: function(data)
                         {
-                            if (!data.error2)
+                            if (!data.error)
                                 swal("Successful!", data.success, "success")
                                     .then((action) => {
                                         $('#markButton'+data.id).prop('disabled', false);
                                     });
                             else
-                                swal("Error!", data.error2, "error");
+                                swal("Error!", data.error, "error");
                         },
                         statusCode: {
                             422: function(responseObject, textStatus, jqXHR) {

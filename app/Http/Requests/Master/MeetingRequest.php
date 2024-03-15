@@ -21,12 +21,21 @@ class MeetingRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
-            'head_person_name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
-            'head_person_designation' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
-            'member_id.*' => 'required'
-        ];
+        if ($this->edit_model_id) {
+            return [
+                'name' => "required|unique:meetings,name,$this->edit_model_id,id,deleted_at,NULL|regex:/^[a-zA-Z0-9 ]+$/u",
+                'head_person_name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+                'head_person_designation' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+                'member_id.*' => 'required'
+            ];
+        } else {
+            return [
+                'name' => "required|unique:meetings,name,NULL,NULL,deleted_at,NULL|regex:/^[a-zA-Z0-9 ]+$/u",
+                'head_person_name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+                'head_person_designation' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+                'member_id.*' => 'required'
+            ];
+        }
     }
 
     public function messages()

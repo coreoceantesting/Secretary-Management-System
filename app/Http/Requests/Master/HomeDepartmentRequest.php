@@ -23,12 +23,12 @@ class HomeDepartmentRequest extends FormRequest
     {
         if ($this->edit_model_id) {
             $rule = [
-                'name' => "required|regex:/^[a-zA-Z0-9 ]+$/u",
+                'name' => "required|unique:departments,name,$this->edit_model_id,id,deleted_at,NULL,is_home_department,1|regex:/^[a-zA-Z0-9 ]+$/u",
                 'initial' => 'required'
             ];
         } else {
             $rule = [
-                'name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+                'name' => 'required|unique:departments,name,NULL,NULL,deleted_at,NULL,is_home_department,1|regex:/^[a-zA-Z0-9 ]+$/u',
                 'initial' => 'required'
             ];
         }
