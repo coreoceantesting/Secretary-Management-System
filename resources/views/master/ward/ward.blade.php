@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Ward</x-slot>
-    <x-slot name="heading">Ward</x-slot>
+    <x-slot name="title">Ward(वार्ड)</x-slot>
+    <x-slot name="heading">Ward(वार्ड)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,18 +12,18 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Ward</h4>
+                            <h4 class="card-title">Add Ward(वार्ड जोडा)</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Ward Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Ward Name">
+                                    <label class="col-form-label" for="name">Ward Name(वार्ड नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Ward Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Ward Initial">
+                                    <label class="col-form-label" for="initial">Initial(वार्ड आरंभिक) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Ward Initial" required>
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
@@ -47,19 +47,19 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Ward</h4>
+                            <h4 class="card-title">Edit Ward(वार्ड संपादित करा)</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Ward Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Ward Name">
+                                    <label class="col-form-label" for="name">Ward Name(वार्ड नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Ward Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Ward Initial">
+                                    <label class="col-form-label" for="initial">Initial(वार्ड आरंभिक) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Ward Initial" required>
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>

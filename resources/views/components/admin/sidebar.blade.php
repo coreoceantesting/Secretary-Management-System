@@ -51,27 +51,27 @@
                         <ul class="nav nav-sm flex-column">
                             @can('department.view')
                             <li class="nav-item">
-                                <a href="{{ route('master.department.index') }}" class="nav-link {{ request()->routeIs('master.department.*') ? 'active' : '' }}" data-key="t-horizontal">Department</a>
+                                <a href="{{ route('master.department.index') }}" class="nav-link {{ request()->routeIs('master.department.*') ? 'active' : '' }}" data-key="t-horizontal">Department(विभाग)</a>
                             </li>
                             @endcan
                             @can('home_department.view')
                             <li class="nav-item">
-                                <a href="{{ route('master.home-department.index') }}" class="nav-link {{ request()->routeIs('master.home-department.*') ? 'active' : '' }}" data-key="t-horizontal">Home&nbsp;Department</a>
+                                <a href="{{ route('master.home-department.index') }}" class="nav-link {{ request()->routeIs('master.home-department.*') ? 'active' : '' }}" data-key="t-horizontal">Home&nbsp;Department(गृह विभाग)</a>
                             </li>
                             @endcan
                             @can('wards.view')
                             <li class="nav-item">
-                                <a href="{{ route('master.ward.index') }}" class="nav-link {{ request()->routeIs('master.ward.*') ? 'active' : '' }}" data-key="t-horizontal">Ward</a>
+                                <a href="{{ route('master.ward.index') }}" class="nav-link {{ request()->routeIs('master.ward.*') ? 'active' : '' }}" data-key="t-horizontal">Ward(वार्ड)</a>
                             </li>
                             @endcan
                             @can('member.view')
                             <li class="nav-item">
-                                <a href="{{ route('master.member.index') }}" class="nav-link {{ request()->routeIs('master.member.*') ? 'active' : '' }}" data-key="t-horizontal">Member</a>
+                                <a href="{{ route('master.member.index') }}" class="nav-link {{ request()->routeIs('master.member.*') ? 'active' : '' }}" data-key="t-horizontal">Member(सदस्य)</a>
                             </li>
                             @endcan
                             @can('meeting.view')
                             <li class="nav-item">
-                                <a href="{{ route('master.meeting.index') }}" class="nav-link {{ request()->routeIs('master.meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Meeting</a>
+                                <a href="{{ route('master.meeting.index') }}" class="nav-link {{ request()->routeIs('master.meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Meeting(बैठक)</a>
                             </li>
                             @endcan
                         </ul>
@@ -90,12 +90,12 @@
                         <ul class="nav nav-sm flex-column">
                             @can('users.view')
                                 <li class="nav-item">
-                                    <a href="{{ route('users.index') }}" class="nav-link" data-key="t-horizontal">Users</a>
+                                    <a href="{{ route('users.index') }}" class="nav-link" data-key="t-horizontal">Users(वापरकर्ते)</a>
                                 </li>
                             @endcan
                             @can('roles.view')
                                 <li class="nav-item">
-                                    <a href="{{ route('roles.index') }}" class="nav-link" data-key="t-horizontal">Roles</a>
+                                    <a href="{{ route('roles.index') }}" class="nav-link" data-key="t-horizontal">Roles(भूमिका)</a>
                                 </li>
                             @endcan
                         </ul>
@@ -113,19 +113,19 @@
                         <ul class="nav nav-sm flex-column">
                             @can('goshwara.view')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.index') }}" class="nav-link {{ request()->routeIs('goshwara.index') ? 'active' : '' }}" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Goshwara&nbsp;List @else Received&nbsp;Goshwara @endif</a>
+                                <a href="{{ route('goshwara.index') }}" class="nav-link {{ request()->routeIs('goshwara.index') ? 'active' : '' }}" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Goshwara&nbsp;List(गोश्वरा यादी) @else Received&nbsp;Goshwara(गोश्वरा प्राप्त झाला) @endif</a>
                             </li>
                             @endcan
 
                             @can('goshwara.create')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.create') }}" class="nav-link {{ request()->routeIs('goshwara.create') ? 'active' : '' }}" data-key="t-horizontal">Upload&nbsp;Goshwara</a>
+                                <a href="{{ route('goshwara.create') }}" class="nav-link {{ request()->routeIs('goshwara.create') ? 'active' : '' }}" data-key="t-horizontal">Upload&nbsp;Goshwara(गोश्वरा अपलोड करा)</a>
                             </li>
                             @endcan
 
                             @can('goshwara.send')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.send') }}" class="nav-link {{ request()->routeIs('goshwara.send') ? 'active' : '' }}" data-key="t-horizontal">Send&nbsp;Goshwara</a>
+                                <a href="{{ route('goshwara.send') }}" class="nav-link {{ request()->routeIs('goshwara.send') ? 'active' : '' }}" data-key="t-horizontal">Send&nbsp;Goshwara(गोश्वरा पाठवा)</a>
                             </li>
                             @endcan
                         </ul>
@@ -145,13 +145,13 @@
                         <ul class="nav nav-sm flex-column">
                             @can('agenda.view')
                             <li class="nav-item">
-                                <a href="{{ route('agenda.index') }}" class="nav-link {{ request()->routeIs('agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Agenda List</a>
+                                <a href="{{ route('agenda.index') }}" class="nav-link {{ request()->routeIs('agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Agenda List(अजेंडा यादी)</a>
                             </li>
                             @endcan
 
                             @can('suplimentry-agenda.view')
                             <li class="nav-item">
-                                <a href="{{ route('suplimentry-agenda.index') }}" class="nav-link {{ request()->routeIs('suplimentry-agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Suplimentry Agenda</a>
+                                <a href="{{ route('suplimentry-agenda.index') }}" class="nav-link {{ request()->routeIs('suplimentry-agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Suplimentry Agenda(पूरक अजेंडा)</a>
                             </li>
                             @endcan
                         </ul>
@@ -170,13 +170,13 @@
                         <ul class="nav nav-sm flex-column">
                             @can('schedule_meeting.view')
                             <li class="nav-item">
-                                <a href="{{ route('schedule-meeting.index') }}" class="nav-link" data-key="t-horizontal">Schedule&nbsp;Meeting</a>
+                                <a href="{{ route('schedule-meeting.index') }}" class="nav-link" data-key="t-horizontal">Schedule&nbsp;Meeting(बैठकीचे वेळापत्रक)</a>
                             </li>
                             @endcan
 
                             @can('reschedule_meeting.view')
                             <li class="nav-item">
-                                <a href="{{ route('reschedule-meeting.index') }}" class="nav-link" data-key="t-horizontal">Reschedule&nbsp;Meeting</a>
+                                <a href="{{ route('reschedule-meeting.index') }}" class="nav-link" data-key="t-horizontal">Reschedule&nbsp;Meeting(मीटिंग पुन्हा शेड्युल करा)</a>
                             </li>
                             @endcan
                         </ul>

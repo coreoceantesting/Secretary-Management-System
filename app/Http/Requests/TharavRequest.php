@@ -28,6 +28,7 @@ class TharavRequest extends FormRequest
             'date' => 'required',
             'time' => 'required',
             'uploadfile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+            'department_id' => 'required'
         ];
     }
 
@@ -42,6 +43,7 @@ class TharavRequest extends FormRequest
             'date.required' => 'Please enter date',
             'time.required' => 'Please enter time',
             'remark.required' => 'Please enter name',
+            'department_id.required' => 'Please select atleast one department'
         ];
     }
 }

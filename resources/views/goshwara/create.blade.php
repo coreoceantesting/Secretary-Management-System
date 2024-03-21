@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Upload Goshwara</x-slot>
-    <x-slot name="heading">Goshwara</x-slot>
+    <x-slot name="title">Upload Goshwara(गोश्वरा अपलोड करा)</x-slot>
+    <x-slot name="heading">Goshwara(गोश्वरा)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,19 +12,23 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Upload Goshwara</h4>
+                            <h4 class="card-title">Upload Goshwara(गोश्वरा अपलोड करा)</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="goshwarafile">Select Goshwara <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara">
-                                    <span class="text-danger is-invalid goshwarafile_err"></span>
+                                    <label class="col-form-label" for="goshwarafile">Select Goshwara(गोश्वरा निवडा) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara" required>
+                                    @error('goshwarafile')
+                                    <span class="text-danger is-invalid goshwarafile_err">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label" for="remark">Remark <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" id="remark" name="remark" placeholder="Enter remark">{{ old('remark') }}</textarea>
-                                    <span class="text-danger is-invalid remark_err"></span>
+                                    <label class="col-form-label" for="remark">Remark(शेरा) <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="remark" name="remark" placeholder="Enter remark" required>{{ old('remark') }}</textarea>
+                                    @error('remark')
+                                    <span class="text-danger is-invalid remark_err">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 

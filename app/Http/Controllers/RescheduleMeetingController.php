@@ -124,7 +124,7 @@ class RescheduleMeetingController extends Controller
         $mettingDetails = '<table class="table table-bordered mt-3">
                             <thead>
                                 <tr>
-                                    <th colspan="5">Old Meeting Details</th>
+                                    <th colspan="5">Old Meeting Details(जुन्या बैठकीचे तपशील)</th>
                                 </tr>
                                 <tr>
                                     <th>Agenda</th>

@@ -21,11 +21,21 @@ class SuplimentryAgendaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'schedule_meeting_id' => 'required',
-            'name' => 'required',
-            'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
-        ];
+
+
+        if ($this->edit_model_id) {
+            return [
+                'schedule_meeting_id' => 'required',
+                'name' => 'required',
+                'agendafile' => 'nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+            ];
+        } else {
+            return [
+                'schedule_meeting_id' => 'required',
+                'name' => 'required',
+                'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+            ];
+        }
     }
 
     public function messages()

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Question</x-slot>
-    <x-slot name="heading">Question</x-slot>
+    <x-slot name="title">Question(प्रश्न)</x-slot>
+    <x-slot name="heading">Question(प्रश्न)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,13 +12,13 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Question</h4>
+                        <h4 class="card-title">Add Question(प्रश्न जोडा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select name="meeting_id" id="meeting_id" class="form-select selectMeetingId">
+                                <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
+                                <select name="meeting_id" id="meeting_id" class="form-select selectMeetingId" required>
                                     <option value="">Select Meeting</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -28,18 +28,18 @@
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="question">Question <span class="text-danger">*</span></label>
-                                <input class="form-control" id="question" name="question" type="text" placeholder="Enter Question">
+                                <label class="col-form-label" for="question">Question(प्रश्न) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="question" name="question" type="text" placeholder="Enter Question" required>
                                 <span class="text-danger is-invalid question_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload File <span class="text-danger">*</span></label>
-                                <input class="form-control" id="uploadfile" name="uploadfile" type="file">
+                                <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="department_id">Select Department <span class="text-danger">*</span></label>
-                                <select name="department_id" id="department_id" class="form-select">
+                                <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
+                                <select name="department_id" id="department_id" class="form-select" required>
                                     <option value="">Select Department</option>
                                     @foreach($departments as $department)
                                     <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -67,14 +67,14 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Question</h4>
+                        <h4 class="card-title">Edit Question(प्रश्न संपादित करा)</h4>
                     </div>
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select name="meeting_id" id="meeting_id" class="form-select selectMeetingId">
+                                <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
+                                <select name="meeting_id" id="meeting_id" class="form-select selectMeetingId" required>
                                     <option value="">Select Meeting</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -84,19 +84,19 @@
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="question">Question <span class="text-danger">*</span></label>
-                                <input class="form-control" id="question" name="question" type="text" placeholder="Enter Question">
+                                <label class="col-form-label" for="question">Question(प्रश्न) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="question" name="question" type="text" placeholder="Enter Question" required>
                                 <span class="text-danger is-invalid question_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload File</label>
+                                <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल)</label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="department_id">Select Department <span class="text-danger">*</span></label>
-                                <select name="department_id" id="department_id" class="form-select selectMeetingId">
+                                <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
+                                <select name="department_id" id="department_id" class="form-select selectMeetingId" required>
                                     <option value="">Select Department</option>
                                     @foreach($departments as $department)
                                     <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -419,8 +419,8 @@
                     $('#preloader').css('visibility', 'visible');
                 },
                 success: function(data) {
-                    let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="schedule_meeting_id" name="schedule_meeting_id">
+                    let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date(शेड्यूल मीटिंग तारीख निवडा) <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12" id="schedule_meeting_id" name="schedule_meeting_id" required>
                                     <option value="">--Select Schedule Meeting--</option>
                                 `;
                     $.each(data.scheduleMeetings, function(key, val){

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Attendance</x-slot>
-    <x-slot name="heading">Attendance</x-slot>
+    <x-slot name="title">Attendance(उपस्थिती)</x-slot>
+    <x-slot name="heading">Attendance(उपस्थिती)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 

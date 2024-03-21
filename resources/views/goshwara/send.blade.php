@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Send Goshwara</x-slot>
-    <x-slot name="heading">Send Goshwara</x-slot>
+    <x-slot name="title">Send Goshwara(गोश्वरा पाठवा)</x-slot>
+    <x-slot name="heading">Send Goshwara(गोश्वरा पाठवा)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
         {{-- Edit Form --}}
@@ -10,19 +10,19 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Goshwara</h4>
+                            <h4 class="card-title">Edit Goshwara(गोश्वरा संपादित करा)</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="goshwarafile">Select Goshwara <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="goshwarafile">Select Goshwara(गोश्वरा निवडा)</label>
                                     <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara">
                                     <span class="text-danger is-invalid goshwarafile_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="remark">Remark <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" id="remark" name="remark" placeholder="Enter remark"></textarea>
+                                    <label class="col-form-label" for="remark">Remark(शेरा) <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="remark" required name="remark" placeholder="Enter remark"></textarea>
                                     <span class="text-danger is-invalid remark_err"></span>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Send Goshwara List</h4>
+                        <h4 class="card-title">Send Goshwara List(गोश्वराची यादी पाठवा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\AgendaRepository;
+use App\Http\Requests\AgendaRequest;
 
 class AgendaController extends Controller
 {
@@ -23,7 +24,7 @@ class AgendaController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(AgendaRequest $request)
     {
         $agenda = $this->agendaRepository->store($request);
 
@@ -49,7 +50,7 @@ class AgendaController extends Controller
         return $response;
     }
 
-    public function update(Request $request, $id)
+    public function update(AgendaRequest $request, $id)
     {
         $agenda = $this->agendaRepository->update($request, $id);
 

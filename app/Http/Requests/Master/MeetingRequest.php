@@ -42,6 +42,8 @@ class MeetingRequest extends FormRequest
     {
         return [
             'name' => 'Please enter name',
+            'name.regex' => $this->name . ' is invalid format',
+            'name.unique' => $this->name . ' name already exists in meeting.',
             'head_person_name' => 'Please enter head person name',
             'head_person_designation' => 'Please enter head person designation',
         ];

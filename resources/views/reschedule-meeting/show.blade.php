@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Schedule Meeting</x-slot>
-    <x-slot name="heading">Schedule Meeting</x-slot>
+    <x-slot name="title">Reschedule Meeting(मीटिंग पुन्हा शेड्युल करा)</x-slot>
+    <x-slot name="heading">Reschedule Meeting(मीटिंग पुन्हा शेड्युल करा)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -9,7 +9,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Schedule Meeting</h4>
+                        <h4 class="card-title">Reschedule Meeting(मीटिंग पुन्हा शेड्युल करा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -17,54 +17,54 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="w-25">Agenda Name</th>
+                                            <th class="w-25">Agenda Name(अजेंडाचे नाव)</th>
                                             <td>{{ $rescheduleMeeting->agenda?->name }}</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th>Agenda File</th>
+                                            <th>Agenda File(अजेंडा फाइल)</th>
                                             <td><a href="{{ asset('storage/'.$rescheduleMeeting->agenda?->file) }}" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
                                         <tr>
-                                            <th>Meeting Name</th>
+                                            <th>Meeting Name(संमेलनाचे नाव)</th>
                                             <td>{{ $rescheduleMeeting->meeting?->name }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Department</th>
+                                            <th>Department(विभाग)</th>
                                             <td>
                                                 @foreach($rescheduleMeeting->assignScheduleMeetingDepartment as $department)
-                                                {{ $department?->department->name }},&nbsp;
+                                                {{ $department?->department?->name }},&nbsp;
                                                 @endforeach
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Date</th>
+                                            <th>Date(तारीख)</th>
                                             <td>{{ date('d-m-Y', strtotime($rescheduleMeeting->date)) }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Time</th>
+                                            <th>Time(वेळ)</th>
                                             <td>{{ date('h:i A', strtotime($rescheduleMeeting->time)) }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Place</th>
+                                            <th>Place(ठिकाण)</th>
                                             <td>{{ $rescheduleMeeting->place }}</td>
                                         </tr>
                                         <tr>
-                                            <th>File</th>
+                                            <th>File(फाईल)</th>
                                             <td><a href="{{ asset('storage/'.$rescheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                         </tr>
                                         @if($rescheduleMeeting->is_meeting_cancel)
                                         <tr>
-                                            <th>Cancel Meeting</th>
+                                            <th>Cancel Meeting(रद्द मीटिंग)</th>
                                             <td>Yes</td>
                                         </tr>
                                         <tr>
-                                            <th>Cancel Remark</th>
+                                            <th>Cancel Remark(रद्द टिप्पणी)</th>
                                             <td>{{ ($rescheduleMeeting->cancel_remark) ? $rescheduleMeeting->cancel_remark : '-' }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Cancel Date</th>
+                                            <th>Cancel Date(रद्द तारीख)</th>
                                             <td>{{ date('d-m-Y', strtotime($rescheduleMeeting->cancel_meeting_date)) }}</td>
                                         </tr>
                                         @endif

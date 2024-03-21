@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Meeting</x-slot>
-    <x-slot name="heading">Meeting</x-slot>
+    <x-slot name="title">Meeting(बैठक)</x-slot>
+    <x-slot name="heading">Meeting(बैठक)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,23 +12,23 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Meeting</h4>
+                            <h4 class="card-title">Add Meeting(बैठक जोडा)</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Meeting Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Meeting Name">
+                                    <label class="col-form-label" for="name">Meeting Name(बैठक नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Meeting Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Head Person Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="head_person_name" name="head_person_name" type="text" placeholder="Enter Department Head Person Name">
+                                    <label class="col-form-label" for="initial">Head Person Name(प्रमुख व्यक्तीचे नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="head_person_name" name="head_person_name" type="text" placeholder="Enter Head Person Name" required>
                                     <span class="text-danger is-invalid head_person_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Head Person Designation <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="head_person_designation" name="head_person_designation" type="text" placeholder="Enter Department Head Person Designation">
+                                    <label class="col-form-label" for="initial">Head Person Designation(प्रमुख व्यक्तीचे पद) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="head_person_designation" name="head_person_designation" type="text" placeholder="Enter Head Person Designation" required>
                                     <span class="text-danger is-invalid head_person_designation_err"></span>
                                 </div>
 
@@ -68,24 +68,24 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Meeting</h4>
+                            <h4 class="card-title">Edit Meeting(बैठक संपादित करा)</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Meeting Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Meeting Name">
+                                    <label class="col-form-label" for="name">Meeting Name(बैठक नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Meeting Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Head Person Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="head_person_name" name="head_person_name" type="text" placeholder="Enter Department Head Person Name">
+                                    <label class="col-form-label" for="initial">Head Person Name(प्रमुख व्यक्तीचे नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="head_person_name" name="head_person_name" type="text" placeholder="Enter Head Person Name" required>
                                     <span class="text-danger is-invalid head_person_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Head Person Designation <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="head_person_designation" name="head_person_designation" type="text" placeholder="Enter Department Head Person Designation">
+                                    <label class="col-form-label" for="initial">Head Person Designation(प्रमुख व्यक्तीचे पद) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="head_person_designation" name="head_person_designation" type="text" placeholder="Enter Head Person Designation" required>
                                     <span class="text-danger is-invalid head_person_designation_err"></span>
                                 </div>
                             </div>

@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Proceeding record pdf</title>
+  <title>Proceeding Record PDF</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    body {
+        font-family: 'freeserif', 'normal';
+    }
     table {
-    		    font-family: arial, sans-serif;
-    		    border-collapse: collapse;
-    		    width: 100%;
-    		}
-    		td, th {
-    		    border: 1px solid #dddddd;
-    		    text-align: left;
-    		    padding: 8px;
-    		}
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
   </style>
 </head>
 <body>
@@ -87,7 +90,7 @@
                                 @php $data = ''; @endphp
                                 @forelse ($departments as $department)
                                     @php
-                                       $data .= $department?->department->name. ', ';
+                                       $data .= $department?->department?->name. ', ';
                                     @endphp
                                 @empty
                                     @php

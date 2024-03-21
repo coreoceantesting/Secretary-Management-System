@@ -23,21 +23,23 @@ class ScheduleMeetingRequest extends FormRequest
     {
         if ($this->edit_model_id) {
             $rule = [
+                'agenda_id' => 'required',
                 'agendafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
                 'meeting_id' => 'required',
                 'date' => 'required',
                 'time' => 'required',
                 'place' => 'required',
-                'department_id.*' => 'required'
+                'department_id' => 'required'
             ];
         } else {
             $rule = [
+                'agenda_id' => 'required',
                 'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
                 'meeting_id' => 'required',
                 'date' => 'required',
                 'time' => 'required',
                 'place' => 'required',
-                'department_id.*' => 'required'
+                'department_id' => 'required'
             ];
         }
 
@@ -47,6 +49,7 @@ class ScheduleMeetingRequest extends FormRequest
     public function messages()
     {
         return [
+            'agenda_id.required' => 'Please select Agenda',
             'agendafile.required' => 'Please select file',
             'agendafile.mimes' => 'Only pdf and doc file supported',
             'agendafile.max' => 'File must be less than 2mb',
@@ -54,6 +57,7 @@ class ScheduleMeetingRequest extends FormRequest
             'date.required' => 'Please select date',
             'time.required' => 'Please select time',
             'time.place' => 'Please enter place',
+            'department_id.required' => "Please selected atleast one department"
         ];
     }
 }

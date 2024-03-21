@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Attendance</x-slot>
-    <x-slot name="heading">Attendance</x-slot>
+    <x-slot name="title">Attendance(उपस्थिती)</x-slot>
+    <x-slot name="heading">Attendance(उपस्थिती)</x-slot>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
@@ -14,7 +14,7 @@
                         <input type="hidden" id="scheduleMeetingId" name="schedule_meeting_id" value="{{ $attendance->id }}">
                         <input type="hidden" id="meetingId" name="meeting_id" value="{{ $attendance->meeting_id }}">
                         <div class="card-header">
-                            <h4 class="card-title">Attendance</h4>
+                            <h4 class="card-title">Attendance(उपस्थिती)</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
@@ -22,19 +22,19 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th style="width: 25%">Agenda Name</th>
+                                                <th style="width: 25%">Agenda Name(अजेंडाचे नाव)</th>
                                                 <td>{{ $attendance->meeting?->name }}</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th>Agenda File</th>
+                                                <th>Agenda File(अजेंडा फाइल)</th>
                                                 <td><a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                             </tr>
 
 
                                             <tr>
-                                                <th>Suplimentry Agenda</th>
+                                                <th>Suplimentry Agenda(पूरक अजेंडा)</th>
                                                 <td>
                                                     @foreach($attendance->suplimentryAgenda as $suplimentryAgenda)
                                                     <a target="_blank" href="{{ asset('storage/'. $suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">{{ $suplimentryAgenda->name }}</a>
@@ -42,20 +42,20 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>Meeting Name</th>
+                                                <th>Meeting Name(संमेलनाचे नाव)</th>
                                                 <td>{{ $attendance->meeting?->name }}</td>
                                             </tr>
 
                                             <tr>
-                                                <th>Date</th>
+                                                <th>Date(तारीख)</th>
                                                 <td>{{ date('d-m-Y', strtotime($attendance->date)) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Time</th>
+                                                <th>Time(वेळ)</th>
                                                 <td>{{ date('h:i A', strtotime($attendance->time)) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Place</th>
+                                                <th>Place(ठिकाण)</th>
                                                 <td>{{ $attendance->place }}</td>
                                             </tr>
                                         </tbody>
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
 
-                            <h4>Mark Attendance</h4>
+                            <h4>Mark Attendance(उपस्थिती चिन्हांकित करा)</h4>
                             <div class="mb-3 row">
                                 <div class="col-12">
                                     <div class="table-responsive">
@@ -71,10 +71,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Member Name</th>
-                                                    <th>In time</th>
-                                                    <th>Out Time</th>
-                                                    <th>Action</th>
+                                                    <th>Member Name(सदस्याचे नाव)</th>
+                                                    <th>In time(वेळेत)</th>
+                                                    <th>Out Time(बाहेर वेळ)</th>
+                                                    <th>Action(कृती)</th>
                                                 </tr>
                                             </thead>
                                             <thead>

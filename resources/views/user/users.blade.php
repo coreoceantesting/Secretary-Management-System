@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Users</x-slot>
-    <x-slot name="heading">Users</x-slot>
+    <x-slot name="title">Users(वापरकर्ते)</x-slot>
+    <x-slot name="heading">Users(वापरकर्ते)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -11,7 +11,7 @@
                 <form class="theme-form" name="addForm" id="addForm">
                     @csrf
                     <div class="card-header pb-0">
-                        <h4>Create User</h4>
+                        <h4>Create User(वापरकर्ता तयार करा)</h4>
                     </div>
                     <div class="card-body pt-0">
 
@@ -19,36 +19,36 @@
                         <div class="mb-3 row">
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="fname">First Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="fname">First Name(पहिले नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="fname" name="fname" type="text" placeholder="Enter User First Name">
                                 <span class="text-danger is-invalid fname_err"></span>
                             </div>
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="mname">Middle Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="mname">Middle Name(मधले नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="mname" name="mname" type="text" placeholder="Enter User Middle Name">
                                 <span class="text-danger is-invalid mname_err"></span>
                             </div>
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="lname">Last Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="lname">Last Name(आडनाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="lname" name="lname" type="text" placeholder="Enter User Last Name">
                                 <span class="text-danger is-invalid lname_err"></span>
                             </div>
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="mobile">User Mobile <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="mobile">User Mobile(वापरकर्ता मोबाइल) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="contact" name="contact" type="number" min="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
                                     placeholder="Enter User Mobile">
                                 <span class="text-danger is-invalid contact_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="email">User Email <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="email">User Email(वापरकर्ता ईमेल) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="email" name="email" type="email" placeholder="Enter User Email">
                                 <span class="text-danger is-invalid email_err"></span>
                             </div>
 
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="gender">Select Gender <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="gender">Select Gender(लिंग निवडा) <span class="text-danger">*</span></label>
                                 <select class="form-select col-sm-12" id="gender" name="gender">
                                     <option value="">--Select Gender--</option>
                                     <option value="m">Male</option>
@@ -58,13 +58,13 @@
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="dob">Date Of Birth <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="dob">Date Of Birth(जन्मतारीख) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="dob" name="dob" type="date">
                                 <span class="text-danger is-invalid dob_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="role">Select User Type / Role <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="role">Select User Type / Role(वापरकर्ता प्रकार / भूमिका निवडा) <span class="text-danger">*</span></label>
                                 <select class="form-select col-sm-12 selectRole" id="role" name="role">
                                     <option value="">--Select Role--</option>
                                     @foreach ($roles as $role)
@@ -76,19 +76,19 @@
                             <div class="col-md-4 mt-3 d-none selectDepartment"></div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="username">Username <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="username">Username(वापरकर्तानाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="username" name="username" type="text" placeholder="Enter Username">
                                 <span class="text-danger is-invalid username_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="password">Password <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="password">Password(पासवर्ड) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="password" name="password" type="password" placeholder="********">
                                 <span class="text-danger is-invalid password_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="confirm_password">Confirm Password(पासवर्डची पुष्टी करा) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="confirm_password" name="confirm_password" type="password" placeholder="********">
                                 <span class="text-danger is-invalid confirm_password_err"></span>
                             </div>
@@ -112,7 +112,7 @@
                 @csrf
                 <section class="card">
                     <header class="card-header">
-                        <h4 class="card-title">Edit User</h4>
+                        <h4 class="card-title">Edit User(वापरकर्ता संपादित करा)</h4>
                     </header>
 
                     <div class="card-body py-2">
@@ -122,36 +122,36 @@
                         <div class="mb-3 row">
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="fname">First Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="fname">First Name(पहिले नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="fname" name="fname" type="text" placeholder="Enter User First Name">
                                 <span class="text-danger is-invalid fname_err"></span>
                             </div>
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="mname">Middle Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="mname">Middle Name(मधले नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="mname" name="mname" type="text" placeholder="Enter User Middle Name">
                                 <span class="text-danger is-invalid mname_err"></span>
                             </div>
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="lname">Last Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="lname">Last Name(आडनाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="lname" name="lname" type="text" placeholder="Enter User Last Name">
                                 <span class="text-danger is-invalid lname_err"></span>
                             </div>
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="mobile">User Mobile <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="mobile">User Mobile(वापरकर्ता मोबाइल) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="contact" name="contact" type="number" min="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
                                     placeholder="Enter User Mobile">
                                 <span class="text-danger is-invalid contact_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="email">User Email <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="email">User Email(वापरकर्ता ईमेल) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="email" name="email" type="email" placeholder="Enter User Email">
                                 <span class="text-danger is-invalid email_err"></span>
                             </div>
 
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="gender">Select Gender <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="gender">Select Gender(लिंग निवडा) <span class="text-danger">*</span></label>
                                 <select class="form-select col-sm-12" id="gender" name="gender">
                                     <option value="">--Select Gender--</option>
                                     <option value="m">Male</option>
@@ -161,13 +161,13 @@
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="dob">Date Of Birth <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="dob">Date Of Birth(जन्मतारीख) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="dob" name="dob" type="date">
                                 <span class="text-danger is-invalid dob_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="role">Select User Type / Role <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="role">Select User Type / Role(वापरकर्ता प्रकार / भूमिका निवडा) <span class="text-danger">*</span></label>
                                 <select class="js-example-basic-single col-sm-12 selectRole" id="role" name="role">
                                     <option value="">--Select Role--</option>
                                     @foreach ($roles as $role)
@@ -180,7 +180,7 @@
                             <div class="col-md-4 mt-3 d-none selectDepartment"></div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="username">Username <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="username">Username(वापरकर्तानाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="username" name="username" type="text" placeholder="Enter Username">
                                 <span class="text-danger is-invalid username_err"></span>
                             </div>
@@ -260,7 +260,7 @@
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Change Password</h5>
+                        <h5 class="modal-title">Change Password(पासवर्ड बदला)</h5>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -269,7 +269,7 @@
 
                         <div class="col-8 mx-auto my-2">
                             <div class="form-group">
-                                <label>Password</label>
+                                <label>Password(पासवर्ड)</label>
                                 <div class="input-group"><span class="input-group-text"><i class="fas fa-unlock-keyhole"></i></span>
                                     <input class="form-control" type="password" id="new_password" name="new_password">
                                     {{-- <div class="show-hide"><span class="show"></span></div> --}}
@@ -280,7 +280,7 @@
 
                         <div class="col-8 mx-auto my-2">
                             <div class="form-group">
-                                <label>Confirm Password</label>
+                                <label>Confirm Password(पासवर्डची पुष्टी करा)</label>
                                 <div class="input-group"><span class="input-group-text"><i class="fas fa-unlock-keyhole"></i></span>
                                     <input class="form-control" type="password" id="confirmed_password" name="confirmed_password">
                                     {{-- <div class="show-hide"><span class="show"></span></div> --}}
@@ -307,7 +307,7 @@
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Assign Role</h5>
+                        <h5 class="modal-title">Assign Role(भूमिका नियुक्त करा)</h5>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -315,14 +315,14 @@
                         <input type="hidden" id="role_user_id" name="role_user_id" value="">
 
                         <div class="mb-3 row">
-                            <label class="col-sm-3 col-form-label" for="name">User Name : </label>
+                            <label class="col-sm-3 col-form-label" for="name">User Name(वापरकर्ता नाव) : </label>
                             <div class="col-sm-9">
                                 <h6 id="role_user_name" class="pt-2"></h6>
                             </div>
                         </div>
 
                         <div class="mb-3 row">
-                            <label class="col-sm-3 col-form-label" for="name">Role : </label>
+                            <label class="col-sm-3 col-form-label" for="name">Role(भूमिका) : </label>
                             <div class="col-sm-9" style="max-height: 60px">
                                 <select class="js-example-basic-single" id="edit_role" name="edit_role">
                                     <option value="">--Select Role--</option>

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Reschedule Meeting</x-slot>
-    <x-slot name="heading">Reschedule Meeting</x-slot>
+    <x-slot name="title">Reschedule Meeting(बैठक पुन्हा शेड्यूल करा)</x-slot>
+    <x-slot name="heading">Reschedule Meeting(बैठक पुन्हा शेड्यूल करा)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,13 +12,13 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Reschedule Meeting</h4>
+                        <h4 class="card-title">Add Reschedule Meeting(रीशेड्यूल मीटिंग जोडा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12 selectMeetingId" id="meeting_id" name="meeting_id">
+                                <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12 selectMeetingId" required id="meeting_id" name="meeting_id">
                                     <option value="">--Select Meeting--</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -28,26 +28,26 @@
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4 selectDepartment d-none">
-                                <label class="col-form-label" for="department_id1">Select Department <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="department_id1">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
                                 <div class="selectDepartmentDynamic"></div>
 
                                 <span class="text-danger is-invalid department_id_err"></span>
                             </div>
                             <div class="col-md-12 selectScheduleMeetingDetails d-none"></div>
-                            <div class="col-md-12 mt-3"><h5>Select New Details</h5></div>
+                            <div class="col-md-12 mt-3"><h5>Select New Details(नवीन तपशील निवडा)</h5></div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" type="date" />
+                                <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="date" name="date" type="date" required />
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="time">Time <span class="text-danger">*</span></label>
-                                <input class="form-control" id="time" name="time" type="time">
+                                <label class="col-form-label" for="time">Time(वेळ) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="time" name="time" type="time" required>
                                 <span class="text-danger is-invalid time_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="place">Place <span class="text-danger">*</span></label>
-                                <input class="form-control" id="place" name="place" type="text">
+                                <label class="col-form-label" for="place">Place(ठिकाण) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="place" name="place" type="text" required>
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                         </div>
@@ -187,14 +187,14 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 overflow-hidden">
                 <div class="modal-header p-3 border-bottom">
-                    <h4 class="card-title mb-0">Cancel Meeting</h4>
+                    <h4 class="card-title mb-0">Cancel Meeting(मीटिंग रद्द करा)</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <input type="hidden" name="id" id="cancelId">
                         <div class="mb-3">
-                            <label for="cancel_remark" class="form-label">Remark</label>
+                            <label for="cancel_remark" class="form-label">Remark(शेरा)</label>
                             <textarea name="cancel_remark" class="form-control" placeholder="Enter remark"  required id="cancel_remark"></textarea>
                         </div>
                         <div class="text-end">
@@ -459,8 +459,8 @@
                 },
                 success: function(data) {
                     if(data.status == 200){
-                        let html = `<label class="col-form-label" for="schedule_meeting_id">Select Reschedule Meeting Date <span class="text-danger">*</span></label>
-                                    <select class="form-select col-sm-12 selectChnageScheduleMeetingDetails" id="schedule_meeting_id" name="schedule_meeting_id">
+                        let html = `<label class="col-form-label" for="schedule_meeting_id">Select Reschedule Meeting Date(मीटिंगची तारीख पुन्हा शेड्यूल करा निवडा) <span class="text-danger">*</span></label>
+                                    <select class="form-select col-sm-12 selectChnageScheduleMeetingDetails" id="schedule_meeting_id" name="schedule_meeting_id" required>
                                         <option value="">--Select Reschedule Meeting--</option>
                                     `;
                         $.each(data.data, function(key, val){

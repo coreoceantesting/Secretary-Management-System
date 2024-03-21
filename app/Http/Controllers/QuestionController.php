@@ -49,8 +49,8 @@ class QuestionController extends Controller
         $question = $this->questionRepository->edit($id);
 
         if ($question) {
-            $scheduleMeetingHtml = '<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date <span class="text-danger">*</span></label>
-            <select class="form-select col-sm-12" id="schedule_meeting_id" name="schedule_meeting_id">
+            $scheduleMeetingHtml = '<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date(शेड्यूल मीटिंग तारीख निवडा) <span class="text-danger">*</span></label>
+            <select class="form-select col-sm-12" id="schedule_meeting_id" name="schedule_meeting_id" required>
                 <option value="">--Select Schedule Meeting--</option>';
             if ($question->schedule_meeting_id) {
                 $scheduleMeetings = $this->questionRepository->getScheduleMeeting($id);

@@ -39,6 +39,8 @@ class HomeDepartmentRequest extends FormRequest
     {
         return [
             'name.required' => 'Please enter name',
+            'name.regex' => $this->name . ' is invalid format',
+            'name.unique' => $this->name . ' name already exists in home department.',
             'initial.required' => 'Please enter initial',
         ];
     }

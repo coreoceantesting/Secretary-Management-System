@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Agenda</x-slot>
-    <x-slot name="heading">Agenda</x-slot>
+    <x-slot name="title">Agenda(अजेंडा)</x-slot>
+    <x-slot name="heading">Agenda(अजेंडा)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,18 +12,18 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Agenda</h4>
+                        <h4 class="card-title">Add Agenda(अजेंडा जोडा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Agenda Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Agenda Name">
+                                <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Agenda Name" required>
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Select File <span class="text-danger">*</span></label>
-                                <input class="form-control" id="agendafile" name="agendafile" type="file">
+                                <label class="col-form-label" for="agendafile">Select File(फाइल निवडा) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="agendafile" name="agendafile" type="file" required>
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
                         </div>
@@ -47,18 +47,18 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Agenda</h4>
+                        <h4 class="card-title">Edit Agenda(अजेंडा संपादित करा)</h4>
                     </div>
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Agenda Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Agenda Name">
+                                <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Agenda Name" required>
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Select File</label>
+                                <label class="col-form-label" for="agendafile">Select File(फाइल निवडा)</label>
                                 <input class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>

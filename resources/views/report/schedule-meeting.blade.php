@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Schedule Meeting Report</x-slot>
-    <x-slot name="heading">Schedule Meeting Report</x-slot>
+    <x-slot name="title">Schedule Meeting Report(बैठकीचा अहवाल शेड्यूल करा)</x-slot>
+    <x-slot name="heading">Schedule Meeting Report(बैठकीचा अहवाल शेड्यूल करा)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -9,7 +9,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Schedule Meeting Report</h4>
+                        <h4 class="card-title">Schedule Meeting Report(बैठकीचा अहवाल शेड्यूल करा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -17,12 +17,12 @@
                                 <form method="get">
                                     <div class="mb-3 row">
                                         <div class="col-md-4">
-                                            <label class="col-form-label" for="from">From Date <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="from" name="from" type="date" required>
+                                            <label class="col-form-label" for="from">From Date(या तारखेपासून) <span class="text-danger">*</span></label>
+                                            <input class="form-control" id="from" name="from" type="date" value="@if(isset(Request()->from)){{ Request()->from }}@endif" required>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="col-form-label" for="to">To Date <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="to" name="to" type="date" required>
+                                            <label class="col-form-label" for="to">To Date(आजपर्यंत) <span class="text-danger">*</span></label>
+                                            <input class="form-control" id="to" name="to" type="date" value="@if(isset(Request()->to)){{ Request()->to }}@endif" required>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="col-form-label" for="to">&nbsp;</div>

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Member</x-slot>
-    <x-slot name="heading">Member</x-slot>
+    <x-slot name="title">Member(सदस्य)</x-slot>
+    <x-slot name="heading">Member(सदस्य)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,13 +12,13 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Member</h4>
+                            <h4 class="card-title">Add Member(सदस्य जोडा)</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="ward_id">Select Ward <span class="text-danger">*</span></label>
-                                    <select name="ward_id" id="ward_id" class="form-select">
+                                    <label class="col-form-label" for="ward_id">Select Ward(वार्ड निवडा) <span class="text-danger">*</span></label>
+                                    <select name="ward_id" id="ward_id" required class="form-select">
                                         <option value="">Select Ward</option>
                                         @foreach($wards as $ward)
                                         <option value="{{ $ward->id }}">{{ $ward->name }}</option>
@@ -28,36 +28,36 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name">
+                                    <label class="col-form-label" for="name">Name(नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="contact_number">Contact Number <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                                    <label class="col-form-label" for="contact_number">Contact Number(संपर्क क्रमांक) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" required>
                                     <span class="text-danger is-invalid contact_number_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="email">Member email <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="email" name="email" type="text" placeholder="Enter Email">
+                                    <label class="col-form-label" for="email">Member email(सदस्य ईमेल) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="email" name="email" type="text" placeholder="Enter Email" required>
                                     <span class="text-danger is-invalid email_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="political_party">Political Party <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="political_party" name="political_party" type="text" placeholder="Enter Political Party">
+                                    <label class="col-form-label" for="political_party">Political Party(राजकीय पक्ष) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="political_party" name="political_party" type="text" placeholder="Enter Political Party" required>
                                     <span class="text-danger is-invalid political_party_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="address">Address <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="address" name="address" type="text" placeholder="Enter Address">
+                                    <label class="col-form-label" for="address">Address(पत्ता) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="address" name="address" type="text" placeholder="Enter Address" required>
                                     <span class="text-danger is-invalid address_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="designation">Designation <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation">
+                                    <label class="col-form-label" for="designation">Designation(पदनाम) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
                                     <span class="text-danger is-invalid designation_err"></span>
                                 </div>
                             </div>
@@ -81,14 +81,14 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Member</h4>
+                            <h4 class="card-title">Edit Member(सदस्य संपादित करा)</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="ward_id">Select Ward <span class="text-danger">*</span></label>
-                                    <select name="ward_id" id="ward_id" class="form-select">
+                                    <label class="col-form-label" for="ward_id">Select Ward(वार्ड निवडा) <span class="text-danger">*</span></label>
+                                    <select name="ward_id" id="ward_id" class="form-select" required>
                                         <option value="">Select Ward</option>
                                         @foreach($wards as $ward)
                                         <option value="{{ $ward->id }}">{{ $ward->name }}</option>
@@ -98,36 +98,36 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name">
+                                    <label class="col-form-label" for="name">Name(नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="contact_number">Contact Number <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                                    <label class="col-form-label" for="contact_number">Contact Number(संपर्क क्रमांक) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" required>
                                     <span class="text-danger is-invalid contact_number_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="email">Member email <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="email" name="email" type="text" placeholder="Enter Email">
+                                    <label class="col-form-label" for="email">Member email(सदस्य ईमेल) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="email" name="email" type="text" placeholder="Enter Email" required>
                                     <span class="text-danger is-invalid email_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="political_party">Political Party <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="political_party" name="political_party" type="text" placeholder="Enter Political Party">
+                                    <label class="col-form-label" for="political_party">Political Party(राजकीय पक्ष) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="political_party" name="political_party" type="text" placeholder="Enter Political Party" required>
                                     <span class="text-danger is-invalid political_party_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="address">Address <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="address" name="address" type="text" placeholder="Enter Address">
+                                    <label class="col-form-label" for="address">Address(पत्ता) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="address" name="address" type="text" placeholder="Enter Address" required>
                                     <span class="text-danger is-invalid address_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="designation">Designation <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation">
+                                    <label class="col-form-label" for="designation">Designation(पदनाम) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
                                     <span class="text-danger is-invalid designation_err"></span>
                                 </div>
                             </div>

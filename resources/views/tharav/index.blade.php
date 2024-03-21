@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Tharav</x-slot>
-    <x-slot name="heading">Tharav</x-slot>
+    <x-slot name="title">Tharav(थरव)</x-slot>
+    <x-slot name="heading">Tharav(थरव)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,12 +12,12 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Tharav</h4>
+                        <h4 class="card-title">Add Tharav(थरव Add)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
                                 <select name="meeting_id" id="meeting_id" required class="form-select selectMeetingId">
                                     <option value="">Select Meeting</option>
                                     @foreach($meetings as $meeting)
@@ -28,28 +28,28 @@
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="date" name="date" type="date" placeholder="Enter date" value="{{ date('Y-m-d') }}" readonly>
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="time">Time <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="time">Time(वेळ) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="time" name="time" type="time" placeholder="Enter time" value="{{ date('h:i:s') }}" readonly>
                                 <span class="text-danger is-invalid time_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="remark">Remark <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="remark" name="remark" placeholder="Enter remark"></textarea>
+                                <label class="col-form-label" for="remark">Remark(शेरा) <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="remark" name="remark" placeholder="Enter remark" required></textarea>
                                 <span class="text-danger is-invalid remark_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload File <span class="text-danger">*</span></label>
-                                <input class="form-control" id="uploadfile" name="uploadfile" type="file">
+                                <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
                             <div class="col-md-4 selectDepartment d-none">
-                                <label class="col-form-label" for="department_id1">Select Department <span class="text-danger">*</span></label>
-                                <select multiple class="js-example-basic-multiple col-sm-12" id="department_id1" name="department_id[]">
+                                <label class="col-form-label" for="department_id1">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
+                                <select multiple class="js-example-basic-multiple col-sm-12" id="department_id1" name="department_id[]" required>
 
                                 </select>
                                 <span class="text-danger is-invalid department_id_err"></span>
@@ -104,7 +104,7 @@
                                         <td>{{ ($tharav->date) ? date('d-m-Y', strtotime($tharav->date)) : '-' }}</td>
                                         <td>
                                             @foreach($tharav->assignTharavDepartment as $department)
-                                            {{ $department?->department->name }},
+                                            {{ $department?->department?->name }},
                                             @endforeach
                                             {{-- {{ $tharav->meeting?->name ?? '-' }} --}}
                                         </td>
@@ -212,7 +212,7 @@
                     $('#preloader').css('visibility', 'visible');
                 },
                 success: function(data) {
-                    let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date <span class="text-danger">*</span></label>
+                    let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date(शेड्यूल मीटिंग तारीख निवडा) <span class="text-danger">*</span></label>
                                 <select class="form-select col-sm-12 selectChnageScheduleMeetingDetails" id="schedule_meeting_id" name="schedule_meeting_id">
                                     <option value="">--Select Schedule Meeting--</option>
                                 `;

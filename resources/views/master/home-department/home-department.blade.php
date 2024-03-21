@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Home Department</x-slot>
-    <x-slot name="heading">Home Department</x-slot>
+    <x-slot name="title">Home Department(गृह विभाग)</x-slot>
+    <x-slot name="heading">Home Department(गृह विभाग)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,18 +12,18 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Home Department</h4>
+                            <h4 class="card-title">Add Home Department(गृह विभाग जोडा)</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Home Department Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Home Department Name">
+                                    <label class="col-form-label" for="name">Home Department Name(गृह विभागाचे नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Home Department Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial">
+                                    <label class="col-form-label" for="initial">Initial(गृह विभागाचे आरंभिक) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Home Department Initial" required>
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
@@ -47,19 +47,19 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Home Department</h4>
+                            <h4 class="card-title">Edit Home Department(गृह विभाग संपादित करा)</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Home Department Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Home Department Name">
+                                    <label class="col-form-label" for="name">Home Department Name(गृह विभागाचे नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Home Department Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial">
+                                    <label class="col-form-label" for="initial">Initial(गृह विभागाचे आरंभिक) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Home Department Initial" required>
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>

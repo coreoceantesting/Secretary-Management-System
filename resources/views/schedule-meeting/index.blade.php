@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Schedule Meeting</x-slot>
-    <x-slot name="heading">Schedule Meeting</x-slot>
+    <x-slot name="title">Schedule Meeting(बैठकीचे वेळापत्रक)</x-slot>
+    <x-slot name="heading">Schedule Meeting(बैठकीचे वेळापत्रक)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
     @push('styles')
@@ -15,13 +15,13 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Schedule Meeting</h4>
+                        <h4 class="card-title">Add Schedule Meeting(शेड्यूल मीटिंग जोडा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agenda_id">Select Agenda <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="agenda_id" name="agenda_id">
+                                <label class="col-form-label" for="agenda_id">Select Agenda(अजेंडा निवडा) <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12" id="agenda_id" name="agenda_id" required>
                                     <option value="">--Select Agenda--</option>
                                     @foreach($agendas as $agenda)
                                     <option value="{{ $agenda->id }}">{{ $agenda->name }}</option>
@@ -30,8 +30,8 @@
                                 <span class="text-danger is-invalid agenda_id_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-multiple form-select col-sm-12" id="meeting_id" name="meeting_id">
+                                <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
+                                <select class="js-example-basic-multiple form-select col-sm-12" id="meeting_id" name="meeting_id" required>
                                     <option value="">--Select Meeting--</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -40,28 +40,28 @@
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" type="date" />
+                                <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="date" name="date" type="date" required />
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="time">Time <span class="text-danger">*</span></label>
-                                <input class="form-control" id="time" name="time" type="time">
+                                <label class="col-form-label" for="time">Time(वेळ) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="time" name="time" type="time" required>
                                 <span class="text-danger is-invalid time_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="place">Place <span class="text-danger">*</span></label>
-                                <input class="form-control" id="place" name="place" type="text">
+                                <label class="col-form-label" for="place">Place(ठिकाण) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="place" name="place" type="text" required>
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Upload Agenda <span class="text-danger">*</span></label>
-                                <input class="form-control" id="agendafile" name="agendafile" type="file">
+                                <label class="col-form-label" for="agendafile">Upload Agenda(अजेंडा अपलोड करा) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="agendafile" name="agendafile" type="file" required>
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="department_id1">Select Department <span class="text-danger">*</span></label>
-                                <select multiple class="js-example-basic-multiple form-select col-sm-12" id="department_id1" name="department_id[]">
+                                <label class="col-form-label" for="department_id1">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
+                                <select multiple class="js-example-basic-multiple form-select col-sm-12" id="department_id1" name="department_id[]" required>
                                     <option value="">--Select Department--</option>
                                     @foreach($departments as $department)
                                     <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -90,20 +90,20 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Schedule Meeting</h4>
+                        <h4 class="card-title">Edit Schedule Meeting(बैठकीचे वेळापत्रक संपादित करा)</h4>
                     </div>
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agenda_id">Select Agenda <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="agenda_id">Select Agenda(अजेंडा निवडा) <span class="text-danger">*</span></label>
                                 <select class="form-select col-sm-12" id="agenda_id" name="agenda_id">
 
                                 </select>
                                 <span class="text-danger is-invalid agenda_id_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
                                 <select class="js-example-basic-multiple form-select col-sm-12" id="meeting_id" name="meeting_id">
                                     <option value="">--Select Meeting--</option>
                                     @foreach($meetings as $meeting)
@@ -113,27 +113,27 @@
                                 <span class="text-danger is-invalid gender_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="date" name="date" type="date" />
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="time">Time <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="time">Time(वेळ) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="time" name="time" type="time">
                                 <span class="text-danger is-invalid time_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="place">Place <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="place">Place(ठिकाण) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="place" name="place" type="text">
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Upload Agenda</label>
+                                <label class="col-form-label" for="agendafile">Upload Agenda(अजेंडा अपलोड करा)</label>
                                 <input class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="department_id">Select Department <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
                                 <select multiple class="js-example-basic-multiple col-sm-12" id="department_id" name="department_id[]">
                                     <option value="">--Select Department--</option>
                                     @foreach($departments as $department)
@@ -225,14 +225,14 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 overflow-hidden">
                 <div class="modal-header p-3 border-bottom">
-                    <h4 class="card-title mb-0">Cancel Meeting</h4>
+                    <h4 class="card-title mb-0">Cancel Meeting(मीटिंग रद्द करा)</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <input type="hidden" name="id" id="cancelId">
                         <div class="mb-3">
-                            <label for="cancel_remark" class="form-label">Remark</label>
+                            <label for="cancel_remark" class="form-label">Remark(शेरा)</label>
                             <textarea name="cancel_remark" class="form-control" placeholder="Enter remark"  required id="cancel_remark"></textarea>
                         </div>
                         <div class="text-end">

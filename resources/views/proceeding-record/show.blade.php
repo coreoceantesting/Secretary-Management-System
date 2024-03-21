@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Proceeding Records</x-slot>
-    <x-slot name="heading">Proceeding Records</x-slot>
+    <x-slot name="title">Proceeding Records(कार्यवाही रेकॉर्ड)</x-slot>
+    <x-slot name="heading">Proceeding Records(कार्यवाही रेकॉर्ड)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -11,15 +11,15 @@
 
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Agenda</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Agenda(अजेंडा)</h5></div>
                 <div class="card-body">
 
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>File</th>
+                                    <th>Name(नाव)</th>
+                                    <th>File(फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,17 +35,17 @@
 
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 2:- Schedule Meeting</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 2:- Schedule Meeting(बैठकीचे वेळापत्रक)</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Meeting</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Place</th>
-                                    <th>File</th>
+                                    <th>Meeting(बैठक)</th>
+                                    <th>Date(तारीख)</th>
+                                    <th>Time(वेळ)</th>
+                                    <th>Place(ठिकाण)</th>
+                                    <th>File(फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,7 +65,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 3:- Departments</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 3:- Departments(विभाग)</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -73,7 +73,7 @@
                                 @php $data = ''; @endphp
                                 @forelse ($departments as $department)
                                     @php
-                                       $data .= $department?->department->name. ', ';
+                                       $data .= $department?->department?->name. ', ';
                                     @endphp
                                 @empty
                                     @php
@@ -81,7 +81,7 @@
                                     @endphp
                                 @endforelse
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Name(नाव)</th>
                                     <td>{{ $data }}</td>
                                 </tr>
                             </tbody>
@@ -93,7 +93,7 @@
             @php $step = 4; @endphp
             @if(count($scheduleMeetings->whereNotNull('schedule_meeting_id')) > 0)
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Reschedule Meeting</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Reschedule Meeting(मीटिंग पुन्हा शेड्युल करा)</h5></div>
                 <div class="card-body">
 
                     <div class="table-responsive">
@@ -101,11 +101,11 @@
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Meeting</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Place</th>
-                                    <th>File</th>
+                                    <th>Meeting(बैठक)</th>
+                                    <th>Date(तारीख)</th>
+                                    <th>Timeवेळ</th>
+                                    <th>Place(ठिकाण)</th>
+                                    <th>File(फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,15 +128,15 @@
 
             @if(count($suplimentryAgendas) > 0)
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Suplimentry Agenda</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Suplimentry Agenda(पूरक अजेंडा)</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Name</th>
-                                    <th>File</th>
+                                    <th>Name(नाव)</th>
+                                    <th>File(फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -163,10 +163,10 @@
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Question</th>
-                                    <th>Question File</th>
-                                    <th>Answer</th>
-                                    <th>Answer File</th>
+                                    <th>Question(प्रश्न)</th>
+                                    <th>Question File(प्रश्न फाइल)</th>
+                                    <th>Answer(उत्तर)</th>
+                                    <th>Answer File(उत्तर फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -200,9 +200,9 @@
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Member Name</th>
-                                    <th>In time</th>
-                                    <th>Out time</th>
+                                    <th>Member Name(सदस्याचे नाव)</th>
+                                    <th>In time(वेळेत)</th>
+                                    <th>Out time(बाहेर वेळ)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -221,17 +221,17 @@
             </div>
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Proceeding Records</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Proceeding Records(कार्यवाही रेकॉर्ड)</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Meeting</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>File</th>
-                                    <th>Remark</th>
+                                    <th>Meeting(बैठक)</th>
+                                    <th>Date(तारीख)</th>
+                                    <th>Time(वेळ)</th>
+                                    <th>File(फाईल)</th>
+                                    <th>Remark(शेरा)</th>
                                 </tr>
                             </thead>
                             <tbody>
