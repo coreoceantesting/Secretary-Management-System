@@ -8,8 +8,8 @@ use App\Models\AssignMemberToMeeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ProceedingRecordMail;
+use App\Jobs\ProceedingRecordEmailJob;
+use App\Jobs\SendSmsJob;
 
 class ProceedingRecordRepository
 {
@@ -56,8 +56,8 @@ class ProceedingRecordRepository
             $proceedingRecord = ProceedingRecord::with(['meeting'])->where('id', $proceedingRecord->id)->first();
 
             foreach ($members as $member) {
-                Log::info('Sms Send to number' . $member->member->contact_number);
-                Mail::to($member->member->email)->send(new ProceedingRecordMail($proceedingRecord));
+                SendSmsJob::dispatch('Sms Send to number', $member->member->contact_number);
+                ProceedingRecordEmailJob::dispatch($member->member->email, $proceedingRecord);
             }
             // end of send sms and email login
 
