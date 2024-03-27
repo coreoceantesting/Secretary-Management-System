@@ -24,8 +24,7 @@ class RescheduleMeetingRepository
 
     public function getScheduleMeeting($meetingId)
     {
-        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0])
-            ->whereDate('date', '>=', date('Y-m-d', strtotime('+7 days')))->select('id', 'datetime')->get();
+        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0])->select('id', 'datetime')->get();
     }
 
     public function getEditScheduleMeeting($meetingId, $scheduleMeetingId, $id)

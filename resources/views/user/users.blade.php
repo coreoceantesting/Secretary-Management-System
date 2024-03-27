@@ -677,7 +677,7 @@
                 if (!data.error) {
                     $("#editForm input[name='edit_model_id']").val(data.user.id);
                     $("#edit_role").html(data.roleHtml);
-                    $("#role_user_name").text(data.user.name);
+                    $("#role_user_name").text(data.user.fname+' '+data.user.mname+' '+data.user.lname);
                 } else {
                     swal("Error!", data.error, "error");
                 }

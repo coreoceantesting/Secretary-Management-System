@@ -20,7 +20,7 @@ class QuestionController extends Controller
 
     public function index()
     {
-        $meetings = $this->commonRepository->getSeventDayMeeting();
+        $meetings = $this->commonRepository->getRescheduleMeeting();
 
         $questions = $this->questionRepository->index();
 
@@ -53,8 +53,15 @@ class QuestionController extends Controller
             <select class="form-select col-sm-12" id="schedule_meeting_id" name="schedule_meeting_id" required>
                 <option value="">--Select Schedule Meeting--</option>';
             if ($question->schedule_meeting_id) {
-                $scheduleMeetings = $this->questionRepository->getScheduleMeeting($id);
-                foreach ($scheduleMeetings as $scheduleMeeting) :
+                $scheduleMeetings = $this->questionRepository->getScheduleMeeting($question->meeting_id);
+
+                $results = $scheduleMeetings->map(function ($item, $key) {
+                    $item["datetime"] =  date('d-m-Y h:i A', strtotime($item["datetime"]));
+                    $item["id"] =  $item["id"];
+                    return $item;
+                });
+
+                foreach ($results as $scheduleMeeting) :
                     $isSelected = $scheduleMeeting->id == $question->schedule_meeting_id ? 'selected' : '';
                     $scheduleMeetingHtml .= '<option ' . $isSelected . ' value="' . $scheduleMeeting->id . '">' . date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) . '</option>';
                 endforeach;
