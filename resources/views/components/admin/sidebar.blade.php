@@ -111,11 +111,6 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarGoshwara">
                         <ul class="nav nav-sm flex-column">
-                            @can('goshwara.view')
-                            <li class="nav-item">
-                                <a href="{{ route('goshwara.index') }}" class="nav-link {{ request()->routeIs('goshwara.index') ? 'active' : '' }}" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Goshwara&nbsp;List(गोश्वरा यादी) @else Received&nbsp;Goshwara(गोश्वरा प्राप्त झाला) @endif</a>
-                            </li>
-                            @endcan
 
                             @can('goshwara.create')
                             <li class="nav-item">
@@ -126,6 +121,12 @@
                             @can('goshwara.send')
                             <li class="nav-item">
                                 <a href="{{ route('goshwara.send') }}" class="nav-link {{ request()->routeIs('goshwara.send') ? 'active' : '' }}" data-key="t-horizontal">Send&nbsp;Goshwara(गोश्वरा पाठवा)</a>
+                            </li>
+                            @endcan
+
+                            @can('goshwara.view')
+                            <li class="nav-item">
+                                <a href="{{ route('goshwara.index') }}" class="nav-link {{ request()->routeIs('goshwara.index') ? 'active' : '' }}" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Sent Goshwara&nbsp;List(पाठवले गोश्वरा यादी) @else Received&nbsp;Goshwara(गोश्वरा प्राप्त झाला) @endif</a>
                             </li>
                             @endcan
                         </ul>

@@ -159,7 +159,7 @@
                                         <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         @canany(['question.edit', 'question.delete', 'question.response'])
                                         <td>
-                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm btn-primary px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
+                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm @if($question->description != "" || $question->response_file != "") btn-success @else btn-primary @endif px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
                                                 @can('question.response')
                                                     @if($question->description != "" || $question->response_file != "") Responded @else Response @endif
                                                 @else
