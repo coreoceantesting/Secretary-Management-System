@@ -181,12 +181,25 @@
                     $("#addSubmit").prop('disabled', false);
                     resetErrors();
                     printErrMsg(responseObject.responseJSON.errors);
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
                 },
                 500: function(responseObject, textStatus, errorThrown) {
                     $("#addSubmit").prop('disabled', false);
                     swal("Error occured!", "Something went wrong please try again", "error");
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
                 }
-            }
+            },
+            error: function(error, jqXHR, textStatus, errorThrown) {
+                $("html, body").animate({ scrollTop: 20 }, "slow");
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
+            complete: function() {
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
         });
 
     });
