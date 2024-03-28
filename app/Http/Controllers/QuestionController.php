@@ -55,13 +55,7 @@ class QuestionController extends Controller
             if ($question->schedule_meeting_id) {
                 $scheduleMeetings = $this->questionRepository->getScheduleMeeting($question->meeting_id);
 
-                $results = $scheduleMeetings->map(function ($item, $key) {
-                    $item["datetime"] =  date('d-m-Y h:i A', strtotime($item["datetime"]));
-                    $item["id"] =  $item["id"];
-                    return $item;
-                });
-
-                foreach ($results as $scheduleMeeting) :
+                foreach ($scheduleMeetings as $scheduleMeeting) :
                     $isSelected = $scheduleMeeting->id == $question->schedule_meeting_id ? 'selected' : '';
                     $scheduleMeetingHtml .= '<option ' . $isSelected . ' value="' . $scheduleMeeting->id . '">' . date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) . '</option>';
                 endforeach;

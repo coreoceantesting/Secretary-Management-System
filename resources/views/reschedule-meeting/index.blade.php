@@ -459,9 +459,9 @@
                 },
                 success: function(data) {
                     if(data.status == 200){
-                        let html = `<label class="col-form-label" for="schedule_meeting_id">Select Reschedule Meeting Date(मीटिंगची तारीख पुन्हा शेड्यूल करा निवडा) <span class="text-danger">*</span></label>
+                        let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date(शेड्यूल मीटिंग तारीख निवडा) <span class="text-danger">*</span></label>
                                     <select class="form-select col-sm-12 selectChnageScheduleMeetingDetails" id="schedule_meeting_id" name="schedule_meeting_id" required>
-                                        <option value="">--Select Reschedule Meeting--</option>
+                                        <option value="">--Select Schedule Meeting--</option>
                                     `;
                         $.each(data.data, function(key, val){
                             html += `<option value="${val.id}">${val.datetime}</option>`;
