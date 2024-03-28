@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('file')->nullable();
             $table->text('remark')->nullable();
             $table->foreignId('sent_by')->nullable()->constrained('users');
-            $table->date('date')->nullable();
+            $table->datetime('date')->nullable();
             $table->boolean('is_sent')->default(0);
             $table->timestamps();
         });

@@ -110,7 +110,7 @@ class GoshwaraRepository
             DB::beginTransaction();
             $goshwara = Goshwara::find($request->id);
             $goshwara->sent_by = Auth::user()->id;
-            $goshwara->date = date('Y-m-d');
+            $goshwara->date = date('Y-m-d h:i:s');
             $goshwara->is_sent = 1;
             $goshwara->department_id = Auth::user()->department?->id;
             $goshwara->save();

@@ -28,11 +28,11 @@
                                     </tr>
                                     <tr>
                                         <th>Sent By</th>
-                                        <td>{{ $goshwara->sentBy?->name ?? '-' }}</td>
+                                        <td>{{ $goshwara->sentBy?->fname.' '.$goshwara->sentBy?->mname.' '.$goshwara->sentBy?->lname ?? '-' }}</td>
                                     </tr>
                                     <tr>
                                         <th>Sent Date</th>
-                                        <td>{{ ($goshwara->date) ? date('d-m-Y', strtotime($goshwara->date)) : '-' }}</td>
+                                        <td>{{ ($goshwara->date) ? date('d-m-Y h:i A', strtotime($goshwara->date)) : '-' }}</td>
                                     </tr>
                                     <tr>
                                         <th>Remark</th>
