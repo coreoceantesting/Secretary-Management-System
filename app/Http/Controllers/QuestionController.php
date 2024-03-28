@@ -60,8 +60,8 @@ class QuestionController extends Controller
                     $scheduleMeetingHtml .= '<option ' . $isSelected . ' value="' . $scheduleMeeting->id . '">' . date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) . '</option>';
                 endforeach;
             }
-            $scheduleMeetingHtml .= `</select>
-                                <span class="text-danger is-invalid schedule_meeting_id_err"></span>`;
+            $scheduleMeetingHtml .= '</select>
+                                <span class="text-danger is-invalid schedule_meeting_id_err"></span>';
 
             $response = [
                 'result' => 1,
