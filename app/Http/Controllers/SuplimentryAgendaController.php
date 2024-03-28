@@ -19,11 +19,11 @@ class SuplimentryAgendaController extends Controller
     {
         $suplimentryAgendas = $this->suplimentryAgendaRepository->index();
 
-        $scheduleMeetings = $this->suplimentryAgendaRepository->getScheduleMeeting();
+        $meetings = $this->suplimentryAgendaRepository->getMeetings();
 
         return view('suplimentry-agenda.index')->with([
             'suplimentryAgendas' => $suplimentryAgendas,
-            'scheduleMeetings' => $scheduleMeetings
+            'meetings' => $meetings
         ]);
     }
 
@@ -42,10 +42,27 @@ class SuplimentryAgendaController extends Controller
     {
         $suplimentryAgenda = $this->suplimentryAgendaRepository->edit($id);
 
+        $scheduleMeetings = $this->suplimentryAgendaRepository->getScheduleMeeting($suplimentryAgenda->meeting_id);
+
+        $scheduleMeetingDateTime = '<label class="col-form-label" for="schedule_meeting_id">
+                Select Schedule Meeting Date
+                <span class="text-danger">*</span>
+            </label>
+            <select class="form-select col-sm-12 selectChnageScheduleMeetingDetails" id="schedule_meeting_id" name="schedule_meeting_id">
+                <option value="">--Select Schedule Meeting--</option>';
+
+        foreach ($scheduleMeetings as $scheduleMeeting) :
+            $isSelected = $scheduleMeeting->id == $suplimentryAgenda->schedule_meeting_id ? 'selected' : '';
+            $scheduleMeetingDateTime .= '<option value="' . $scheduleMeeting->id . '" ' . $isSelected . '>' . date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) . '</option>';
+        endforeach;
+        $scheduleMeetingDateTime .= '</select>';
+
+
         if ($suplimentryAgenda) {
             $response = [
                 'result' => 1,
                 'suplimentryAgenda' => $suplimentryAgenda,
+                'scheduleMeetingDateTime' => $scheduleMeetingDateTime,
             ];
         } else {
             $response = ['result' => 0];
@@ -72,6 +89,24 @@ class SuplimentryAgendaController extends Controller
             return response()->json(['success' => 'Agenda deleted successfully!']);
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
+        }
+    }
+
+    public function getScheduleMeeting(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $scheduleMeetings = $this->suplimentryAgendaRepository->getScheduleMeeting($id);
+
+            $results = $scheduleMeetings->map(function ($item, $key) {
+                $item["datetime"] =  date('d-m-Y h:i A', strtotime($item["datetime"]));
+                $item["id"] =  $item["id"];
+                return $item;
+            });
+
+            return response()->json([
+                'status' => 200,
+                'data' => $results
+            ]);
         }
     }
 }

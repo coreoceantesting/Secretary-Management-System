@@ -105,6 +105,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('reschedule-meeting/get-schedule_meeting-details/{id}', [RescheduleMeetingController::class, 'getScheduleMeetingDetails'])->name('reschedule-meeting.getScheduleMeetingDetails');
     Route::resource('reschedule-meeting', RescheduleMeetingController::class);
 
+
+    Route::get('suplimentry-agenda/schedule_meeting/{id}', [SuplimentryAgendaController::class, 'getScheduleMeeting'])->name('suplimentry-agenda.getScheduleMeeting');
     Route::resource('suplimentry-agenda', SuplimentryAgendaController::class);
 
     Route::post('attendance/update/singleMark', [AttendanceController::class, 'saveSingleMark'])->name('attendance.saveSingleMark');

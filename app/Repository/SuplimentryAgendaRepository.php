@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Models\SuplimentryAgenda;
 use App\Models\ScheduleMeeting;
+use App\Models\Meeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,7 @@ class SuplimentryAgendaRepository
 {
     public function index()
     {
-        return SuplimentryAgenda::with(['scheduleMeeting.meeting'])->latest()->get();
+        return SuplimentryAgenda::with(['meeting', 'scheduleMeeting'])->latest()->get();
     }
 
     public function store($request)
@@ -88,8 +89,15 @@ class SuplimentryAgendaRepository
         }
     }
 
-    public function getScheduleMeeting()
+    public function getMeetings()
     {
-        return ScheduleMeeting::where(['is_meeting_completed' => 0, 'is_meeting_reschedule' => 0])->get();
+        return Meeting::whereHas('scheduleMeeting', function ($q) {
+            return $q->where(['is_meeting_completed' => 0, 'is_meeting_reschedule' => 0]);
+        })->get();
+    }
+
+    public function getScheduleMeeting($id)
+    {
+        return ScheduleMeeting::where(['is_meeting_completed' => 0, 'is_meeting_reschedule' => 0, 'meeting_id' => $id])->get();
     }
 }

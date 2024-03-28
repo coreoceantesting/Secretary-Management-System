@@ -17,15 +17,17 @@
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
-                                <label for="schedule_meeting_id" class="col-form-label">Select Schedule Meeting(शेड्यूल मीटिंग निवडा) <span class="text-danger">*</span></label>
-                                <select name="schedule_meeting_id" id="schedule_meeting_id" required class="form-select">
-                                    <option value="">Select Schedule Meeting</option>
-                                    @foreach($scheduleMeetings as $scheduleMeeting)
-                                    <option value="{{ $scheduleMeeting->id }}">{{ date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) }}</option>
+                                <label for="meeting_id" class="col-form-label">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
+                                <select name="meeting_id" id="meeting_id" required class="form-select selectMeetingId">
+                                    <option value="">Select Meeting</option>
+                                    @foreach($meetings as $meeting)
+                                    <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
                                     @endforeach
                                 </select>
-                                <span class="text-danger is-invalid schedule_meeting_id_err"></span>
+                                <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
+                            <div class="col-md-4 selectScheduleMeeting d-none"></div>
+
                             <div class="col-md-4">
                                 <label class="col-form-label" for="name">Suplimentry Agenda Name(पूरक अजेंडाचे नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Enter Suplimentry Agenda Name" required>
@@ -63,6 +65,18 @@
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                         <div class="mb-3 row">
                             <div class="col-md-4">
+                                <label for="meeting_id" class="col-form-label">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
+                                <select name="meeting_id" id="meeting_id" required class="form-select">
+                                    <option value="">Select Meeting</option>
+                                    @foreach($meetings as $meeting)
+                                    <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid meeting_id_err"></span>
+                            </div>
+
+                            <div class="col-md-4 selectScheduleMeeting d-none"></div>
+                            {{-- <div class="col-md-4">
                                 <label for="schedule_meeting_id" class="col-form-label">Select Schedule Meeting(शेड्यूल मीटिंग निवडा) <span class="text-danger">*</span></label>
                                 <select name="schedule_meeting_id" id="schedule_meeting_id" required class="form-select">
                                     <option value="">Select Schedule Meeting</option>
@@ -71,7 +85,7 @@
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>
-                            </div>
+                            </div> --}}
                             <div class="col-md-4">
                                 <label class="col-form-label" for="name">Suplimentry Agenda Name(पूरक अजेंडाचे नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Enter Suplimentry Agenda Name" required>
@@ -128,7 +142,7 @@
                                 @foreach ($suplimentryAgendas as $agenda)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $agenda->scheduleMeeting?->meeting?->name }}</td>
+                                        <td>{{ $agenda->meeting?->name }}</td>
                                         <td>{{ date('d-m-Y h:i A', strtotime($agenda->scheduleMeeting->datetime)) }}</td>
                                         <td>{{ $agenda->scheduleMeeting?->place }}</td>
                                         <td>{{ $agenda->name }}</td>
@@ -240,7 +254,9 @@
                 if (!data.error)
                 {
                     $("#editForm input[name='edit_model_id']").val(data.suplimentryAgenda.id);
-                    $("#editForm select[name='schedule_meeting_id']").val(data.suplimentryAgenda.schedule_meeting_id);
+                    $("#editForm select[name='meeting_id']").val(data.suplimentryAgenda.meeting_id);
+                    $("#editForm .selectScheduleMeeting").html(data.scheduleMeetingDateTime);
+                    $("#editForm .selectScheduleMeeting").removeClass('d-none');
                     $("#editForm input[name='name']").val(data.suplimentryAgenda.name);
                 }
                 else
@@ -381,4 +397,57 @@
             }
         });
     });
+
+
+
+
+    $('body').on('change', '.selectMeetingId', function(){
+        let meetingId = $(this).val();
+
+        if(meetingId != ""){
+            getScheduleMeeting(meetingId);
+            $('body').find('.selectScheduleMeeting').removeClass('d-none');
+        }else{
+            $('body').find('.selectScheduleMeeting').html('');
+            $('body').find('.selectScheduleMeeting').addClass('d-none');
+        }
+    });
+
+    function getScheduleMeeting(id){
+        var url = "{{ route('suplimentry-agenda.getScheduleMeeting', ':model_id') }}";
+        $.ajax({
+            url: url.replace(':model_id', id),
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            beforeSend: function()
+            {
+                $('#preloader').css('opacity', '0.5');
+                $('#preloader').css('visibility', 'visible');
+            },
+            success: function(data) {
+                if(data.status == 200){
+                    let html = `<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date(शेड्यूल मीटिंग तारीख निवडा) <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12 selectChnageScheduleMeetingDetails" id="schedule_meeting_id" name="schedule_meeting_id" required>
+                                    <option value="">--Select Schedule Meeting--</option>
+                                `;
+                    $.each(data.data, function(key, val){
+                        html += `<option value="${val.id}">${val.datetime}</option>`;
+                    });
+                    html += `</select>
+                                <span class="text-danger is-invalid schedule_meeting_id_err"></span>`;
+                    $('body').find('.selectScheduleMeeting').html(html);
+                }
+            },
+            error: function(xhr) {
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
+            complete: function() {
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
+        });
+    }
+
 </script>
