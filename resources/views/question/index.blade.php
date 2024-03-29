@@ -472,19 +472,19 @@
             });
         }
 
-        let count = 2;
+        let addcount = 2;
         $('body').on('click', '.addMore', function(){
-            let html = `<tr id="row${count}">
+            let html = `<tr id="row${addcount}">
                         <td>
                             <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-danger removeMore" data-id="${count}">Remove</button>
+                            <button type="button" class="btn btn-sm btn-danger removeMore" data-id="${addcount}">Remove</button>
                         </td>
                     </tr>`;
 
             $('body').find('#addQuestion').append(html);
-            count = count + 1;
+            addcount = addcount + 1;
         });
 
         $('body').on('click', '.removeMore', function(){
@@ -510,7 +510,7 @@
 
         $('body').on('click', '.editRemoveMore', function(){
             let id = $(this).attr('data-id');
-            $('#editrow1'+id).remove();
+            $('#editrow'+id).remove();
         });
     });
 </script>

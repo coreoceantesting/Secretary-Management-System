@@ -70,7 +70,7 @@ class QuestionController extends Controller
 
             foreach ($subQuestions as $subQuestion) {
                 if ($count == "1") {
-                    $subQuestionHtml .= "<tr id='editrow'" . $count . "'>
+                    $subQuestionHtml .= "<tr id='editrow$count'>
                                 <td>
                                     <input class='form-control' name='question[]' value='" . $subQuestion->question . "' type='text' placeholder='Enter Question' required>
                                 </td>
@@ -79,7 +79,7 @@ class QuestionController extends Controller
                                 </td>
                             </tr>";
                 } else {
-                    $subQuestionHtml .= "<tr id='editrow'" . $count . "'>
+                    $subQuestionHtml .= "<tr id='editrow$count'>
                                 <td>
                                     <input class='form-control' name='question[]' value='" . $subQuestion->question . "' type='text' placeholder='Enter Question' required>
                                 </td>
