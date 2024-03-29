@@ -26,14 +26,14 @@ class MeetingRequest extends FormRequest
                 'name' => "required|unique:meetings,name,$this->edit_model_id,id,deleted_at,NULL|regex:/^[a-zA-Z0-9 ]+$/u",
                 'head_person_name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
                 'head_person_designation' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
-                'member_id.*' => 'required'
+                'member_id' => 'required'
             ];
         } else {
             return [
                 'name' => "required|unique:meetings,name,NULL,NULL,deleted_at,NULL|regex:/^[a-zA-Z0-9 ]+$/u",
                 'head_person_name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
                 'head_person_designation' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
-                'member_id.*' => 'required'
+                'member_id' => 'required'
             ];
         }
     }
@@ -46,6 +46,7 @@ class MeetingRequest extends FormRequest
             'name.unique' => $this->name . ' name already exists in meeting.',
             'head_person_name' => 'Please enter head person name',
             'head_person_designation' => 'Please enter head person designation',
+            'member_id' => 'Please select atleast one member'
         ];
     }
 }

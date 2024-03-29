@@ -35,6 +35,7 @@
                             </div>
 
                             <div class="mb-3 row">
+                                <span class="text-danger is-invalid member_id_err"></span>
                                 @foreach($wardMembers as $wardMember)
                                 <div class="form-group m-t-15 row roles-checkbox-group">
                                     <strong class="mt-2"> {{ $wardMember->name }} </strong>

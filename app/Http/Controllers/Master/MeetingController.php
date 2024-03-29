@@ -54,7 +54,7 @@ class MeetingController extends Controller
 
         $memberHtml = "";
         foreach ($wardMembers as $wardMember) {
-            $memberHtml .= '<div class="form-group m-t-15 row roles-checkbox-group">
+            $memberHtml .= '<span class="text-danger is-invalid member_id_err"></span><div class="form-group m-t-15 row roles-checkbox-group">
                                     <strong class="mt-2"> ' . $wardMember->name . '</strong>';
             foreach ($wardMember?->members as $member) {
                 $checked = "";
