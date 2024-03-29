@@ -91,7 +91,7 @@ class ProceedingRecordController extends Controller
 
         $suplimentryAgendas = SuplimentryAgenda::whereIn('schedule_meeting_id', $ids)->get();
 
-        $questions = Question::whereIn('schedule_meeting_id', $ids)->get();
+        $questions = Question::with(['subQuestions'])->whereIn('schedule_meeting_id', $ids)->get();
 
         return view('proceeding-record.show')->with([
             'agenda' => $agenda,
@@ -104,7 +104,8 @@ class ProceedingRecordController extends Controller
         ]);
     }
 
-    public function pdf($id){
+    public function pdf($id)
+    {
         $proceedingRecord = ProceedingRecord::with(['meeting'])->find($id);
 
         $scheduleMeeting = ScheduleMeeting::where('id', $proceedingRecord->schedule_meeting_id)->first();
@@ -127,7 +128,7 @@ class ProceedingRecordController extends Controller
 
         $suplimentryAgendas = SuplimentryAgenda::whereIn('schedule_meeting_id', $ids)->get();
 
-        $questions = Question::whereIn('schedule_meeting_id', $ids)->get();
+        $questions = Question::with(['subQuestions'])->whereIn('schedule_meeting_id', $ids)->get();
 
         $pdf = PDF::loadView('proceeding-record.pdf', [
             'agenda' => $agenda,
@@ -138,7 +139,7 @@ class ProceedingRecordController extends Controller
             'suplimentryAgendas' => $suplimentryAgendas,
             'questions' => $questions
         ]);
-		return $pdf->stream('document.pdf');
+        return $pdf->stream('document.pdf');
 
         // return view('proceeding-record.pdf')->with();
     }

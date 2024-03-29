@@ -131,7 +131,7 @@ class AttendanceRepository
                 'meeting_id' => $request->meeting_id,
                 'member_id' => $request->memberId,
                 'in_time' => date('h:i:s', strtotime($request->inTime)),
-                'out_time' => date('h:i:s', strtotime($request->outTime)),
+                'out_time' => ($request->outTime != "") ? date('h:i:s', strtotime($request->outTime)) : null,
             ]);
             return true;
         } catch (\Exception $e) {

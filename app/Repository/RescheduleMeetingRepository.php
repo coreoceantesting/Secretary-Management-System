@@ -144,8 +144,8 @@ class RescheduleMeetingRepository
 
     public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $scheduleMeeting = ScheduleMeeting::find($id);
             // change agenda schedule meeting status
             ScheduleMeeting::where('id', $scheduleMeeting->schedule_meeting_id)->update([
@@ -165,6 +165,7 @@ class RescheduleMeetingRepository
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }

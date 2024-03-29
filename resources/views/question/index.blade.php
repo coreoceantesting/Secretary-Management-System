@@ -27,11 +27,7 @@
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="question">Question(प्रश्न) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="question" name="question" type="text" placeholder="Enter Question" required>
-                                <span class="text-danger is-invalid question_err"></span>
-                            </div>
+
                             <div class="col-md-4">
                                 <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
@@ -47,7 +43,27 @@
                                 </select>
                                 <span class="text-danger is-invalid department_id_err"></span>
                             </div>
+
                         </div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40%">Question</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="addQuestion">
+                                <tr id="row1">
+                                    <td>
+                                        <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary addMore" data-id="1">Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
 
                     </div>
                     <div class="card-footer">
@@ -84,11 +100,6 @@
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="question">Question(प्रश्न) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="question" name="question" type="text" placeholder="Enter Question" required>
-                                <span class="text-danger is-invalid question_err"></span>
-                            </div>
-                            <div class="col-md-4">
                                 <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल)</label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
@@ -105,6 +116,25 @@
                                 <span class="text-danger is-invalid department_id_err"></span>
                             </div>
                         </div>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40%">Question</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="editQuestion">
+                                <tr id="editrow1">
+                                    <td>
+                                        <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary editAddMore" data-id="1">Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
                     </div>
                     <div class="card-footer">
@@ -141,7 +171,6 @@
                                     <th>Meeting</th>
                                     <th>Date</th>
                                     <th>Place</th>
-                                    <th>Question</th>
                                     <th>File</th>
                                     @canany(['question.edit', 'question.delete', 'question.response'])
                                     <th>Action</th>
@@ -155,18 +184,17 @@
                                         <td>{{ $question->meeting?->name ?? '-' }}</td>
                                         <td>{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</td>
                                         <td>{{ ($question->scheduleMeeting?->place) ? $question->scheduleMeeting?->place : '-' }}</td>
-                                        <td>{{ $question->question }}</td>
                                         <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         @canany(['question.edit', 'question.delete', 'question.response'])
                                         <td>
-                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm @if($question->description != "" || $question->response_file != "") btn-success @else btn-primary @endif px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
+                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm @if(count($question->subQuestions) > 0 || $question->response_file != "") btn-success @else btn-primary @endif px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
                                                 @can('question.response')
-                                                    @if($question->description != "" || $question->response_file != "") Responded @else Response @endif
+                                                    @if(count($question->subQuestions) > 0 || $question->response_file != "") Responded @else Response @endif
                                                 @else
                                                     Check Response
                                                 @endif
                                             </a>
-                                            @if($question->description == "")
+                                            @if(count($question->subQuestions) == 0 || $question->response_file == "")
                                             @can('question.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Question" data-id="{{ $question->id }}"><i data-feather="edit"></i></button>
                                             @endcan
@@ -257,7 +285,7 @@
                     $("#editForm input[name='edit_model_id']").val(data.question.id);
                     $("#editForm select[name='meeting_id']").val(data.question.meeting_id);
                     $("#editForm select[name='department_id']").val(data.question.department_id);
-                    $("#editForm input[name='question']").val(data.question.question);
+                    $("#editForm #editQuestion").html(data.subQuestionHtml);
                     $('body').find('.selectScheduleMeeting').html(data.scheduleMeeting);
                     $('body').find('.selectScheduleMeeting').removeClass('d-none');
                 }
@@ -443,5 +471,46 @@
                 },
             });
         }
+
+        let count = 2;
+        $('body').on('click', '.addMore', function(){
+            let html = `<tr id="row${count}">
+                        <td>
+                            <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger removeMore" data-id="${count}">Remove</button>
+                        </td>
+                    </tr>`;
+
+            $('body').find('#addQuestion').append(html);
+            count = count + 1;
+        });
+
+        $('body').on('click', '.removeMore', function(){
+            let id = $(this).attr('data-id');
+            $('#row'+id).remove();
+        });
+
+
+        let count = 200;
+        $('body').on('click', '.editAddMore', function(){
+            let html = `<tr id="editrow${count}">
+                        <td>
+                            <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger editRemoveMore" data-id="${count}">Remove</button>
+                        </td>
+                    </tr>`;
+
+            $('body').find('#editQuestion').append(html);
+            count = count + 1;
+        });
+
+        $('body').on('click', '.editRemoveMore', function(){
+            let id = $(this).attr('data-id');
+            $('#editrow1'+id).remove();
+        });
     });
 </script>

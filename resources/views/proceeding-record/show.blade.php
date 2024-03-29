@@ -173,9 +173,17 @@
                                 @foreach($questions as $question)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $question->question }}</td>
+                                    <td>
+                                        @foreach($question->subQuestions as $subQues)
+                                        <b>{{ $loop->iteration }} :-</b> {{ ($subQues->question) ? $subQues->question : '-' }}<br>
+                                        @endforeach
+                                    </td>
                                     <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-primary btn-sm">View File</a></td>
-                                    <td>{{ ($question->description) ? $question->description : '-' }}</td>
+                                    <td>
+                                        @foreach($question->subQuestions as $subQues)
+                                        <b>{{ $loop->iteration }} :-</b> {{ ($subQues->response) ? $subQues->response : '-' }}<br>
+                                        @endforeach
+                                    </td>
                                     <td>
                                         @if($question->response_file)
                                         <a href="{{ asset('storage/'.$question->response_file) }}" class="btn btn-primary btn-sm">View File</a>

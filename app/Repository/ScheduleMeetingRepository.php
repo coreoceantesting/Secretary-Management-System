@@ -153,8 +153,8 @@ class ScheduleMeetingRepository
 
     public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $scheduleMeeting = ScheduleMeeting::find($id);
             // change agenda schedule meeting status
             Agenda::where('id', $scheduleMeeting->agenda_id)->update([
@@ -176,6 +176,7 @@ class ScheduleMeetingRepository
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }
@@ -188,8 +189,8 @@ class ScheduleMeetingRepository
 
     public function cancel($request, $id)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $scheduleMeeting = ScheduleMeeting::find($id);
             $scheduleMeeting->is_meeting_cancel = 1;
             $scheduleMeeting->cancel_remark = $request->remark;
@@ -209,6 +210,7 @@ class ScheduleMeetingRepository
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }

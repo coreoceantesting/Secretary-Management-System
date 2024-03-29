@@ -101,7 +101,7 @@
                                                         </td>
                                                         <td>{{ $member->member?->name }}</td>
                                                         <td><input type="time" name="in_time[]" class="form-control inTime {{ ($inTime) ? $inTime : 'd-none' }}" value="{{ $inTime }}"></td>
-                                                        <td><input type="time" name="out_time[]" class="form-control outTime {{ ($outTime) ? $outTime : 'd-none' }}" value="{{ $outTime }}"></td>
+                                                        <td><input type="time" name="out_time[]" class="form-control outTime {{ ($inTime) ? $inTime : 'd-none' }}" value="{{ $outTime }}"></td>
                                                         <td><button type="button" class="btn btn-primary btn-sm  {{ ($inTime) ? $inTime : 'd-none' }} markButton" id="markButton{{ $key+1 }}">Mark</button></td>
                                                     </tr>
                                                 @endforeach

@@ -77,8 +77,8 @@ class GoshwaraRepository
 
     public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $goshwara = Goshwara::find($id);
             if ($goshwara->file != "") {
                 if (Storage::exists($goshwara->file)) {
@@ -92,6 +92,7 @@ class GoshwaraRepository
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }
@@ -106,8 +107,8 @@ class GoshwaraRepository
 
     public function postSend($request)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $goshwara = Goshwara::find($request->id);
             $goshwara->sent_by = Auth::user()->id;
             $goshwara->date = date('Y-m-d h:i:s');
@@ -119,6 +120,7 @@ class GoshwaraRepository
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }

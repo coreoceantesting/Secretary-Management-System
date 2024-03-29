@@ -70,8 +70,8 @@ class SuplimentryAgendaRepository
 
     public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $agenda = SuplimentryAgenda::find($id);
             if ($agenda->file != "") {
                 if (Storage::exists($agenda->file)) {
@@ -85,6 +85,7 @@ class SuplimentryAgendaRepository
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }

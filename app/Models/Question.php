@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Meeting;
 use App\Models\ScheduleMeeting;
+use App\Models\SubQuestion;
 
 class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['meeting_id', 'schedule_meeting_id', 'question', 'question_file', 'description', 'response_file', 'department_id'];
+    protected $fillable = ['meeting_id', 'schedule_meeting_id', 'question_file', 'response_file', 'department_id'];
 
     public function meeting()
     {
@@ -26,5 +27,10 @@ class Question extends Model
     public function parentScheduleMeeting()
     {
         return $this->belongsTo(ScheduleMeeting::class, 'schedule_meeting_id', 'id')->latestOfMany();
+    }
+
+    public function subQuestions()
+    {
+        return $this->hasMany(SubQuestion::class, 'question_id', 'id');
     }
 }

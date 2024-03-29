@@ -83,6 +83,7 @@ class AgendaRepository
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }

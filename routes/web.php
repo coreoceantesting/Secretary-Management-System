@@ -99,6 +99,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     Route::get('question/schedule_meeting/{id}', [QuestionController::class, 'getScheduleMeeting'])->name('question.getScheduleMeeting');
     Route::post('question/response', [QuestionController::class, 'response'])->name('question.response');
+    Route::post('question/saveSingleResponse', [QuestionController::class, 'saveSingleResponse'])->name('question.saveSingleResponse');
     Route::resource('question', QuestionController::class);
 
     Route::get('reschedule-meeting/schedule_meeting/{id}', [RescheduleMeetingController::class, 'getScheduleMeeting'])->name('reschedule-meeting.getScheduleMeeting');

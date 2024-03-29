@@ -63,10 +63,39 @@ class QuestionController extends Controller
             $scheduleMeetingHtml .= '</select>
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>';
 
+            // sub question
+            $count = 1;
+            $subQuestionHtml = "";
+            $subQuestions = $this->questionRepository->getSubQuestions($question->id);
+
+            foreach ($subQuestions as $subQuestion) {
+                if ($count == "1") {
+                    $subQuestionHtml .= "<tr id='editrow'" . $count . "'>
+                                <td>
+                                    <input class='form-control' name='question[]' value='" . $subQuestion->question . "' type='text' placeholder='Enter Question' required>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-sm btn-primary editAddMore' data-id='" . $count . "'>Add</button>
+                                </td>
+                            </tr>";
+                } else {
+                    $subQuestionHtml .= "<tr id='editrow'" . $count . "'>
+                                <td>
+                                    <input class='form-control' name='question[]' value='" . $subQuestion->question . "' type='text' placeholder='Enter Question' required>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-sm btn-danger editRemoveMore' data-id='" . $count . "'>Remove</button>
+                                </td>
+                            </tr>";
+                }
+                $count++;
+            }
+
             $response = [
                 'result' => 1,
                 'question' => $question,
-                'scheduleMeeting' => $scheduleMeetingHtml
+                'scheduleMeeting' => $scheduleMeetingHtml,
+                'subQuestionHtml' => $subQuestionHtml
             ];
         } else {
             $response = ['result' => 0];
@@ -117,8 +146,11 @@ class QuestionController extends Controller
     {
         $question = $this->questionRepository->show($id);
 
+        $subQuestions = $this->questionRepository->getSubQuestions($id);
+
         return view('question.show')->with([
-            'question' => $question
+            'question' => $question,
+            'subQuestions' => $subQuestions
         ]);
     }
 
@@ -130,6 +162,20 @@ class QuestionController extends Controller
             return redirect()->route('question.index')->with(['success' => 'Schedule meeting deleted successfully!']);
         } else {
             return redirect()->route('question.index')->with(['error' => 'Something went wrong please try again']);
+        }
+    }
+
+    public function saveSingleResponse(Request $request)
+    {
+        // dd($request);
+        if ($request->ajax()) {
+            $question = $this->questionRepository->saveSingleResponse($request);
+
+            if ($question) {
+                return response()->json(['success' => 'Question Response updated successfully!']);
+            } else {
+                return response()->json(['error' => 'Something went wrong please try again']);
+            }
         }
     }
 }

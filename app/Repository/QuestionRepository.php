@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Models\Question;
 use App\Models\QuestionDepartment;
+use App\Models\SubQuestion;
 use App\Models\ScheduleMeeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +14,9 @@ class QuestionRepository
 {
     public function index()
     {
-        return Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting'])->latest()->get();
+        return Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'subQuestions' => function ($q) {
+            return $q->whereNotNull('response');
+        }])->latest()->get();
     }
 
     public function store($request)
@@ -26,13 +29,23 @@ class QuestionRepository
             }
 
             $request['question_file'] = $file;
-            Question::create($request->all());
+            $ques = Question::create($request->all());
+
+            if (isset($request->question)) {
+                for ($i = 0; $i < count($request->question); $i++) {
+                    $subQuestion = new SubQuestion;
+                    $subQuestion->question_id = $ques->id;
+                    $subQuestion->question = $request->question[$i];
+                    $subQuestion->save();
+                }
+            }
 
             DB::commit();
 
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }
@@ -60,19 +73,30 @@ class QuestionRepository
             $request['question_file'] = $file;
             $question->update($request->all());
 
+            if (isset($request->question)) {
+                SubQuestion::where('question_id', $id)->delete();
+                for ($i = 0; $i < count($request->question); $i++) {
+                    $subQuestion = new SubQuestion;
+                    $subQuestion->question_id = $id;
+                    $subQuestion->question = $request->question[$i];
+                    $subQuestion->save();
+                }
+            }
+
             DB::commit();
 
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }
 
     public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $question = Question::find($id);
             if ($question->question_file != "") {
                 if (Storage::exists($question->question_file)) {
@@ -86,6 +110,7 @@ class QuestionRepository
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
             return false;
         }
     }
@@ -97,6 +122,11 @@ class QuestionRepository
             'is_meeting_completed' => 0,
             'is_meeting_cancel' => 0,
         ])->get();
+    }
+
+    public function getSubQuestions($id)
+    {
+        return SubQuestion::where('question_id', $id)->get();
     }
 
     public function show($id)
@@ -124,11 +154,40 @@ class QuestionRepository
             $request['response_file'] = $file;
             $question->update($request->all());
 
+            if (isset($request->response)) {
+                for ($i = 0; $i < count($request->response); $i++) {
+                    SubQuestion::updateOrCreate([
+                        'id' => $request->subQuestionId[$i]
+                    ], [
+                        'response' => $request->response[$i]
+                    ]);
+                }
+            }
+
             DB::commit();
 
             return true;
         } catch (\Exception $e) {
             Log::info($e);
+            DB::rollback();
+            return false;
+        }
+    }
+
+    public function saveSingleResponse($request)
+    {
+        DB::beginTransaction();
+        try {
+            SubQuestion::updateOrCreate([
+                'id' => $request->id
+            ], [
+                'response' => $request->response
+            ]);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            Log::info($e);
+            DB::rollback();
             return false;
         }
     }
