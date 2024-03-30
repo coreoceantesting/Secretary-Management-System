@@ -37,10 +37,6 @@
                                             <th>Time(वेळ)</th>
                                             <td>{{ date('h:i A', strtotime($question->scheduleMeeting?->time)) }}</td>
                                         </tr>
-                                        <tr>
-                                            <th>Question(प्रश्न)</th>
-                                            <td>{{ $question->question }}</td>
-                                        </tr>
                                         @if($question->question_file)
                                         <tr>
                                             <th>Question File(प्रश्न फाइल)</th>
