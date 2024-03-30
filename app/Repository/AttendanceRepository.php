@@ -13,7 +13,10 @@ class AttendanceRepository
 {
     public function index()
     {
-        return ScheduleMeeting::with(['agenda', 'meeting'])->where('date', date('Y-m-d'))->latest()->get();
+        return ScheduleMeeting::with(['agenda', 'meeting'])
+            ->where(
+                ['is_meeting_reschedule' => 0, 'is_record_proceeding' => 0]
+            )->get();
     }
 
     public function store($request)
@@ -81,7 +84,7 @@ class AttendanceRepository
 
     public function show($id)
     {
-        return ScheduleMeeting::with(['agenda', 'meeting', 'suplimentryAgenda'])->where('date', date('Y-m-d'))->where('id', $id)->first();
+        return ScheduleMeeting::with(['agenda', 'meeting', 'suplimentryAgenda'])->where('id', $id)->first();
     }
 
     public function getMeetingMembers($meetingId)

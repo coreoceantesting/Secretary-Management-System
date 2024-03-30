@@ -72,7 +72,11 @@
                                             </td>
                                             <td>
                                                 @can('question.response')
-                                                <input type="text" class="form-control questionResponse" name="response[]" value="{{ $subQuestion->response }}">
+                                                    @if($subQuestion->response == "")
+                                                    <input type="text" class="form-control questionResponse" name="response[]" value="{{ $subQuestion->response }}">
+                                                    @else
+                                                    {{ $subQuestion->response }}
+                                                    @endif
                                                 @else
                                                     @if($subQuestion->response != "")
                                                     {{ $subQuestion->response }}
@@ -83,7 +87,11 @@
                                             </td>
                                             @can('question.response')
                                             <td>
+                                                @if($subQuestion->response == "")
                                                 <button type="button" class="btn btn-sm btn-primary sendQuestionResponse @if($subQuestion->response == "")d-none @endif">Send</button>
+                                                @else
+                                                -
+                                                @endif
                                             </td>
                                             @endcan
                                         </tr>

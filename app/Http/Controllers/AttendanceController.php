@@ -33,6 +33,10 @@ class AttendanceController extends Controller
     {
         $attendance = $this->attendanceRepository->show($id);
 
+        if ($attendance->is_record_proceeding) {
+            return redirect()->route('attendance.index');
+        }
+
         $members = $this->attendanceRepository->getMeetingMembers($attendance->meeting_id);
 
         $attendanceMarks = $this->attendanceRepository->getPresentAttendence($id);
