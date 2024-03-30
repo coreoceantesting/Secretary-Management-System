@@ -42,7 +42,7 @@
                                         <th>Sent By</th>
                                         <th>Sent Date</th>
                                         <th>Remark</th>
-                                        <th>Action</th>
+                                        <th>Goshwara</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,7 +54,7 @@
                                             <td>{{ date('d-m-Y', strtotime($goshwara->date)) }}</td>
                                             <td>{{ $goshwara->remark }}</td>
                                             <td>
-                                                <a href="{{ route('goshwara.show', $goshwara->id) }}" class="btn btn-primary btn-sm">View</a>
+                                                <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a>
                                             </td>
                                         </tr>
                                     @endforeach
