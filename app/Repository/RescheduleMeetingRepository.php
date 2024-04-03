@@ -18,6 +18,7 @@ class RescheduleMeetingRepository
         return ScheduleMeeting::with(['meeting', 'agenda'])
             ->whereNotNull('schedule_meeting_id')
             ->where('is_meeting_reschedule', 0)
+            ->where('is_meeting_completed', 0)
             ->latest()
             ->get();
     }
@@ -34,7 +35,6 @@ class RescheduleMeetingRepository
             ->where(function ($q) use ($scheduleMeetingId) {
                 return $q->where('is_meeting_reschedule', 0)->orWhere('id', $scheduleMeetingId);
             })
-            ->whereDate('date', '>', date('Y-m-d', strtotime('+7 days')))
             ->select('id', 'datetime')
             ->get();
     }

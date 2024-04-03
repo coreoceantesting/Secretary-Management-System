@@ -12,7 +12,7 @@ class ReportRepository
             return $q->whereDate('date', '>=', date('Y-m-d', strtotime($request->from)));
         })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
             return $q->whereDate('date', '<=', date('Y-m-d', strtotime($request->to)));
-        })->get();
+        })->latest()->get();
 
         return $scheduleMeeting;
     }

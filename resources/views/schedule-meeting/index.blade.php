@@ -205,7 +205,8 @@
                                             @can('schedule_meeting.cancel')
                                             @if(!$scheduleMeeting->is_meeting_cancel)
                                             <button class="btn btn-primary btn-sm text-cancel px-2 py-1" title="Cancel Schedule Meeting"  data-bs-toggle="modal" data-bs-target="#signupModals" data-id="{{ $scheduleMeeting->id }}">Cancel Meeting </button>
-
+                                            @else
+                                            <button class="btn btn-success btn-sm px-2 py-1">Canceled </button>
                                             @endif
                                             @endcan
                                         </td>
