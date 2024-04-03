@@ -197,6 +197,10 @@ class ScheduleMeetingRepository
             $scheduleMeeting->cancel_meeting_date = date('Y-m-d');
             $scheduleMeeting->save();
 
+            Agenda::where('id', $scheduleMeeting->agenda_id)->update([
+                'is_meeting_schedule' => 0
+            ]);
+
             // logic to send sms and email
             $members = AssignMemberToMeeting::with(['member'])->where('meeting_id', $scheduleMeeting->meeting_id)->get();
 

@@ -25,7 +25,7 @@ class RescheduleMeetingRepository
 
     public function getScheduleMeeting($meetingId)
     {
-        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0])->select('id', 'datetime')->get();
+        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0, 'is_meeting_cancel' => 0])->select('id', 'datetime')->get();
     }
 
     public function getEditScheduleMeeting($meetingId, $scheduleMeetingId, $id)
@@ -41,7 +41,10 @@ class RescheduleMeetingRepository
 
     public function getScheduleMeetingDetails($scheduleMeetingId)
     {
-        return ScheduleMeeting::with(['meeting', 'agenda'])->where('id', $scheduleMeetingId)->first();
+        return ScheduleMeeting::with(['meeting', 'agenda'])->where([
+            'is_meeting_cancel' => 0,
+            'is_meeting_completed' => 0
+        ])->where('id', $scheduleMeetingId)->first();
     }
 
     public function assignScheduleMeetingDepartments($id)

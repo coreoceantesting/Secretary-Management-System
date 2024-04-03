@@ -41,6 +41,7 @@
                                             <th>Date</th>
                                             <th>Time</th>
                                             <th>Place</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,6 +53,11 @@
                                             <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->date)) }}</td>
                                             <td>{{ date('H:i A', strtotime($scheduleMeeting?->time)) }}</td>
                                             <td>{{ $scheduleMeeting?->place }}</td>
+                                            <td>
+                                                <a href="{{ route('schedule-meeting.show', $scheduleMeeting->id) }}" class="btn text-secondary px-1 py-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                </a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
