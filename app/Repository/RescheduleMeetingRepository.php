@@ -8,7 +8,7 @@ use App\Models\AssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use App\mail\RescheduleMeetingMail;
+use App\Mail\RescheduleMeetingMail;
 use Illuminate\Support\Facades\Mail;
 
 class RescheduleMeetingRepository
