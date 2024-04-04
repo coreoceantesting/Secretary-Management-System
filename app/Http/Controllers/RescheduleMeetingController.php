@@ -36,7 +36,7 @@ class RescheduleMeetingController extends Controller
             $rescheduleMeetings = $this->rescheduleMeetingRepository->getScheduleMeeting($id);
 
             $results = $rescheduleMeetings->map(function ($item, $key) {
-                $item["datetime"] =  date('d-m-Y h:i A', strtotime($item["datetime"]));
+                $item["unique_id"] =  $item["unique_id"] . ' (' . date('d-m-Y h:i A', strtotime($item["datetime"])) . ')';
                 $item["id"] =  $item["id"];
                 return $item;
             });

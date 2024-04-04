@@ -15,7 +15,7 @@ class ScheduleMeeting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['schedule_meeting_id', 'agenda_id', 'meeting_id', 'place', 'date', 'time', 'file', 'datetime', 'is_meeting_reschedule', 'is_meeting_completed', 'parent_id'];
+    protected $fillable = ['schedule_meeting_id', 'agenda_id', 'meeting_id', 'place', 'date', 'time', 'file', 'datetime', 'is_meeting_reschedule', 'is_meeting_completed', 'parent_id', 'unique_id'];
 
     public function meeting()
     {

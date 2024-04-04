@@ -33,6 +33,8 @@ class ScheduleMeetingRepository
     {
         DB::beginTransaction();
         try {
+            $uniqueCount = ScheduleMeeting::where('date', 'like', '%' . date('Y-m', strtotime($request->date)) . '%')->where('meeting_id', $request->meeting_id)->count();
+
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
             $file = null;
@@ -42,6 +44,7 @@ class ScheduleMeetingRepository
             $request['file'] = $file;
             $request['date'] = $date;
             $request['time'] = $time;
+            $request['unique_id'] = date('Y/m/') . '' . $uniqueCount + 1;
             $request['datetime'] = $date . " " . $time;
             $scheduleMeeting = ScheduleMeeting::create($request->all());
 

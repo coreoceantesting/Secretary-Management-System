@@ -139,6 +139,7 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
+                                    <th>Unique Id</th>
                                     <th>Agenda</th>
                                     <th>Date</th>
                                     <th>Time</th>
@@ -152,6 +153,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $rescheduleMeeting->meeting?->name }}</td>
+                                        <td>{{ $rescheduleMeeting->unique_id }}</td>
                                         <td>{{ $rescheduleMeeting->agenda?->name }}</td>
                                         <td>{{ date('d-m-Y', strtotime($rescheduleMeeting->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($rescheduleMeeting->time)) }}</td>
@@ -464,7 +466,7 @@
                                         <option value="">--Select Schedule Meeting--</option>
                                     `;
                         $.each(data.data, function(key, val){
-                            html += `<option value="${val.id}">${val.datetime}</option>`;
+                            html += `<option value="${val.id}">${val.unique_id}</option>`;
                         });
                         html += `</select>
                                     <span class="text-danger is-invalid schedule_meeting_id_err"></span>`;

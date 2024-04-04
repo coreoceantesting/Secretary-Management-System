@@ -42,6 +42,7 @@
                             <thead>
                                 <tr>
                                     <th>Meeting(बैठक)</th>
+                                    <th>Unique Id</th>
                                     <th>Date(तारीख)</th>
                                     <th>Time(वेळ)</th>
                                     <th>Place(ठिकाण)</th>
@@ -52,6 +53,7 @@
                                 @foreach($scheduleMeetings->whereNull('schedule_meeting_id') as $scheduleMeeting)
                                 <tr>
                                     <td>{{ $scheduleMeeting->meeting?->name }}</td>
+                                    <td>{{ $scheduleMeeting->unique_id }}</td>
                                     <td>{{ ($scheduleMeeting->date) ? date('d-m-Y', strtotime($scheduleMeeting->date)) : '-' }}</td>
                                     <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
                                     <td>{{ $scheduleMeeting->place }}</td>
@@ -102,6 +104,7 @@
                                 <tr>
                                     <th>Sr.No</th>
                                     <th>Meeting(बैठक)</th>
+                                    <th>Unique Id</th>
                                     <th>Date(तारीख)</th>
                                     <th>Timeवेळ</th>
                                     <th>Place(ठिकाण)</th>
@@ -113,6 +116,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $scheduleMeeting->meeting?->name }}</td>
+                                    <td>{{ $scheduleMeeting->unique_id }}</td>
                                     <td>{{ ($scheduleMeeting->date) ? date('d-m-Y', strtotime($scheduleMeeting->date)) : '-' }}</td>
                                     <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
                                     <td>{{ $scheduleMeeting->place }}</td>

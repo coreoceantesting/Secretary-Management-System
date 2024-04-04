@@ -24,12 +24,11 @@ class QuestionController extends Controller
 
         $questions = $this->questionRepository->index();
 
-        $departments = $this->commonRepository->getDepartments();
+        // $departments = $this->commonRepository->getDepartments();
 
         return view('question.index')->with([
             'questions' => $questions,
             'meetings' => $meetings,
-            'departments' => $departments
         ]);
     }
 
@@ -131,7 +130,7 @@ class QuestionController extends Controller
             $scheduleMeetings = $this->questionRepository->getScheduleMeeting($id);
 
             $results = $scheduleMeetings->map(function ($item, $key) {
-                $item["datetime"] =  date('d-m-Y h:i A', strtotime($item["datetime"]));
+                $item["datetime"] =  $item['unique_id'] . ' (' . date('d-m-Y h:i A', strtotime($item["datetime"])) . ')';
                 $item["id"] =  $item["id"];
                 return $item;
             });
@@ -176,6 +175,19 @@ class QuestionController extends Controller
             } else {
                 return response()->json(['error' => 'Something went wrong please try again']);
             }
+        }
+    }
+
+    // get schedule meeting assign departments
+    public function getScheduleMeetingDepartments(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $departments = $this->questionRepository->getScheduleMeetingDepartments($id);
+
+
+            return response()->json([
+                'departments' => $departments
+            ]);
         }
     }
 }

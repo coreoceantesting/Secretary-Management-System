@@ -177,6 +177,7 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
+                                    <th>Unique Id</th>
                                     <th>Agenda</th>
                                     <th>Date</th>
                                     <th>Time</th>
@@ -190,6 +191,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $scheduleMeeting->meeting?->name }}</td>
+                                        <td>{{ $scheduleMeeting->unique_id }}</td>
                                         <td>{{ $scheduleMeeting->agenda?->name }}</td>
                                         <td>{{ date('d-m-Y', strtotime($scheduleMeeting->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>

@@ -85,6 +85,7 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting Name</th>
+                                    <th>Unique Id</th>
                                     <th>Date</th>
                                     <th>Remark</th>
                                     <th>File</th>
@@ -96,6 +97,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $proceedingRecord->meeting?->name ?? '-' }}</td>
+                                        <td>{{ $proceedingRecord->scheduleMeeting?->unique_id ?? '-' }}</td>
                                         <td>{{ ($proceedingRecord->date) ? date('d-m-Y', strtotime($proceedingRecord->date)) : '-' }}</td>
                                         <td>{{ ($proceedingRecord->remark) ? $proceedingRecord->remark : '-' }}</td>
                                         <td><a href="{{ asset('storage/'.$proceedingRecord->file) }}" class="btn btn-sm btn-primary">View File</a></td>

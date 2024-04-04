@@ -25,7 +25,7 @@ class RescheduleMeetingRepository
 
     public function getScheduleMeeting($meetingId)
     {
-        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0, 'is_meeting_cancel' => 0])->select('id', 'datetime')->get();
+        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0, 'is_meeting_cancel' => 0])->select('id', 'datetime', 'unique_id')->get();
     }
 
     public function getEditScheduleMeeting($meetingId, $scheduleMeetingId, $id)
@@ -56,6 +56,8 @@ class RescheduleMeetingRepository
     {
         DB::beginTransaction();
         try {
+            $uniqueCount = ScheduleMeeting::where('date', 'like', '%' . date('Y-m', strtotime($request->date)) . '%')->where('meeting_id', $request->meeting_id)->count();
+
             $meeting = ScheduleMeeting::find($request->schedule_meeting_id);
 
             $request['parent_id'] = $meeting->parent_id;
@@ -66,6 +68,8 @@ class RescheduleMeetingRepository
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;
+
+            $request['unique_id'] = date('Y/m/') . '' . $uniqueCount + 1;
             $reScheduleMeeting = ScheduleMeeting::create($request->all());
 
 

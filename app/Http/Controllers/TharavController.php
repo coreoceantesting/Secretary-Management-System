@@ -36,7 +36,7 @@ class TharavController extends Controller
             $scheduleMeetings = $this->tharavRepository->getScheduleMeeting($id);
 
             $results = $scheduleMeetings->map(function ($item, $key) {
-                $item["datetime"] =  date('d-m-Y h:i A', strtotime($item["datetime"]));
+                $item["datetime"] =  $item['unique_id'] . ' (' . date('d-m-Y h:i A', strtotime($item["datetime"])) . ')';
                 $item["id"] =  $item["id"];
                 return $item;
             });

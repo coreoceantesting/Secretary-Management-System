@@ -33,16 +33,7 @@
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
-                                <select name="department_id" id="department_id" class="form-select" required>
-                                    <option value="">Select Department</option>
-                                    @foreach($departments as $department)
-                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="text-danger is-invalid department_id_err"></span>
-                            </div>
+                            <div class="col-md-4 selectScheduleMeetingDepartment d-none"></div>
 
                         </div>
                         <table class="table table-bordered">
@@ -109,9 +100,7 @@
                                 <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
                                 <select name="department_id" id="department_id" class="form-select selectMeetingId" required>
                                     <option value="">Select Department</option>
-                                    @foreach($departments as $department)
-                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                    @endforeach
+
                                 </select>
                                 <span class="text-danger is-invalid department_id_err"></span>
                             </div>
@@ -169,6 +158,7 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
+                                    <th>Unique Id</th>
                                     <th>Date</th>
                                     <th>Place</th>
                                     <th>File</th>
@@ -182,6 +172,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $question->meeting?->name ?? '-' }}</td>
+                                        <td>{{ $question->unique_id ?? '-' }}</td>
                                         <td>{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</td>
                                         <td>{{ ($question->scheduleMeeting?->place) ? $question->scheduleMeeting?->place : '-' }}</td>
                                         <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-sm btn-primary">View File</a></td>
@@ -233,6 +224,11 @@
             data: formdata,
             contentType: false,
             processData: false,
+            beforeSend: function()
+            {
+                $('#preloader').css('opacity', '0.5');
+                $('#preloader').css('visibility', 'visible');
+            },
             success: function(data)
             {
                 $("#addSubmit").prop('disabled', false);
@@ -259,7 +255,11 @@
                     $('#preloader').css('opacity', '0');
                     $('#preloader').css('visibility', 'hidden');
                 }
-            }
+            },
+            complete: function() {
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
         });
 
     });
@@ -512,5 +512,53 @@
             let id = $(this).attr('data-id');
             $('#editrow'+id).remove();
         });
+
+
+        // selecct schedule meeting to get departments
+        $('body').on('change', '#schedule_meeting_id', function(){
+            let meetingId = $(this).val();
+            if(meetingId != ""){
+                getScheduleMeetingDepartments(meetingId);
+                $('body').find('.selectScheduleMeetingDepartment').removeClass('d-none');
+            }else{
+                $('body').find('.selectScheduleMeetingDepartment').html('');
+                $('body').find('.selectScheduleMeetingDepartment').addClass('d-none');
+            }
+        });
+
+        function getScheduleMeetingDepartments(id){
+            var url = "{{ route('question.getScheduleMeetingDepartments', ':model_id') }}";
+            $.ajax({
+                url: url.replace(':model_id', id),
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                beforeSend: function()
+                {
+                    $('#preloader').css('opacity', '0.5');
+                    $('#preloader').css('visibility', 'visible');
+                },
+                success: function(data) {
+                    let html = `<label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
+                    <select name="department_id" id="department_id" class="form-select" required>
+                        <option value="">Select Department</option>
+                                `;
+                    $.each(data.departments, function(key, val){
+                        html += `<option value="${val.department.id}">${val.department.name}</option>`;
+                    });
+                    html += `</select>
+                    <span class="text-danger is-invalid department_id_err"></span>`;
+                    $('body').find('.selectScheduleMeetingDepartment').html(html);
+                },
+                error: function(xhr) {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+                complete: function() {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+            });
+        }
     });
 </script>

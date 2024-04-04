@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Models\Question;
 use App\Models\QuestionDepartment;
+use App\Models\AssignScheduleMeetingDepartment;
 use App\Models\SubQuestion;
 use App\Models\ScheduleMeeting;
 use Illuminate\Support\Facades\DB;
@@ -190,5 +191,11 @@ class QuestionRepository
             DB::rollback();
             return false;
         }
+    }
+
+    // function to get schedule meeting departments id
+    public function getScheduleMeetingDepartments($id)
+    {
+        return AssignScheduleMeetingDepartment::with(['department'])->where('schedule_meeting_id', $id)->get();
     }
 }

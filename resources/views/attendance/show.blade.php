@@ -97,7 +97,7 @@
                                                         <td>
                                                             <input type="hidden" class="memberId" name="member_id[]" value="{{ $member->member?->id }}">
                                                             <input type="hidden" class="dataId" value="{{ $key+1 }}">
-                                                            <input type="checkbox" class="form-check-input memberCheckbox" {{ $memberId }} />
+                                                            @if($inTime == "")<input type="checkbox" class="form-check-input memberCheckbox" {{ $memberId }} />@else - @endif
                                                         </td>
                                                         <td>{{ $member->member?->name }}</td>
                                                         <td><input type="time" name="in_time[]" class="form-control inTime {{ ($inTime) ? $inTime : 'd-none' }}" value="{{ $inTime }}"></td>
