@@ -11,7 +11,7 @@ class SettingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class SettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'meeting_id' => 'required',
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'prefix' => 'required',
+            'sequence' => 'required',
+            'status' => 'required',
         ];
     }
 }

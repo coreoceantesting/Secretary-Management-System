@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Member(सदस्य)</x-slot>
-    <x-slot name="heading">Member(सदस्य)</x-slot>
+    <x-slot name="title">Sequence</x-slot>
+    <x-slot name="heading">Sequence</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,54 +12,56 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Member(सदस्य जोडा)</h4>
+                            <h4 class="card-title">Add Sequence</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="ward_id">Select Ward(वार्ड निवडा) <span class="text-danger">*</span></label>
-                                    <select name="ward_id" id="ward_id" required class="form-select">
-                                        <option value="">Select Ward</option>
-                                        @foreach($wards as $ward)
-                                        <option value="{{ $ward->id }}">{{ $ward->name }}</option>
+                                    <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                    <select name="meeting_id" id="meeting_id" required class="form-select">
+                                        <option value="">Select Meeting</option>
+                                        @foreach($meetings as $meeting)
+                                        <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
                                         @endforeach
                                     </select>
-                                    <span class="text-danger is-invalid ward_id_err"></span>
+                                    <span class="text-danger is-invalid meeting_id_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Name(नाव) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name" required>
-                                    <span class="text-danger is-invalid name_err"></span>
+                                    <label class="col-form-label" for="from_date">Select From Date <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="from_date" name="from_date" type="date" required>
+                                    <span class="text-danger is-invalid from_date_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="contact_number">Contact Number(संपर्क क्रमांक) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" required>
-                                    <span class="text-danger is-invalid contact_number_err"></span>
+                                    <label class="col-form-label" for="to_date">Select To Date <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="to_date" name="to_date" type="date" required>
+                                    <span class="text-danger is-invalid to_date_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="email">Member email(सदस्य ईमेल) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="email" name="email" type="text" placeholder="Enter Email" required>
-                                    <span class="text-danger is-invalid email_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="political_party">Political Party(राजकीय पक्ष) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="political_party" name="political_party" type="text" placeholder="Enter Political Party" required>
-                                    <span class="text-danger is-invalid political_party_err"></span>
+                                    <label class="col-form-label" for="prefix">Prefix <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="prefix" name="prefix" type="text" required>
+                                    <span class="text-danger is-invalid prefix_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="address">Address(पत्ता) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="address" name="address" type="text" placeholder="Enter Address" required>
-                                    <span class="text-danger is-invalid address_err"></span>
+                                    <label class="col-form-label" for="sequence">Sequence <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="sequence" name="sequence" type="text" placeholder="Enter Sequence Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" required>
+                                    <span class="text-danger is-invalid sequence_err"></span>
                                 </div>
+
+
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="designation">Designation(पदनाम) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
-                                    <span class="text-danger is-invalid designation_err"></span>
+                                    <label class="col-form-label" for="status111">Select Status <span class="text-danger">*</span></label>
+                                    <select name="status" id="status111" required class="form-select">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                    <span class="text-danger is-invalid status_err"></span>
                                 </div>
+
+
                             </div>
 
                         </div>
@@ -81,55 +83,56 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Member(सदस्य संपादित करा)</h4>
+                            <h4 class="card-title">Edit Sequence</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="ward_id">Select Ward(वार्ड निवडा) <span class="text-danger">*</span></label>
-                                    <select name="ward_id" id="ward_id" class="form-select" required>
-                                        <option value="">Select Ward</option>
-                                        @foreach($wards as $ward)
-                                        <option value="{{ $ward->id }}">{{ $ward->name }}</option>
+                                    <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                    <select name="meeting_id" id="meeting_id" required class="form-select">
+                                        <option value="">Select Meeting</option>
+                                        @foreach($meetings as $meeting)
+                                        <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
                                         @endforeach
                                     </select>
-                                    <span class="text-danger is-invalid ward_id_err"></span>
+                                    <span class="text-danger is-invalid meeting_id_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Name(नाव) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name" required>
-                                    <span class="text-danger is-invalid name_err"></span>
+                                    <label class="col-form-label" for="from_date">Select From Date <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="from_date" name="from_date" type="date" required>
+                                    <span class="text-danger is-invalid from_date_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="contact_number">Contact Number(संपर्क क्रमांक) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="contact_number" name="contact_number" type="text" placeholder="Enter Contact Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" required>
-                                    <span class="text-danger is-invalid contact_number_err"></span>
+                                    <label class="col-form-label" for="to_date">Select To Date <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="to_date" name="to_date" type="date" required>
+                                    <span class="text-danger is-invalid to_date_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="email">Member email(सदस्य ईमेल) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="email" name="email" type="text" placeholder="Enter Email" required>
-                                    <span class="text-danger is-invalid email_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="political_party">Political Party(राजकीय पक्ष) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="political_party" name="political_party" type="text" placeholder="Enter Political Party" required>
-                                    <span class="text-danger is-invalid political_party_err"></span>
+                                    <label class="col-form-label" for="prefix">Prefix <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="prefix" name="prefix" type="text" required>
+                                    <span class="text-danger is-invalid prefix_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="address">Address(पत्ता) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="address" name="address" type="text" placeholder="Enter Address" required>
-                                    <span class="text-danger is-invalid address_err"></span>
+                                    <label class="col-form-label" for="sequence">Sequence <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="sequence" name="sequence" type="text" placeholder="Enter Sequence Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" required>
+                                    <span class="text-danger is-invalid sequence_err"></span>
                                 </div>
+
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="designation">Designation(पदनाम) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
-                                    <span class="text-danger is-invalid designation_err"></span>
+                                    <label class="col-form-label" for="status1111">Select Status <span class="text-danger">*</span></label>
+                                    <select name="status" id="status1111" required class="form-select">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                    <span class="text-danger is-invalid status_err"></span>
                                 </div>
+
+
                             </div>
 
                         </div>
@@ -164,34 +167,34 @@
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
-                                        <th>Ward</th>
-                                        <th>Name</th>
-                                        <th>Contact Number</th>
-                                        <th>Email</th>
-                                        <th>Political Party</th>
-                                        <th>Address</th>
-                                        <th>Designation</th>
+                                        <th>Meeting</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                        <th>Prefix</th>
+                                        <th>Sequence</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($members as $member)
+                                    @foreach ($settings as $setting)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $member->ward?->name }}</td>
-                                            <td>{{ $member->name }}</td>
-                                            <td>{{ $member->contact_number }}</td>
-                                            <td>{{ $member->email }}</td>
-                                            <td>{{ $member->political_party }}</td>
-                                            <td>{{ $member->address }}</td>
-                                            <td>{{ $member->designation }}</td>
+                                            <td>{{ $setting->meeting?->name }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($setting->from_date)) }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($setting->to_date)) }}</td>
+                                            <td>{{ $setting->prefix }}</td>
+                                            <td>{{ $setting->sequence }}</td>
                                             <td>
-                                                @can('member.edit')
-                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit Member" data-id="{{ $member->id }}"><i data-feather="edit"></i></button>
-                                                @endcan
-                                                @can('member.delete')
-                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete Member" data-id="{{ $member->id }}"><i data-feather="trash-2"></i> </button>
-                                                @endcan
+                                                @if($setting->status)
+                                                    <span class="badge bg-success">Active</span>
+                                                @else
+                                                    <span class="badge bg-danger">Inactive</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit setting" data-id="{{ $setting->id }}"><i data-feather="edit"></i></button>
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete setting" data-id="{{ $setting->id }}"><i data-feather="trash-2"></i> </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -216,7 +219,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('master.member.store') }}',
+            url: '{{ route('master.setting.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -232,7 +235,7 @@
                 if (!data.error)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('master.member.store') }}';
+                            window.location.href = '{{ route('master.setting.store') }}';
                         });
                 else
                     swal("Error!", data.error, "error");
@@ -271,7 +274,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('master.member.edit', ":model_id") }}";
+        var url = "{{ route('master.setting.edit', ":model_id") }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
@@ -288,14 +291,13 @@
                 editFormBehaviour();
                 if (!data.error)
                 {
-                    $("#editForm input[name='edit_model_id']").val(data.member.id);
-                    $("#editForm select[name='ward_id']").val(data.member.ward_id).change();
-                    $("#editForm input[name='name']").val(data.member.name);
-                    $("#editForm input[name='contact_number']").val(data.member.contact_number);
-                    $("#editForm input[name='email']").val(data.member.email);
-                    $("#editForm input[name='political_party']").val(data.member.political_party);
-                    $("#editForm input[name='address']").val(data.member.address);
-                    $("#editForm input[name='designation']").val(data.member.designation);
+                    $("#editForm input[name='edit_model_id']").val(data.setting.id);
+                    $("#editForm select[name='meeting_id']").val(data.setting.meeting_id).change();
+                    $("#editForm input[name='from_date']").val(data.setting.from_date);
+                    $("#editForm input[name='to_date']").val(data.setting.to_date);
+                    $("#editForm input[name='prefix']").val(data.setting.prefix);
+                    $("#editForm input[name='sequence']").val(data.setting.sequence);
+                    $("#editForm select[name='status']").val(data.setting.status).change();
                 }
                 else
                 {
@@ -325,7 +327,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('master.member.update', ":model_id") }}";
+            var url = "{{ route('master.setting.update', ":model_id") }}";
             //
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -344,7 +346,7 @@
                     if (!data.error)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('master.member.index') }}';
+                                window.location.href = '{{ route('master.setting.index') }}';
                             });
                     else
                         swal("Error!", data.error, "error");
@@ -394,7 +396,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('master.member.destroy', ":model_id") }}";
+                var url = "{{ route('master.setting.destroy', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),

@@ -11,27 +11,32 @@ use App\Http\Requests\Master\SettingRequest;
 class SettingController extends Controller
 {
     protected $settingRepository;
+    protected $commonRepository;
 
-    public function __construct(SettingRepository $settingRepository)
+    public function __construct(SettingRepository $settingRepository, CommonRepository $commonRepository)
     {
         $this->settingRepository = $settingRepository;
+        $this->commonRepository = $commonRepository;
     }
 
     public function index()
     {
-        $seetings = $this->settingRepository->index();
+        $settings = $this->settingRepository->index();
+
+        $meetings = $this->commonRepository->getMeeting();
 
         return view('master.setting.index')->with([
-            'seetings' => $seetings
+            'settings' => $settings,
+            'meetings' => $meetings
         ]);
     }
 
     // function to store meeting
     public function store(SettingRequest $request)
     {
-        $seeting = $this->settingRepository->store($request);
+        $setting = $this->settingRepository->store($request);
 
-        if ($seeting) {
+        if ($setting) {
             return response()->json(['success' => 'Setting created successfully!']);
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
@@ -41,12 +46,12 @@ class SettingController extends Controller
     // function to edit the meeting by id
     public function edit($id)
     {
-        $seeting = $this->settingRepository->edit($id);
+        $setting = $this->settingRepository->edit($id);
 
-        if ($seeting) {
+        if ($setting) {
             $response = [
                 'result' => 1,
-                'seeting' => $seeting,
+                'setting' => $setting,
             ];
         } else {
             $response = ['result' => 0];
@@ -66,7 +71,7 @@ class SettingController extends Controller
         }
     }
 
-    // function to delete the seeting
+    // function to delete the setting
     public function destroy($id)
     {
         $meeting = $this->settingRepository->destroy($id);
