@@ -49,7 +49,8 @@
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
-                                        <th>Goshwara</th>
+                                        <th>Name</th>
+                                        <th>Goshwara File</th>
                                         <th>Remark</th>
                                         <th>Action</th>
                                     </tr>
@@ -58,6 +59,7 @@
                                     @foreach ($goshwaras as $goshwara)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $goshwara->name }}</td>
                                             <td><a target="_blank" href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm">View Goshwara</a></td>
                                             <td>{{ $goshwara->remark }}</td>
                                             <td>

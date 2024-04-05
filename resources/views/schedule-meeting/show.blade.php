@@ -54,6 +54,12 @@
                                             <th>File(फाईल)</th>
                                             <td><a href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                         </tr>
+                                        @if(!$scheduleMeeting->is_meeting_cancel)
+                                        <tr>
+                                            <th>Go toattendance</th>
+                                            <td><a href="{{ route('attendance.show', $rescheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a></td>
+                                        </tr>
+                                        @endif
                                         @if($scheduleMeeting->is_meeting_cancel)
                                         <tr>
                                             <th>Cancel Meeting(रद्द मीटिंग)</th>

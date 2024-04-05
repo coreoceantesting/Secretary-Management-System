@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Models\Agenda;
+use App\Models\Goshwara;
+use App\Models\AssignGoshwaraToAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +16,18 @@ class AgendaRepository
         return Agenda::latest()->get();
     }
 
+    public function getNotAssignedGoshwara()
+    {
+        return Goshwara::doesntHave('assignGoshwaraToAgenda')->where('is_sent', 1)->get();
+    }
+
+    public function getAssignedGoshwaraById($id)
+    {
+        return Goshwara::orWhereHas('assignGoshwaraToAgenda', function ($q) use ($id) {
+            return $q->where('agenda_id', $id);
+        })->where('is_sent', 1)->get();
+    }
+
     public function store($request)
     {
         DB::beginTransaction();
@@ -23,7 +37,16 @@ class AgendaRepository
                 $file = $request->agendafile->store('agenda');
             }
             $request['file'] = $file;
-            Agenda::create($request->all());
+            $agenda = Agenda::create($request->all());
+
+            if (isset($request->goshwara_id)) {
+                for ($i = 0; $i < count($request->goshwara_id); $i++) {
+                    AssignGoshwaraToAgenda::create([
+                        'agenda_id' => $agenda->id,
+                        'goshwara_id' => $request->goshwara_id[$i],
+                    ]);
+                }
+            }
 
             DB::commit();
             return true;
@@ -55,6 +78,16 @@ class AgendaRepository
             }
             $request['file'] = $file;
             $agenda->update($request->all());
+
+            if (isset($request->goshwara_id)) {
+                AssignGoshwaraToAgenda::where('agenda_id', $id)->delete();
+                for ($i = 0; $i < count($request->goshwara_id); $i++) {
+                    AssignGoshwaraToAgenda::create([
+                        'agenda_id' => $id,
+                        'goshwara_id' => $request->goshwara_id[$i],
+                    ]);
+                }
+            }
 
             DB::commit();
             return true;

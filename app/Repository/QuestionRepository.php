@@ -9,15 +9,27 @@ use App\Models\SubQuestion;
 use App\Models\ScheduleMeeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class QuestionRepository
 {
     public function index()
     {
-        return Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'subQuestions' => function ($q) {
+        $role = Auth::user()->roles[0]->name;
+
+        $question =  Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'subQuestions' => function ($q) {
             return $q->whereNotNull('response');
-        }])->latest()->get();
+        }]);
+
+        if ($role == "Department") {
+            $question = $question->where('department_id', Auth::user()->department_id);
+        }
+
+        $question = $question->latest()->get();
+
+
+        return $question;
     }
 
     public function store($request)
@@ -194,8 +206,16 @@ class QuestionRepository
     }
 
     // function to get schedule meeting departments id
-    public function getScheduleMeetingDepartments($id)
+    public function getScheduleMeetingDepartments($id, $questionId)
     {
-        return AssignScheduleMeetingDepartment::with(['department'])->where('schedule_meeting_id', $id)->get();
+        // get schedule meeting assign Id
+        if ($questionId == "add")
+            $scheduleMeetingQuestionIds = Question::where('schedule_meeting_id', $id)->pluck('department_id');
+        else
+            $scheduleMeetingQuestionIds = Question::where('schedule_meeting_id', $id)->where('id', '!=', $questionId)->pluck('department_id');
+
+        $data = AssignScheduleMeetingDepartment::with(['department'])->whereNotIn('department_id', $scheduleMeetingQuestionIds)->where('schedule_meeting_id', $id)->get();
+
+        return $data;
     }
 }

@@ -23,11 +23,13 @@ class GoshwaraRequest extends FormRequest
     {
         if ($this->edit_model_id) {
             $rule = [
+                'name' => 'required',
                 'goshwarafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
                 'remark' => 'required'
             ];
         } else {
             $rule = [
+                'name' => 'required',
                 'goshwarafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
                 'remark' => 'required'
             ];

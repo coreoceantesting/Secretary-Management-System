@@ -16,7 +16,7 @@ class GoshwaraRepository
             return $q->whereDate('date', '>=', date('Y-m-d', strtotime($request->from)));
         })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
             return $q->whereDate('date', '<=', date('Y-m-d', strtotime($request->to)));
-        })->where('is_sent', 1)->with(['department', 'sentBy'])->latest()->get();
+        })->where('is_sent', 1)->with(['department', 'sentBy'])->where('department_id', Auth::user()->department_id)->latest()->get();
 
         return $goshwara;
     }
@@ -100,7 +100,7 @@ class GoshwaraRepository
     // function to get send list
     public function send($request)
     {
-        $goshwara = Goshwara::where('is_sent', 0)->latest()->get();
+        $goshwara = Goshwara::where('is_sent', 0)->latest()->where('department_id', Auth::user()->department_id)->get();
 
         return $goshwara;
     }

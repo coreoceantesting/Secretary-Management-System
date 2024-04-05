@@ -36,7 +36,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>File</th>
+                                    <th>Agenda File</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,7 +63,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Place</th>
-                                    <th>File</th>
+                                    <th>Schedule Meeting File</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,7 +125,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Place</th>
-                                    <th>File</th>
+                                    <th>Reschedule Meeting File</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -157,7 +157,7 @@
                                 <tr>
                                     <th>Sr.No</th>
                                     <th>Name</th>
-                                    <th>File</th>
+                                    <th>Suplimentry Agenda File</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -259,7 +259,7 @@
                                     <th>Meeting</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>File</th>
+                                    <th>Proceeding record file</th>
                                     <th>Remark</th>
                                 </tr>
                             </thead>

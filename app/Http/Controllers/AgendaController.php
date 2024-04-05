@@ -19,8 +19,11 @@ class AgendaController extends Controller
     {
         $agendas = $this->agendaRepository->index();
 
+        $goshwaras = $this->agendaRepository->getNotAssignedGoshwara();
+
         return view('agenda.index')->with([
-            'agendas' => $agendas
+            'agendas' => $agendas,
+            'goshwaras' => $goshwaras
         ]);
     }
 
@@ -39,10 +42,23 @@ class AgendaController extends Controller
     {
         $agenda = $this->agendaRepository->edit($id);
 
+        $goshwaras = $this->agendaRepository->getAssignedGoshwaraById($id);
+        $notAssignedGoshwaras = $this->agendaRepository->getNotAssignedGoshwara();
+
+        $goshwaraHtml = '<option value="">--Select Goshwara--</option>';
+        foreach ($goshwaras as $goshwara) {
+            $goshwaraHtml .= '<option selected value="' . $goshwara->id . '">' . $goshwara->name . '</option>';
+        }
+
+        foreach ($notAssignedGoshwaras as $notAssignedGoshwara) {
+            $goshwaraHtml .= '<option value="' . $notAssignedGoshwara->id . '">' . $notAssignedGoshwara->name . '</option>';
+        }
+
         if ($agenda) {
             $response = [
                 'result' => 1,
                 'agenda' => $agenda,
+                'goshwaraHtml' => $goshwaraHtml
             ];
         } else {
             $response = ['result' => 0];

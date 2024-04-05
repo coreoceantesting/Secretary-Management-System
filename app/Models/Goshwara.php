@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Meeting;
 use App\Models\Department;
 use App\Models\User;
+use App\Models\AssignGoshwaraToAgenda;
 
 class Goshwara extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['department_id', 'meeting_id', 'file', 'remark', 'sent_by', 'date', 'is_sent'];
+    protected $fillable = ['name', 'department_id', 'meeting_id', 'file', 'remark', 'sent_by', 'date', 'is_sent'];
 
     public function meeting()
     {
@@ -27,5 +28,10 @@ class Goshwara extends Model
     public function sentBy()
     {
         return $this->belongsTo(User::class, 'sent_by', 'id');
+    }
+
+    public function assignGoshwaraToAgenda()
+    {
+        return $this->hasMany(AssignGoshwaraToAgenda::class, 'goshwara_id', 'id');
     }
 }

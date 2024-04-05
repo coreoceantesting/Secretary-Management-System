@@ -18,10 +18,14 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 25%">Department</th>
-                                        <th>{{ $goshwara->department?->name ?? '-' }}</th>
+                                        <td>{{ $goshwara->department?->name ?? '-' }}</td>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>{{ $goshwara->name ?? '-' }}</td>
+                                    </tr>
                                     <tr>
                                         <th>File</th>
                                         <td><a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary">View File</a></td>

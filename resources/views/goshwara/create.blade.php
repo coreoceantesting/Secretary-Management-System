@@ -17,13 +17,20 @@
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="name">Goshwara Name(गोश्वरा नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter goshwara name" required>
+                                    @error('name')
+                                    <span class="text-danger is-invalid name_err">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="goshwarafile">Select Goshwara(गोश्वरा निवडा) <span class="text-danger">*</span></label>
                                     <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara" required>
                                     @error('goshwarafile')
                                     <span class="text-danger is-invalid goshwarafile_err">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="remark">Remark(शेरा) <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="remark" name="remark" placeholder="Enter remark" required>{{ old('remark') }}</textarea>
                                     @error('remark')

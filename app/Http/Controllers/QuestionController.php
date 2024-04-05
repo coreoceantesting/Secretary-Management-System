@@ -24,8 +24,6 @@ class QuestionController extends Controller
 
         $questions = $this->questionRepository->index();
 
-        // $departments = $this->commonRepository->getDepartments();
-
         return view('question.index')->with([
             'questions' => $questions,
             'meetings' => $meetings,
@@ -49,7 +47,7 @@ class QuestionController extends Controller
 
         if ($question) {
             $scheduleMeetingHtml = '<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date(शेड्यूल मीटिंग तारीख निवडा) <span class="text-danger">*</span></label>
-            <select class="form-select col-sm-12" id="schedule_meeting_id" name="schedule_meeting_id" required>
+            <select class="form-select col-sm-12" id="schedule_meeting_id1" name="schedule_meeting_id" required>
                 <option value="">--Select Schedule Meeting--</option>';
             if ($question->schedule_meeting_id) {
                 $scheduleMeetings = $this->questionRepository->getScheduleMeeting($question->meeting_id);
@@ -61,6 +59,15 @@ class QuestionController extends Controller
             }
             $scheduleMeetingHtml .= '</select>
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>';
+
+            // logic to get department
+            $departmentHtml = '<option value="">Select Department</option>';
+            $departments = $this->questionRepository->getScheduleMeetingDepartments($question->schedule_meeting_id, $id);
+
+            foreach ($departments as $department) {
+                $isSelected = ($department->department?->id == $question->department_id) ? 'selected' : '';
+                $departmentHtml .= '<option ' . $isSelected . ' value="' . $department->department?->id . '">' . $department->department?->name . '</option>';
+            }
 
             // sub question
             $count = 1;
@@ -94,7 +101,8 @@ class QuestionController extends Controller
                 'result' => 1,
                 'question' => $question,
                 'scheduleMeeting' => $scheduleMeetingHtml,
-                'subQuestionHtml' => $subQuestionHtml
+                'subQuestionHtml' => $subQuestionHtml,
+                'departmentHtml' => $departmentHtml
             ];
         } else {
             $response = ['result' => 0];
@@ -182,8 +190,7 @@ class QuestionController extends Controller
     public function getScheduleMeetingDepartments(Request $request, $id)
     {
         if ($request->ajax()) {
-            $departments = $this->questionRepository->getScheduleMeetingDepartments($id);
-
+            $departments = $this->questionRepository->getScheduleMeetingDepartments($id, $request->type);
 
             return response()->json([
                 'departments' => $departments

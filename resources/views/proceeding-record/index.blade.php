@@ -43,7 +43,7 @@
                                 <span class="text-danger is-invalid remark_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल) <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="uploadfile">Upload Proceeding Records(अपलोड कार्यवाही फाइल) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
@@ -88,7 +88,7 @@
                                     <th>Unique Id</th>
                                     <th>Date</th>
                                     <th>Remark</th>
-                                    <th>File</th>
+                                    <th>Proceeding Record File</th>
                                     @can('proceeding-record.show')<th>Action</th>@endcan
                                 </tr>
                             </thead>

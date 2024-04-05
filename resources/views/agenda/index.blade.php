@@ -17,6 +17,16 @@
                     <div class="card-body">
                         <div class="mb-3 row">
                             <div class="col-md-4">
+                                <label class="col-form-label" for="goshwara_id1">Select Goshwara(विभाग निवडा) <span class="text-danger">*</span></label>
+                                <select multiple class="js-example-basic-multiple form-select col-sm-12" id="goshwara_id1" name="goshwara_id[]" required>
+                                    <option value="">--Select Goshwara--</option>
+                                    @foreach($goshwaras as $goshwara)
+                                    <option value="{{ $goshwara->id }}">{{ $goshwara->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid goshwara_id_err"></span>
+                            </div>
+                            <div class="col-md-4">
                                 <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Enter Agenda Name" required>
                                 <span class="text-danger is-invalid name_err"></span>
@@ -52,6 +62,12 @@
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                         <div class="mb-3 row">
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="goshwara_id">Select Goshwara(विभाग निवडा) <span class="text-danger">*</span></label>
+                                <select multiple class="js-example-basic-multiple form-select col-sm-12 editSelectGoshwaraToAgenda" id="goshwara_id" name="goshwara_id[]" required>
+                                </select>
+                                <span class="text-danger is-invalid goshwara_id_err"></span>
+                            </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Agenda Name" required>
@@ -218,6 +234,7 @@
                     $("#editForm input[name='edit_model_id']").val(data.agenda.id);
                     $("#editForm input[name='name']").val(data.agenda.name);
                     $("#editForm input[name='initial']").val(data.agenda.initial);
+                    $('body').find("#editForm .editSelectGoshwaraToAgenda").html(data.goshwaraHtml)
                 }
                 else
                 {

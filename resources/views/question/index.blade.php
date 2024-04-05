@@ -288,6 +288,7 @@
                     $("#editForm #editQuestion").html(data.subQuestionHtml);
                     $('body').find('.selectScheduleMeeting').html(data.scheduleMeeting);
                     $('body').find('.selectScheduleMeeting').removeClass('d-none');
+                    $("#editForm #department_id").html(data.departmentHtml);
                 }
                 else
                 {
@@ -518,7 +519,7 @@
         $('body').on('change', '#schedule_meeting_id', function(){
             let meetingId = $(this).val();
             if(meetingId != ""){
-                getScheduleMeetingDepartments(meetingId);
+                getScheduleMeetingDepartments(meetingId, 'add');
                 $('body').find('.selectScheduleMeetingDepartment').removeClass('d-none');
             }else{
                 $('body').find('.selectScheduleMeetingDepartment').html('');
@@ -526,11 +527,27 @@
             }
         });
 
-        function getScheduleMeetingDepartments(id){
+        // for edit
+        $('body').on('change', '#schedule_meeting_id1', function(){
+            let meetingId = $(this).val();
+            let questionId = $(this).closest('form').find('#edit_model_id').val();
+            if(meetingId != ""){
+                getScheduleMeetingDepartments(meetingId, questionId);
+                $('body').find('.selectScheduleMeetingDepartment').removeClass('d-none');
+            }else{
+                $('body').find('.selectScheduleMeetingDepartment').html('');
+                $('body').find('.selectScheduleMeetingDepartment').addClass('d-none');
+            }
+        });
+
+        function getScheduleMeetingDepartments(id, type){
             var url = "{{ route('question.getScheduleMeetingDepartments', ':model_id') }}";
             $.ajax({
                 url: url.replace(':model_id', id),
                 type: 'GET',
+                data: {
+                    type: type
+                },
                 contentType: false,
                 processData: false,
                 beforeSend: function()
