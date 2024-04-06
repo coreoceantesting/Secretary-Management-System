@@ -39,7 +39,7 @@ class ScheduleMeetingRepository
                 $uniqueCount = $setting->prefix . '' . $setting->sequence;
                 Setting::where('meeting_id', $request->meeting_id)->where('status', 1)->increment('sequence', 1);
             } else {
-                $count = ScheduleMeeting::where('date', 'like', '%' . date('Y-m', strtotime($request->date)) . '%')->where('meeting_id', $request->meeting_id)->count();
+                $count = ScheduleMeeting::where('date', 'like', '%' . date('Y', strtotime($request->date)) . '%')->where('meeting_id', $request->meeting_id)->count();
                 $uniqueCount = $count + 1;
             }
 
