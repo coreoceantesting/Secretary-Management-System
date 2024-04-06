@@ -103,6 +103,8 @@ class AgendaRepository
     {
         try {
             DB::beginTransaction();
+
+            AssignGoshwaraToAgenda::where('agenda_id', $id)->delete();
             $agenda = Agenda::find($id);
             if ($agenda->file != "") {
                 if (Storage::exists($agenda->file)) {

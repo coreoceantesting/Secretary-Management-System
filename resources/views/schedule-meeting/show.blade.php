@@ -57,7 +57,7 @@
                                         @if(!$scheduleMeeting->is_meeting_cancel)
                                         <tr>
                                             <th>Go toattendance</th>
-                                            <td><a href="{{ route('attendance.show', $rescheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a></td>
+                                            <td><a href="{{ route('attendance.show', $scheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a></td>
                                         </tr>
                                         @endif
                                         @if($scheduleMeeting->is_meeting_cancel)

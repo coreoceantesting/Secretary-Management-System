@@ -19,6 +19,10 @@ class SettingRepository
     {
         DB::beginTransaction();
         try {
+            if ($request->status == "1") {
+                Setting::where('meeting_id', $request->meeting_id)->update(['status' => 0]);
+            }
+
             Setting::create($request->all());
 
             DB::commit();
@@ -42,6 +46,10 @@ class SettingRepository
     {
         DB::beginTransaction();
         try {
+            if ($request->status == "1") {
+                Setting::where('meeting_id', $request->meeting_id)->update(['status' => 0]);
+            }
+
             $setting = Setting::find($id);
             $setting->update($request->all());
 

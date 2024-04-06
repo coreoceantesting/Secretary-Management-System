@@ -30,6 +30,7 @@ class GoshwaraRepository
                 $file = $request->goshwarafile->store('goshwara');
             }
             $request['file'] = $file;
+            $request['department_id'] = Auth::user()->department_id;
             Goshwara::create($request->all());
 
             DB::commit();
@@ -113,7 +114,6 @@ class GoshwaraRepository
             $goshwara->sent_by = Auth::user()->id;
             $goshwara->date = date('Y-m-d h:i:s');
             $goshwara->is_sent = 1;
-            $goshwara->department_id = Auth::user()->department?->id;
             $goshwara->save();
             DB::commit();
 

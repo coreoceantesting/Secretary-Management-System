@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Models\ScheduleMeeting;
 use App\Models\Agenda;
+use App\Models\Setting;
 use App\Models\AssignMemberToMeeting;
 use App\Models\AssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,15 @@ class ScheduleMeetingRepository
     {
         DB::beginTransaction();
         try {
-            $uniqueCount = ScheduleMeeting::where('date', 'like', '%' . date('Y-m', strtotime($request->date)) . '%')->where('meeting_id', $request->meeting_id)->count();
+            $setting = Setting::where('meeting_id', $request->meeting_id)->where('status', 1)->first();
+            if ($setting) {
+                $uniqueCount = $setting->prefix . '' . $setting->sequence;
+                Setting::where('meeting_id', $request->meeting_id)->where('status', 1)->increment('sequence', 1);
+            } else {
+                $count = ScheduleMeeting::where('date', 'like', '%' . date('Y-m', strtotime($request->date)) . '%')->where('meeting_id', $request->meeting_id)->count();
+                $uniqueCount = $count + 1;
+            }
+
 
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
@@ -44,7 +53,7 @@ class ScheduleMeetingRepository
             $request['file'] = $file;
             $request['date'] = $date;
             $request['time'] = $time;
-            $request['unique_id'] = date('Y/m/') . '' . $uniqueCount + 1;
+            $request['unique_id'] = $uniqueCount;
             $request['datetime'] = $date . " " . $time;
             $scheduleMeeting = ScheduleMeeting::create($request->all());
 
