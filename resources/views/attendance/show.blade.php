@@ -39,14 +39,14 @@
                                                 <th>Agenda File(अजेंडा फाइल)</th>
                                                 <td><a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                             </tr>
-                                            <tr>
+                                            {{-- <tr>
                                                 <th>Suplimentry Agenda(पूरक अजेंडा)</th>
                                                 <td>
                                                     @foreach($attendance->suplimentryAgenda as $suplimentryAgenda)
                                                     <a target="_blank" href="{{ asset('storage/'. $suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">{{ $suplimentryAgenda->name }}</a>
                                                     @endforeach
                                                 </td>
-                                            </tr>
+                                            </tr> --}}
                                             <tr>
                                                 <th>Date(तारीख)</th>
                                                 <td>{{ date('d-m-Y', strtotime($attendance->date)) }}</td>

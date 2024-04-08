@@ -84,7 +84,7 @@ class AttendanceRepository
 
     public function show($id)
     {
-        return ScheduleMeeting::with(['agenda', 'meeting', 'suplimentryAgenda'])->where('id', $id)->first();
+        return ScheduleMeeting::with(['agenda', 'meeting'])->where('id', $id)->first();
     }
 
     public function getMeetingMembers($meetingId)
