@@ -55,11 +55,6 @@
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Upload Agenda(अजेंडा अपलोड करा) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="agendafile" name="agendafile" type="file" required>
-                                <span class="text-danger is-invalid agendafile_err"></span>
-                            </div>
-                            <div class="col-md-4">
                                 <label class="col-form-label" for="department_id1">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
                                 <select multiple class="js-example-basic-multiple form-select col-sm-12" id="department_id1" name="department_id[]" required>
                                     <option value="">--Select Department--</option>
@@ -128,11 +123,6 @@
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Upload Agenda(अजेंडा अपलोड करा)</label>
-                                <input class="form-control" id="agendafile" name="agendafile" type="file">
-                                <span class="text-danger is-invalid agendafile_err"></span>
-                            </div>
-                            <div class="col-md-4">
                                 <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
                                 <select multiple class="js-example-basic-multiple col-sm-12" id="department_id" name="department_id[]">
                                     <option value="">--Select Department--</option>
@@ -177,12 +167,12 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
-                                    <th>Unique Id</th>
+                                    <th>Unique No.</th>
                                     <th>Agenda</th>
+                                    <th>Agenda File</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Place</th>
-                                    <th>Upload File</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -193,10 +183,10 @@
                                         <td>{{ $scheduleMeeting->meeting?->name }}</td>
                                         <td>{{ $scheduleMeeting->unique_id }}</td>
                                         <td>{{ $scheduleMeeting->agenda?->name }}</td>
+                                        <td><a href="{{ asset('storage/'.$scheduleMeeting->agenda->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
                                         <td>{{ date('d-m-Y', strtotime($scheduleMeeting->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
                                         <td>{{ $scheduleMeeting->place }}</td>
-                                        <td><a href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
 
                                         <td>
                                             @can('schedule_meeting.show')

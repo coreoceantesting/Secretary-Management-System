@@ -9,7 +9,7 @@
         font-family: 'freeserif', 'normal';
     }
     table {
-        font-family: arial, sans-serif;
+        font-family: 'freeserif', 'normal';
         border-collapse: collapse;
         width: 100%;
     }

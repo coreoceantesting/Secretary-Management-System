@@ -22,17 +22,23 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th style="width: 25%">Agenda Name(अजेंडाचे नाव)</th>
+                                                <th>Meeting Name(संमेलनाचे नाव)</th>
                                                 <td>{{ $attendance->meeting?->name }}</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                <th style="width: 25%">Meeting Id(मीटिंग आयडी)</th>
+                                                <td>{{ $attendance->meeting?->name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="width: 25%">Agenda Name(अजेंडाचे नाव)</th>
+                                                <td>{{ $attendance->agenda?->name }}</td>
+                                            </tr>
+                                            <tr>
                                                 <th>Agenda File(अजेंडा फाइल)</th>
                                                 <td><a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                             </tr>
-
-
                                             <tr>
                                                 <th>Suplimentry Agenda(पूरक अजेंडा)</th>
                                                 <td>
@@ -41,11 +47,6 @@
                                                     @endforeach
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <th>Meeting Name(संमेलनाचे नाव)</th>
-                                                <td>{{ $attendance->meeting?->name }}</td>
-                                            </tr>
-
                                             <tr>
                                                 <th>Date(तारीख)</th>
                                                 <td>{{ date('d-m-Y', strtotime($attendance->date)) }}</td>

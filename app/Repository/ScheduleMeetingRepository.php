@@ -44,11 +44,7 @@ class ScheduleMeetingRepository
 
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
-            $file = null;
-            if ($request->hasFile('agendafile')) {
-                $file = $request->agendafile->store('schedulemeeting');
-            }
-            $request['file'] = $file;
+
             $request['date'] = $date;
             $request['time'] = $time;
             $request['unique_id'] = $uniqueCount;
@@ -114,20 +110,8 @@ class ScheduleMeetingRepository
                 'is_meeting_schedule' => 0
             ]);
 
-            $file = $scheduleMeeting->file;
-            if ($request->hasFile('agendafile')) {
-                if ($scheduleMeeting->file != "") {
-                    if (Storage::exists($scheduleMeeting->file)) {
-                        Storage::delete($scheduleMeeting->file);
-                    }
-                }
-                $file = $request->agendafile->store('schedulemeeting');
-            }
-            $request['file'] = $file;
-
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
-            $request['file'] = $file;
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;

@@ -57,7 +57,18 @@
                                         @if(!$scheduleMeeting->is_meeting_cancel)
                                         <tr>
                                             <th>Go toattendance</th>
-                                            <td><a href="{{ route('attendance.show', $scheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a></td>
+                                            <td>
+                                                @php
+                                                $diff = strtotime($scheduleMeeting->date) - strtotime(date('Y-m-d'));
+
+                                                $daysleft = abs(round($diff / 86400));
+                                                @endphp
+                                                @if($daysleft == "0")
+                                                <a href="{{ route('attendance.show', $scheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a>
+                                                @else
+                                                {{ $daysleft }} days left for meeting
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endif
                                         @if($scheduleMeeting->is_meeting_cancel)

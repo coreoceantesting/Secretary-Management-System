@@ -24,7 +24,6 @@ class ScheduleMeetingRequest extends FormRequest
         if ($this->edit_model_id) {
             $rule = [
                 'agenda_id' => 'required',
-                'agendafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
                 'meeting_id' => 'required',
                 'date' => 'required',
                 'time' => 'required',
@@ -34,7 +33,6 @@ class ScheduleMeetingRequest extends FormRequest
         } else {
             $rule = [
                 'agenda_id' => 'required',
-                'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
                 'meeting_id' => 'required',
                 'date' => 'required',
                 'time' => 'required',
@@ -50,9 +48,6 @@ class ScheduleMeetingRequest extends FormRequest
     {
         return [
             'agenda_id.required' => 'Please select Agenda',
-            'agendafile.required' => 'Please select file',
-            'agendafile.mimes' => 'Only pdf and doc file supported',
-            'agendafile.max' => 'File must be less than 2mb',
             'meeting_id.required' => 'Please select meeting',
             'date.required' => 'Please select date',
             'time.required' => 'Please select time',

@@ -35,7 +35,16 @@
                                             <a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->file) }}" class="btn btn-primary btn-sm">View File</a>
                                         </td>
                                         <td>
+                                            @php
+                                            $diff = strtotime($attendance->date) - strtotime(date('Y-m-d'));
+
+                                            $daysleft = abs(round($diff / 86400));
+                                            @endphp
+                                            @if($daysleft == "0")
                                             <a href="{{ route('attendance.show', $attendance->id) }}" class="btn btn-primary btn-sm">Mark</a>
+                                            @else
+                                            {{ $daysleft }} days left for meeting
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
