@@ -139,7 +139,7 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
-                                    <th>Unique Id</th>
+                                    <th>Meeting No.</th>
                                     <th>Agenda</th>
                                     <th>Date</th>
                                     <th>Time</th>

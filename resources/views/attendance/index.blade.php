@@ -15,7 +15,7 @@
                                     <th>Sr no.</th>
                                     <th>Agenda Name</th>
                                     <th>Meeting Name</th>
-                                    <th>Unique ID</th>
+                                    <th>Meeting No.</th>
                                     <th>Datetime</th>
                                     <th>Place</th>
                                     <th>Agenda File</th>
@@ -43,7 +43,7 @@
                                             @if($daysleft == "0")
                                             <a href="{{ route('attendance.show', $attendance->id) }}" class="btn btn-primary btn-sm">Mark</a>
                                             @else
-                                            {{ $daysleft }} days left for meeting
+                                            <span style="color:#308f18!important">{{ $daysleft }} days left for meeting</span>
                                             @endif
                                         </td>
                                     </tr>

@@ -16,4 +16,9 @@ class ReportRepository
 
         return $scheduleMeeting;
     }
+
+    public function viewScheduleMeetingReport($id)
+    {
+        return ScheduleMeeting::with(['meeting', 'agenda', 'assignScheduleMeetingDepartment.department'])->where('id', $id)->first();
+    }
 }

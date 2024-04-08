@@ -18,7 +18,13 @@ class ScheduleMeetingRepository
 {
     public function index()
     {
-        $scheduleMeeting = ScheduleMeeting::with(['meeting', 'agenda'])->whereNull('schedule_meeting_id')->where('is_meeting_reschedule', 0)->where('is_meeting_completed', 0);
+        $scheduleMeeting = ScheduleMeeting::with(['meeting', 'agenda'])
+            ->whereNull('schedule_meeting_id')
+            ->where([
+                'is_meeting_reschedule' => 0,
+                'is_meeting_completed' => 0,
+                'is_meeting_cancel' => 0
+            ]);
 
         if (Auth::user()->hasRole('Department')) {
             $scheduleMeeting = $scheduleMeeting->whereHas('assignScheduleMeetingDepartment', function ($q) {

@@ -71,7 +71,7 @@
                                                 @if($daysleft == "0")
                                                 <a href="{{ route('attendance.show', $scheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a>
                                                 @else
-                                                <span class="text-success">{{ $daysleft }} day left for meeting</span>
+                                                <span style="color:#308f18!important">{{ $daysleft }} day left for meeting</span>
                                                 @endif
                                             </td>
                                         </tr>

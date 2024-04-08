@@ -6,6 +6,7 @@ use App\Models\ScheduleMeeting;
 use App\Models\AssignMemberToMeeting;
 use App\Models\AssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\RescheduleMeetingMail;
@@ -16,12 +17,22 @@ class RescheduleMeetingRepository
 {
     public function index()
     {
-        return ScheduleMeeting::with(['meeting', 'agenda'])
-            ->whereNotNull('schedule_meeting_id')
-            ->where('is_meeting_reschedule', 0)
-            ->where('is_meeting_completed', 0)
-            ->latest()
-            ->get();
+        $scheduleMeeting = ScheduleMeeting::with(['meeting', 'agenda'])
+            ->whereNull('schedule_meeting_id')
+            ->where([
+                'is_meeting_reschedule' => 0,
+                'is_meeting_completed' => 0,
+                'is_meeting_cancel' => 0
+            ]);
+
+        if (Auth::user()->hasRole('Department')) {
+            $scheduleMeeting = $scheduleMeeting->whereHas('assignScheduleMeetingDepartment', function ($q) {
+                $q->where('department_id', Auth::user()->department_id);
+            });
+        }
+        $scheduleMeeting = $scheduleMeeting->latest()->get();
+
+        return $scheduleMeeting;
     }
 
     public function getScheduleMeeting($meetingId)

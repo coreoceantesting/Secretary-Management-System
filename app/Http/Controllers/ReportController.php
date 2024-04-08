@@ -22,4 +22,11 @@ class ReportController extends Controller
             'scheduleMeetings' => $scheduleMeetings
         ]);
     }
+
+    public function viewScheduleMeetingReport($id)
+    {
+        $scheduleMeeting = $this->reportRepository->viewScheduleMeetingReport($id);
+
+        return view('report.schedule-meeting-view')->with(['scheduleMeeting' => $scheduleMeeting]);
+    }
 }
