@@ -26,9 +26,33 @@
         <div class="col-sm-12">
 
 
-
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Agenda</h5></div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Goshwara Name</th>
+                                    <th>Goshwara File</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($proceedingRecord->scheduleMeeting->agenda->assignGoshwaraToAgenda as $goshwara)
+                                <tr>
+                                    <td>{{ $goshwara->goshwara?->name }}</td>
+                                    <td><a href="{{ asset('storage/'.$goshwara->goshwara?->name) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 2:- Agenda</h5></div>
                 <div class="card-body">
 
                     <div class="table-responsive">
@@ -52,14 +76,14 @@
 
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 2:- Schedule Meeting</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 3:- Schedule Meeting</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Meeting</th>
-                                    <th>Unique Id</th>
+                                    <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Place</th>
@@ -84,7 +108,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 3:- Departments</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 4:- Departments</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -109,7 +133,7 @@
                 </div>
             </div>
 
-            @php $step = 4; @endphp
+            @php $step = 5; @endphp
             @if(count($scheduleMeetings->whereNotNull('schedule_meeting_id')) > 0)
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Reschedule Meeting</h5></div>
@@ -121,7 +145,7 @@
                                 <tr>
                                     <th>Sr.No</th>
                                     <th>Meeting</th>
-                                    <th>Unique Id</th>
+                                    <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Place</th>
@@ -149,15 +173,15 @@
 
             @if(count($suplimentryAgendas) > 0)
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Suplimentry Agenda</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Supplementary Agenda</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Name</th>
-                                    <th>Suplimentry Agenda File</th>
+                                    <th>Supplementary Name</th>
+                                    <th>Supplementary File</th>
                                 </tr>
                             </thead>
                             <tbody>

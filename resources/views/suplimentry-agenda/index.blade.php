@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Suplimentry Agenda(पूरक अजेंडा)</x-slot>
-    <x-slot name="heading">Suplimentry Agenda(पूरक अजेंडा)</x-slot>
+    <x-slot name="title">Supplementary Agenda(पूरक अजेंडा)</x-slot>
+    <x-slot name="heading">Supplementary Agenda(पूरक अजेंडा)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,7 +12,7 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Suplimentry Agenda(पूरक अजेंडा जोडा)</h4>
+                        <h4 class="card-title">Add Supplementary Agenda(पूरक अजेंडा जोडा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -29,8 +29,8 @@
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Suplimentry Agenda Name(पूरक अजेंडाचे नाव) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Suplimentry Agenda Name" required>
+                                <label class="col-form-label" for="name">Supplementary Agenda Name(पूरक अजेंडाचे नाव) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Supplementary Agenda Name" required>
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>
                             <div class="col-md-4">
@@ -59,7 +59,7 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Suplimentry Agenda(पूरक अजेंडा संपादित करा) <span class="text-danger">*</span></h4>
+                        <h4 class="card-title">Edit Supplementary Agenda(पूरक अजेंडा संपादित करा) <span class="text-danger">*</span></h4>
                     </div>
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
@@ -87,8 +87,8 @@
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>
                             </div> --}}
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Suplimentry Agenda Name(पूरक अजेंडाचे नाव) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Suplimentry Agenda Name" required>
+                                <label class="col-form-label" for="name">Supplementary Agenda Name(पूरक अजेंडाचे नाव) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Supplementary Agenda Name" required>
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>
                             <div class="col-md-4">

@@ -9,6 +9,30 @@
         <div class="col-sm-12">
 
 
+            <div class="card">
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Goshwara(गोश्वरा)</h5></div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Goshwara Name(गोश्वरा नाव)</th>
+                                    <th>Goshwara File(गोश्वरा फाईल)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($proceedingRecord->scheduleMeeting->agenda->assignGoshwaraToAgenda as $goshwara)
+                                <tr>
+                                    <td>{{ $goshwara->goshwara?->name }}</td>
+                                    <td><a href="{{ asset('storage/'.$goshwara->goshwara?->name) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step 2:- Agenda(अजेंडा)</h5></div>
@@ -35,7 +59,7 @@
 
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 2:- Schedule Meeting(बैठकीचे वेळापत्रक)</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 3:- Schedule Meeting(बैठकीचे वेळापत्रक)</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -67,7 +91,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 3:- Departments(विभाग)</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 4:- Departments(विभाग)</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -92,7 +116,7 @@
                 </div>
             </div>
 
-            @php $step = 4; @endphp
+            @php $step = 5; @endphp
             @if(count($scheduleMeetings->whereNotNull('schedule_meeting_id')) > 0)
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Reschedule Meeting(मीटिंग पुन्हा शेड्युल करा)</h5></div>
@@ -104,7 +128,7 @@
                                 <tr>
                                     <th>Sr.No</th>
                                     <th>Meeting(बैठक)</th>
-                                    <th>Unique Id</th>
+                                    <th>Meeting No.</th>
                                     <th>Date(तारीख)</th>
                                     <th>Timeवेळ</th>
                                     <th>Place(ठिकाण)</th>
@@ -132,15 +156,15 @@
 
             @if(count($suplimentryAgendas) > 0)
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Suplimentry Agenda(पूरक अजेंडा)</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Supplementary Agenda(पूरक अजेंडा)</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Name(नाव)</th>
-                                    <th>File(फाईल)</th>
+                                    <th>Supplementary Name(नाव)</th>
+                                    <th>Supplementary File(फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
