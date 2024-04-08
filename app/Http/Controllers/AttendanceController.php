@@ -55,7 +55,7 @@ class AttendanceController extends Controller
             $attendance = $this->attendanceRepository->updateSingleMemberAttandance($request);
 
             if ($attendance) {
-                return response()->json(['success' => 'Goshwara updated successfully!', 'id' => $request->id]);
+                return response()->json(['success' => 'Attendance updated successfully!', 'id' => $request->id]);
             } else {
                 return response()->json(['error' => 'Something went wrong please try again', 'id' => $request->id]);
             }
