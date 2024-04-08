@@ -19,7 +19,6 @@
                             <div class="col-md-4">
                                 <label class="col-form-label" for="goshwara_id1">Select Goshwara(विभाग निवडा) <span class="text-danger">*</span></label>
                                 <select multiple class="js-example-basic-multiple form-select col-sm-12" id="goshwara_id1" name="goshwara_id[]" required>
-                                    <option value="">--Select Goshwara--</option>
                                     @foreach($goshwaras as $goshwara)
                                     <option value="{{ $goshwara->id }}">{{ $goshwara->name }}</option>
                                     @endforeach

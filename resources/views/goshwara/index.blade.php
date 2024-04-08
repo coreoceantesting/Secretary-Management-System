@@ -38,7 +38,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
-                                        <th>Department</th>
+                                        @if(Auth::user()->roles[0]->name != "Department")<th>Department</th>@endif
                                         <th>Goshwara  Name</th>
                                         <th>Sent Date</th>
                                         <th>Remark</th>
@@ -49,7 +49,7 @@
                                     @foreach ($goshwaras as $goshwara)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $goshwara->department?->name ?? '-' }}</td>
+                                            @if(Auth::user()->roles[0]->name != "Department")<td>{{ $goshwara->department?->name ?? '-' }}</td>@endif
                                             <td>{{ $goshwara->name ?? '-' }}</td>
                                             <td>{{ date('d-m-Y', strtotime($goshwara->date)) }}</td>
                                             <td>{{ $goshwara->remark }}</td>
