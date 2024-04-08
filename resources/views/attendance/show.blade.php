@@ -28,8 +28,8 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th style="width: 25%">Meeting Id(मीटिंग आयडी)</th>
-                                                <td>{{ $attendance->meeting?->name }}</td>
+                                                <th style="width: 25%">Meeting No.(बैठक क्र.)</th>
+                                                <td>{{ $attendance->unique_id }}</td>
                                             </tr>
                                             <tr>
                                                 <th style="width: 25%">Agenda Name(अजेंडाचे नाव)</th>

@@ -30,6 +30,11 @@
                                             <th>Meeting Name(संमेलनाचे नाव)</th>
                                             <td>{{ $scheduleMeeting->meeting?->name }}</td>
                                         </tr>
+
+                                        <tr>
+                                            <th>Meeting No.(बैठक क्र.)</th>
+                                            <td>{{ $scheduleMeeting->unique_id }}</td>
+                                        </tr>
                                         <tr>
                                             <th>Department(विभाग)</th>
                                             <td>
@@ -56,7 +61,7 @@
                                         </tr>
                                         @if(!$scheduleMeeting->is_meeting_cancel)
                                         <tr>
-                                            <th>Go toattendance</th>
+                                            <th>Go to attendance</th>
                                             <td>
                                                 @php
                                                 $diff = strtotime($scheduleMeeting->date) - strtotime(date('Y-m-d'));
@@ -66,7 +71,7 @@
                                                 @if($daysleft == "0")
                                                 <a href="{{ route('attendance.show', $scheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a>
                                                 @else
-                                                {{ $daysleft }} days left for meeting
+                                                <span class="text-success">{{ $daysleft }} day left for meeting</span>
                                                 @endif
                                             </td>
                                         </tr>

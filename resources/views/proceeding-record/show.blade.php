@@ -11,15 +11,15 @@
 
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Agenda(अजेंडा)</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 2:- Agenda(अजेंडा)</h5></div>
                 <div class="card-body">
 
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Name(नाव)</th>
-                                    <th>File(फाईल)</th>
+                                    <th>Agenda Name(नाव)</th>
+                                    <th>Agenda File(फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,7 +42,7 @@
                             <thead>
                                 <tr>
                                     <th>Meeting(बैठक)</th>
-                                    <th>Unique Id</th>
+                                    <th>Meeting No.</th>
                                     <th>Date(तारीख)</th>
                                     <th>Time(वेळ)</th>
                                     <th>Place(ठिकाण)</th>

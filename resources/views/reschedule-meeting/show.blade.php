@@ -31,6 +31,10 @@
                                             <td>{{ $rescheduleMeeting->meeting?->name }}</td>
                                         </tr>
                                         <tr>
+                                            <th>Meeting No.(बैठक क्र.)</th>
+                                            <td>{{ $rescheduleMeeting->unique_id }}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Department(विभाग)</th>
                                             <td>
                                                 @foreach($rescheduleMeeting->assignScheduleMeetingDepartment as $department)
@@ -56,8 +60,19 @@
                                         </tr>
                                         @if(!$rescheduleMeeting->is_meeting_cancel)
                                         <tr>
-                                            <th>Go toattendance</th>
-                                            <td><a href="{{ route('attendance.show', $rescheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a></td>
+                                            <th>Go to attendance</th>
+                                            <td>
+                                                @php
+                                                $diff = strtotime($rescheduleMeeting->date) - strtotime(date('Y-m-d'));
+
+                                                $daysleft = abs(round($diff / 86400));
+                                                @endphp
+                                                @if($daysleft == "0")
+                                                <a href="{{ route('attendance.show', $rescheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a>
+                                                @else
+                                                <span class="text-success">{{ $daysleft }} day left for meeting</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endif
                                         @if($rescheduleMeeting->is_meeting_cancel)
