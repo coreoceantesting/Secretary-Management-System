@@ -29,7 +29,7 @@
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल) <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="uploadfile">Upload Question File(प्रश्न फाइल अपलोड करा) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल)</label>
+                                <label class="col-form-label" for="uploadfile">Upload Question File(प्रश्न फाइल अपलोड करा)</label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
@@ -158,10 +158,10 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
-                                    <th>Unique Id</th>
+                                    <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Place</th>
-                                    <th>File</th>
+                                    <th>Question File</th>
                                     @canany(['question.edit', 'question.delete', 'question.response'])
                                     <th>Action</th>
                                     @endcan
@@ -172,7 +172,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $question->meeting?->name ?? '-' }}</td>
-                                        <td>{{ $question->unique_id ?? '-' }}</td>
+                                        <td>{{ $question->scheduleMeeting?->unique_id ?? '-' }}</td>
                                         <td>{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</td>
                                         <td>{{ ($question->scheduleMeeting?->place) ? $question->scheduleMeeting?->place : '-' }}</td>
                                         <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-sm btn-primary">View File</a></td>

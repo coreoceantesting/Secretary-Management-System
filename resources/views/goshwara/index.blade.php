@@ -39,8 +39,7 @@
                                     <tr>
                                         <th>Sr no.</th>
                                         <th>Department</th>
-                                        <th>Name</th>
-                                        <th>Sent By</th>
+                                        <th>Goshwara  Name</th>
                                         <th>Sent Date</th>
                                         <th>Remark</th>
                                         <th>Goshwara</th>
@@ -52,7 +51,6 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $goshwara->department?->name ?? '-' }}</td>
                                             <td>{{ $goshwara->name ?? '-' }}</td>
-                                            <td>{{ ($goshwara->sent_by) ? $goshwara->sentBy?->fname." ".$goshwara->sentBy?->mname." ".$goshwara->sentBy?->lname : '-' }}</td>
                                             <td>{{ date('d-m-Y', strtotime($goshwara->date)) }}</td>
                                             <td>{{ $goshwara->remark }}</td>
                                             <td>

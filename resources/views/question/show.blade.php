@@ -26,6 +26,10 @@
                                     </thead>
                                     <tbody>
                                         <tr>
+                                            <th class="w-25">Meeting No(बैठक क्र.)</th>
+                                            <td>{{ $question->scheduleMeeting?->unique_id }}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Date(तारीख)</th>
                                             <td>{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</td>
                                         </tr>

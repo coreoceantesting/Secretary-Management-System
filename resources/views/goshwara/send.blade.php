@@ -16,6 +16,11 @@
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="name">Goshwara Name(गोश्वरा नाव) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" required name="name" placeholder="Enter name">
+                                    <span class="text-danger is-invalid name_err"></span>
+                                </div>
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="goshwarafile">Select Goshwara(गोश्वरा निवडा)</label>
                                     <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara">
                                     <span class="text-danger is-invalid goshwarafile_err"></span>
@@ -49,7 +54,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
-                                        <th>Name</th>
+                                        <th>Goshwara Name</th>
                                         <th>Goshwara File</th>
                                         <th>Remark</th>
                                         <th>Action</th>
@@ -114,7 +119,7 @@
                 if (!data.error)
                 {
                     $("#editForm input[name='edit_model_id']").val(data.goshwara.id);
-                    // $("#editForm input[name='name']").val(data.goshwara.name);
+                    $("#editForm input[name='name']").val(data.goshwara.name);
                     $("#editForm textarea[name='remark']").html(data.goshwara.remark);
                 }
                 else
@@ -164,7 +169,7 @@
                     if (!data.error)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('goshwara.index') }}';
+                                window.location.href = '{{ route('goshwara.send') }}';
                             });
                     else
                         swal("Error!", data.error, "error");

@@ -131,10 +131,11 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting Name</th>
+                                    <th>Meeting No.</th>
                                     <th>Datetime</th>
                                     <th>Place</th>
-                                    <th>Name</th>
-                                    <th>File</th>
+                                    <th>Supplementary Name</th>
+                                    <th>Supplementary File</th>
                                     @canany(['suplimentry-agenda.edit', 'suplimentry-agenda.delete'])<th>Action</th>@endcan
                                 </tr>
                             </thead>
@@ -143,6 +144,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $agenda->meeting?->name }}</td>
+                                        <td>{{ $agenda->scheduleMeeting?->unique_id }}</td>
                                         <td>{{ date('d-m-Y h:i A', strtotime($agenda->scheduleMeeting->datetime)) }}</td>
                                         <td>{{ $agenda->scheduleMeeting?->place }}</td>
                                         <td>{{ $agenda->name }}</td>

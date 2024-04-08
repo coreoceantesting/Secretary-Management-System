@@ -23,16 +23,12 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th>Name</th>
+                                        <th>Goshwara  Name</th>
                                         <td>{{ $goshwara->name ?? '-' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>File</th>
+                                        <th>Goshwara  File</th>
                                         <td><a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary">View File</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Sent By</th>
-                                        <td>{{ $goshwara->sentBy?->fname.' '.$goshwara->sentBy?->mname.' '.$goshwara->sentBy?->lname ?? '-' }}</td>
                                     </tr>
                                     <tr>
                                         <th>Sent Date</th>
