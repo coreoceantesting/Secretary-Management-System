@@ -27,7 +27,7 @@
 
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Agenda</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Goshwara</h5></div>
                 <div class="card-body">
 
                     <div class="table-responsive">
@@ -87,7 +87,6 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Place</th>
-                                    <th>Schedule Meeting File</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -98,7 +97,6 @@
                                     <td>{{ ($scheduleMeeting->date) ? date('d-m-Y', strtotime($scheduleMeeting->date)) : '-' }}</td>
                                     <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
                                     <td>{{ $scheduleMeeting->place }}</td>
-                                    <td><a href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -253,7 +251,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Member Name</th>
+                                    <th>Members Name</th>
                                     <th>In time</th>
                                     <th>Out time</th>
                                 </tr>
@@ -281,6 +279,7 @@
                             <thead>
                                 <tr>
                                     <th>Meeting</th>
+                                    <th>Meeting No</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Proceeding record file</th>
@@ -290,6 +289,7 @@
                             <tbody>
                                 <tr>
                                     <td>{{ $proceedingRecord->meeting?->name }}</td>
+                                    <td>{{ $proceedingRecord->scheduleMeeting?->unique_id }}</td>
                                     <td>{{ ($proceedingRecord->date) ? date('d-m-Y', strtotime($proceedingRecord->date)) : '-' }}</td>
                                     <td>{{ date('h:i A', strtotime($proceedingRecord->time)) }}</td>
                                     <td><a href="{{ asset('storage/'.$proceedingRecord->file) }}" class="btn btn-primary btn-sm">View File</a></td>

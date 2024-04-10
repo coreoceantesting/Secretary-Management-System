@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Tharav(थरव)</x-slot>
-    <x-slot name="heading">Tharav(थरव)</x-slot>
+    <x-slot name="title">Tharav(थराव)</x-slot>
+    <x-slot name="heading">Tharav(थराव)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,7 +12,7 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Tharav(थरव Add)</h4>
+                        <h4 class="card-title">Add Tharav(थराव जोडा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -43,7 +43,7 @@
                                 <span class="text-danger is-invalid remark_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload File(अपलोड फाइल) <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="uploadfile">Upload Tharav File(अपलोड थराव फाइल) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
@@ -90,10 +90,11 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting Name</th>
+                                    <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Department</th>
                                     <th>Remark</th>
-                                    <th>File</th>
+                                    <th>Tharav File</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,6 +102,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $tharav->meeting?->name ?? '-' }}</td>
+                                        <td>{{ $tharav->scheduleMeeting?->unique_id ?? '-' }}</td>
                                         <td>{{ ($tharav->date) ? date('d-m-Y', strtotime($tharav->date)) : '-' }}</td>
                                         <td>
                                             @foreach($tharav->assignTharavDepartment as $department)

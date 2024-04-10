@@ -10,15 +10,15 @@
 
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Goshwara(गोश्वरा)</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step 1:- Goshwara(गोषवारा)</h5></div>
                 <div class="card-body">
 
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Goshwara Name(गोश्वरा नाव)</th>
-                                    <th>Goshwara File(गोश्वरा फाईल)</th>
+                                    <th>Goshwara Name(गोषवारा नाव)</th>
+                                    <th>Goshwara File(गोषवारा फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,7 +70,6 @@
                                     <th>Date(तारीख)</th>
                                     <th>Time(वेळ)</th>
                                     <th>Place(ठिकाण)</th>
-                                    <th>File(फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,7 +80,6 @@
                                     <td>{{ ($scheduleMeeting->date) ? date('d-m-Y', strtotime($scheduleMeeting->date)) : '-' }}</td>
                                     <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
                                     <td>{{ $scheduleMeeting->place }}</td>
-                                    <td><a href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -236,7 +234,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Member Name(सदस्याचे नाव)</th>
+                                    <th>Members Name(सदस्याचे नाव)</th>
                                     <th>In time(वेळेत)</th>
                                     <th>Out time(बाहेर वेळ)</th>
                                 </tr>
@@ -264,15 +262,17 @@
                             <thead>
                                 <tr>
                                     <th>Meeting(बैठक)</th>
+                                    <th>Meeting No.</th>
                                     <th>Date(तारीख)</th>
                                     <th>Time(वेळ)</th>
-                                    <th>File(फाईल)</th>
+                                    <th>Proceeding record file(कार्यवाही रेकॉर्ड फाइल)</th>
                                     <th>Remark(शेरा)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>{{ $proceedingRecord->meeting?->name }}</td>
+                                    <td>{{ $proceedingRecord->scheduleMeeting?->unique_id }}</td>
                                     <td>{{ ($proceedingRecord->date) ? date('d-m-Y', strtotime($proceedingRecord->date)) : '-' }}</td>
                                     <td>{{ date('h:i A', strtotime($proceedingRecord->time)) }}</td>
                                     <td><a href="{{ asset('storage/'.$proceedingRecord->file) }}" class="btn btn-primary btn-sm">View File</a></td>

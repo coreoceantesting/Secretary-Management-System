@@ -16,15 +16,24 @@
                             <div class="my-2">
                                 <form method="get">
                                     <div class="mb-3 row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="col-form-label" for="from">From Date(या तारखेपासून) <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="from" name="from" type="date" value="@if(isset(Request()->from)){{ Request()->from }}@endif" required>
+                                            <input class="form-control" id="from" name="from" type="date" value="@if(isset(Request()->from)){{ Request()->from }}@endif">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="col-form-label" for="to">To Date(आजपर्यंत) <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="to" name="to" type="date" value="@if(isset(Request()->to)){{ Request()->to }}@endif" required>
+                                            <input class="form-control" id="to" name="to" type="date" value="@if(isset(Request()->to)){{ Request()->to }}@endif">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <label class="col-form-label" for="to">Select Status <span class="text-danger">*</span></label>
+                                            <select name="status" id="status111" class="form-select">
+                                                <option value="">Select Status</option>
+                                                <option @if(isset(Request()->status) && Request()->status == "1")selected @endif value="1">In progress</option>
+                                                <option @if(isset(Request()->status) && Request()->status == "2")selected @endif value="2">Completed</option>
+                                                <option @if(isset(Request()->status) && Request()->status == "3")selected @endif value="3">Cancel</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="col-form-label" for="to">&nbsp;</div>
                                             <button class="btn btn-primary">Submit</button>
                                         </div>
@@ -38,7 +47,7 @@
                                             <th>Sr No.</th>
                                             <th>Agenda</th>
                                             <th>Meeting</th>
-                                            <th>Unique Id</th>
+                                            <th>Meeting No.</th>
                                             <th>Date</th>
                                             <th>Time</th>
                                             <th>Place</th>

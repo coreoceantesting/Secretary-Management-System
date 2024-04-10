@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Question(प्रश्न)</x-slot>
-    <x-slot name="heading">Question(प्रश्न)</x-slot>
+    <x-slot name="title">Questions(प्रश्न)</x-slot>
+    <x-slot name="heading">Questions(प्रश्न)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -39,7 +39,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 40%">Question</th>
+                                    <th style="width: 40%">Questions</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -109,7 +109,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 40%">Question</th>
+                                    <th style="width: 40%">Questions</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

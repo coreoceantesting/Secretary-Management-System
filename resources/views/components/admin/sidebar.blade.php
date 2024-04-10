@@ -114,19 +114,19 @@
 
                             @can('goshwara.create')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.create') }}" class="nav-link {{ request()->routeIs('goshwara.create') ? 'active' : '' }}" data-key="t-horizontal">Upload&nbsp;Goshwara(गोश्वरा अपलोड करा)</a>
+                                <a href="{{ route('goshwara.create') }}" class="nav-link {{ request()->routeIs('goshwara.create') ? 'active' : '' }}" data-key="t-horizontal">Upload&nbsp;Goshwara(गोषवारा अपलोड करा)</a>
                             </li>
                             @endcan
 
                             @can('goshwara.send')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.send') }}" class="nav-link {{ request()->routeIs('goshwara.send') ? 'active' : '' }}" data-key="t-horizontal">Send&nbsp;Goshwara(गोश्वरा पाठवा)</a>
+                                <a href="{{ route('goshwara.send') }}" class="nav-link {{ request()->routeIs('goshwara.send') ? 'active' : '' }}" data-key="t-horizontal">Send&nbsp;Goshwara(गोषवारा पाठवा)</a>
                             </li>
                             @endcan
 
                             @can('goshwara.view')
                             <li class="nav-item">
-                                <a href="{{ route('goshwara.index') }}" class="nav-link {{ request()->routeIs('goshwara.index') ? 'active' : '' }}" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Sent Goshwara&nbsp;List(पाठवले गोश्वरा यादी) @else Received&nbsp;Goshwara(गोश्वरा प्राप्त झाला) @endif</a>
+                                <a href="{{ route('goshwara.index') }}" class="nav-link {{ request()->routeIs('goshwara.index') ? 'active' : '' }}" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Sent Goshwara&nbsp;List(पाठवले गोषवारा यादी) @else Received&nbsp;Goshwara(गोषवारा प्राप्त झाला) @endif</a>
                             </li>
                             @endcan
                         </ul>
@@ -191,7 +191,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('question.*') ? 'active' : '' }}" href="{{ route('question.index') }}" >
                         <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Question</span>
+                        <span data-key="t-dashboards">Questions</span>
                     </a>
                 </li>
                 @endcan

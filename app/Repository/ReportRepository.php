@@ -12,7 +12,15 @@ class ReportRepository
             return $q->whereDate('date', '>=', date('Y-m-d', strtotime($request->from)));
         })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
             return $q->whereDate('date', '<=', date('Y-m-d', strtotime($request->to)));
-        })->latest()->get();
+        })->when(isset($request->status) && $request->status != "", function ($q) use ($request) {
+            if ($request->status == "1")
+                return $q->where('is_meeting_cancel', 0)->where('is_meeting_completed', 0);
+            elseif ($request->status == "2")
+                return $q->where('is_meeting_completed', 1);
+            else
+                return $q->where('is_meeting_cancel', 1);
+        })
+            ->latest()->get();
 
         return $scheduleMeeting;
     }

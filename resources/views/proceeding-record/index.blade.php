@@ -85,7 +85,7 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting Name</th>
-                                    <th>Unique Id</th>
+                                    <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Remark</th>
                                     <th>Proceeding Record File</th>

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Goshwara(गोश्वरा)</x-slot>
-    <x-slot name="heading">Goshwara(गोश्वरा)</x-slot>
+    <x-slot name="title">Goshwara(गोषवारा)</x-slot>
+    <x-slot name="heading">Goshwara(गोषवारा)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 

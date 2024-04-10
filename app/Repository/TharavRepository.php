@@ -13,7 +13,7 @@ class TharavRepository
 {
     public function index()
     {
-        return Tharav::with(['meeting', 'assignTharavDepartment.department'])->latest()->get();
+        return Tharav::with(['meeting', 'assignTharavDepartment.department', 'scheduleMeeting'])->latest()->get();
     }
 
     public function getScheduleMeeting($id)
