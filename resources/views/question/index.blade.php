@@ -3,6 +3,17 @@
     <x-slot name="heading">Questions(प्रश्न)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
+    <style>
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .blink-text {
+            animation: blink 3s infinite;
+        }
+    </style>
 
     <!-- Add Form -->
     <div class="row" id="addContainer" style="display:none;">
@@ -170,22 +181,46 @@
                             <tbody>
                                 @foreach ($questions as $question)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $loop->iteration }}  {{ $question->scheduleMeeting->id }}</td>
                                         <td>{{ $question->meeting?->name ?? '-' }}</td>
                                         <td>{{ $question->scheduleMeeting?->unique_id ?? '-' }}</td>
-                                        <td>{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</td>
+
+                                        <td>
+                                            @if($question->subQuestions->whereNull('response')->count() > 0)
+
+                                            @php
+                                            $date = ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? $question->scheduleMeeting?->parentLatestScheduleMeeting?->date : $question->scheduleMeeting?->date;
+                                            $diff = strtotime($date) - strtotime(date('Y-m-d'));
+
+                                            $daysleft = abs(round($diff / 86400));
+                                            @endphp
+
+                                            @if($daysleft <= 6 && $daysleft >=4)
+                                                <div class="blink-text" style="color:#308f18!important">{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</div>
+                                            @elseif($daysleft < 3)
+                                            <div class="blink-text" style="color:#e92d46!important">{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</div>
+                                            @else
+                                            {{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}
+                                            @endif
+
+                                            @else
+                                            {{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}
+                                            @endif
+                                        </td>
+
+
                                         <td>{{ ($question->scheduleMeeting?->place) ? $question->scheduleMeeting?->place : '-' }}</td>
                                         <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         @canany(['question.edit', 'question.delete', 'question.response'])
                                         <td>
-                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm @if(count($question->subQuestions) > 0 || $question->response_file != "") btn-success @else btn-primary @endif px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
+                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm @if($question->subQuestions->whereNotNull('response')->count() > 0 || $question->response_file != "") btn-success @else btn-primary @endif px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
                                                 @can('question.response')
-                                                    @if(count($question->subQuestions) > 0 || $question->response_file != "") Responded @else Response @endif
+                                                    @if($question->subQuestions->whereNotNull('response')->count() > 0 || $question->response_file != "") Responded @else Response @endif
                                                 @else
                                                     Check Response
                                                 @endif
                                             </a>
-                                            @if(count($question->subQuestions) == 0 || $question->response_file == "")
+                                            @if($question->subQuestions->whereNotNull('response')->count() == 0 || $question->response_file == "")
                                             @can('question.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Question" data-id="{{ $question->id }}"><i data-feather="edit"></i></button>
                                             @endcan
@@ -579,3 +614,4 @@
         }
     });
 </script>
+

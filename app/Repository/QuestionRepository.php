@@ -18,9 +18,7 @@ class QuestionRepository
     {
         $role = Auth::user()->roles[0]->name;
 
-        $question =  Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'subQuestions' => function ($q) {
-            return $q->whereNotNull('response');
-        }]);
+        $question =  Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'subQuestions']);
 
         if ($role == "Department") {
             $question = $question->where('department_id', Auth::user()->department_id);
