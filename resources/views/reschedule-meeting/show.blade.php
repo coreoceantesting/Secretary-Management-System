@@ -54,10 +54,6 @@
                                             <th>Place(ठिकाण)</th>
                                             <td>{{ $rescheduleMeeting->place }}</td>
                                         </tr>
-                                        <tr>
-                                            <th>File(फाईल)</th>
-                                            <td><a href="{{ asset('storage/'.$rescheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
-                                        </tr>
                                         @if(!$rescheduleMeeting->is_meeting_cancel)
                                         <tr>
                                             <th>Go to attendance</th>

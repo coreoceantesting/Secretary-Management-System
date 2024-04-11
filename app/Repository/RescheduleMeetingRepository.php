@@ -83,7 +83,6 @@ class RescheduleMeetingRepository
             $date = date('Y-m-d', strtotime($request->date));
             $time = date('h:i:s', strtotime($request->time));
             $request['agenda_id'] = $meeting->agenda_id;
-            $request['file'] = $meeting->file;
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;
