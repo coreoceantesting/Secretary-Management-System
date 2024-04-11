@@ -18,7 +18,7 @@ class RescheduleMeetingRepository
     public function index()
     {
         $scheduleMeeting = ScheduleMeeting::with(['meeting', 'agenda'])
-            ->whereNull('schedule_meeting_id')
+            ->whereNotNull('schedule_meeting_id')
             ->where([
                 'is_meeting_reschedule' => 0,
                 'is_meeting_completed' => 0,
