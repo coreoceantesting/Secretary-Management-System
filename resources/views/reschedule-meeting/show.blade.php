@@ -55,6 +55,7 @@
                                             <td>{{ $rescheduleMeeting->place }}</td>
                                         </tr>
                                         @if(!$rescheduleMeeting->is_meeting_cancel)
+                                        @if (Auth::user()->hasRole('Home Department'))
                                         <tr>
                                             <th>Go to attendance</th>
                                             <td>
@@ -70,6 +71,7 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                        @endif
                                         @endif
                                         @if($rescheduleMeeting->is_meeting_cancel)
                                         <tr>

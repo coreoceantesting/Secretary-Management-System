@@ -267,9 +267,6 @@
                 @if ($scheduleMeeting->is_record_proceeding == "1")
                     var colors = "blue";
                     var routeUrl = "{{ route('proceeding-record.show', $scheduleMeeting?->proceedingRecord?->id) }}";
-                @elseif($scheduleMeeting->is_tharav_uploaded == "1")
-                    var colors = "#FFFF00";
-                    var routeUrl = "{{ route('tharav.index') }}";
                 @elseif($scheduleMeeting->is_meeting_cancel == "1")
                     var colors = "red";
                     @if($scheduleMeeting->schedule_meeting_id)
