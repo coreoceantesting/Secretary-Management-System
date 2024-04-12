@@ -229,9 +229,16 @@
                 @endcan
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('report.*') ? 'active' : '' }}" href="{{ route('report.schedule-meeting') }}">
+                    <a class="nav-link menu-link {{ request()->routeIs('report.schedule-meeting') ? 'active' : '' }} {{ request()->routeIs('report.schedule-meeting.*') ? 'active' : '' }}" href="{{ route('report.schedule-meeting') }}">
                         <i class="ri-dashboard-2-line"></i>
                         <span data-key="t-dashboards">Meeting Report</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('report.attendance-meeting') ? 'active' : '' }}" href="{{ route('report.attendance-meeting') }}">
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">Attendance Report</span>
                     </a>
                 </li>
 

@@ -29,4 +29,13 @@ class ReportController extends Controller
 
         return view('report.schedule-meeting-view')->with(['scheduleMeeting' => $scheduleMeeting]);
     }
+
+    public function attendanceMeetingReport(Request $request)
+    {
+        $scheduleMeetings = $this->reportRepository->attendanceMeetingReport($request);
+
+        return view('report.attendance-meeting')->with([
+            'scheduleMeetings' => $scheduleMeetings
+        ]);
+    }
 }

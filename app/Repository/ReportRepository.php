@@ -29,4 +29,9 @@ class ReportRepository
     {
         return ScheduleMeeting::with(['meeting', 'agenda', 'assignScheduleMeetingDepartment.department'])->where('id', $id)->first();
     }
+
+    public function attendanceMeetingReport($request)
+    {
+        $attendanceReport = ScheduleMeeting::where('id', $request->id)->first();
+    }
 }

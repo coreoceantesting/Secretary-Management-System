@@ -129,6 +129,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     Route::get('report/schedule-meeting', [ReportController::class, 'scheduleMeetingReport'])->name('report.schedule-meeting');
     Route::get('report/schedule-meeting/{id}', [ReportController::class, 'viewScheduleMeetingReport'])->name('report.viewScheduleMeetingReport');
+
+    Route::get('report/attendance-meeting', [ReportController::class, 'attendanceMeetingReport'])->name('report.attendance-meeting');
 });
 
 

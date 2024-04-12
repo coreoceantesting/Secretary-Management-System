@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Meeting Report(बैठकीचा अहवाल करा)</x-slot>
-    <x-slot name="heading">Meeting Report(बैठकीचा अहवाल करा)</x-slot>
+    <x-slot name="title">Attendance Report(उपस्थिती अहवाल)</x-slot>
+    <x-slot name="heading">Attendance Report(उपस्थिती अहवाल)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -9,7 +9,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Meeting Report(बैठकीचा अहवाल करा)</h4>
+                        <h4 class="card-title">Attendance Report(उपस्थिती अहवाल)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -47,40 +47,20 @@
                                             <th>Sr No.</th>
                                             <th>Agenda</th>
                                             <th>Meeting</th>
-                                            <th>Meeting No.</th>
-                                            <th>Date</th>
                                             <th>Time</th>
                                             <th>Place</th>
                                             <th>Status</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($scheduleMeetings as $scheduleMeeting)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $scheduleMeeting?->agenda?->name }}</td>
-                                            <td>{{ $scheduleMeeting?->meeting?->name }}</td>
-                                            <td>{{ $scheduleMeeting->unique_id }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->date)) }}</td>
-                                            <td>{{ date('H:i A', strtotime($scheduleMeeting?->time)) }}</td>
-                                            <td>{{ $scheduleMeeting?->place }}</td>
-                                            <td>
-                                                @if($scheduleMeeting->is_meeting_completed)
-                                                <span class="badge bg-success text-dark">Completed</span>
-                                                @elseif($scheduleMeeting->is_meeting_cancel)
-                                                <span class="badge bg-danger text-dark">Cancel</span>
-                                                @else
-                                                <span class="badge bg-warning text-dark">In progress</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('report.viewScheduleMeetingReport', $scheduleMeeting->id) }}" class="btn text-secondary px-1 py-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                </a>
-                                            </td>
+                                            <td>1</td>
+                                            <td>Agenda</td>
+                                            <td>Meeting</td>
+                                            <td>Time</td>
+                                            <td>Place</td>
+                                            <td>Status</td>
                                         </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
