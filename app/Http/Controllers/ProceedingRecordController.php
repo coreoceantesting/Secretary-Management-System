@@ -8,7 +8,7 @@ use App\Repository\CommonRepository;
 use App\Models\Agenda;
 use App\Models\SuplimentryAgenda;
 use App\Models\AssignMemberToMeeting;
-use App\Models\Member;
+use App\Models\DepartmentAttendance;
 use App\Models\Question;
 use App\Models\ScheduleMeeting;
 use App\Models\AssignScheduleMeetingDepartment;
@@ -84,6 +84,11 @@ class ProceedingRecordController extends Controller
             return $q->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id);
         }])->where('meeting_id', $proceedingRecord->meeting_id)->get();
 
+        $departmentAttendances = DepartmentAttendance::with(['department'])
+            ->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id)
+            ->where('meeting_id', $proceedingRecord->meeting_id)
+            ->get();
+
 
         $departments = AssignScheduleMeetingDepartment::with(['department'])
             ->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id)
@@ -100,7 +105,8 @@ class ProceedingRecordController extends Controller
             'members' => $members,
             'departments' => $departments,
             'suplimentryAgendas' => $suplimentryAgendas,
-            'questions' => $questions
+            'questions' => $questions,
+            'departmentAttendances' => $departmentAttendances
         ]);
     }
 
@@ -130,6 +136,11 @@ class ProceedingRecordController extends Controller
 
         $questions = Question::with(['subQuestions'])->whereIn('schedule_meeting_id', $ids)->get();
 
+        $departmentAttendances = DepartmentAttendance::with(['department'])
+            ->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id)
+            ->where('meeting_id', $proceedingRecord->meeting_id)
+            ->get();
+
         $pdf = PDF::loadView('proceeding-record.pdf', [
             'agenda' => $agenda,
             'scheduleMeetings' => $scheduleMeetings,
@@ -137,8 +148,10 @@ class ProceedingRecordController extends Controller
             'members' => $members,
             'departments' => $departments,
             'suplimentryAgendas' => $suplimentryAgendas,
-            'questions' => $questions
+            'questions' => $questions,
+            'departmentAttendances' => $departmentAttendances
         ]);
+
         return $pdf->stream('document.pdf');
 
         // return view('proceeding-record.pdf')->with();

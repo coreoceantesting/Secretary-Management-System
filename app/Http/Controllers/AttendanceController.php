@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\AttendanceRepository;
+use App\Repository\CommonRepository;
 
 class AttendanceController extends Controller
 {
     protected $attendanceRepository;
-    public function __construct(AttendanceRepository $attendanceRepository)
+    protected $commonRepository;
+    public function __construct(AttendanceRepository $attendanceRepository, CommonRepository $commonRepository)
     {
         $this->attendanceRepository = $attendanceRepository;
+        $this->commonRepository = $commonRepository;
     }
 
     public function index()
@@ -41,10 +44,16 @@ class AttendanceController extends Controller
 
         $attendanceMarks = $this->attendanceRepository->getPresentAttendence($id);
 
+        $departmentAttendanceMarks = $this->attendanceRepository->getDepartmentPresentAttendence($id);
+
+        $departments = $this->commonRepository->getDepartments();
+
         return view('attendance.show')->with([
             'attendance' => $attendance,
             'members' => $members,
-            'attendanceMarks' => $attendanceMarks
+            'attendanceMarks' => $attendanceMarks,
+            'departmentAttendanceMarks' => $departmentAttendanceMarks,
+            'departments' => $departments,
         ]);
     }
 
@@ -56,6 +65,20 @@ class AttendanceController extends Controller
 
             if ($attendance) {
                 return response()->json(['success' => 'Attendance updated successfully!', 'id' => $request->id]);
+            } else {
+                return response()->json(['error' => 'Something went wrong please try again', 'id' => $request->id]);
+            }
+        }
+    }
+
+    public function saveDepartmentSingleMark(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $attendance = $this->attendanceRepository->saveDepartmentSingleMark($request);
+
+            if ($attendance) {
+                return response()->json(['success' => 'Attendance updated successfully!', 'id' => $request->id, 'departmentAttenceId' => $attendance[1]]);
             } else {
                 return response()->json(['error' => 'Something went wrong please try again', 'id' => $request->id]);
             }

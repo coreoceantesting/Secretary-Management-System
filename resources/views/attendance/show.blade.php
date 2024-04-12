@@ -111,6 +111,74 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <h4>Department Attendance</h4>
+                                <div class="mb-3 row">
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Department</th>
+                                                        <th>Name</th>
+                                                        <th>In Time</th>
+                                                        <th>Out Time</th>
+                                                        <th><button type="button" class="btn btn-primary btn-sm" id="addMoreDepartmentButton">Add</button></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="departmentAttendanceTbody">
+                                                    @php $count = 1; @endphp
+                                                    @foreach($departmentAttendanceMarks as $key => $departmentAttendanceMark)
+                                                    <tr id="departmentTrRow1">
+                                                        <td>
+                                                            <input type="hidden" class="dataId" value="{{ $key+1 }}">
+                                                            <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="{{ $departmentAttendanceMark->id }}">
+                                                            <select name="department_id[]" class="form-select selectDepartmentForAttendance">
+                                                                <option value="">Select Department</option>
+                                                                @foreach($departments as $department)
+                                                                <option @if($departmentAttendanceMark->department_id == $department->id) selected @endif value="{{ $department->id }}">{{ $department->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="department_name[]" class="form-control departmentInputName" value="{{ $departmentAttendanceMark->name }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" name="department_in_time[]" class="form-control departmentInTime" value="{{ $departmentAttendanceMark->in_time }}">
+                                                        </td>
+                                                        <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime" value="{{ $departmentAttendanceMark->out_time }}"></td>
+                                                        <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button></td>
+                                                    </tr>
+                                                    @php $count++; @endphp
+                                                    @endforeach
+
+                                                    @if($count == "1")
+                                                    <tr id="departmentTrRow1">
+                                                        <td>
+                                                            <input type="hidden" class="dataId" value="1">
+                                                            <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="">
+                                                            <select name="department_id[]" class="form-select selectDepartmentForAttendance">
+                                                                <option value="">Select Department</option>
+                                                                @foreach($departments as $department)
+                                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="department_name[]" class="form-control departmentInputName">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" name="department_in_time[]" class="form-control departmentInTime"></td>
+                                                        <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime"></td>
+                                                        <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button></td>
+                                                    </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary" id="addSubmit">Mark All</button>
                                 <a href="{{ route('attendance.index') }}" class="btn btn-warning">Cancel</a>
@@ -169,9 +237,7 @@
                         },
                         success: function(data)
                         {
-                            if (!data.error)
-
-                            else
+                            if (data.error)
                                 swal("Error!", data.error, "error");
                         },
                         statusCode: {
@@ -200,6 +266,109 @@
                     });
                 })
             })
+        </script>
+
+
+        {{-- js for department --}}
+        <script>
+            $(document).ready(function(){
+                var departmentRowCount = 200;
+                $('body').on('click', '#addMoreDepartmentButton', function(){
+                    let html = `<tr id="departmentTrRow${departmentRowCount}">
+                            <td>
+                                <input type="hidden" class="dataId" value="${departmentRowCount}">
+                                <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="">
+                                <select name="department_id[]" class="form-select selectDepartmentForAttendance">
+                                    <option value="">Select Department</option>
+                                    @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" name="department_name[]" class="form-control departmentInputName">
+                            </td>
+                            <td>
+                                <input type="time" name="department_in_time[]" class="form-control departmentInTime"></td>
+                            <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime"></td>
+                            <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button>&nbsp;<button type="button" class="btn btn-danger btn-sm removeDepartment" data-id="${departmentRowCount}">Remove</button></td>
+                        </tr>`;
+
+                    $('#departmentAttendanceTbody').append(html);
+                    departmentRowCount++;
+                });
+
+
+                $('body').on('click', '.removeDepartment', function(){
+                    let departmentId = $(this).attr('data-id');
+                    $('#departmentTrRow'+departmentId).remove();
+                });
+
+
+                $('body').on('click', '.markDepartment', function(){
+                    // $(this).prop('disabled', true);
+                    let dataId = $(this).closest('tr').find('.dataId').val();
+                    let dataDepartmentAttendanceId = $(this).closest('tr').find('.dataDepartmentAttendanceId').val();
+                    let department_id = $(this).closest('tr').find('.selectDepartmentForAttendance').val();
+                    let inTime = $(this).closest('tr').find('.departmentInTime').val();
+                    let outTime = $(this).closest('tr').find('.departmentOutTime').val();
+                    let scheduleMeetingId = $('#scheduleMeetingId').val();
+                    let meetingId = $('#meetingId').val();
+                    let name = $(this).closest('tr').find('.departmentInputName').val();
+                    $.ajax({
+                        url: "{{ route('attendance.saveDepartmentSingleMark') }}",
+                        type: 'POST',
+                        data: {
+                            id: dataId,
+                            schedule_meeting_id: scheduleMeetingId,
+                            name: name,
+                            meeting_id: meetingId,
+                            dataDepartmentAttendanceId: dataDepartmentAttendanceId,
+                            inTime: inTime,
+                            outTime: outTime,
+                            department_id: department_id,
+                        },
+                        beforeSend: function()
+                        {
+                            $('#preloader').css('opacity', '0.5');
+                            $('#preloader').css('visibility', 'visible');
+                        },
+                        success: function(data)
+                        {
+                            if (!data.error){
+                                $('#departmentTrRow'+data.id).find('.dataDepartmentAttendanceId').val(data.departmentAttenceId);
+                                $('#departmentTrRow'+data.id).find('.removeDepartment').remove();
+                            }
+                            else{
+                                swal("Error!", data.error, "error");
+                            }
+                        },
+                        statusCode: {
+                            422: function(responseObject, textStatus, jqXHR) {
+                                $("#editSubmit").prop('disabled', false);
+                                resetErrors();
+                                printErrMsg(responseObject.responseJSON.errors);
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            },
+                            500: function(responseObject, textStatus, errorThrown) {
+                                $("#editSubmit").prop('disabled', false);
+                                swal("Error occured!", "Something went wrong please try again", "error");
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            }
+                        },
+                        error: function(xhr) {
+                            $('#preloader').css('opacity', '0');
+                            $('#preloader').css('visibility', 'hidden');
+                        },
+                        complete: function() {
+                            $('#preloader').css('opacity', '0');
+                            $('#preloader').css('visibility', 'hidden');
+                        },
+                    });
+                });
+            });
         </script>
         @endpush
 </x-admin.layout>

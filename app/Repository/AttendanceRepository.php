@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\ScheduleMeeting;
 use App\Models\Attendance;
 use App\Models\AssignMemberToMeeting;
+use App\Models\DepartmentAttendance;
 use App\Models\SuplimentryAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -107,12 +108,15 @@ class AttendanceRepository
         }
     }
 
-
     public function getPresentAttendence($id)
     {
         return Attendance::where('schedule_meeting_id', $id)->get();
     }
 
+    public function getDepartmentPresentAttendence($id)
+    {
+        return DepartmentAttendance::where('schedule_meeting_id', $id)->get();
+    }
 
     public function updateSingleMemberAttandance($request)
     {
@@ -141,6 +145,46 @@ class AttendanceRepository
             Log::info($e);
             DB::rollback();
             return false;
+        }
+    }
+
+    public function saveDepartmentSingleMark($request)
+    {
+        DB::beginTransaction();
+        try {
+            DB::commit();
+            ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
+
+            SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
+                'is_meeting_completed' => 1
+            ]);
+
+            if ($request->dataDepartmentAttendanceId != "") {
+                $department = DepartmentAttendance::updateOrCreate([
+                    'id' => $request->dataDepartmentAttendanceId
+                ], [
+                    'schedule_meeting_id' => $request->schedule_meeting_id,
+                    'meeting_id' => $request->meeting_id,
+                    'department_id' => $request->department_id,
+                    'name' => $request->name,
+                    'in_time' => ($request->inTime != "") ? date('h:i:s', strtotime($request->inTime)) : null,
+                    'out_time' => ($request->outTime != "") ? date('h:i:s', strtotime($request->outTime)) : null,
+                ]);
+            } else {
+                $department = DepartmentAttendance::create([
+                    'schedule_meeting_id' => $request->schedule_meeting_id,
+                    'meeting_id' => $request->meeting_id,
+                    'department_id' => $request->department_id,
+                    'name' => $request->name,
+                    'in_time' => ($request->inTime != "") ? date('h:i:s', strtotime($request->inTime)) : null,
+                    'out_time' => ($request->outTime != "") ? date('h:i:s', strtotime($request->outTime)) : null,
+                ]);
+            }
+            return [true, $department->id];
+        } catch (\Exception $e) {
+            Log::info($e);
+            DB::rollback();
+            return [false, $department->id];
         }
     }
 }

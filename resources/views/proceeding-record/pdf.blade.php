@@ -51,6 +51,7 @@
                 </div>
             </div>
 
+
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step 2:- Agenda</h5></div>
                 <div class="card-body">
@@ -73,6 +74,7 @@
                     </div>
                 </div>
             </div>
+
 
 
             <div class="card">
@@ -105,6 +107,7 @@
                 </div>
             </div>
 
+
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step 4:- Departments</h5></div>
                 <div class="card-body">
@@ -130,6 +133,7 @@
                     </div>
                 </div>
             </div>
+
 
             @php $step = 5; @endphp
             @if(count($scheduleMeetings->whereNotNull('schedule_meeting_id')) > 0)
@@ -167,6 +171,7 @@
                     </div>
                 </div>
             </div>
+
             @endif
 
             @if(count($suplimentryAgendas) > 0)
@@ -195,6 +200,7 @@
                     </div>
                 </div>
             </div>
+
             @endif
 
             @if(count($questions) > 0)
@@ -241,11 +247,14 @@
                     </div>
                 </div>
             </div>
+
             @endif
 
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Members In Meeting Attendance</h5></div>
                 <div class="card-body">
+                    @if(count($members) > 0)
+                    <h5>Member Attendance</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -268,8 +277,38 @@
                             </tbody>
                         </table>
                     </div>
+                    @endif
+
+                    @if(count($departmentAttendances) > 0)
+                    <h5>Department Member Attendance</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Department</th>
+                                    <th>Name</th>
+                                    <th>In time(वेळेत)</th>
+                                    <th>Out time(बाहेर वेळ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($departmentAttendances as $departmentAttendance)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $departmentAttendance->department?->name }}</td>
+                                    <td>{{ $departmentAttendance->name }}</td>
+                                    <td>{{ ($departmentAttendance->in_time) ? date('h:i A', strtotime($departmentAttendance->in_time)) : '-' }}</td>
+                                    <td>{{ ($departmentAttendance->out_time) ? date('h:i A', strtotime($departmentAttendance->out_time)) : '-' }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @endif
                 </div>
             </div>
+
 
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Proceeding Records</h5></div>

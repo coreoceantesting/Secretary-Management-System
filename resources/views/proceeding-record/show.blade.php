@@ -227,8 +227,9 @@
             @endif
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Members In Meeting Attendance</h5></div>
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Attendance</h5></div>
                 <div class="card-body">
+                    <h5>Member Attendance</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -246,6 +247,33 @@
                                     <td>{{ $member->member?->name }}</td>
                                     <td>{{ ($member?->member?->attendance?->in_time) ? date('h:i A', strtotime($member?->member?->attendance?->in_time)) : '-' }}</td>
                                     <td>{{ ($member?->member?->attendance?->out_time) ? date('h:i A', strtotime($member?->member?->attendance?->out_time)) : '-' }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <h5>Department Member Attendance</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Department</th>
+                                    <th>Name</th>
+                                    <th>In time(वेळेत)</th>
+                                    <th>Out time(बाहेर वेळ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($departmentAttendances as $departmentAttendance)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $departmentAttendance->department?->name }}</td>
+                                    <td>{{ $departmentAttendance->name }}</td>
+                                    <td>{{ ($departmentAttendance->in_time) ? date('h:i A', strtotime($departmentAttendance->in_time)) : '-' }}</td>
+                                    <td>{{ ($departmentAttendance->out_time) ? date('h:i A', strtotime($departmentAttendance->out_time)) : '-' }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

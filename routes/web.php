@@ -116,6 +116,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('suplimentry-agenda', SuplimentryAgendaController::class);
 
     Route::post('attendance/update/singleMark', [AttendanceController::class, 'saveSingleMark'])->name('attendance.saveSingleMark');
+    Route::post('attendance/update/saveDepartmentSingleMark', [AttendanceController::class, 'saveDepartmentSingleMark'])->name('attendance.saveDepartmentSingleMark');
     Route::resource('attendance', AttendanceController::class);
 
     Route::get('proceeding-record/pdf/{id}', [ProceedingRecordController::class, 'pdf'])->name('proceeding-record.pdf');
