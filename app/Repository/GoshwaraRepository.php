@@ -16,7 +16,7 @@ class GoshwaraRepository
             return $q->whereDate('date', '>=', date('Y-m-d', strtotime($request->from)));
         })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
             return $q->whereDate('date', '<=', date('Y-m-d', strtotime($request->to)));
-        })->where('is_sent', 1)->with(['department']);
+        })->where('is_sent', 1)->with(['department', 'assignGoshwaraToAgenda']);
 
         if (Auth::user()->roles[0]->name == "Department")
             $goshwara = $goshwara->where('department_id', Auth::user()->department_id)->latest()->get();

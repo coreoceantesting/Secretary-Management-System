@@ -43,6 +43,7 @@
                                         <th>Sent Date</th>
                                         <th>Remark</th>
                                         <th>Goshwara</th>
+                                        <th>Goshwara Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,6 +56,13 @@
                                             <td>{{ $goshwara->remark }}</td>
                                             <td>
                                                 <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a>
+                                            </td>
+                                            <td>
+                                                @if(count($goshwara->assignGoshwaraToAgenda) > 0)
+                                                <span class="badge bg-success">Created Agenda</span>
+                                                @else
+                                                <span class="badge bg-warning">Inprogress</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
