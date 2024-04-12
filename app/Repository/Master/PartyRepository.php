@@ -2,24 +2,24 @@
 
 namespace App\Repository\Master;
 
-use App\Models\Member;
+use App\Models\Party;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class MemberRepository
+class PartyRepository
 {
     public function index()
     {
-        $members = Member::with(['ward', 'party'])->select('id', 'ward_id', 'name', 'contact_number', 'email', 'address', 'designation', 'party_id')->latest()->get();
+        $party = Party::select('id', 'name')->get();
 
-        return $members;
+        return $party;
     }
 
     public function store($request)
     {
         DB::beginTransaction();
         try {
-            Member::create($request->all());
+            Party::create($request->all());
 
             DB::commit();
             return true;
@@ -33,17 +33,17 @@ class MemberRepository
 
     public function edit($id)
     {
-        $member = Member::find($id);
+        $party = Party::find($id);
 
-        return $member;
+        return $party;
     }
 
     public function update($request, $id)
     {
         DB::beginTransaction();
         try {
-            $member = Member::find($id);
-            $member->update($request->all());
+            $party = Party::find($id);
+            $party->update($request->all());
 
             DB::commit();
             return true;
@@ -59,8 +59,8 @@ class MemberRepository
     {
         try {
             DB::beginTransaction();
-            $member = Member::find($id);
-            $member->delete();
+            $party = Party::find($id);
+            $party->delete();
             DB::commit();
 
             return true;
@@ -68,9 +68,5 @@ class MemberRepository
             Log::info($e);
             return false;
         }
-    }
-
-    public function assignMemberToMeeting($id)
-    {
     }
 }

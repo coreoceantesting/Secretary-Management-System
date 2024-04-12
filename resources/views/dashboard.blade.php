@@ -17,15 +17,15 @@
                 <div class="col-xl-4 col-lg-4 col-sm-12 col-12">
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
-                            <div class="card card-animate">
+                            <div class="card card-animate bg-info">
                                 <div class="card-body">
-                                    <div>
+                                    <a href="{{ route('goshwara.index') }}">
                                         <div class="text-center">
-                                            <p class="fw-medium text-dark mb-0">
+                                            <p class="fw-medium text-white mb-0">
                                                 Total Goshwara
                                             </p>
                                             <h2 class="mt-2 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ $goshwara }}">{{ round($goshwara) }}</span>
+                                                <span class="counter-value text-white" data-target="{{ $goshwara }}">{{ round($goshwara) }}</span>
                                             </h2>
                                         </div>
                                         {{-- <div>
@@ -35,7 +35,7 @@
                                                 </span>
                                             </div>
                                         </div> --}}
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- end card body -->
                             </div>
@@ -44,15 +44,15 @@
                         <!-- end col-->
 
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
-                            <div class="card card-animate">
+                            <div class="card card-animate bg-warning">
                                 <div class="card-body">
-                                    <div>
+                                    <a href="{{ route('agenda.index') }}">
                                         <div class="text-center">
-                                            <p class="fw-medium text-dark mb-0">
+                                            <p class="fw-medium text-white mb-0">
                                                 Total Agenda
                                             </p>
                                             <h2 class="mt-2 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ $agenda }}">{{ round($agenda) }}</span>
+                                                <span class="counter-value text-white" data-target="{{ $agenda }}">{{ round($agenda) }}</span>
                                             </h2>
                                         </div>
                                         {{-- <div>
@@ -62,7 +62,7 @@
                                                 </span>
                                             </div>
                                         </div> --}}
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- end card body -->
                             </div>
@@ -72,15 +72,15 @@
 
 
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
-                            <div class="card card-animate">
+                            <div class="card card-animate bg-success">
                                 <div class="card-body">
-                                    <div>
+                                    <a href="{{ route('suplimentry-agenda.index') }}">
                                         <div class="text-center">
-                                            <p class="fw-medium text-dark mb-0">
+                                            <p class="fw-medium text-white mb-0">
                                                 Total Suplimentry Agenda
                                             </p>
                                             <h2 class="mt-2 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ round($suplimentryAgenda) }}">{{ round($suplimentryAgenda) }}</span>
+                                                <span class="counter-value text-white" data-target="{{ round($suplimentryAgenda) }}">{{ round($suplimentryAgenda) }}</span>
                                             </h2>
                                         </div>
                                         {{-- <div>
@@ -90,7 +90,7 @@
                                                 </span>
                                             </div>
                                         </div> --}}
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- end card body -->
                             </div>
@@ -99,15 +99,15 @@
                         <!-- end col-->
 
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
-                            <div class="card card-animate">
+                            <div class="card card-animate bg-danger">
                                 <div class="card-body">
-                                    <div>
+                                    <a href="{{ route('schedule-meeting.index') }}">
                                         <div class="text-center">
-                                            <p class="fw-medium text-dark mb-0">
+                                            <p class="fw-medium text-white mb-0">
                                                 Total Schedule Meeting
                                             </p>
                                             <h2 class="mt-2 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ round($scheduleMeeting) }}">{{ round($scheduleMeeting) }}</span>
+                                                <span class="counter-value text-white" data-target="{{ round($scheduleMeeting) }}">{{ round($scheduleMeeting) }}</span>
                                             </h2>
                                         </div>
                                         {{-- <div>
@@ -117,7 +117,7 @@
                                                 </span>
                                             </div>
                                         </div> --}}
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- end card body -->
                             </div>
@@ -126,15 +126,15 @@
                         <!-- end col-->
 
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
-                            <div class="card card-animate">
+                            <div class="card card-animate bg-primary">
                                 <div class="card-body">
-                                    <div>
+                                    <a href="{{ route('reschedule-meeting.index') }}">
                                         <div class="text-center">
-                                            <p class="fw-medium text-dark mb-0">
+                                            <p class="fw-medium text-white mb-0">
                                                 Total Reschedule Meeting
                                             </p>
                                             <h2 class="mt-2 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ round($rescheduleMeeting) }}">{{ round($rescheduleMeeting) }}</span>
+                                                <span class="counter-value text-white" data-target="{{ round($rescheduleMeeting) }}">{{ round($rescheduleMeeting) }}</span>
                                             </h2>
                                         </div>
                                         {{-- <div>
@@ -144,7 +144,7 @@
                                                 </span>
                                             </div>
                                         </div> --}}
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- end card body -->
                             </div>
@@ -153,15 +153,15 @@
                         <!-- end col-->
 
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
-                            <div class="card card-animate">
+                            <div class="card card-animate bg-secondary">
                                 <div class="card-body">
-                                    <div>
+                                    <a href="{{ route('question.index') }}">
                                         <div class="text-center">
-                                            <p class="fw-medium text-dark mb-0">
+                                            <p class="fw-medium text-white mb-0">
                                                 Total Question
                                             </p>
                                             <h2 class="mt-2 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ round($question) }}">{{ round($question) }}</span>
+                                                <span class="counter-value text-white" data-target="{{ round($question) }}">{{ round($question) }}</span>
                                             </h2>
                                         </div>
                                         {{-- <div>
@@ -171,7 +171,7 @@
                                                 </span>
                                             </div>
                                         </div> --}}
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- end card body -->
                             </div>
@@ -180,15 +180,15 @@
                         <!-- end col-->
 
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
-                            <div class="card card-animate">
+                            <div class="card card-animate bg-info">
                                 <div class="card-body">
-                                    <div>
+                                    <a href="{{ route('proceeding-record.index') }}">
                                         <div class="text-center">
-                                            <p class="fw-medium text-dark mb-0">
+                                            <p class="fw-medium text-white mb-0">
                                                 Total Proceeding Record
                                             </p>
                                             <h2 class="mt-2 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ round($proceedingRecord) }}">{{ round($proceedingRecord) }}</span>
+                                                <span class="counter-value text-white" data-target="{{ round($proceedingRecord) }}">{{ round($proceedingRecord) }}</span>
                                             </h2>
                                         </div>
                                         {{-- <div>
@@ -198,7 +198,7 @@
                                                 </span>
                                             </div>
                                         </div> --}}
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- end card body -->
                             </div>
@@ -207,15 +207,15 @@
                         <!-- end col-->
 
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
-                            <div class="card card-animate">
+                            <div class="card card-animate bg-warning">
                                 <div class="card-body">
-                                    <div>
+                                    <a href="{{ route('tharav.index') }}">
                                         <div class="text-center">
-                                            <p class="fw-medium text-dark mb-0">
+                                            <p class="fw-medium text-white mb-0">
                                                 Total Tharav
                                             </p>
                                             <h2 class="mt-2 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ round($tharav) }}">{{ round($tharav) }}</span>
+                                                <span class="counter-value text-white" data-target="{{ round($tharav) }}">{{ round($tharav) }}</span>
                                             </h2>
                                         </div>
                                         {{-- <div>
@@ -225,7 +225,7 @@
                                                 </span>
                                             </div>
                                         </div> --}}
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- end card body -->
                             </div>

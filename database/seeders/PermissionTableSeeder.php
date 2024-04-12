@@ -339,6 +339,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'tharav.create',
                 'group' => 'tharav',
             ],
+            [
+                'id' => 76,
+                'name' => 'party.view',
+                'group' => 'party',
+            ],
+            [
+                'id' => 77,
+                'name' => 'party.create',
+                'group' => 'party',
+            ],
+            [
+                'id' => 78,
+                'name' => 'party.edit',
+                'group' => 'party',
+            ],
+            [
+                'id' => 79,
+                'name' => 'party.delete',
+                'group' => 'party',
+            ],
         ];
 
         foreach ($permissions as $permission) {

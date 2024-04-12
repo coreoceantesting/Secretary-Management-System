@@ -26,7 +26,7 @@ class MemberRequest extends FormRequest
             'name' => 'required',
             'contact_number' => 'required|numeric|digits:10',
             'email' => 'required|email',
-            'political_party' => 'required',
+            'party_id' => 'required',
             'address' => 'required',
             'designation' => 'required',
         ];
@@ -39,7 +39,7 @@ class MemberRequest extends FormRequest
             'name.required' => 'Please enter name',
             'contact_number.required' => 'Please enter contact number',
             'contact_number.numeric' => 'Please enter only number',
-            'political_party.required' => 'Please enter political party',
+            'party_id.required' => 'Please select party',
             'address.required' => 'Please enter address',
             'designation.required' => 'Please enter designation',
         ];

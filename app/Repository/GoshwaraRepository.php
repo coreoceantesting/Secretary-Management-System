@@ -106,7 +106,7 @@ class GoshwaraRepository
     // function to get send list
     public function send($request)
     {
-        $goshwara = Goshwara::where('is_sent', 0)->latest()->where('department_id', Auth::user()->department_id)->get();
+        $goshwara = Goshwara::where('is_sent', 0)->latest()->where('department_id', Auth::user()->department_id)->orderBy('updated_at', 'desc')->get();
 
         return $goshwara;
     }

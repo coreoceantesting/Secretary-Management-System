@@ -19,7 +19,7 @@
 
 <body>
 
-    <div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
+    <div class="auth-page-wrapper auth-bg-cover d-flex justify-content-center align-items-center min-vh-100">
         <div class="bg-overlay"></div>
         <div class="auth-page-content overflow-hidden pt-lg-5">
             <div class="container">
@@ -28,7 +28,7 @@
                         <div class="card overflow-hidden card-bg-fill border-0 card-border-effect-none">
                             <div class="row g-0">
                                 <div class="col-lg-6">
-                                    <img src="https://mycounto.com/wp-content/uploads/2023/02/how-has-the-role-of-a-company-secretary-evolved-over-time.jpg" alt="" width="100%" height="100%">
+                                    <img src="{{ asset('admin/images/secretarymanagementsystem.jpg') }}" alt="" width="100%" height="100%">
                                     <div class="p-lg-5 p-4 auth-one-bg h-100 d-none">
                                         <div class="bg-overlay"></div>
                                         <div class="position-relative h-100 d-flex flex-column">

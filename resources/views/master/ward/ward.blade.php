@@ -154,7 +154,7 @@
                 if (!data.error)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('master.ward.store') }}';
+                            window.location.href = '{{ route('master.ward.index') }}';
                         });
                 else
                     swal("Error!", data.error, "error");

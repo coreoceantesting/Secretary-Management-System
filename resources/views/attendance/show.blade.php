@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary" id="addSubmit">Submit</button>
+                                <button type="submit" class="btn btn-primary" id="addSubmit">Mark All</button>
                                 <a href="{{ route('attendance.index') }}" class="btn btn-warning">Cancel</a>
                             </div>
 
@@ -170,10 +170,7 @@
                         success: function(data)
                         {
                             if (!data.error)
-                                swal("Successful!", data.success, "success")
-                                    .then((action) => {
-                                        $('#markButton'+data.id).prop('disabled', false);
-                                    });
+
                             else
                                 swal("Error!", data.error, "error");
                         },

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Department(विभाग)</x-slot>
-    <x-slot name="heading">Department(विभाग)</x-slot>
+    <x-slot name="title">Party(पक्ष)</x-slot>
+    <x-slot name="heading">Party(पक्ष)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,19 +12,14 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Department(विभाग जोडा)</h4>
+                            <h4 class="card-title">Add Party(विभाग पक्ष)</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Department Name(विभागाचे नाव) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Department Name" required>
+                                    <label class="col-form-label" for="name">Party Name(पक्ष नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter Party Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial(विभागाचे आरंभिक) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial" required>
-                                    <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
 
@@ -47,20 +42,15 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Department(विभाग संपादित करा)</h4>
+                            <h4 class="card-title">Edit Party(पक्ष संपादित करा)</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Department Name(विभागाचे नाव) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Department Name" required>
+                                    <label class="col-form-label" for="name">Party Name(पक्ष नाव) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Party Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial(विभागाचे आरंभिक) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial" required>
-                                    <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
 
@@ -78,7 +68,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    @can('department.create')
+                    @can('party.create')
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-6">
@@ -97,22 +87,20 @@
                                     <tr>
                                         <th>Sr no.</th>
                                         <th>Name</th>
-                                        <th>Initial</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($departments as $department)
+                                    @foreach ($parties as $party)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $department->name }}</td>
-                                            <td>{{ $department->initial }}</td>
+                                            <td>{{ $party->name }}</td>
                                             <td>
-                                                @can('department.edit')
-                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit department" data-id="{{ $department->id }}"><i data-feather="edit"></i></button>
+                                                @can('party.edit')
+                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit party" data-id="{{ $party->id }}"><i data-feather="edit"></i></button>
                                                 @endcan
-                                                @can('department.delete')
-                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete department" data-id="{{ $department->id }}"><i data-feather="trash-2"></i> </button>
+                                                @can('party.delete')
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete party" data-id="{{ $party->id }}"><i data-feather="trash-2"></i> </button>
                                                 @endcan
                                             </td>
                                         </tr>
@@ -138,7 +126,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('master.department.store') }}',
+            url: '{{ route('master.party.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -154,7 +142,7 @@
                 if (!data.error)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('master.department.index') }}';
+                            window.location.href = '{{ route('master.party.index') }}';
                         });
                 else
                     swal("Error!", data.error, "error");
@@ -194,7 +182,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('master.department.edit', ":model_id") }}";
+        var url = "{{ route('master.party.edit', ":model_id") }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
@@ -211,9 +199,8 @@
                 editFormBehaviour();
                 if (!data.error)
                 {
-                    $("#editForm input[name='edit_model_id']").val(data.department.id);
-                    $("#editForm input[name='name']").val(data.department.name);
-                    $("#editForm input[name='initial']").val(data.department.initial);
+                    $("#editForm input[name='edit_model_id']").val(data.party.id);
+                    $("#editForm input[name='name']").val(data.party.name);
                 }
                 else
                 {
@@ -243,7 +230,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('master.department.update', ":model_id") }}";
+            var url = "{{ route('master.party.update', ":model_id") }}";
             //
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -262,7 +249,7 @@
                     if (!data.error)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('master.department.index') }}';
+                                window.location.href = '{{ route('master.party.index') }}';
                             });
                     else
                         swal("Error!", data.error, "error");
@@ -312,7 +299,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('master.department.destroy', ":model_id") }}";
+                var url = "{{ route('master.party.destroy', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),

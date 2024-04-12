@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Tharav;
 use App\Models\AssignScheduleMeetingDepartment;
 use App\Models\ScheduleMeeting;
@@ -13,7 +14,17 @@ class TharavRepository
 {
     public function index()
     {
-        return Tharav::with(['meeting', 'assignTharavDepartment.department', 'scheduleMeeting'])->latest()->get();
+        $tharav = Tharav::with(['meeting', 'assignTharavDepartment.department', 'scheduleMeeting']);
+
+        if (Auth::user()->hasRole('Department')) {
+            $tharav = $tharav->whereHas('assignTharavDepartment', function ($q) {
+                $q->where('department_id', Auth::user()->department_id);
+            });
+        }
+
+        $tharav = $tharav->latest()->get();
+
+        return $tharav;
     }
 
     public function getScheduleMeeting($id)

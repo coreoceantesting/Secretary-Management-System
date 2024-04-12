@@ -56,10 +56,6 @@
                                             <td>{{ $scheduleMeeting->place }}</td>
                                         </tr>
                                         <tr>
-                                            <th>File(फाईल)</th>
-                                            <td><a href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
-                                        </tr>
-                                        <tr>
                                             <th>Status</th>
                                             <td>
                                                 @if($scheduleMeeting->is_meeting_completed)

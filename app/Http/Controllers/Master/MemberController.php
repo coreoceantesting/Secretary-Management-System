@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repository\Master\MemberRepository;
 use App\Repository\Master\WardRepository;
 use App\Http\Requests\Master\MemberRequest;
+use App\Models\Party;
 
 class MemberController extends Controller
 {
@@ -25,9 +26,12 @@ class MemberController extends Controller
 
         $wards = $this->wardRepository->index();
 
+        $parties = Party::select('id', 'name')->get();
+
         return view('master.member.member')->with([
             'members' => $members,
-            'wards' => $wards
+            'wards' => $wards,
+            'parties' => $parties
         ]);
     }
 

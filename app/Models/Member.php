@@ -8,16 +8,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ward;
 use App\Models\Attendance;
+use App\Models\Party;
 
 class Member extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['ward_id', 'name', 'contact_number', 'email', 'political_party', 'address', 'designation', 'deleted_at'];
+    protected $fillable = ['ward_id', 'name', 'contact_number', 'email', 'party_id', 'address', 'designation', 'deleted_at'];
 
     public function ward()
     {
         return $this->belongsTo(Ward::class, 'ward_id', 'id');
+    }
+
+    public function party()
+    {
+        return $this->belongsTo(Party::class, 'party_id', 'id');
     }
 
     public function attendance()

@@ -45,9 +45,14 @@
                                     <span class="text-danger is-invalid email_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="political_party">Political Party(राजकीय पक्ष) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="political_party" name="political_party" type="text" placeholder="Enter Political Party" required>
-                                    <span class="text-danger is-invalid political_party_err"></span>
+                                    <label class="col-form-label" for="party_id">Select Party(पक्ष निवडा) <span class="text-danger">*</span></label>
+                                    <select name="party_id" id="party_id" required class="form-select">
+                                        <option value="">Select Party</option>
+                                        @foreach($parties as $party)
+                                        <option value="{{ $party->id }}">{{ $party->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid party_id_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
@@ -115,9 +120,14 @@
                                     <span class="text-danger is-invalid email_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="political_party">Political Party(राजकीय पक्ष) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="political_party" name="political_party" type="text" placeholder="Enter Political Party" required>
-                                    <span class="text-danger is-invalid political_party_err"></span>
+                                    <label class="col-form-label" for="party_id">Select Party(पक्ष निवडा) <span class="text-danger">*</span></label>
+                                    <select name="party_id" id="party_id" required class="form-select">
+                                        <option value="">Select Party</option>
+                                        @foreach($parties as $party)
+                                        <option value="{{ $party->id }}">{{ $party->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid party_id_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
@@ -165,10 +175,10 @@
                                     <tr>
                                         <th>Sr no.</th>
                                         <th>Ward</th>
+                                        <th>Party</th>
                                         <th>Name</th>
                                         <th>Contact Number</th>
                                         <th>Email</th>
-                                        <th>Political Party</th>
                                         <th>Address</th>
                                         <th>Designation</th>
                                         <th>Action</th>
@@ -179,10 +189,10 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $member->ward?->name }}</td>
+                                            <td>{{ $member->party?->name ?? '-' }}</td>
                                             <td>{{ $member->name }}</td>
                                             <td>{{ $member->contact_number }}</td>
                                             <td>{{ $member->email }}</td>
-                                            <td>{{ $member->political_party }}</td>
                                             <td>{{ $member->address }}</td>
                                             <td>{{ $member->designation }}</td>
                                             <td>
@@ -232,7 +242,7 @@
                 if (!data.error)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('master.member.store') }}';
+                            window.location.href = '{{ route('master.member.index') }}';
                         });
                 else
                     swal("Error!", data.error, "error");
@@ -293,7 +303,7 @@
                     $("#editForm input[name='name']").val(data.member.name);
                     $("#editForm input[name='contact_number']").val(data.member.contact_number);
                     $("#editForm input[name='email']").val(data.member.email);
-                    $("#editForm input[name='political_party']").val(data.member.political_party);
+                    $("#editForm input[name='party_id']").val(data.member.party_id);
                     $("#editForm input[name='address']").val(data.member.address);
                     $("#editForm input[name='designation']").val(data.member.designation);
                 }

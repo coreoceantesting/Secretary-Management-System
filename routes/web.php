@@ -7,6 +7,7 @@ use App\Http\Controllers\Master\DepartmentController;
 use App\Http\Controllers\Master\MeetingController;
 use App\Http\Controllers\Master\WardController;
 use App\Http\Controllers\Master\MemberController;
+use App\Http\Controllers\Master\PartyController;
 use App\Http\Controllers\Master\HomeDepartmentController;
 use App\Http\Controllers\Master\SettingController;
 use App\Http\Controllers\User\UserController;
@@ -89,6 +90,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::resource('member', MemberController::class);
         Route::resource('meeting', MeetingController::class);
         Route::resource('setting', SettingController::class);
+        Route::resource('party', PartyController::class);
     });
 
     Route::get('goshwara/send', [GoshwaraController::class, 'send'])->name('goshwara.send');
