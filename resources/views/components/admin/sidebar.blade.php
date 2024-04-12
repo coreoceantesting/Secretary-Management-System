@@ -74,10 +74,11 @@
                                 <a href="{{ route('master.meeting.index') }}" class="nav-link {{ request()->routeIs('master.meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Meeting(बैठक)</a>
                             </li>
                             @endcan
-
+                            @can('party.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.party.index') }}" class="nav-link {{ request()->routeIs('master.party.*') ? 'active' : '' }}" data-key="t-horizontal">Party(पक्ष)</a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
