@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\ProceedingRecordRepository;
 use App\Repository\CommonRepository;
 use App\Models\Agenda;
+use App\Models\Department;
 use App\Models\SuplimentryAgenda;
 use App\Models\AssignMemberToMeeting;
 use App\Models\DepartmentAttendance;
@@ -96,7 +97,9 @@ class ProceedingRecordController extends Controller
 
         $suplimentryAgendas = SuplimentryAgenda::whereIn('schedule_meeting_id', $ids)->get();
 
-        $questions = Question::with(['subQuestions'])->whereIn('schedule_meeting_id', $ids)->get();
+        $questions = Department::withWhereHas('questions', function ($q) use ($ids) {
+            return $q->whereIn('schedule_meeting_id', $ids)->with(['subQuestions']);
+        })->get();
 
         return view('proceeding-record.show')->with([
             'agenda' => $agenda,
@@ -134,7 +137,9 @@ class ProceedingRecordController extends Controller
 
         $suplimentryAgendas = SuplimentryAgenda::whereIn('schedule_meeting_id', $ids)->get();
 
-        $questions = Question::with(['subQuestions'])->whereIn('schedule_meeting_id', $ids)->get();
+        $questions = Department::withWhereHas('questions', function ($q) use ($ids) {
+            return $q->whereIn('schedule_meeting_id', $ids)->with(['subQuestions']);
+        })->get();
 
         $departmentAttendances = DepartmentAttendance::with(['department'])
             ->where('schedule_meeting_id', $proceedingRecord->schedule_meeting_id)

@@ -207,6 +207,8 @@
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Questions</h5></div>
                 <div class="card-body">
+                    @foreach($questions as $que)
+                    <h5>{{ $que->name }}</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -219,7 +221,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($questions as $question)
+                                @foreach($que?->questions as $question)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
@@ -245,6 +247,7 @@
                             </tbody>
                         </table>
                     </div>
+                    @endforeach
                 </div>
             </div>
 

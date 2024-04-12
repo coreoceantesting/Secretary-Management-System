@@ -6,12 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Question;
 
 class Department extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name', 'initial', 'is_home_department', 'deleted_at'];
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 
     public static function booted()
     {
