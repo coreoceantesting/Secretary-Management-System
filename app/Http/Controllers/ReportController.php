@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\ReportRepository;
+use App\Models\Party;
+use App\Models\ScheduleMeeting;
 
 class ReportController extends Controller
 {
@@ -32,9 +34,19 @@ class ReportController extends Controller
 
     public function attendanceMeetingReport(Request $request)
     {
-        $scheduleMeetings = $this->reportRepository->attendanceMeetingReport($request);
+        $attendanceMeetingReports = $this->reportRepository->attendanceMeetingReport($request);
+
+        $scheduleMeetings = ScheduleMeeting::where([
+            'is_meeting_cancel' => 0,
+            'is_meeting_reschedule' => 0,
+            'is_meeting_completed' => 1
+        ])->get();
+
+        $parties = Party::all();
 
         return view('report.attendance-meeting')->with([
+            'attendanceMeetingReports' => $attendanceMeetingReports,
+            'parties' => $parties,
             'scheduleMeetings' => $scheduleMeetings
         ]);
     }

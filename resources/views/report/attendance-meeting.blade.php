@@ -17,25 +17,26 @@
                                 <form method="get">
                                     <div class="mb-3 row">
                                         <div class="col-md-3">
-                                            <label class="col-form-label" for="from">From Date(या तारखेपासून) <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="from" name="from" type="date" value="@if(isset(Request()->from)){{ Request()->from }}@endif">
+                                            <label class="col-form-label" for="party_id">Select Party Name <span class="text-danger">*</span></label>
+                                            <select name="party_id" id="party_id" class="form-select">
+                                                <option value="">Select</option>
+                                                @foreach($parties as $party)
+                                                <option @if(isset(Request()->party_id) && Request()->party_id == $party->id)selected @endif value="{{ $party->id }}">{{ $party->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="col-form-label" for="to">To Date(आजपर्यंत) <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="to" name="to" type="date" value="@if(isset(Request()->to)){{ Request()->to }}@endif">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="col-form-label" for="to">Select Status <span class="text-danger">*</span></label>
-                                            <select name="status" id="status111" class="form-select">
-                                                <option value="">Select Status</option>
-                                                <option @if(isset(Request()->status) && Request()->status == "1")selected @endif value="1">In progress</option>
-                                                <option @if(isset(Request()->status) && Request()->status == "2")selected @endif value="2">Completed</option>
-                                                <option @if(isset(Request()->status) && Request()->status == "3")selected @endif value="3">Cancel</option>
+                                            <label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting <span class="text-danger">*</span></label>
+                                            <select name="schedule_meeting_id" id="schedule_meeting_id" class="form-select">
+                                                <option value="">Select</option>
+                                                @foreach($scheduleMeetings as $scheduleMeeting)
+                                                <option @if(isset(Request()->schedule_meeting_id) && Request()->schedule_meeting_id == $scheduleMeeting->id)selected @endif value="{{ $scheduleMeeting->id }}">{{ $scheduleMeeting->unique_id.' ('.date('d-m-Y', strtotime($scheduleMeeting->date)).')' }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="col-form-label" for="to">&nbsp;</div>
-                                            <button class="btn btn-primary">Submit</button>
+                                            <button class="btn btn-primary">Search</button>
                                         </div>
                                     </div>
                                 </form>
@@ -45,22 +46,30 @@
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>
-                                            <th>Agenda</th>
-                                            <th>Meeting</th>
-                                            <th>Time</th>
+                                            <th>Agenda Name</th>
+                                            <th>Meeting Name</th>
+                                            <th>Meeting No.</th>
+                                            <th>Member Name</th>
+                                            <th>Datetime</th>
                                             <th>Place</th>
-                                            <th>Status</th>
+                                            <th>Intime</th>
+                                            <th>Outtime</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($attendanceMeetingReports as $attendanceMeetingReport)
                                         <tr>
-                                            <td>1</td>
-                                            <td>Agenda</td>
-                                            <td>Meeting</td>
-                                            <td>Time</td>
-                                            <td>Place</td>
-                                            <td>Status</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $attendanceMeetingReport->scheduleMeeting?->agenda?->name }}</td>
+                                            <td>{{ $attendanceMeetingReport->meeting?->name }}</td>
+                                            <td>{{ $attendanceMeetingReport->scheduleMeeting?->unique_id }}</td>
+                                            <td>{{ $attendanceMeetingReport->member?->name }}</td>
+                                            <td>{{ date('d-m-Y h:i: A', strtotime($attendanceMeetingReport->scheduleMeeting->datetime)) }}</td>
+                                            <td>{{ $attendanceMeetingReport->scheduleMeeting?->place }}</td>
+                                            <td>{{ date('H:i A', strtotime($attendanceMeetingReport->in_time)) }}</td>
+                                            <td>{{ date('H:i A', strtotime($attendanceMeetingReport->out_time)) }}</td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

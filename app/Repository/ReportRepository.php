@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\Attendance;
 use App\Models\ScheduleMeeting;
 
 class ReportRepository
@@ -32,6 +33,16 @@ class ReportRepository
 
     public function attendanceMeetingReport($request)
     {
-        $attendanceReport = ScheduleMeeting::where('id', $request->id)->first();
+        $attendanceReport = Attendance::withWhereHas('member', function ($q) use ($request) {
+            $q->when(isset($request->schedule_meeting_id) && $request->schedule_meeting_id != '', function ($q) use ($request) {
+                return $q->where('party_id', $request->party_id);
+            });
+        })->with(['scheduleMeeting.agenda', 'meeting'])
+            ->when(isset($request->schedule_meeting_id) && $request->schedule_meeting_id != '', function ($q) use ($request) {
+                return $q->where('schedule_meeting_id', $request->schedule_meeting_id);
+            })
+            ->get();
+
+        return $attendanceReport;
     }
 }
