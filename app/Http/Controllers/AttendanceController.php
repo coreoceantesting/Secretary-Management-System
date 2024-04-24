@@ -29,7 +29,7 @@ class AttendanceController extends Controller
     {
         $attendances = $this->attendanceRepository->store($request);
 
-        return redirect()->route('attendance.show')->with('success', 'Attendance taken successfully');
+        return redirect()->route('attendance.index')->with('success', 'Attendance taken successfully');
     }
 
     public function show($id)
