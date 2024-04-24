@@ -49,7 +49,9 @@
                                             <th>Agenda Name</th>
                                             <th>Meeting Name</th>
                                             <th>Meeting No.</th>
+                                            <th>Party Name</th>
                                             <th>Member Name</th>
+                                            <th>Designation</th>
                                             <th>Datetime</th>
                                             <th>Place</th>
                                             <th>Intime</th>
@@ -63,7 +65,9 @@
                                             <td>{{ $attendanceMeetingReport->scheduleMeeting?->agenda?->name }}</td>
                                             <td>{{ $attendanceMeetingReport->meeting?->name }}</td>
                                             <td>{{ $attendanceMeetingReport->scheduleMeeting?->unique_id }}</td>
+                                            <td>{{ $attendanceMeetingReport->member?->party?->name }}</td>
                                             <td>{{ $attendanceMeetingReport->member?->name }}</td>
+                                            <td>{{ $attendanceMeetingReport->member?->designation }}</td>
                                             <td>{{ date('d-m-Y h:i: A', strtotime($attendanceMeetingReport->scheduleMeeting->datetime)) }}</td>
                                             <td>{{ $attendanceMeetingReport->scheduleMeeting?->place }}</td>
                                             <td>{{ date('H:i A', strtotime($attendanceMeetingReport->in_time)) }}</td>
