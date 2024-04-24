@@ -310,11 +310,32 @@
                     let dataId = $(this).closest('tr').find('.dataId').val();
                     let dataDepartmentAttendanceId = $(this).closest('tr').find('.dataDepartmentAttendanceId').val();
                     let department_id = $(this).closest('tr').find('.selectDepartmentForAttendance').val();
+
                     let inTime = $(this).closest('tr').find('.departmentInTime').val();
                     let outTime = $(this).closest('tr').find('.departmentOutTime').val();
                     let scheduleMeetingId = $('#scheduleMeetingId').val();
                     let meetingId = $('#meetingId').val();
                     let name = $(this).closest('tr').find('.departmentInputName').val();
+
+                    if(department_id == "" || inTime == "" || name == ""){
+                        if(name == ""){
+                            $(this).closest('tr').find('.departmentInputName').css('border', '1px solid red');
+                        }
+
+                        if(department_id == ""){
+                            $(this).closest('tr').find('.selectDepartmentForAttendance').css('border', '1px solid red');
+                        }
+
+                        if(inTime == ""){
+                            $(this).closest('tr').find('.departmentInTime').css('border', '1px solid red');
+                        }
+                        return false;
+                    }else{
+                        $(this).closest('tr').find('.selectDepartmentForAttendance').css('border', '1px solid #e9ebec');
+                        $(this).closest('tr').find('.departmentInputName').css('border', '1px solid #e9ebec');
+                        $(this).closest('tr').find('.departmentInTime').css('border', '1px solid #e9ebec');
+                    }
+
                     $.ajax({
                         url: "{{ route('attendance.saveDepartmentSingleMark') }}",
                         type: 'POST',

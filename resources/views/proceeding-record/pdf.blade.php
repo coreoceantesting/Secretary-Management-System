@@ -254,7 +254,7 @@
             @endif
 
             <div class="card">
-                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Members In Meeting Attendance</h5></div>
+                <h5 class="card-title text-white">Step {{ $step++ }}:- Meeting Attendance</h5>
                 <div class="card-body">
                     @if(count($members) > 0)
                     <h5>Member Attendance</h5>
