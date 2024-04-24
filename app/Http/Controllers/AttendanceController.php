@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\AttendanceRepository;
 use App\Repository\CommonRepository;
+use App\Http\Requests\AttendanceRequest;
 
 class AttendanceController extends Controller
 {
@@ -25,11 +26,11 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(AttendanceRequest $request)
     {
         $attendances = $this->attendanceRepository->store($request);
 
-        return redirect()->route('attendance.index')->with('success', 'Attendance taken successfully');
+        return redirect()->route('attendance.show', $request->schedule_meeting_id)->with('success', 'Attendance taken successfully');
     }
 
     public function show($id)

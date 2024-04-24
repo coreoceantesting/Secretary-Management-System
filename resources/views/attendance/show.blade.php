@@ -134,7 +134,7 @@
                                                         <td>
                                                             <input type="hidden" class="dataId" value="{{ $key+1 }}">
                                                             <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="{{ $departmentAttendanceMark->id }}">
-                                                            <select name="department_id[]" class="form-select selectDepartmentForAttendance">
+                                                            <select name="department_id[]" class="form-select selectDepartmentForAttendance" required>
                                                                 <option value="">Select Department</option>
                                                                 @foreach($departments as $department)
                                                                 <option @if($departmentAttendanceMark->department_id == $department->id) selected @endif value="{{ $department->id }}">{{ $department->name }}</option>
@@ -142,10 +142,10 @@
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="department_name[]" class="form-control departmentInputName" value="{{ $departmentAttendanceMark->name }}">
+                                                            <input type="text" required name="department_name[]" class="form-control departmentInputName" value="{{ $departmentAttendanceMark->name }}">
                                                         </td>
                                                         <td>
-                                                            <input type="time" name="department_in_time[]" class="form-control departmentInTime" value="{{ $departmentAttendanceMark->in_time }}">
+                                                            <input type="time" name="department_in_time[]" class="form-control departmentInTime" value="{{ $departmentAttendanceMark->in_time }}" required>
                                                         </td>
                                                         <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime" value="{{ $departmentAttendanceMark->out_time }}"></td>
                                                         <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button></td>
@@ -158,7 +158,7 @@
                                                         <td>
                                                             <input type="hidden" class="dataId" value="1">
                                                             <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="">
-                                                            <select name="department_id[]" class="form-select selectDepartmentForAttendance">
+                                                            <select name="department_id[]" class="form-select selectDepartmentForAttendance" required>
                                                                 <option value="">Select Department</option>
                                                                 @foreach($departments as $department)
                                                                 <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -166,10 +166,10 @@
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="department_name[]" class="form-control departmentInputName">
+                                                            <input type="text" name="department_name[]" class="form-control departmentInputName" required>
                                                         </td>
                                                         <td>
-                                                            <input type="time" name="department_in_time[]" class="form-control departmentInTime"></td>
+                                                            <input type="time" name="department_in_time[]" class="form-control departmentInTime" required></td>
                                                         <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime"></td>
                                                         <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button></td>
                                                     </tr>
@@ -278,7 +278,7 @@
                             <td>
                                 <input type="hidden" class="dataId" value="${departmentRowCount}">
                                 <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="">
-                                <select name="department_id[]" class="form-select selectDepartmentForAttendance">
+                                <select name="department_id[]" class="form-select selectDepartmentForAttendance" required>
                                     <option value="">Select Department</option>
                                     @foreach($departments as $department)
                                     <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -286,10 +286,10 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="department_name[]" class="form-control departmentInputName">
+                                <input type="text" name="department_name[]" class="form-control departmentInputName" required>
                             </td>
                             <td>
-                                <input type="time" name="department_in_time[]" class="form-control departmentInTime"></td>
+                                <input type="time" name="department_in_time[]" class="form-control departmentInTime" required></td>
                             <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime"></td>
                             <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button>&nbsp;<button type="button" class="btn btn-danger btn-sm removeDepartment" data-id="${departmentRowCount}">Remove</button></td>
                         </tr>`;

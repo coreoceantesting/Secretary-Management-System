@@ -54,6 +54,33 @@ class AttendanceRepository
                         $attendance->save();
                     }
                 }
+
+
+                DepartmentAttendance::where('schedule_meeting_id', $request->schedule_meeting_id)->delete();
+
+                for ($i = 0; $i < count($request->department_attendance_id); $i++) {
+                    // Log::info($request->department_in_time[$i]);
+                    $inTime = null;
+                    if ($request->department_in_time[$i] != "") {
+                        $inTime = date('h:i:s', strtotime($request->department_in_time[$i]));
+                    }
+
+                    $outTime = null;
+                    if ($request->department_out_time[$i] != "") {
+                        $outTime = date('h:i:s', strtotime($request->department_out_time[$i]));
+                    }
+
+                    if ($request->department_in_time[$i] != "") {
+                        $departmentAttendance = new DepartmentAttendance;
+                        $departmentAttendance->schedule_meeting_id = $request->schedule_meeting_id;
+                        $departmentAttendance->meeting_id = $request->meeting_id;
+                        $departmentAttendance->department_id  = $request->department_id[$i];
+                        $departmentAttendance->name  = $request->department_name[$i];
+                        $departmentAttendance->in_time = $inTime;
+                        $departmentAttendance->out_time = $outTime;
+                        $departmentAttendance->save();
+                    }
+                }
             }
 
             return true;
