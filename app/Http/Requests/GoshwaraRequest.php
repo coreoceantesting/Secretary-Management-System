@@ -24,14 +24,14 @@ class GoshwaraRequest extends FormRequest
         if ($this->edit_model_id) {
             $rule = [
                 'name' => 'required',
-                'goshwarafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
-                'remark' => 'required'
+                'goshwarafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG",
+                'subject' => 'required'
             ];
         } else {
             $rule = [
                 'name' => 'required',
-                'goshwarafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
-                'remark' => 'required'
+                'goshwarafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG',
+                'subject' => 'required'
             ];
         }
 
@@ -42,9 +42,8 @@ class GoshwaraRequest extends FormRequest
     {
         return [
             'goshwarafile.required' => 'Please select file',
-            'goshwarafile.mimes' => 'Only pdf and doc file supported',
-            'goshwarafile.max' => 'File must be less than 2mb',
-            'remark.required' => 'Please enter remark'
+            'goshwarafile.mimes' => 'Only image, pdf and doc file supported',
+            'subject.required' => 'Please enter remark'
         ];
     }
 }

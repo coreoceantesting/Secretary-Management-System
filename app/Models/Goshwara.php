@@ -13,7 +13,7 @@ class Goshwara extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'department_id', 'meeting_id', 'file', 'remark', 'sent_by', 'date', 'is_sent'];
+    protected $fillable = ['name', 'department_id', 'meeting_id', 'file', 'subject', 'sent_by', 'date', 'is_sent', 'is_mayor_selected', 'selected_datetime', 'selected_by'];
 
     public function meeting()
     {

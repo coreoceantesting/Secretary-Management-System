@@ -22,5 +22,10 @@
             <th>Remark</th>
             <td>{{ $data?->remark }}</td>
         </tr>
+
+        <tr>
+            <th>View File</th>
+            <td><a href="{{ asset('storage/'.$data->file) }}">View</a></td>
+        </tr>
     </tbody>
 </table>

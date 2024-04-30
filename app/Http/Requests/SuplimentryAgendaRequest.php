@@ -27,13 +27,13 @@ class SuplimentryAgendaRequest extends FormRequest
             return [
                 'schedule_meeting_id' => 'required',
                 'name' => 'required',
-                'agendafile' => 'nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+                'agendafile' => 'nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG',
             ];
         } else {
             return [
                 'schedule_meeting_id' => 'required',
                 'name' => 'required',
-                'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+                'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG',
             ];
         }
     }
@@ -42,8 +42,7 @@ class SuplimentryAgendaRequest extends FormRequest
     {
         return [
             'agendafile.required' => 'Please select file',
-            'agendafile.mimes' => 'Only pdf and doc file supported',
-            'agendafile.max' => 'File must be less than 2mb',
+            'agendafile.mimes' => 'Only image, pdf and doc file supported',
             'name.required' => 'Please enter name',
             'schedule_meeting_id.required' => 'Please Select Schedule Meeting'
         ];

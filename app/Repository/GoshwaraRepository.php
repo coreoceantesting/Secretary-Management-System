@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Goshwara;
+use App\Models\Meeting;
 
 class GoshwaraRepository
 {
@@ -16,7 +17,7 @@ class GoshwaraRepository
             return $q->whereDate('date', '>=', date('Y-m-d', strtotime($request->from)));
         })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
             return $q->whereDate('date', '<=', date('Y-m-d', strtotime($request->to)));
-        })->where('is_sent', 1)->with(['department', 'assignGoshwaraToAgenda']);
+        })->where('is_sent', 1)->with(['meeting', 'department', 'assignGoshwaraToAgenda']);
 
         if (Auth::user()->roles[0]->name == "Department")
             $goshwara = $goshwara->where('department_id', Auth::user()->department_id)->latest()->get();
@@ -24,6 +25,11 @@ class GoshwaraRepository
             $goshwara = $goshwara->latest()->get();
 
         return $goshwara;
+    }
+
+    public function getMeetingName()
+    {
+        return Meeting::get();
     }
 
     public function store($request)
@@ -106,7 +112,7 @@ class GoshwaraRepository
     // function to get send list
     public function send($request)
     {
-        $goshwara = Goshwara::where('is_sent', 0)->latest()->where('department_id', Auth::user()->department_id)->orderBy('updated_at', 'desc')->get();
+        $goshwara = Goshwara::with(['meeting'])->where('is_sent', 0)->latest()->where('department_id', Auth::user()->department_id)->orderBy('updated_at', 'desc')->get();
 
         return $goshwara;
     }
@@ -132,6 +138,26 @@ class GoshwaraRepository
 
     public function show($id)
     {
-        return Goshwara::with(['department', 'sentBy'])->where('id', $id)->first();
+        return Goshwara::with(['department', 'sentBy', 'meeting'])->where('id', $id)->first();
+    }
+
+    public function getSelectedStatus($status)
+    {
+        return Goshwara::with(['department', 'meeting'])->where([
+            'is_mayor_selected' => $status,
+            'is_sent' => 1
+        ])->get();
+    }
+
+    public function saveMayorSelectedStatus($request)
+    {
+        $goshwara = Goshwara::find($request->id);
+        $goshwara->is_mayor_selected = 1;
+        $goshwara->selected_datetime = date('Y-m-d h:i:s');
+        $goshwara->selected_by = Auth::user()->id;
+
+        if ($goshwara->save()) {
+            return true;
+        }
     }
 }

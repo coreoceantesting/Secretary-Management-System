@@ -23,12 +23,12 @@ class AgendaRequest extends FormRequest
     {
         if ($this->edit_model_id) {
             $rule = [
-                'agendafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
+                'agendafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG|max:2010",
                 'name' => 'required'
             ];
         } else {
             $rule = [
-                'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+                'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG|max:2010',
                 'name' => 'required'
             ];
         }
@@ -40,7 +40,7 @@ class AgendaRequest extends FormRequest
     {
         return [
             'agendafile.required' => 'Please select file',
-            'agendafile.mimes' => 'Only pdf and doc file supported',
+            'agendafile.mimes' => 'Only image, pdf and doc file supported',
             'agendafile.max' => 'File must be less than 2mb',
             'name.required' => 'Please enter name'
         ];

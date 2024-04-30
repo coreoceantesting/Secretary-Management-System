@@ -27,7 +27,7 @@ class TharavRequest extends FormRequest
             'remark' => 'required',
             'date' => 'required',
             'time' => 'required',
-            'uploadfile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+            'uploadfile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG',
             'department_id' => 'required'
         ];
     }
@@ -38,8 +38,7 @@ class TharavRequest extends FormRequest
             'meeting_id.required' => 'Please select meeting',
             'schedule_meeting_id.required' => 'Please select schedule meeting',
             'uploadfile.required' => 'Please select file',
-            'uploadfile.mimes' => 'Only pdf and doc file supported',
-            'uploadfile.max' => 'File must be less than 2mb',
+            'uploadfile.mimes' => 'Only image, pdf and doc file supported',
             'date.required' => 'Please enter date',
             'time.required' => 'Please enter time',
             'remark.required' => 'Please enter name',

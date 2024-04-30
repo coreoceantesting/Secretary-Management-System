@@ -65,6 +65,18 @@
                                     <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
                                     <span class="text-danger is-invalid designation_err"></span>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="photos">Member Photo(सदस्य फोटो) <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="photos" name="photos" type="file" placeholder="Enter Photo" required>
+                                    <span class="text-danger is-invalid photos_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="alternate_number">Alternate Number(पर्यायी क्रमांक)</label>
+                                    <input class="form-control" id="alternate_number" name="alternate_number" type="text" placeholder="Enter Alternate Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                                    <span class="text-danger is-invalid alternate_number_err"></span>
+                                </div>
                             </div>
 
                         </div>
@@ -139,6 +151,18 @@
                                     <label class="col-form-label" for="designation">Designation(पदनाम) <span class="text-danger">*</span></label>
                                     <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
                                     <span class="text-danger is-invalid designation_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="photo">Member Photo(सदस्य फोटो)</label>
+                                    <input class="form-control" id="photo" name="photos" type="file" placeholder="Enter Photo">
+                                    <span class="text-danger is-invalid photos_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="alternate_number">Alternate Number(पर्यायी क्रमांक)</label>
+                                    <input class="form-control" id="alternate_number" name="alternate_number" type="text" placeholder="Enter Alternate Number" maxlength="10" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                                    <span class="text-danger is-invalid alternate_number_err"></span>
                                 </div>
                             </div>
 
@@ -303,7 +327,8 @@
                     $("#editForm input[name='name']").val(data.member.name);
                     $("#editForm input[name='contact_number']").val(data.member.contact_number);
                     $("#editForm input[name='email']").val(data.member.email);
-                    $("#editForm input[name='party_id']").val(data.member.party_id);
+                    $("#editForm select[name='party_id']").val(data.member.party_id);
+                    $("#editForm input[name='alternate_number']").val(data.member.alternate_number);
                     $("#editForm input[name='address']").val(data.member.address);
                     $("#editForm input[name='designation']").val(data.member.designation);
                 }

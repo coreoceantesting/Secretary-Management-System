@@ -23,7 +23,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th>Goshwara  Name</th>
+                                        <th>Meeting Name</th>
+                                        <td>{{ $goshwara?->meeting?->name ?? '-' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Goshwara Name</th>
                                         <td>{{ $goshwara->name ?? '-' }}</td>
                                     </tr>
                                     <tr>

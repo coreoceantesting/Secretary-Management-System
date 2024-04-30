@@ -16,11 +16,29 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
+                                <div class="col-sm-12 col-lg-4 col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="from">Select Meeting</label>
+                                        <select name="meeting_id" class="form-select" id="meeting_id" required>
+                                            <option value="">Select Meeting</option>
+                                            @foreach($meetings as $meeting)
+                                                <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="name">Goshwara Name(गोषवारा नाव) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter goshwara name" required>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter goshwara name" value="{{ old('name') }}" required>
                                     @error('name')
                                     <span class="text-danger is-invalid name_err">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="subject">Subject(विषय) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject" value="{{ old('subject') }}" required />
+                                    @error('subject')
+                                    <span class="text-danger is-invalid subject_err">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
@@ -28,13 +46,6 @@
                                     <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara" required>
                                     @error('goshwarafile')
                                     <span class="text-danger is-invalid goshwarafile_err">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="remark">Remark(शेरा) <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" id="remark" name="remark" placeholder="Enter remark" required>{{ old('remark') }}</textarea>
-                                    @error('remark')
-                                    <span class="text-danger is-invalid remark_err">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>

@@ -15,9 +15,11 @@ class AttendanceRepository
     public function index()
     {
         return ScheduleMeeting::with(['agenda', 'meeting'])
-            ->where(
-                ['is_meeting_reschedule' => 0, 'is_record_proceeding' => 0, 'is_meeting_cancel' => 0]
-            )->whereDate('date', '>=', date('Y-m-d'))->get();
+            ->where([
+                'is_meeting_reschedule' => 0,
+                'is_record_proceeding' => 0,
+                'is_meeting_cancel' => 0,
+            ])->get();
     }
 
     public function store($request)

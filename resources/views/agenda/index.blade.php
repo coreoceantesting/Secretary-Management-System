@@ -16,7 +16,7 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <label class="col-form-label" for="goshwara_id1">Select Goshwara(विभाग निवडा) <span class="text-danger">*</span></label>
                                 <select multiple class="js-example-basic-multiple form-select col-sm-12" id="goshwara_id1" name="goshwara_id[]" required>
                                     @foreach($goshwaras as $goshwara)
@@ -24,7 +24,7 @@
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid goshwara_id_err"></span>
-                            </div>
+                            </div> --}}
                             <div class="col-md-4">
                                 <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Enter Agenda Name" required>
@@ -35,7 +35,45 @@
                                 <input class="form-control" id="agendafile" name="agendafile" type="file" required>
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="date">Meeting Date <span class="text-danger">*</span></label>
+                                <input class="form-control" id="date" name="date" type="date" placeholder="Select date" required>
+                                <span class="text-danger is-invalid date_err"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="time">Meeting Time <span class="text-danger">*</span></label>
+                                <input class="form-control" id="time" name="time" type="time" placeholder="Select time" required>
+                                <span class="text-danger is-invalid time_err"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="place">Meeting Place <span class="text-danger">*</span></label>
+                                <input class="form-control" id="place" name="place" type="place" placeholder="Enter place" required>
+                                <span class="text-danger is-invalid place_err"></span>
+                            </div>
                         </div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Meeting Name</th>
+                                    <th>Goshwara Name</th>
+                                    <th>Goshwara Subject</th>
+                                    <th>Goshwara File</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($goshwaras as $goshwara)
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="goshwara_id[]" value="{{ $goshwara->id }}" class="form-check" checked>
+                                    </td>
+                                    <td>{{ $goshwara->name }}</td>
+                                    <td>{{ $goshwara->subject }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
 
                     </div>
                     <div class="card-footer">
@@ -77,6 +115,22 @@
                                 <input class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="date">Meeting Date <span class="text-danger">*</span></label>
+                                <input class="form-control" id="date" name="date" type="date" placeholder="Select date" required>
+                                <span class="text-danger is-invalid date_err"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="time">Meeting Time <span class="text-danger">*</span></label>
+                                <input class="form-control" id="time" name="time" type="time" placeholder="Select time" required>
+                                <span class="text-danger is-invalid time_err"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="place">Meeting Place <span class="text-danger">*</span></label>
+                                <input class="form-control" id="place" name="place" type="place" placeholder="Enter place" required>
+                                <span class="text-danger is-invalid place_err"></span>
+                            </div>
                         </div>
 
                     </div>
@@ -112,7 +166,11 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Name</th>
+                                    <th>Goshwara Subject</th>
                                     <th>File</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Place</th>
                                     @canany(['agenda.edit', 'agenda.delete'])<th>Action</th>@endcan
                                 </tr>
                             </thead>
@@ -121,7 +179,15 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $agenda->name }}</td>
+                                        <td>
+                                            @foreach($agenda?->assignGoshwaraToAgenda as $subject)
+                                            {{ $subject?->goshwara?->subject.', ' }}
+                                            @endforeach
+                                        </td>
                                         <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                        <td>{{ date('d-m-Y', strtotime($agenda->date)) }}</td>
+                                        <td>{{ date('h:i A', strtotime($agenda->time)) }}</td>
+                                        <td>{{ $agenda->place }}</td>
                                         @canany(['agenda.edit', 'agenda.delete'])
                                         <td>
                                             @if($agenda->is_meeting_schedule == 0)
@@ -232,7 +298,9 @@
                 {
                     $("#editForm input[name='edit_model_id']").val(data.agenda.id);
                     $("#editForm input[name='name']").val(data.agenda.name);
-                    $("#editForm input[name='initial']").val(data.agenda.initial);
+                    $("#editForm input[name='date']").val(data.agenda.date);
+                    $("#editForm input[name='time']").val(data.agenda.time);
+                    $("#editForm input[name='place']").val(data.agenda.place);
                     $('body').find("#editForm .editSelectGoshwaraToAgenda").html(data.goshwaraHtml)
                 }
                 else

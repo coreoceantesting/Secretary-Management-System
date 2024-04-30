@@ -5,6 +5,7 @@ namespace App\Repository\Master;
 use App\Models\Member;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class MemberRepository
 {
@@ -19,6 +20,11 @@ class MemberRepository
     {
         DB::beginTransaction();
         try {
+            $file = null;
+            if ($request->hasFile('photos')) {
+                $file = $request->photos->store('members');
+            }
+            $request['photo'] = $file;
             Member::create($request->all());
 
             DB::commit();
@@ -43,6 +49,18 @@ class MemberRepository
         DB::beginTransaction();
         try {
             $member = Member::find($id);
+
+            $file = $member->photo;
+            if ($request->hasFile('photos')) {
+                if ($member->photo != "") {
+                    if (Storage::exists($member->photo)) {
+                        Storage::delete($member->photo);
+                    }
+                }
+                $file = $request->photos->store('members');
+            }
+            $request['photo'] = $file;
+
             $member->update($request->all());
 
             DB::commit();

@@ -53,7 +53,7 @@ class ProceedingRecordMail extends Mailable
     public function attachments(): array
     {
         return [
-            storage_path('app/public/' . $this->data->file),
+            // storage_path('app/public/' . $this->data->file),
         ];
     }
 }

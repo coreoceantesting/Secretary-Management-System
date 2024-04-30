@@ -108,7 +108,7 @@
                 </li>
                 @endcan
 
-                @canany(['goshwara.view', 'goshwara.create', 'goshwara.send'])
+                @canany(['goshwara.view', 'goshwara.create', 'goshwara.send', 'goshwara.get-selected-status'])
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('goshwara.*') ? 'active' : '' }}" href="#sidebarGoshwara" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGoshwara">
                         <i class="bx bx-user-circle"></i>
@@ -134,6 +134,14 @@
                                 <a href="{{ route('goshwara.index') }}" class="nav-link {{ request()->routeIs('goshwara.index') ? 'active' : '' }}" data-key="t-horizontal">@if(Auth::user()->hasRole('Department'))Sent Goshwara&nbsp;List(पाठवले गोषवारा यादी) @else Received&nbsp;Goshwara(गोषवारा प्राप्त झाला) @endif</a>
                             </li>
                             @endcan
+
+                            <li class="nav-item">
+                                <a href="{{ route('goshwara.get-selected-status', 1) }}" class="nav-link {{ request()->is('goshwara/selected-status/1') ? 'active' : '' }}" data-key="t-horizontal">Selected Goshwara</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('goshwara.get-selected-status', 0) }}" class="nav-link {{ request()->is('goshwara/selected-status/0') ? 'active' : '' }}" data-key="t-horizontal">On Hold Goshwara</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

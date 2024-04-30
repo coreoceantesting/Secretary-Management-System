@@ -13,6 +13,7 @@
                     <div class="card-header">
                         <form action="{{ route('goshwara.index') }}" method="get">
                             <div class="row">
+
                                 <div class="col-sm-12 col-lg-4 col-md-4 col-12">
                                     <div class="form-group">
                                         <label for="from">From Date(या तारखेपासून)</label>
@@ -39,9 +40,11 @@
                                     <tr>
                                         <th>Sr no.</th>
                                         @if(Auth::user()->roles[0]->name != "Department")<th>Department</th>@endif
-                                        <th>Goshwara  Name</th>
+                                        <th>Meeting</th>
+                                        <th>Goshwara Name</th>
+                                        <th>Goshwara Subject</th>
                                         <th>Sent Date</th>
-                                        <th>Remark</th>
+                                        <th>Mayor Status</th>
                                         <th>Goshwara</th>
                                         <th>Goshwara Status</th>
                                     </tr>
@@ -51,9 +54,17 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             @if(Auth::user()->roles[0]->name != "Department")<td>{{ $goshwara->department?->name ?? '-' }}</td>@endif
+                                            <td>{{ $goshwara?->meeting?->name ?? '-' }}</td>
                                             <td>{{ $goshwara->name ?? '-' }}</td>
+                                            <td>{{ $goshwara->subject }}</td>
                                             <td>{{ date('d-m-Y', strtotime($goshwara->date)) }}</td>
-                                            <td>{{ $goshwara->remark }}</td>
+                                            <td>
+                                                @if($goshwara->is_mayor_selected)
+                                                Selected by Mayor Department
+                                                @else
+                                                On hold by Mayor Department
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a>
                                             </td>

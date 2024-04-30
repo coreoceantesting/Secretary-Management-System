@@ -13,12 +13,15 @@ class AgendaRepository
 {
     public function index()
     {
-        return Agenda::latest()->get();
+        return Agenda::with(['assignGoshwaraToAgenda.goshwara'])->latest()->get();
     }
 
     public function getNotAssignedGoshwara()
     {
-        return Goshwara::doesntHave('assignGoshwaraToAgenda')->where('is_sent', 1)->get();
+        return Goshwara::doesntHave('assignGoshwaraToAgenda')->where([
+            'is_sent' => 1,
+            'is_mayor_selected' => 1,
+        ])->get();
     }
 
     public function getAssignedGoshwaraById($id)

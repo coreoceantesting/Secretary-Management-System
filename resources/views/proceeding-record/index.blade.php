@@ -87,6 +87,7 @@
                                     <th>Meeting Name</th>
                                     <th>Meeting No.</th>
                                     <th>Date</th>
+                                    <th>time</th>
                                     <th>Remark</th>
                                     <th>Proceeding Record File</th>
                                     @can('proceeding-record.show')<th>Action</th>@endcan
@@ -99,6 +100,7 @@
                                         <td>{{ $proceedingRecord->meeting?->name ?? '-' }}</td>
                                         <td>{{ $proceedingRecord->scheduleMeeting?->unique_id ?? '-' }}</td>
                                         <td>{{ ($proceedingRecord->date) ? date('d-m-Y', strtotime($proceedingRecord->date)) : '-' }}</td>
+                                        <td>{{ ($proceedingRecord->time) ? date('h:i A', strtotime($proceedingRecord->time)) : '-' }}</td>
                                         <td>{{ ($proceedingRecord->remark) ? $proceedingRecord->remark : '-' }}</td>
                                         <td><a href="{{ asset('storage/'.$proceedingRecord->file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         @can('proceeding-record.show')

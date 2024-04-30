@@ -29,6 +29,7 @@ class MemberRequest extends FormRequest
             'party_id' => 'required',
             'address' => 'required',
             'designation' => 'required',
+            'photos' => 'nullable|mimes:png,jpg,jpeg,PNG,JPEG,JPG'
         ];
     }
 
@@ -42,6 +43,7 @@ class MemberRequest extends FormRequest
             'party_id.required' => 'Please select party',
             'address.required' => 'Please enter address',
             'designation.required' => 'Please enter designation',
+            'photos.mimes' => 'Image should be png and jpg type'
         ];
     }
 }

@@ -95,6 +95,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     Route::get('goshwara/send', [GoshwaraController::class, 'send'])->name('goshwara.send');
     Route::post('goshwara/send', [GoshwaraController::class, 'postSend'])->name('goshwara.post-send');
+    Route::get('goshwara/selected-status/{status}', [GoshwaraController::class, 'getSelectedStatus'])->name('goshwara.get-selected-status');
+    Route::post('goshwara/save-mayor-selected-status', [GoshwaraController::class, 'saveMayorSelectedStatus'])->name('goshwara.save-mayor-selected-status');
     Route::resource('goshwara', GoshwaraController::class);
 
     Route::resource('agenda', AgendaController::class);

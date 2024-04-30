@@ -22,5 +22,11 @@
             <th>Place</th>
             <td>{{ $data?->data?->place }}</td>
         </tr>
+        <tr>
+            <th>View File</th>
+            <td>
+                <a href="{{ asset('storage/'.$data->agenda->file) }}">View</a>
+            </td>
+        </tr>
     </tbody>
 </table>

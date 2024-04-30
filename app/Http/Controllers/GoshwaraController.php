@@ -26,7 +26,11 @@ class GoshwaraController extends Controller
 
     public function create()
     {
-        return view('goshwara.create');
+        $meetings = $this->goshwaraRepository->getMeetingName();
+
+        return view('goshwara.create')->with([
+            'meetings' => $meetings
+        ]);
     }
 
     public function store(GoshwaraRequest $request)
@@ -108,5 +112,28 @@ class GoshwaraController extends Controller
         return view('goshwara.show')->with([
             'goshwara' => $goshwara
         ]);
+    }
+
+    // function to get goshwara for mayour
+    public function getSelectedStatus($status)
+    {
+        $goshwaras = $this->goshwaraRepository->getSelectedStatus($status);
+
+        return view('goshwara.mayor-selectd-list')->with([
+            'goshwaras' => $goshwaras
+        ]);
+    }
+
+    public function saveMayorSelectedStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $goshwara = $this->goshwaraRepository->saveMayorSelectedStatus($request);
+
+            if ($goshwara) {
+                return response()->json(['success' => 'Goshwara selected successfully!']);
+            } else {
+                return response()->json(['error' => 'Something went wrong please try again']);
+            }
+        }
     }
 }

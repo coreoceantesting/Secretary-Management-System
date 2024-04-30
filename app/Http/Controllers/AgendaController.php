@@ -18,7 +18,7 @@ class AgendaController extends Controller
     public function index()
     {
         $agendas = $this->agendaRepository->index();
-
+        // return $agendas;
         $goshwaras = $this->agendaRepository->getNotAssignedGoshwara();
 
         return view('agenda.index')->with([

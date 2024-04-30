@@ -23,7 +23,7 @@ class QuestionRequest extends FormRequest
     {
         if ($this->edit_model_id) {
             $rule = [
-                'uploadfile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010",
+                'uploadfile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG",
                 'meeting_id' => 'required',
                 'schedule_meeting_id' => 'required',
                 'question' => 'required',
@@ -31,7 +31,7 @@ class QuestionRequest extends FormRequest
             ];
         } else {
             $rule = [
-                'uploadfile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX|max:2010',
+                'uploadfile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG',
                 'meeting_id' => 'required',
                 'schedule_meeting_id' => 'required',
                 'question' => 'required',
@@ -46,8 +46,7 @@ class QuestionRequest extends FormRequest
     {
         return [
             'uploadfile.required' => 'Please select file',
-            'uploadfile.mimes' => 'Only pdf and doc file supported',
-            'uploadfile.max' => 'File must be less than 2mb',
+            'uploadfile.mimes' => 'Only image, pdf and doc file supported',
             'meeting_id.required' => 'Please select Meeting',
             'department_id.required' => 'Please select Department',
             'schedule_meeting_id.required' => 'Please select Schedule Meeting Date & Time',

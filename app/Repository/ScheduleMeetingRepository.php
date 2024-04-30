@@ -44,7 +44,7 @@ class ScheduleMeetingRepository
             $meetingName = Meeting::where('id', $request->meeting_id)->value('name');
 
             // get schedule meeting count
-            $count = ScheduleMeeting::where('date', 'like', '%' . date('Y', strtotime($request->date)) . '%')->where('meeting_id', $request->meeting_id)->count();
+            $count = ScheduleMeeting::where('meeting_id', $request->meeting_id)->count();
             $uniqueCount = $meetingName . ' क्र. ' . $count + 1;
 
 
