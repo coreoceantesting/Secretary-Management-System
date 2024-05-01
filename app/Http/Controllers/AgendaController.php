@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\AgendaRepository;
 use App\Http\Requests\AgendaRequest;
+use PDF;
 
 class AgendaController extends Controller
 {
@@ -118,5 +119,12 @@ class AgendaController extends Controller
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
         }
+    }
+
+    public function generatePdf()
+    {
+        $pdf = PDF::loadView('agenda.pdf');
+
+        return $pdf->stream('document.pdf');
     }
 }
