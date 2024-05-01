@@ -33,6 +33,7 @@ class UpdateUserRequest extends FormRequest
             'dob' => 'required',
             'role' => 'required',
             'username' => 'required',
+            'meeting_id' => 'nullable'
         ];
     }
 }

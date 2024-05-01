@@ -17,6 +17,8 @@ class GoshwaraRepository
             return $q->whereDate('date', '>=', date('Y-m-d', strtotime($request->from)));
         })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
             return $q->whereDate('date', '<=', date('Y-m-d', strtotime($request->to)));
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->where('meeting_id', Auth::user()->meeting_id);
         })->where('is_sent', 1)->with(['meeting', 'department', 'assignGoshwaraToAgenda']);
 
         if (Auth::user()->roles[0]->name == "Department")
@@ -141,23 +143,23 @@ class GoshwaraRepository
         return Goshwara::with(['department', 'sentBy', 'meeting'])->where('id', $id)->first();
     }
 
-    public function getSelectedStatus($status)
-    {
-        return Goshwara::with(['department', 'meeting'])->where([
-            'is_mayor_selected' => $status,
-            'is_sent' => 1
-        ])->get();
-    }
+    // public function getSelectedStatus($status)
+    // {
+    //     return Goshwara::with(['department', 'meeting'])->where([
+    //         'is_mayor_selected' => $status,
+    //         'is_sent' => 1
+    //     ])->get();
+    // }
 
-    public function saveMayorSelectedStatus($request)
-    {
-        $goshwara = Goshwara::find($request->id);
-        $goshwara->is_mayor_selected = 1;
-        $goshwara->selected_datetime = date('Y-m-d h:i:s');
-        $goshwara->selected_by = Auth::user()->id;
+    // public function saveMayorSelectedStatus($request)
+    // {
+    //     $goshwara = Goshwara::find($request->id);
+    //     $goshwara->is_mayor_selected = 1;
+    //     $goshwara->selected_datetime = date('Y-m-d h:i:s');
+    //     $goshwara->selected_by = Auth::user()->id;
 
-        if ($goshwara->save()) {
-            return true;
-        }
-    }
+    //     if ($goshwara->save()) {
+    //         return true;
+    //     }
+    // }
 }

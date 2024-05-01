@@ -9,6 +9,7 @@ use App\Models\DepartmentAttendance;
 use App\Models\SuplimentryAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceRepository
 {
@@ -20,7 +21,9 @@ class AttendanceRepository
                 'is_record_proceeding' => 0,
                 'is_meeting_cancel' => 0,
                 'is_meeting_completed' => 0
-            ])->get();
+            ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->where('meeting_id', Auth::user()->meeting_id);
+            })->get();
     }
 
     public function store($request)

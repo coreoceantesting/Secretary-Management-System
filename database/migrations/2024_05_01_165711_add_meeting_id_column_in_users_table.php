@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('goshwaras', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->foreignId('meeting_id')->after('id')->nullable()->constrained('meetings');
-            $table->string('subject')->nullable()->after('remark');
-            $table->dropColumn('remark');
         });
     }
 
@@ -23,10 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('goshwaras', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropConstrainedForeignId('meeting_id');
-            $table->dropColumn('subject');
-            $table->text('remark')->nullable()->after('file');
         });
     }
 };

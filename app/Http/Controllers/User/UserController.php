@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
-use App\Models\Ward;
+use App\Models\Meeting;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,9 +25,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::whereNot('id', Auth::user()->id)->latest()->get();
+
         $roles = Role::whereNot('name', 'like', '%super%')->get();
 
-        return view('user.users')->with(['users' => $users, 'roles' => $roles]);
+        $meetings = Meeting::get();
+
+        return view('user.users')->with(['users' => $users, 'roles' => $roles, 'meetings' => $meetings]);
     }
 
     /**

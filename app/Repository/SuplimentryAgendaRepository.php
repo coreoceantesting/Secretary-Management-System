@@ -7,13 +7,19 @@ use App\Models\ScheduleMeeting;
 use App\Models\Meeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SuplimentryAgendaRepository
 {
     public function index()
     {
-        return SuplimentryAgenda::with(['meeting', 'scheduleMeeting'])->latest()->get();
+        return SuplimentryAgenda::with(['meeting', 'scheduleMeeting'])
+            ->whereHas('scheduleMeeting', function ($q) {
+                $q->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                    return $query->where('meeting_id', Auth::user()->meeting_id);
+                });
+            })->latest()->get();
     }
 
     public function store($request)

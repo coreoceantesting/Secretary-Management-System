@@ -14,7 +14,10 @@ class TharavRepository
 {
     public function index()
     {
-        $tharav = Tharav::with(['meeting', 'assignTharavDepartment.department', 'scheduleMeeting']);
+        $tharav = Tharav::with(['meeting', 'assignTharavDepartment.department', 'scheduleMeeting'])
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->where('meeting_id', Auth::user()->meeting_id);
+            });;
 
         if (Auth::user()->hasRole('Department')) {
             $tharav = $tharav->whereHas('assignTharavDepartment', function ($q) {

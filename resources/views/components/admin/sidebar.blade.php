@@ -135,15 +135,6 @@
                             </li>
                             @endcan
 
-                            @can('goshwara.select-goshwara')
-                            <li class="nav-item">
-                                <a href="{{ route('goshwara.get-selected-status', 1) }}" class="nav-link {{ request()->is('goshwara/selected-status/1') ? 'active' : '' }}" data-key="t-horizontal">Selected Goshwara</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ route('goshwara.get-selected-status', 0) }}" class="nav-link {{ request()->is('goshwara/selected-status/0') ? 'active' : '' }}" data-key="t-horizontal">On Hold Goshwara</a>
-                            </li>
-                            @endcan
                         </ul>
                     </div>
                 </li>

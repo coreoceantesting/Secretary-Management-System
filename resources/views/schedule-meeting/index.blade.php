@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-multiple form-select col-sm-12" id="meeting_id" name="meeting_id" required>
+                                <select class="form-select col-sm-12" id="meeting_id" name="meeting_id" required>
                                     <option value="">--Select Meeting--</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -79,7 +79,7 @@
 
 
     {{-- Edit Form --}}
-    <div class="row" id="editContainer" style="display:none;">
+    {{-- <div class="row" id="editContainer" style="display:none;">
         <div class="col">
             <form class="form-horizontal form-bordered" method="post" id="editForm">
                 @csrf
@@ -142,7 +142,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> --}}
 
 
     <div class="row">
@@ -527,5 +527,50 @@
                 $('#preloader').css('visibility', 'hidden');
             },
         });
+    });
+</script>
+
+{{-- Select Agenda --}}
+<script>
+    $(document).ready(function(){
+        $('#agenda_id').change(function(){
+            let agendaId = $(this).val();
+            $.ajax({
+                url: "{{ route('schedule-meeting.fetch-agenda') }}",
+                type: 'POST',
+                data: {
+                    '_method': "get",
+                    'agenda_id': agendaId,
+                },
+                beforeSend: function()
+                {
+                    $('#preloader').css('opacity', '0.5');
+                    $('#preloader').css('visibility', 'visible');
+                },
+                success: function(data, textStatus, jqXHR) {
+                    if (!data.error && !data.error2) {
+                        $("#addForm select[name='meeting_id']").val(data.agenda.meeting_id);
+                        $("#addForm input[name='date']").val(data.agenda.date);
+                        $("#addForm input[name='time']").val(data.agenda.time);
+                        $("#addForm input[name='place']").val(data.agenda.place);
+                    } else {
+                        if (data.error) {
+                            swal("Error!", data.error, "error");
+                        } else {
+                            swal("Error!", data.error2, "error");
+                        }
+                    }
+                },
+                error: function(error, jqXHR, textStatus, errorThrown) {
+                    swal("Error!", "Something went wrong", "error");
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+                complete: function() {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+            });
+        })
     });
 </script>

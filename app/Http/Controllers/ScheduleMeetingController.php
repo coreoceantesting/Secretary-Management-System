@@ -127,4 +127,13 @@ class ScheduleMeetingController extends Controller
             return response()->json(['error' => 'Something went wrong please try again']);
         }
     }
+
+    public function fetchAgendaDetails(Request $request)
+    {
+        if ($request->ajax()) {
+            $agenda = $this->scheduleMeetingRepository->getAgendaById($request->agenda_id);
+
+            return response()->json(['agenda' => $agenda]);
+        }
+    }
 }

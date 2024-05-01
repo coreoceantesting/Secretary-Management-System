@@ -88,8 +88,11 @@ class GoshwaraController extends Controller
     {
         $goshwaras = $this->goshwaraRepository->send($request);
 
+        $meetings = $this->goshwaraRepository->getMeetingName();
+
         return view('goshwara.send')->with([
-            'goshwaras' => $goshwaras
+            'goshwaras' => $goshwaras,
+            'meetings' => $meetings
         ]);
     }
 
@@ -115,25 +118,25 @@ class GoshwaraController extends Controller
     }
 
     // function to get goshwara for mayour
-    public function getSelectedStatus($status)
-    {
-        $goshwaras = $this->goshwaraRepository->getSelectedStatus($status);
+    // public function getSelectedStatus($status)
+    // {
+    //     $goshwaras = $this->goshwaraRepository->getSelectedStatus($status);
 
-        return view('goshwara.mayor-selectd-list')->with([
-            'goshwaras' => $goshwaras
-        ]);
-    }
+    //     return view('goshwara.mayor-selectd-list')->with([
+    //         'goshwaras' => $goshwaras
+    //     ]);
+    // }
 
-    public function saveMayorSelectedStatus(Request $request)
-    {
-        if ($request->ajax()) {
-            $goshwara = $this->goshwaraRepository->saveMayorSelectedStatus($request);
+    // public function saveMayorSelectedStatus(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $goshwara = $this->goshwaraRepository->saveMayorSelectedStatus($request);
 
-            if ($goshwara) {
-                return response()->json(['success' => 'Goshwara selected successfully!']);
-            } else {
-                return response()->json(['error' => 'Something went wrong please try again']);
-            }
-        }
-    }
+    //         if ($goshwara) {
+    //             return response()->json(['success' => 'Goshwara selected successfully!']);
+    //         } else {
+    //             return response()->json(['error' => 'Something went wrong please try again']);
+    //         }
+    //     }
+    // }
 }

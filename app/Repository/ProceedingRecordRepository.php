@@ -15,7 +15,10 @@ class ProceedingRecordRepository
 {
     public function index()
     {
-        $proceddingRecords = ProceedingRecord::with(['meeting', 'scheduleMeeting'])->latest()->get();
+        $proceddingRecords = ProceedingRecord::with(['meeting', 'scheduleMeeting'])
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->where('meeting_id', Auth::user()->meeting_id);
+            })->latest()->get();
 
         return $proceddingRecords;
     }

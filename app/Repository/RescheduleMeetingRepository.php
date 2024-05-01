@@ -23,7 +23,9 @@ class RescheduleMeetingRepository
                 'is_meeting_reschedule' => 0,
                 'is_meeting_completed' => 0,
                 'is_meeting_cancel' => 0
-            ])->whereDate('date', '>=', date('Y-m-d'));
+            ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->where('meeting_id', Auth::user()->meeting_id);
+            })->whereDate('date', '>=', date('Y-m-d'));
 
         if (Auth::user()->hasRole('Department')) {
             $scheduleMeeting = $scheduleMeeting->whereHas('assignScheduleMeetingDepartment', function ($q) {

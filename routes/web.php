@@ -73,7 +73,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
 
 
-    // Users Roles n Permissions
+    // route for Users Roles and Permissions
     Route::resource('users', UserController::class);
     Route::get('users/{user}/toggle', [UserController::class, 'toggle'])->name('users.toggle');
     Route::get('users/{user}/retire', [UserController::class, 'retire'])->name('users.retire');
@@ -82,7 +82,9 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::put('users/{user}/assign-role', [UserController::class, 'assignRole'])->name('users.assign-role');
     Route::resource('roles', RoleController::class);
     Route::get('users/{isHomeDepartment}/get-department', [UserController::class, 'getDepartment'])->name('users.get-department');
+    // end of route for Users Roles and Permissions
 
+    // route for master
     Route::prefix('master')->name('master.')->group(function () {
         Route::resource('department', DepartmentController::class);
         Route::resource('home-department', HomeDepartmentController::class);
@@ -92,49 +94,69 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::resource('setting', SettingController::class);
         Route::resource('party', PartyController::class);
     });
+    // end of route for master
 
+    // route for goshwara
     Route::get('goshwara/send', [GoshwaraController::class, 'send'])->name('goshwara.send');
     Route::post('goshwara/send', [GoshwaraController::class, 'postSend'])->name('goshwara.post-send');
-    Route::get('goshwara/selected-status/{status}', [GoshwaraController::class, 'getSelectedStatus'])->name('goshwara.get-selected-status');
-    Route::post('goshwara/save-mayor-selected-status', [GoshwaraController::class, 'saveMayorSelectedStatus'])->name('goshwara.save-mayor-selected-status');
+    // Route::get('goshwara/selected-status/{status}', [GoshwaraController::class, 'getSelectedStatus'])->name('goshwara.get-selected-status');
+    // Route::post('goshwara/save-mayor-selected-status', [GoshwaraController::class, 'saveMayorSelectedStatus'])->name('goshwara.save-mayor-selected-status');
     Route::resource('goshwara', GoshwaraController::class);
+    // end of route for goshwara
 
 
+    // route for agenda
     Route::get('agenda/meeting/select-meeting', [AgendaController::class, 'selectMeeting'])->name('agenda.selectMeeting');
     Route::resource('agenda', AgendaController::class);
+
+    // route for schedule meeting
+    Route::get('schedule-meeting/fetch-agenda-details', [ScheduleMeetingController::class, 'fetchAgendaDetails'])->name('schedule-meeting.fetch-agenda');
     Route::post('schedule-meeting/{id}/cancel', [ScheduleMeetingController::class, 'cancel'])->name('schedule-meeting.cancel');
     Route::resource('schedule-meeting', ScheduleMeetingController::class);
+    // end of route for schedule meeting
 
+    // route for question
     Route::get('question/schedule_meeting/{id}', [QuestionController::class, 'getScheduleMeeting'])->name('question.getScheduleMeeting');
     Route::get('question/schedule_meeting/get-department/{id}', [QuestionController::class, 'getScheduleMeetingDepartments'])->name('question.getScheduleMeetingDepartments');
     Route::post('question/response', [QuestionController::class, 'response'])->name('question.response');
     Route::post('question/saveSingleResponse', [QuestionController::class, 'saveSingleResponse'])->name('question.saveSingleResponse');
     Route::resource('question', QuestionController::class);
+    // end of route for question
 
+    // route for reschedule meeting
     Route::get('reschedule-meeting/schedule_meeting/{id}', [RescheduleMeetingController::class, 'getScheduleMeeting'])->name('reschedule-meeting.getScheduleMeeting');
     Route::get('reschedule-meeting/get-schedule_meeting-details/{id}', [RescheduleMeetingController::class, 'getScheduleMeetingDetails'])->name('reschedule-meeting.getScheduleMeetingDetails');
     Route::resource('reschedule-meeting', RescheduleMeetingController::class);
+    // end of route ffor reschedule meeting
 
-
+    // route for suplimentry agenda
     Route::get('suplimentry-agenda/schedule_meeting/{id}', [SuplimentryAgendaController::class, 'getScheduleMeeting'])->name('suplimentry-agenda.getScheduleMeeting');
     Route::resource('suplimentry-agenda', SuplimentryAgendaController::class);
+    // end of route for suplimentry agenda
 
+    // route for attendance
     Route::post('attendance/update/singleMark', [AttendanceController::class, 'saveSingleMark'])->name('attendance.saveSingleMark');
     Route::post('attendance/update/saveDepartmentSingleMark', [AttendanceController::class, 'saveDepartmentSingleMark'])->name('attendance.saveDepartmentSingleMark');
     Route::resource('attendance', AttendanceController::class);
+    // end of route for attendance
 
+    // route for proceeding record
     Route::get('proceeding-record/pdf/{id}', [ProceedingRecordController::class, 'pdf'])->name('proceeding-record.pdf');
     Route::get('proceeding-record/getScheduleMeeting/{id}', [ProceedingRecordController::class, 'getScheduleMeeting'])->name('proceeding-record.getScheduleMeeting');
     Route::resource('proceeding-record', ProceedingRecordController::class);
+    // end of route for proceeding record
 
+    // route for tharav
     Route::get('tharav/getScheduleMeeting/{id}', [TharavController::class, 'getScheduleMeeting'])->name('tharav.getScheduleMeeting');
     Route::get('tharav/get-schedule_meeting-department/{id}', [TharavController::class, 'getScheduleMeetingDepartment'])->name('tharav.getScheduleMeetingDepartment');
     Route::resource('tharav', TharavController::class);
+    // end of route for tharav
 
+    // route for report
     Route::get('report/schedule-meeting', [ReportController::class, 'scheduleMeetingReport'])->name('report.schedule-meeting');
     Route::get('report/schedule-meeting/{id}', [ReportController::class, 'viewScheduleMeetingReport'])->name('report.viewScheduleMeetingReport');
-
     Route::get('report/attendance-meeting', [ReportController::class, 'attendanceMeetingReport'])->name('report.attendance-meeting');
+    // end of route for report
 });
 
 

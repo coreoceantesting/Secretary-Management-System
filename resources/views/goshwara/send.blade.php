@@ -15,6 +15,17 @@
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
+                                <div class="col-sm-12 col-lg-4 col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="from">Select Meeting</label>
+                                        <select name="meeting_id" class="form-select" id="meeting_id" required>
+                                            <option value="">Select Meeting</option>
+                                            @foreach($meetings as $meeting)
+                                                <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="name">Goshwara Name(गोषवारा नाव) <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="name" required name="name" placeholder="Enter name">
@@ -121,6 +132,7 @@
                 if (!data.error)
                 {
                     $("#editForm input[name='edit_model_id']").val(data.goshwara.id);
+                    $("#editForm select[name='meeting_id']").val(data.goshwara.meeting_id);
                     $("#editForm input[name='name']").val(data.goshwara.name);
                     $("#editForm input[name='subject']").val(data.goshwara.subject);
                 }

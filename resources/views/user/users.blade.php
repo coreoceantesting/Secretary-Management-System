@@ -73,6 +73,19 @@
                                 </select>
                                 <span class="text-danger is-invalid role_err"></span>
                             </div>
+
+                            <div class="col-md-4 mt-3 d-none selectMeeting">
+                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12" id="meeting_id" name="meeting_id">
+                                    <option value="">--Select Meeting--</option>
+                                    @foreach($meetings as $meeting)
+                                    <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid meeting_id_err"></span>
+                            </div>
+
+
                             <div class="col-md-4 mt-3 d-none selectDepartment"></div>
 
                             <div class="col-md-4 mt-3">
@@ -175,6 +188,17 @@
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid role_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3 d-none selectMeeting">
+                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12" id="meeting_id" name="meeting_id">
+                                    <option value="">--Select Meeting--</option>
+                                    @foreach($meetings as $meeting)
+                                    <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3 d-none selectDepartment"></div>
@@ -569,9 +593,14 @@
                     $("#editForm input[name='username']").val(data.user.username);
                     $("#editForm select[name='gender']").val(data.user.gender).change();
                     if(data.departmentHtml != ""){
+                        $("#editForm .selectMeeting").addClass('d-none');
                         $('body').find('.selectDepartment').removeClass('d-none');
                         $('body').find('.selectDepartment').html(data.departmentHtml)
+                    }else if(data.user.meeting_id != ""){
+                        $("#editForm .selectMeeting").removeClass('d-none');
+                        $("#editForm select[name='meeting_id']").val(data.user.meeting_id).change();
                     }else{
+                        $("#editForm .selectMeeting").addClass('d-none');
                         $('body').find('.selectDepartment').addClass('d-none');
                     }
                 } else {
@@ -765,10 +794,17 @@
                     isHomeDepartment = 1;
                 }
                 getDepartment(isHomeDepartment);
+
+                $('body').find('.selectMeeting').addClass('d-none');
                 $('body').find('.selectDepartment').removeClass('d-none');
+            }else if(role == "Clerk"){
+                $('body').find('.selectDepartment').addClass('d-none');
+                $('body').find('.selectDepartment').html("");
+                $('body').find('.selectMeeting').removeClass('d-none');
             }else{
                 $('body').find('.selectDepartment').addClass('d-none');
                 $('body').find('.selectDepartment').html("");
+                $('body').find('.selectMeeting').addClass('d-none');
             }
         });
 

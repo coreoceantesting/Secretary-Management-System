@@ -60,5 +60,6 @@ class DefaultLoginUserSeeder extends Seeder
         Role::create(['name' => 'Mayor']);
         Role::create(['name' => 'Department']);
         Role::create(['name' => 'Home Department']);
+        Role::create(['name' => 'Clerk']);
     }
 }

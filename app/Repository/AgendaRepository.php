@@ -7,6 +7,7 @@ use App\Models\Goshwara;
 use App\Models\AssignGoshwaraToAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Meeting;
 
@@ -14,14 +15,17 @@ class AgendaRepository
 {
     public function index()
     {
-        return Agenda::with(['assignGoshwaraToAgenda.goshwara'])->latest()->get();
+        return Agenda::with(['assignGoshwaraToAgenda.goshwara'])
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->where('meeting_id', Auth::user()->meeting_id);
+            })
+            ->latest()->get();
     }
 
     public function getNotAssignedGoshwara()
     {
         return Goshwara::doesntHave('assignGoshwaraToAgenda')->where([
             'is_sent' => 1,
-            'is_mayor_selected' => 1,
         ])->with('meeting')->get();
     }
 
@@ -29,7 +33,6 @@ class AgendaRepository
     {
         return Goshwara::with('meeting')->doesntHave('assignGoshwaraToAgenda')->where([
             'is_sent' => 1,
-            'is_mayor_selected' => 1,
             'meeting_id' => $meetingId
         ])->get();
     }
@@ -38,8 +41,7 @@ class AgendaRepository
     {
         return Meeting::whereHas('goshwara', function ($q) {
             return $q->where([
-                'is_mayor_selected' => 1,
-                'is_sent' => 1
+                'is_sent' => 0
             ]);
         })->latest()->get();
     }
@@ -108,6 +110,12 @@ class AgendaRepository
                     AssignGoshwaraToAgenda::create([
                         'agenda_id' => $id,
                         'goshwara_id' => $request->goshwara_id[$i],
+                    ]);
+
+                    Goshwara::where('id', $request->goshwara_id[$i])->update([
+                        'is_mayor_selected' => 1,
+                        'selected_datetime' => date('Y-m-d h:i:s'),
+                        'selected_by' => Auth::user()->id
                     ]);
                 }
             }
