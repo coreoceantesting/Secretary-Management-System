@@ -30,7 +30,7 @@ class UserRolesAndPermissionSeeder extends Seeder
 
         $mayor = Role::where('name', 'Mayor')->first();
 
-        $mayor->syncPermissions(['dashboard.view', 'agenda.view', 'question.view', 'tharav.view']);
+        $mayor->syncPermissions(['dashboard.view', 'agenda.view', 'goshwara.select-goshwara', 'question.view', 'tharav.view']);
 
 
 

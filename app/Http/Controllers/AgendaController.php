@@ -18,13 +18,29 @@ class AgendaController extends Controller
     public function index()
     {
         $agendas = $this->agendaRepository->index();
-        // return $agendas;
-        $goshwaras = $this->agendaRepository->getNotAssignedGoshwara();
+
+        // $goshwaras = $this->agendaRepository->getNotAssignedGoshwara();
+
+        $meetings = $this->agendaRepository->getMeetings();
 
         return view('agenda.index')->with([
             'agendas' => $agendas,
-            'goshwaras' => $goshwaras
+            // 'goshwaras' => $goshwaras,
+            'meetings' => $meetings
         ]);
+    }
+
+    public function selectMeeting(Request $request)
+    {
+        if ($request->ajax()) {
+            $goshwaras = $this->agendaRepository->getAddNotAssignedGoshwara($request->meeting_id);
+
+            if ($goshwaras) {
+                return response()->json(['goshwaras' => $goshwaras]);
+            } else {
+                return response()->json(['error' => 'Something went wrong please try again']);
+            }
+        }
     }
 
     public function store(AgendaRequest $request)
@@ -45,13 +61,29 @@ class AgendaController extends Controller
         $goshwaras = $this->agendaRepository->getAssignedGoshwaraById($id);
         $notAssignedGoshwaras = $this->agendaRepository->getNotAssignedGoshwara();
 
-        $goshwaraHtml = '<option value="">--Select Goshwara--</option>';
+        $goshwaraHtml = '';
         foreach ($goshwaras as $goshwara) {
-            $goshwaraHtml .= '<option selected value="' . $goshwara->id . '">' . $goshwara->name . '</option>';
+            $goshwaraHtml .= '<tr>
+                                    <td>
+                                        <input type="checkbox" name="goshwara_id[]" value="' . $goshwara->id . '" class="form-check" checked>
+                                    </td>
+                                    <td>' . $goshwara?->meeting->name . '</td>
+                                    <td>' . $goshwara->name . '</td>
+                                    <td>' . $goshwara->subject . '</td>
+                                    <td><a href="' . asset("storage/") . $goshwara->file . '" class="btn btn-primary btn-sm">View</a></td>
+                                </tr>';
         }
 
         foreach ($notAssignedGoshwaras as $notAssignedGoshwara) {
-            $goshwaraHtml .= '<option value="' . $notAssignedGoshwara->id . '">' . $notAssignedGoshwara->name . '</option>';
+            $goshwaraHtml .= '<tr>
+                                    <td>
+                                        <input type="checkbox" name="goshwara_id[]" value="' . $notAssignedGoshwara->id . '" class="form-check">
+                                    </td>
+                                    <td>' . $notAssignedGoshwara?->meeting->name . '</td>
+                                    <td>' . $notAssignedGoshwara->name . '</td>
+                                    <td>' . $notAssignedGoshwara->subject . '</td>
+                                    <td><a href="' . asset("storage/") . $notAssignedGoshwara->file . '" class="btn btn-primary btn-sm">View</a></td>
+                                </tr>';
         }
 
         if ($agenda) {

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ScheduleMeeting;
+use App\Models\Goshwara;
 
 class Meeting extends Model
 {
@@ -17,6 +18,11 @@ class Meeting extends Model
     public function scheduleMeeting()
     {
         return $this->hasMany(ScheduleMeeting::class, 'meeting_id', 'id');
+    }
+
+    public function goshwara()
+    {
+        return $this->hasMany(Goshwara::class, 'meeting_id', 'id');
     }
 
     public static function booted()

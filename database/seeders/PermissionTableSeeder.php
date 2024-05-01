@@ -359,6 +359,11 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'party.delete',
                 'group' => 'party',
             ],
+            [
+                'id' => 80,
+                'name' => 'goshwara.select-goshwara',
+                'group' => 'goshwara',
+            ],
         ];
 
         foreach ($permissions as $permission) {

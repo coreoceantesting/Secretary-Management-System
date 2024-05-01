@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('agendas', function (Blueprint $table) {
+            $table->foreignId('meeting_id')->after('id')->nullable()->constrained('meetings');
             $table->date('date')->nullable()->after('file');
             $table->time('time')->nullable()->after('date');
             $table->string('place')->nullable()->after('time');
@@ -24,6 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('agendas', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('meeting_id');
             $table->dropColumn('date');
             $table->dropColumn('time');
             $table->dropColumn('place');

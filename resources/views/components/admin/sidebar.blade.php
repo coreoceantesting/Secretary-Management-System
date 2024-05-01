@@ -108,7 +108,7 @@
                 </li>
                 @endcan
 
-                @canany(['goshwara.view', 'goshwara.create', 'goshwara.send', 'goshwara.get-selected-status'])
+                @canany(['goshwara.view', 'goshwara.create', 'goshwara.send', 'goshwara.get-selected-status', 'goshwara.select-goshwara'])
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('goshwara.*') ? 'active' : '' }}" href="#sidebarGoshwara" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGoshwara">
                         <i class="bx bx-user-circle"></i>
@@ -135,6 +135,7 @@
                             </li>
                             @endcan
 
+                            @can('goshwara.select-goshwara')
                             <li class="nav-item">
                                 <a href="{{ route('goshwara.get-selected-status', 1) }}" class="nav-link {{ request()->is('goshwara/selected-status/1') ? 'active' : '' }}" data-key="t-horizontal">Selected Goshwara</a>
                             </li>
@@ -142,6 +143,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('goshwara.get-selected-status', 0) }}" class="nav-link {{ request()->is('goshwara/selected-status/0') ? 'active' : '' }}" data-key="t-horizontal">On Hold Goshwara</a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>

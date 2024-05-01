@@ -73,6 +73,8 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Member Name(सदस्याचे नाव)</th>
+                                                    <th>Member Photo</th>
+                                                    <th>Party Name</th>
                                                     <th>In time(वेळेत)</th>
                                                     <th>Out Time(बाहेर वेळ)</th>
                                                     <th>Action(कृती)</th>
@@ -101,6 +103,14 @@
                                                             @if($inTime == "")<input type="checkbox" class="form-check-input memberCheckbox" {{ $memberId }} />@else - @endif
                                                         </td>
                                                         <td>{{ $member->member?->name }}</td>
+                                                        <td>
+                                                            @if($member->photo)
+                                                            <a href="{{ asset('storage/'.$member->photo) }}">
+                                                                <img src="{{ asset('storage/'.$member->photo) }}" style="width: 100px;" alt="" />
+                                                            </a>
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $member->member?->party?->name }}</td>
                                                         <td><input type="time" name="in_time[]" class="form-control inTime {{ ($inTime) ? $inTime : 'd-none' }}" value="{{ $inTime }}"></td>
                                                         <td><input type="time" name="out_time[]" class="form-control outTime {{ ($inTime) ? $inTime : 'd-none' }}" value="{{ $outTime }}"></td>
                                                         <td><button type="button" class="btn btn-primary btn-sm  {{ ($inTime) ? $inTime : 'd-none' }} markButton" id="markButton{{ $key+1 }}">Mark</button></td>
@@ -169,7 +179,7 @@
                                                             <input type="text" name="department_name[]" class="form-control departmentInputName" required>
                                                         </td>
                                                         <td>
-                                                            <input type="time" name="department_in_time[]" class="form-control departmentInTime" required></td>
+                                                            <input type="time" value="{{ date('h:i:s') }}" name="department_in_time[]" class="form-control departmentInTime" required></td>
                                                         <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime"></td>
                                                         <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button></td>
                                                     </tr>
@@ -180,8 +190,25 @@
                                     </div>
                                 </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary" id="addSubmit">Mark All</button>
-                                <a href="{{ route('attendance.index') }}" class="btn btn-warning">Cancel</a>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="col-form-label" for="date">Date</label>
+                                        <input class="form-control" id="date" name="meeting_end_date" type="date" value="@if($attendance->meeting_end_date){{ date('Y-m-d', strtotime($attendance->date)) }}@endif">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="col-form-label" for="time">Time</label>
+                                        <input class="form-control" id="time" name="meeting_end_time" type="time" value="@if($attendance->meeting_end_time){{ date('h:i:s', strtotime($attendance->time)) }}@endif">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="col-form-label" for="reason">Reason</label>
+                                        <textarea class="form-control" id="reason" name="meeting_end_reason" placeholder="Enter reason">{{ $attendance->meeting_end_reason }}</textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" onclick="return confirm('Are you sure you want to comple this meeting')" value="completed" class="btn btn-primary" name="close_meeting" id="addSubmit">Close Meeting</button>
+                                <button type="submit" class="btn btn-success" name="to_be_continue" id="addSubmit">To be Continued </button>
+                                {{-- <a href="{{ route('attendance.index') }}" class="btn btn-warning">Cancel</a> --}}
                             </div>
 
                         </div>
@@ -201,6 +228,7 @@
                 $(".memberCheckbox").click(function() {
                     if($(this).is(":checked")) {
                         $(this).closest('tr').find('.inTime').removeClass('d-none')
+                        $(this).closest('tr').find('.inTime').val("{{ date('h:i:s') }}")
                     } else {
                         $(this).closest('tr').find('.inTime').addClass('d-none')
                     }

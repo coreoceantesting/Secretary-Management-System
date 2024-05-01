@@ -99,6 +99,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::post('goshwara/save-mayor-selected-status', [GoshwaraController::class, 'saveMayorSelectedStatus'])->name('goshwara.save-mayor-selected-status');
     Route::resource('goshwara', GoshwaraController::class);
 
+
+    Route::get('agenda/meeting/select-meeting', [AgendaController::class, 'selectMeeting'])->name('agenda.selectMeeting');
     Route::resource('agenda', AgendaController::class);
     Route::post('schedule-meeting/{id}/cancel', [ScheduleMeetingController::class, 'cancel'])->name('schedule-meeting.cancel');
     Route::resource('schedule-meeting', ScheduleMeetingController::class);

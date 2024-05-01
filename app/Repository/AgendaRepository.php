@@ -8,6 +8,7 @@ use App\Models\AssignGoshwaraToAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Meeting;
 
 class AgendaRepository
 {
@@ -21,14 +22,33 @@ class AgendaRepository
         return Goshwara::doesntHave('assignGoshwaraToAgenda')->where([
             'is_sent' => 1,
             'is_mayor_selected' => 1,
+        ])->with('meeting')->get();
+    }
+
+    public function getAddNotAssignedGoshwara($meetingId)
+    {
+        return Goshwara::with('meeting')->doesntHave('assignGoshwaraToAgenda')->where([
+            'is_sent' => 1,
+            'is_mayor_selected' => 1,
+            'meeting_id' => $meetingId
         ])->get();
+    }
+
+    public function getMeetings()
+    {
+        return Meeting::whereHas('goshwara', function ($q) {
+            return $q->where([
+                'is_mayor_selected' => 1,
+                'is_sent' => 1
+            ]);
+        })->latest()->get();
     }
 
     public function getAssignedGoshwaraById($id)
     {
         return Goshwara::orWhereHas('assignGoshwaraToAgenda', function ($q) use ($id) {
             return $q->where('agenda_id', $id);
-        })->where('is_sent', 1)->get();
+        })->with('meeting')->where('is_sent', 1)->get();
     }
 
     public function store($request)

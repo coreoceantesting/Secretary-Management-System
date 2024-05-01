@@ -19,6 +19,7 @@ class AttendanceRepository
                 'is_meeting_reschedule' => 0,
                 'is_record_proceeding' => 0,
                 'is_meeting_cancel' => 0,
+                'is_meeting_completed' => 0
             ])->get();
     }
 
@@ -26,65 +27,76 @@ class AttendanceRepository
     {
         DB::beginTransaction();
         try {
-            DB::commit();
 
-            if (isset($request->member_id)) {
-                Attendance::where('schedule_meeting_id', $request->schedule_meeting_id)->delete();
-                ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
+            // if (isset($request->member_id)) {
+            //     Attendance::where('schedule_meeting_id', $request->schedule_meeting_id)->delete();
+            //     ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
+
+            //     SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
+            //         'is_meeting_completed' => 1
+            //     ]);
+            //     for ($i = 0; $i < count($request->member_id); $i++) {
+            //         $inTime = null;
+            //         if ($request->in_time[$i] != "") {
+            //             $inTime = date('h:i:s', strtotime($request->in_time[$i]));
+            //         }
+
+            //         $outTime = null;
+            //         if ($request->out_time[$i] != "") {
+            //             $outTime = date('h:i:s', strtotime($request->out_time[$i]));
+            //         }
+
+            //         if ($request->in_time[$i] != "") {
+            //             $attendance = new Attendance;
+            //             $attendance->schedule_meeting_id = $request->schedule_meeting_id;
+            //             $attendance->meeting_id = $request->meeting_id;
+            //             $attendance->member_id = $request->member_id[$i];
+            //             $attendance->in_time = $inTime;
+            //             $attendance->out_time = $outTime;
+            //             $attendance->save();
+            //         }
+            //     }
+
+
+            //     DepartmentAttendance::where('schedule_meeting_id', $request->schedule_meeting_id)->delete();
+
+            //     for ($i = 0; $i < count($request->department_attendance_id); $i++) {
+            //         // Log::info($request->department_in_time[$i]);
+            //         $inTime = null;
+            //         if ($request->department_in_time[$i] != "") {
+            //             $inTime = date('h:i:s', strtotime($request->department_in_time[$i]));
+            //         }
+
+            //         $outTime = null;
+            //         if ($request->department_out_time[$i] != "") {
+            //             $outTime = date('h:i:s', strtotime($request->department_out_time[$i]));
+            //         }
+
+            //         if ($request->department_in_time[$i] != "") {
+            //             $departmentAttendance = new DepartmentAttendance;
+            //             $departmentAttendance->schedule_meeting_id = $request->schedule_meeting_id;
+            //             $departmentAttendance->meeting_id = $request->meeting_id;
+            //             $departmentAttendance->department_id  = $request->department_id[$i];
+            //             $departmentAttendance->name  = $request->department_name[$i];
+            //             $departmentAttendance->in_time = $inTime;
+            //             $departmentAttendance->out_time = $outTime;
+            //             $departmentAttendance->save();
+            //         }
+            //     }
+            // }
+            if (isset($request->close_meeting)) {
+                ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
+                    'is_meeting_completed' => 1,
+                    'meeting_end_date' => ($request->meeting_end_date) ? date('Y-m-d', strtotime($request->meeting_end_date)) : null,
+                    'meeting_end_time' => ($request->meeting_end_time) ? date('h:i:s', strtotime($request->meeting_end_time)) : null,
+                    'meeting_end_reason' => $request->meeting_end_reason
+                ]);
 
                 SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
                     'is_meeting_completed' => 1
                 ]);
-                for ($i = 0; $i < count($request->member_id); $i++) {
-                    $inTime = null;
-                    if ($request->in_time[$i] != "") {
-                        $inTime = date('h:i:s', strtotime($request->in_time[$i]));
-                    }
-
-                    $outTime = null;
-                    if ($request->out_time[$i] != "") {
-                        $outTime = date('h:i:s', strtotime($request->out_time[$i]));
-                    }
-
-                    if ($request->in_time[$i] != "") {
-                        $attendance = new Attendance;
-                        $attendance->schedule_meeting_id = $request->schedule_meeting_id;
-                        $attendance->meeting_id = $request->meeting_id;
-                        $attendance->member_id = $request->member_id[$i];
-                        $attendance->in_time = $inTime;
-                        $attendance->out_time = $outTime;
-                        $attendance->save();
-                    }
-                }
-
-
-                DepartmentAttendance::where('schedule_meeting_id', $request->schedule_meeting_id)->delete();
-
-                for ($i = 0; $i < count($request->department_attendance_id); $i++) {
-                    // Log::info($request->department_in_time[$i]);
-                    $inTime = null;
-                    if ($request->department_in_time[$i] != "") {
-                        $inTime = date('h:i:s', strtotime($request->department_in_time[$i]));
-                    }
-
-                    $outTime = null;
-                    if ($request->department_out_time[$i] != "") {
-                        $outTime = date('h:i:s', strtotime($request->department_out_time[$i]));
-                    }
-
-                    if ($request->department_in_time[$i] != "") {
-                        $departmentAttendance = new DepartmentAttendance;
-                        $departmentAttendance->schedule_meeting_id = $request->schedule_meeting_id;
-                        $departmentAttendance->meeting_id = $request->meeting_id;
-                        $departmentAttendance->department_id  = $request->department_id[$i];
-                        $departmentAttendance->name  = $request->department_name[$i];
-                        $departmentAttendance->in_time = $inTime;
-                        $departmentAttendance->out_time = $outTime;
-                        $departmentAttendance->save();
-                    }
-                }
             }
-
+            DB::commit();
             return true;
         } catch (\Exception $e) {
             Log::info($e);
@@ -119,7 +131,7 @@ class AttendanceRepository
 
     public function getMeetingMembers($meetingId)
     {
-        return AssignMemberToMeeting::with(['member'])->where('meeting_id', $meetingId)->get();
+        return AssignMemberToMeeting::with(['member.party'])->where('meeting_id', $meetingId)->get();
     }
 
 
@@ -152,11 +164,11 @@ class AttendanceRepository
         DB::beginTransaction();
         try {
             DB::commit();
-            ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
+            // ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
 
-            SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
-                'is_meeting_completed' => 1
-            ]);
+            // SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
+            //     'is_meeting_completed' => 1
+            // ]);
 
             Attendance::updateOrCreate([
                 'member_id' => $request->memberId,
@@ -182,11 +194,11 @@ class AttendanceRepository
         DB::beginTransaction();
         try {
             DB::commit();
-            ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
+            // ScheduleMeeting::where('id', $request->schedule_meeting_id)->update(['is_meeting_completed' => 1]);
 
-            SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
-                'is_meeting_completed' => 1
-            ]);
+            // SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
+            //     'is_meeting_completed' => 1
+            // ]);
 
             if ($request->dataDepartmentAttendanceId != "") {
                 $department = DepartmentAttendance::updateOrCreate([

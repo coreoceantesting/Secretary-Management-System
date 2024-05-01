@@ -26,6 +26,16 @@
                                 <span class="text-danger is-invalid goshwara_id_err"></span>
                             </div> --}}
                             <div class="col-md-4">
+                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                <select name="meeting_id" id="meetingId" required class="form-select">
+                                    <option value="">Select Meeting</option>
+                                    @foreach($meetings as $meeting)
+                                    <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid meeting_id_err"></span>
+                            </div>
+                            <div class="col-md-4">
                                 <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Enter Agenda Name" required>
                                 <span class="text-danger is-invalid name_err"></span>
@@ -47,12 +57,12 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="place">Meeting Place <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="place">Meeting Venue <span class="text-danger">*</span></label>
                                 <input class="form-control" id="place" name="place" type="place" placeholder="Enter place" required>
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                         </div>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered d-none hideGoshwaraTableData">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -62,16 +72,7 @@
                                     <th>Goshwara File</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($goshwaras as $goshwara)
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" name="goshwara_id[]" value="{{ $goshwara->id }}" class="form-check" checked>
-                                    </td>
-                                    <td>{{ $goshwara->name }}</td>
-                                    <td>{{ $goshwara->subject }}</td>
-                                </tr>
-                                @endforeach
+                            <tbody class="showGoshwaraTableTbodyData">
                             </tbody>
                         </table>
 
@@ -100,11 +101,21 @@
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                         <div class="mb-3 row">
                             <div class="col-md-4">
+                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                <select name="meeting_id" id="meetingId" required class="form-select">
+                                    <option value="">Select Meeting</option>
+                                    @foreach($meetings as $meeting)
+                                    <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid meeting_id_err"></span>
+                            </div>
+                            {{-- <div class="col-md-4">
                                 <label class="col-form-label" for="goshwara_id">Select Goshwara(विभाग निवडा) <span class="text-danger">*</span></label>
                                 <select multiple class="js-example-basic-multiple form-select col-sm-12 editSelectGoshwaraToAgenda" id="goshwara_id" name="goshwara_id[]" required>
                                 </select>
                                 <span class="text-danger is-invalid goshwara_id_err"></span>
-                            </div>
+                            </div> --}}
                             <div class="col-md-4">
                                 <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Agenda Name" required>
@@ -127,11 +138,25 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="place">Meeting Place <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="place">Meeting Venue <span class="text-danger">*</span></label>
                                 <input class="form-control" id="place" name="place" type="place" placeholder="Enter place" required>
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                         </div>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Meeting Name</th>
+                                    <th>Goshwara Name</th>
+                                    <th>Goshwara Subject</th>
+                                    <th>Goshwara File</th>
+                                </tr>
+                            </thead>
+                            <tbody class="showEditGoshwaraTableTbodyData">
+                            </tbody>
+                        </table>
 
                     </div>
                     <div class="card-footer">
@@ -297,11 +322,12 @@
                 if (!data.error)
                 {
                     $("#editForm input[name='edit_model_id']").val(data.agenda.id);
+                    $("#editForm select[name='meeting_id']").val(data.agenda.meeting_id);
                     $("#editForm input[name='name']").val(data.agenda.name);
                     $("#editForm input[name='date']").val(data.agenda.date);
                     $("#editForm input[name='time']").val(data.agenda.time);
                     $("#editForm input[name='place']").val(data.agenda.place);
-                    $('body').find("#editForm .editSelectGoshwaraToAgenda").html(data.goshwaraHtml)
+                    $('body').find("#editForm .showEditGoshwaraTableTbodyData").html(data.goshwaraHtml)
                 }
                 else
                 {
@@ -439,6 +465,61 @@
 	                },
                 });
             }
+        });
+    });
+</script>
+
+{{-- Select Meeting --}}
+<script>
+    $('body').on('change', '#meetingId', function(){
+        let meetingId = $(this).val();
+        $.ajax({
+            url: "{{ route('agenda.selectMeeting') }}",
+            type: 'get',
+            data: {
+                '_method': "get",
+                '_token': "{{ csrf_token() }}",
+                'meeting_id': meetingId
+            },
+            beforeSend: function()
+            {
+                $('#preloader').css('opacity', '0.5');
+                $('#preloader').css('visibility', 'visible');
+            },
+            success: function(data, textStatus, jqXHR) {
+                if (!data.error && !data.error2) {
+                    let html = '';
+                    $.each(data.goshwaras, function(key, val){
+                        html += `<tr>
+                                    <td>
+                                        <input type="checkbox" name="goshwara_id[]" value="${val.id}" class="form-check" checked>
+                                    </td>
+                                    <td>${val.meeting.name}</td>
+                                    <td>${val.name}</td>
+                                    <td>${val.subject}</td>
+                                    <td><a href="{{ asset('storage/') }}${val.file}" class="btn btn-primary btn-sm">View</a></td>
+                                </tr>`;
+                    });
+
+                    $('body').find('.hideGoshwaraTableData').removeClass('d-none');
+                    $('body').find('.showGoshwaraTableTbodyData').html(html);
+                } else {
+                    if (data.error) {
+                        swal("Error!", data.error, "error");
+                    } else {
+                        swal("Error!", data.error2, "error");
+                    }
+                }
+            },
+            error: function(error, jqXHR, textStatus, errorThrown) {
+                swal("Error!", "Something went wrong", "error");
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
+            complete: function() {
+                $('#preloader').css('opacity', '0');
+                $('#preloader').css('visibility', 'hidden');
+            },
         });
     });
 </script>

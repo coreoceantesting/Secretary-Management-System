@@ -40,7 +40,8 @@
 
                                             $daysleft = abs(round($diff / 86400));
                                             @endphp
-                                            @if($daysleft == "0")
+
+                                            @if($diff <= 0)
                                             <a href="{{ route('attendance.show', $attendance->id) }}" class="btn btn-primary btn-sm">Mark</a>
                                             @else
                                             <span style="color:#308f18!important">{{ $daysleft }} days left for meeting</span>
