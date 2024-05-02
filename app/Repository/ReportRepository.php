@@ -51,7 +51,7 @@ class ReportRepository
     public function getTharavReport($request)
     {
         return Tharav::with(['meeting', 'scheduleMeeting'])
-            ->whereHas('scheduleMeeting.assignScheduleMeetingDepartment.department', function ($q) use ($request) {
+            ->whereHas('scheduleMeeting.assignScheduleMeetingDepartment', function ($q) use ($request) {
                 if (isset($request->department) && $request->department != '') {
                     return $q->where('department_id', $request->department);
                 }
@@ -59,6 +59,6 @@ class ReportRepository
                 return $q->whereDate("date", ">=", $request->from);
             })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
                 return $q->whereDate("date", "<=", $request->to);
-            })->toSql();
+            })->get();
     }
 }
