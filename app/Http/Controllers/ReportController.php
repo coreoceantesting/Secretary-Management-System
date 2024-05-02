@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\ReportRepository;
 use App\Models\Party;
 use App\Models\ScheduleMeeting;
+use App\Models\Department;
 
 class ReportController extends Controller
 {
@@ -48,6 +49,19 @@ class ReportController extends Controller
             'attendanceMeetingReports' => $attendanceMeetingReports,
             'parties' => $parties,
             'scheduleMeetings' => $scheduleMeetings
+        ]);
+    }
+
+    // function for tharav report
+    public function tharavReport(Request $request)
+    {
+        $tharavs = $this->reportRepository->getTharavReport($request);
+
+        $departments = Department::where('is_home_department', 0)->get();
+        return $tharavs;
+        return view('report.tharav')->with([
+            'tharavs' => $tharavs,
+            'departments' => $departments
         ]);
     }
 }
