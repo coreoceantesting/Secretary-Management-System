@@ -53,7 +53,7 @@ class ReportRepository
         return Tharav::with(['meeting', 'scheduleMeeting'])
             ->whereHas('scheduleMeeting.assignScheduleMeetingDepartment', function ($q) use ($request) {
                 if (isset($request->department) && $request->department != '') {
-                    return $q->where('department_id', $request->department);
+                    return $q->where('department_id', $request->department)->with('department');
                 }
             })->when(isset($request->from) && $request->from != "", function ($q) use ($request) {
                 return $q->whereDate("date", ">=", $request->from);

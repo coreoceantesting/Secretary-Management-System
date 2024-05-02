@@ -104,9 +104,9 @@
                                                         </td>
                                                         <td>{{ $member->member?->name }}</td>
                                                         <td>
-                                                            @if($member->photo)
-                                                            <a href="{{ asset('storage/'.$member->photo) }}">
-                                                                <img src="{{ asset('storage/'.$member->photo) }}" style="width: 100px;" alt="" />
+                                                            @if($member->member->photo)
+                                                            <a target="_blank" href="{{ asset('storage/'.$member->member->photo) }}">
+                                                                <img src="{{ asset('storage/'.$member->member->photo) }}" style="width: 100px;" alt="" />
                                                             </a>
                                                             @endif
                                                         </td>
@@ -228,16 +228,20 @@
                 $(".memberCheckbox").click(function() {
                     if($(this).is(":checked")) {
                         $(this).closest('tr').find('.inTime').removeClass('d-none')
+                        $(this).closest('tr').find('.outTime').removeClass('d-none')
+                        $(this).closest('tr').find('.markButton').removeClass('d-none')
                         $(this).closest('tr').find('.inTime').val("{{ date('h:i:s') }}")
                     } else {
+                        $(this).closest('tr').find('.markButton').addClass('d-none')
                         $(this).closest('tr').find('.inTime').addClass('d-none')
+                        $(this).closest('tr').find('.outTime').addClass('d-none')
                     }
                 });
 
-                $('body').on('change', '.inTime', function(){
-                    $(this).closest('tr').find('.outTime').removeClass('d-none')
-                    $(this).closest('tr').find('.markButton').removeClass('d-none')
-                });
+                // $('body').on('change', '.inTime', function(){
+                //     $(this).closest('tr').find('.outTime').removeClass('d-none')
+                //     $(this).closest('tr').find('.markButton').removeClass('d-none')
+                // });
 
                 $('body').on('click', '.markButton', function(){
                     $(this).prop('disabled', true);

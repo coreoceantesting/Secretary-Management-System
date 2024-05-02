@@ -56,7 +56,7 @@ class ReportController extends Controller
     public function tharavReport(Request $request)
     {
         $tharavs = $this->reportRepository->getTharavReport($request);
-
+        // return $tharavs;
         $departments = Department::where('is_home_department', 0)->get();
 
         return view('report.tharav')->with([

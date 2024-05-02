@@ -55,18 +55,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($tharavs as $tharav)
+                                        @forelse($tharavs as $tharav)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $tharavs->meeting?->name }}</td>
-                                            <td>{{ $tharavs->scheduleMeeting?->unique_id }}</td>
-                                            <td>{{ $tharavs->scheduleMeeting?->assignScheduleMeetingDepartment?->department?->name }}</td>
+                                            <td>{{ $tharav->meeting?->name }}</td>
+                                            <td>{{ $tharav->scheduleMeeting?->unique_id }}</td>
+                                            <td>
+                                                @foreach($tharav->scheduleMeeting?->assignScheduleMeetingDepartment as $department)
+                                                    @if(request()->department && request()->department != "")
+                                                        @if(request()->department == $department->department_id)
+                                                        {{ $department?->department?->name }}
+                                                        @endif
+                                                    @else
+                                                    {{ $department?->department?->name.', ' }}
+                                                    @endif
+                                                @endforeach
+                                                {{-- {{ $tharav->scheduleMeeting?->assignScheduleMeetingDepartment?->department?->name }} --}}
+                                            </td>
                                             <td>{{ date('d-m-Y h:i: A', strtotime($tharav->datetime)) }}</td>
                                             <td>{{ date('h:i A', strtotime($tharav->time)) }}</td>
                                             <td>{{ $tharav->remark }}</td>
                                             <td><a href="{{ asset('storage/'.$tharav->file) }}" class="btn btn-primary btn-sm" target="_blank">View</a></td>
                                         </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr align="center">
+                                                <td colspan="8">No Data Found</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
