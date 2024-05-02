@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Meeting;
+use PDF;
 
 class AgendaRepository
 {
@@ -41,8 +42,11 @@ class AgendaRepository
     {
         return Meeting::whereHas('goshwara', function ($q) {
             return $q->where([
-                'is_sent' => 0
+                'is_sent' => 1,
+                'is_mayor_selected' => 0,
             ]);
+        })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
+            return $q->where("meeting_id", Auth::user()->meeting_id);
         })->latest()->get();
     }
 
@@ -71,6 +75,19 @@ class AgendaRepository
                         'goshwara_id' => $request->goshwara_id[$i],
                     ]);
                 }
+
+                // code to generate pdf
+                $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
+                    ->where('goshwara_id', $agenda->id)->get();
+                $pdf = PDF::loadView('agenda.pdf', compact('agenda', 'goshwaras'));
+                $name = 'pdf/' . 'agenda-' . time() . '.pdf';
+
+                Storage::put($name, $pdf->output());
+
+                Agenda::where('id', $agenda->id)->update([
+                    'pdf' => $name
+                ]);
+                // end of code to generate pdf
             }
 
             DB::commit();
@@ -105,6 +122,14 @@ class AgendaRepository
             $agenda->update($request->all());
 
             if (isset($request->goshwara_id)) {
+                Goshwara::whereHas('assignGoshwaraToAgenda', function ($q) use ($id) {
+                    $q->where('agenda_id', $id);
+                })->update([
+                    'is_mayor_selected' => 0,
+                    'selected_datetime' => null,
+                    'selected_by' => null
+                ]);
+
                 AssignGoshwaraToAgenda::where('agenda_id', $id)->delete();
                 for ($i = 0; $i < count($request->goshwara_id); $i++) {
                     AssignGoshwaraToAgenda::create([
@@ -112,12 +137,27 @@ class AgendaRepository
                         'goshwara_id' => $request->goshwara_id[$i],
                     ]);
 
-                    Goshwara::where('id', $request->goshwara_id[$i])->update([
-                        'is_mayor_selected' => 1,
-                        'selected_datetime' => date('Y-m-d h:i:s'),
-                        'selected_by' => Auth::user()->id
-                    ]);
+                    if (Auth::user()->roles[0]->name == "Mayor") {
+                        Goshwara::where('id', $request->goshwara_id[$i])->update([
+                            'is_mayor_selected' => 1,
+                            'selected_datetime' => date('Y-m-d h:i:s'),
+                            'selected_by' => Auth::user()->id
+                        ]);
+                    }
                 }
+
+                // code to generate pdf
+                $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
+                    ->where('goshwara_id', $agenda->id)->get();
+                $pdf = PDF::loadView('agenda.pdf', compact('agenda', 'goshwaras'));
+                $name = 'pdf/' . $agenda->file . '.pdf';
+
+                Storage::put($name, $pdf->output());
+
+                Agenda::where('id', $agenda->id)->update([
+                    'pdf' => $name
+                ]);
+                // end of code to generate pdf
             }
 
             DB::commit();
@@ -140,6 +180,10 @@ class AgendaRepository
             if ($agenda->file != "") {
                 if (Storage::exists($agenda->file)) {
                     Storage::delete($agenda->file);
+                }
+
+                if (Storage::exists($agenda->pdf)) {
+                    Storage::delete($agenda->pdf);
                 }
             }
 

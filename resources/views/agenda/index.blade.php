@@ -196,6 +196,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Place</th>
+                                    <th>PDF</th>
                                     @canany(['agenda.edit', 'agenda.delete'])<th>Action</th>@endcan
                                 </tr>
                             </thead>
@@ -213,6 +214,11 @@
                                         <td>{{ date('d-m-Y', strtotime($agenda->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($agenda->time)) }}</td>
                                         <td>{{ $agenda->place }}</td>
+                                        <td>
+                                            @if($agenda->pdf)
+                                            <a target="_blank" href="{{ asset('storage/'.$agenda->pdf) }}" class="btn btn-sm btn-primary">View</a>
+                                            @endif
+                                        </td>
                                         @canany(['agenda.edit', 'agenda.delete'])
                                         <td>
                                             @if($agenda->is_meeting_schedule == 0)

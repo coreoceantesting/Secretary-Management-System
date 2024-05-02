@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('date')->nullable()->after('file');
             $table->time('time')->nullable()->after('date');
             $table->string('place')->nullable()->after('time');
+            $table->string('pdf')->nullable()->after('place');
         });
     }
 
