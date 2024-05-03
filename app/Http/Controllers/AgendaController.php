@@ -60,7 +60,7 @@ class AgendaController extends Controller
         $agenda = $this->agendaRepository->edit($id);
 
         $goshwaras = $this->agendaRepository->getAssignedGoshwaraById($id, $agenda->meeting_id);
-        $notAssignedGoshwaras = $this->agendaRepository->getNotAssignedGoshwara();
+        $notAssignedGoshwaras = $this->agendaRepository->getNotAssignedGoshwara($agenda->meeting_id);
 
         $goshwaraHtml = '';
         foreach ($goshwaras as $goshwara) {

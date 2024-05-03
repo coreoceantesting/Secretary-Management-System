@@ -133,7 +133,7 @@
                                     <th>Meeting Name</th>
                                     <th>Meeting No.</th>
                                     <th>Datetime</th>
-                                    <th>Place</th>
+                                    <th>Meeting Venue</th>
                                     <th>Supplementary Name</th>
                                     <th>Supplementary File</th>
                                     @canany(['suplimentry-agenda.edit', 'suplimentry-agenda.delete'])<th>Action</th>@endcan

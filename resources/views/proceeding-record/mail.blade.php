@@ -15,7 +15,7 @@
             <td>{{ date('H:i A', strtotime($data?->time)) }}</td>
         </tr>
         <tr>
-            <th>Place</th>
+            <th>Meeting Venue</th>
             <td>{{ $data?->data?->place }}</td>
         </tr>
         <tr>

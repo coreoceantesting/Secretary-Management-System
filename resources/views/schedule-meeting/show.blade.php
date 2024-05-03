@@ -52,7 +52,7 @@
                                             <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Place(ठिकाण)</th>
+                                            <th>Meeting Venue(बैठकीचे स्थळ)</th>
                                             <td>{{ $scheduleMeeting->place }}</td>
                                         </tr>
                                         @if(!$scheduleMeeting->is_meeting_cancel)

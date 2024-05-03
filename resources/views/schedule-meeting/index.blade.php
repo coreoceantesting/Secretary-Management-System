@@ -172,7 +172,7 @@
                                     <th>Agenda File</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Place</th>
+                                    <th>Meeting Venue</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

@@ -171,7 +171,7 @@
                                     <th>Meeting</th>
                                     <th>Meeting No.</th>
                                     <th>Date</th>
-                                    <th>Place</th>
+                                    <th>Meeting Venue</th>
                                     <th>Question File</th>
                                     @canany(['question.edit', 'question.delete', 'question.response'])
                                     <th>Action</th>

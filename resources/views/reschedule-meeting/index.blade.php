@@ -143,7 +143,7 @@
                                     <th>Agenda</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Place</th>
+                                    <th>Meeting Venue</th>
                                     <th>Upload File</th>
                                     <th>Action</th>
                                 </tr>

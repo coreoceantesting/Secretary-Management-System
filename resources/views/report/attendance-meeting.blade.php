@@ -53,7 +53,7 @@
                                             <th>Member Name</th>
                                             <th>Designation</th>
                                             <th>Datetime</th>
-                                            <th>Place</th>
+                                            <th>Meeting Venue</th>
                                             <th>Intime</th>
                                             <th>Outtime</th>
                                         </tr>

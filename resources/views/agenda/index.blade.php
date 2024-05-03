@@ -102,7 +102,7 @@
                         <div class="mb-3 row">
                             <div class="col-md-4">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select name="meeting_id" id="meetingId" required class="form-select">
+                                <select @if(Auth::user()->hasRole('Mayor'))readonly @endif name="meeting_id" id="meetingId" required class="form-select">
                                     <option value="">Select Meeting</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -123,7 +123,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="agendafile">Select File(फाइल निवडा)</label>
-                                <input class="form-control" id="agendafile" name="agendafile" type="file">
+                                <input @if(Auth::user()->hasRole('Mayor'))readonly @endif class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
                             <div class="col-md-4">
@@ -195,7 +195,7 @@
                                     <th>Agenda File</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Place</th>
+                                    <th>Meeting Venue</th>
                                     <th>PDF</th>
                                     @canany(['agenda.edit', 'agenda.delete'])<th>Action</th>@endcan
                                 </tr>

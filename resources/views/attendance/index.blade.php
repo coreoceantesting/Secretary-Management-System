@@ -17,7 +17,7 @@
                                     <th>Meeting Name</th>
                                     <th>Meeting No.</th>
                                     <th>Datetime</th>
-                                    <th>Place</th>
+                                    <th>Meeting Venue</th>
                                     <th>Agenda File</th>
                                     <th>Action</th>
                                 </tr>

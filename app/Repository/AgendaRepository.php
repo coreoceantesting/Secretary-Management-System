@@ -27,10 +27,11 @@ class AgendaRepository
             ->latest()->get();
     }
 
-    public function getNotAssignedGoshwara()
+    public function getNotAssignedGoshwara($meetingId)
     {
         return Goshwara::doesntHave('assignGoshwaraToAgenda')->where([
             'is_sent' => 1,
+            'meeting_id' => $meetingId
         ])->with('meeting')->get();
     }
 

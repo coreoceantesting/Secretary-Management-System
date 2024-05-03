@@ -56,7 +56,7 @@
                                                 <td>{{ date('h:i A', strtotime($attendance->time)) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Place(ठिकाण)</th>
+                                                <th>Meeting Venue(बैठकीचे स्थळ)</th>
                                                 <td>{{ $attendance->place }}</td>
                                             </tr>
                                         </tbody>

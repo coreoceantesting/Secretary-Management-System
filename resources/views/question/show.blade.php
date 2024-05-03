@@ -34,7 +34,7 @@
                                             <td>{{ ($question->scheduleMeeting?->parentLatestScheduleMeeting?->date) ? date('d-m-Y', strtotime($question->scheduleMeeting?->parentLatestScheduleMeeting?->date)) : date('d-m-Y', strtotime($question->scheduleMeeting?->date)) }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Place(ठिकाण)</th>
+                                            <th>Meeting Venue(बैठकीचे स्थळ)</th>
                                             <td>{{ $question->scheduleMeeting?->place }}</td>
                                         </tr>
                                         <tr>

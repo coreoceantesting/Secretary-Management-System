@@ -33,7 +33,7 @@
                                             <td>{{ $goshwara?->meeting?->name ?? '-' }}</td>
                                             <td>{{ $goshwara->name ?? '-' }}</td>
                                             <td>{{ $goshwara->subject }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($goshwara->date)) }}</td>
+                                            <td>{{ date('d-m-Y h:i A', strtotime($goshwara->date)) }}</td>
                                             <td>
                                                 <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a>
                                             </td>

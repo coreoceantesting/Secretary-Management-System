@@ -69,7 +69,7 @@
                                     <th>Meeting No.</th>
                                     <th>Date(तारीख)</th>
                                     <th>Time(वेळ)</th>
-                                    <th>Place(ठिकाण)</th>
+                                    <th>Meeting Venue(बैठकीचे स्थळ)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -129,7 +129,7 @@
                                     <th>Meeting No.</th>
                                     <th>Date(तारीख)</th>
                                     <th>Timeवेळ</th>
-                                    <th>Place(ठिकाण)</th>
+                                    <th>Meeting Venue(बैठकीचे स्थळ)</th>
                                     <th>File(फाईल)</th>
                                 </tr>
                             </thead>

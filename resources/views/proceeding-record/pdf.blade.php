@@ -88,7 +88,7 @@
                                     <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Place</th>
+                                    <th>Meeting Venue</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -150,7 +150,7 @@
                                     <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Place</th>
+                                    <th>Meeting Venue</th>
                                     <th>Reschedule Meeting File</th>
                                 </tr>
                             </thead>
