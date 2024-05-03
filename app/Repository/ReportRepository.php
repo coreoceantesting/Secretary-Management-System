@@ -29,7 +29,7 @@ class ReportRepository
 
     public function viewScheduleMeetingReport($id)
     {
-        return ScheduleMeeting::with(['meeting', 'agenda', 'assignScheduleMeetingDepartment.department'])->where('id', $id)->first();
+        return ScheduleMeeting::with(['meeting', 'agenda.assignGoshwaraToAgenda.goshwara.meeting', 'suplimentryAgenda.meeting', 'assignScheduleMeetingDepartment.department', 'proceedingRecord.meeting', 'tharav.meeting'])->where('id', $id)->first();
     }
 
     public function attendanceMeetingReport($request)

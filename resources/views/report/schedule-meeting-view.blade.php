@@ -13,7 +13,204 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
+
+                            <h5 style="font-weight: 800" class="mt-3">Goshwara(गोषवारा)</h5>
                             <div class="table-responsive">
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Meeting</th>
+                                            <th>Goshwara Name</th>
+                                            <th>Goshwara Subject</th>
+                                            <th>Sent Date</th>
+                                            <th>Goshwara File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($scheduleMeeting?->agenda?->assignGoshwaraToAgenda as $goshwara)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $goshwara?->goshwara?->meeting?->name }}</td>
+                                            <td>{{ $goshwara?->goshwara?->name }}</td>
+                                            <td>{{ $goshwara?->goshwara?->subject }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($goshwara?->goshwara?->date)) }}</td>
+                                            <td><a href="{{ asset('storage/'.$goshwara?->goshwara?->file) }}" class="btn btn-primary btn-sm">View</a></td>
+                                        </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="6">No Data Found</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <h5 style="font-weight: 800" class="mt-3">Agenda(अजेंडा)</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Name</th>
+                                            <th>File</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Place</th>
+                                            <th>PDF</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>{{ $scheduleMeeting?->agenda?->name }}</td>
+                                            <td><a href="{{ asset('storage/'.$scheduleMeeting?->agenda?->file) }}" class="btn btn-primary btn-sm">View</a></td>
+                                            <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->agenda?->date)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($scheduleMeeting?->agenda?->time)) }}</td>
+                                            <td>{{ $scheduleMeeting?->agenda?->place }}</td>
+                                            <td><a href="{{ asset('storage/'.$scheduleMeeting?->agenda?->pdf) }}" class="btn btn-primary btn-sm">View</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h5 style="font-weight: 800" class="mt-3">Supplementary Agenda(पूरक अजेंडा)</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Meeting Name</th>
+                                            <th>Meeting No.</th>
+                                            <th>Suplimentry Name</th>
+                                            <th>Suplimentry File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($scheduleMeeting?->suplimentryAgenda as $suplimentryAgenda)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $suplimentryAgenda?->meeting?->name }}</td>
+                                            <td>{{ $scheduleMeeting->unique_id }}</td>
+                                            <td>{{ $suplimentryAgenda?->name }}</td>
+                                            <td><a href="{{ asset('storage/'.$suplimentryAgenda?->file) }}" class="btn btn-primary btn-sm">View</a></td>
+                                        </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+
+                            <h5 style="font-weight: 800" class="mt-3">Schedule Meeting(बैठकीचे वेळापत्रक)</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Meeting(बैठक)</th>
+                                            <th>Meeting No.</th>
+                                            <th>Department</th>
+                                            <th>Date(तारीख)</th>
+                                            <th>Time(वेळ)</th>
+                                            <th>Place(ठिकाण)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>{{ $scheduleMeeting?->meeting?->name }}</td>
+                                            <td>{{ $scheduleMeeting->unique_id }}</td>
+                                            <td>
+                                                @foreach($scheduleMeeting?->assignScheduleMeetingDepartment as $meeting)
+                                                {{ $meeting?->department?->name.', ' }}
+                                                @endforeach
+                                            </td>
+                                            <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->date)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($scheduleMeeting?->time)) }}</td>
+                                            <td>{{ $scheduleMeeting->place }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <h5 style="font-weight: 800" class="mt-3">Proceeding Record</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Meeting(बैठक)</th>
+                                            <th>Meeting No.</th>
+                                            <th>Date(तारीख)</th>
+                                            <th>Time(वेळ)</th>
+                                            <th>Remark</th>
+                                            <th>File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>{{ $scheduleMeeting?->proceedingRecord?->meeting?->name }}</td>
+                                            <td>{{ $scheduleMeeting->unique_id }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->proceedingRecord?->date)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($scheduleMeeting?->proceedingRecord?->time)) }}</td>
+                                            <td>{{ $scheduleMeeting?->proceedingRecord->remark }}</td>
+                                            <td><a href="{{ asset('storage/'.$scheduleMeeting?->proceedingRecord->file) }}" class="btn btn-primary btn-sm">View</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <h5 style="font-weight: 800" class="mt-3">Tharav Record</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Meeting(बैठक)</th>
+                                            <th>Meeting No.</th>
+                                            <th>Date(तारीख)</th>
+                                            <th>Time(वेळ)</th>
+                                            <th>Remark</th>
+                                            <th>File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>{{ $scheduleMeeting?->tharav?->meeting?->name }}</td>
+                                            <td>{{ $scheduleMeeting->unique_id }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->tharav?->date)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($scheduleMeeting?->tharav?->time)) }}</td>
+                                            <td>{{ $scheduleMeeting?->tharav->remark }}</td>
+                                            <td><a href="{{ asset('storage/'.$scheduleMeeting?->tharav->file) }}" class="btn btn-primary btn-sm">View</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            {{-- <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -84,7 +281,7 @@
                                         @endif
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
                         </div>
 
                     </div>

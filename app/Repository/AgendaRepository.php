@@ -50,11 +50,11 @@ class AgendaRepository
         })->latest()->get();
     }
 
-    public function getAssignedGoshwaraById($id)
+    public function getAssignedGoshwaraById($id, $meetingId)
     {
         return Goshwara::orWhereHas('assignGoshwaraToAgenda', function ($q) use ($id) {
             return $q->where('agenda_id', $id);
-        })->with('meeting')->where('is_sent', 1)->get();
+        })->with('meeting')->where('meeting_id', $meetingId)->where('is_sent', 1)->get();
     }
 
     public function store($request)

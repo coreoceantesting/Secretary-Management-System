@@ -29,7 +29,7 @@ class ReportController extends Controller
     public function viewScheduleMeetingReport($id)
     {
         $scheduleMeeting = $this->reportRepository->viewScheduleMeetingReport($id);
-
+        // return $scheduleMeeting;
         return view('report.schedule-meeting-view')->with(['scheduleMeeting' => $scheduleMeeting]);
     }
 
