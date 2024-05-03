@@ -44,9 +44,8 @@
                                         <th>Goshwara Name</th>
                                         <th>Goshwara Subject</th>
                                         <th>Sent Date</th>
-                                        <th>Mayor Status</th>
                                         <th>Goshwara</th>
-                                        <th>Goshwara Status</th>
+                                        <th>Mayor Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,20 +58,13 @@
                                             <td>{{ $goshwara->subject }}</td>
                                             <td>{{ date('d-m-Y', strtotime($goshwara->date)) }}</td>
                                             <td>
+                                                <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a>
+                                            </td>
+                                            <td>
                                                 @if($goshwara->is_mayor_selected)
                                                 Selected by Mayor Department
                                                 @else
                                                 On hold by Mayor Department
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a>
-                                            </td>
-                                            <td>
-                                                @if(count($goshwara->assignGoshwaraToAgenda) > 0)
-                                                <span class="badge bg-success">Created Agenda</span>
-                                                @else
-                                                <span class="badge bg-warning">Inprogress</span>
                                                 @endif
                                             </td>
                                         </tr>
