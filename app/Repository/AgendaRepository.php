@@ -51,7 +51,7 @@ class AgendaRepository
                 'is_mayor_selected' => 0,
             ]);
         })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
-            return $q->where("meeting_id", Auth::user()->meeting_id);
+            return $q->where("id", Auth::user()->meeting_id);
         })->latest()->get();
     }
 
