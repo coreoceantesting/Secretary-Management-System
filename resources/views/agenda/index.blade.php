@@ -223,7 +223,11 @@
                                         <td>
                                             @if($agenda->is_meeting_schedule == 0)
                                             @can('agenda.edit')
+                                            @if(Auth::user()->hasRole('Mayor'))
+                                            <button class="edit-element btn btn-secondary btn-sm px-2 py-1" title="Edit Agenda" data-id="{{ $agenda->id }}">View</button>
+                                            @else
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Agenda" data-id="{{ $agenda->id }}"><i data-feather="edit"></i></button>
+                                            @endif
                                             @endcan
 
                                             @can('agenda.delete')

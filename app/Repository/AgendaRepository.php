@@ -19,6 +19,10 @@ class AgendaRepository
         return Agenda::with(['assignGoshwaraToAgenda.goshwara'])
             ->when(Auth::user()->hasRole('Clerk'), function ($query) {
                 return $query->where('meeting_id', Auth::user()->meeting_id);
+            })->when(Auth::user()->hasRole('Department'), function ($query) {
+                return $query->whereHas('assignGoshwaraToAgenda.goshwara', function ($q) {
+                    return $q->where('department_id', Auth::user()->id);
+                });
             })
             ->latest()->get();
     }
