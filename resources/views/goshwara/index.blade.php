@@ -62,9 +62,9 @@
                                             </td>
                                             <td>
                                                 @if($goshwara->is_mayor_selected)
-                                                <span class="badge bg-primary">Selected by Mayor Department</span>
+                                                <span class="badge bg-success">Selected by Mayor Department</span>
                                                 @else
-                                                <span class="badge bg-warning">On hold by Mayor Department</span>
+                                                <span class="badge bg-warning text-dark">On hold by Mayor Department</span>
                                                 @endif
                                             </td>
                                         </tr>
