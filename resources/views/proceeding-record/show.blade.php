@@ -25,7 +25,7 @@
                                 @foreach($proceedingRecord->scheduleMeeting->agenda->assignGoshwaraToAgenda as $goshwara)
                                 <tr>
                                     <td>{{ $goshwara->goshwara?->name }}</td>
-                                    <td><a href="{{ asset('storage/'.$goshwara->goshwara?->name) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$goshwara?->goshwara?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -49,7 +49,7 @@
                             <tbody>
                                 <tr>
                                     <td>{{ $agenda->name }}</td>
-                                    <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -142,7 +142,7 @@
                                     <td>{{ ($scheduleMeeting->date) ? date('d-m-Y', strtotime($scheduleMeeting->date)) : '-' }}</td>
                                     <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
                                     <td>{{ $scheduleMeeting->place }}</td>
-                                    <td><a href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$scheduleMeeting->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -170,7 +170,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <th>{{ $suplimentryAgenda->name }}</th>
-                                    <td><a href="{{ asset('storage/'.$suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -206,7 +206,7 @@
                                         <b>{{ $loop->iteration }} :-</b> {{ ($subQues->question) ? $subQues->question : '-' }}<br>
                                         @endforeach
                                     </td>
-                                    <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                     <td>
                                         @foreach($question->subQuestions as $subQues)
                                         <b>{{ $loop->iteration }} :-</b> {{ ($subQues->response) ? $subQues->response : '-' }}<br>
@@ -214,7 +214,7 @@
                                     </td>
                                     <td>
                                         @if($question->response_file)
-                                        <a href="{{ asset('storage/'.$question->response_file) }}" class="btn btn-primary btn-sm">View File</a>
+                                        <a target="_blank" href="{{ asset('storage/'.$question->response_file) }}" class="btn btn-primary btn-sm">View File</a>
                                         @else
                                         -
                                         @endif
@@ -306,7 +306,7 @@
                                     <td>{{ $proceedingRecord->scheduleMeeting?->unique_id }}</td>
                                     <td>{{ ($proceedingRecord->date) ? date('d-m-Y', strtotime($proceedingRecord->date)) : '-' }}</td>
                                     <td>{{ date('h:i A', strtotime($proceedingRecord->time)) }}</td>
-                                    <td><a href="{{ asset('storage/'.$proceedingRecord->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$proceedingRecord->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                     <td>{{ ($proceedingRecord->remark) ? $proceedingRecord->remark : '-' }}</td>
                                 </tr>
                             </tbody>
