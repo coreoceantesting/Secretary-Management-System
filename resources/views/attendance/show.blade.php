@@ -53,7 +53,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Time(वेळ)</th>
-                                                <td>{{ date('h:i A', strtotime($attendance->time)) }}</td>
+                                                <td>{{ date('H:i', strtotime($attendance->time)) }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Meeting Venue(बैठकीचे स्थळ)</th>
@@ -91,7 +91,7 @@
                                                         @if($member->member?->id == $attendanceMark->member_id)
                                                         @php
                                                             $memberId = "checked";
-                                                            $inTime = $attendanceMark->in_time;
+                                                            $inTime = date('H:i', strtotime($attendanceMark->in_time));
                                                             $outTime = $attendanceMark->out_time;
                                                         @endphp
                                                         @endif
@@ -111,8 +111,8 @@
                                                             @endif
                                                         </td>
                                                         <td>{{ $member->member?->party?->name }}</td>
-                                                        <td><input type="time" name="in_time[]" class="form-control inTime {{ ($inTime) ? $inTime : 'd-none' }}" value="{{ $inTime }}"></td>
-                                                        <td><input type="time" name="out_time[]" class="form-control outTime {{ ($inTime) ? $inTime : 'd-none' }}" value="{{ $outTime }}"></td>
+                                                        <td><input type="time" name="in_time[]" class="form-control inTime {{ ($inTime) ? '' : 'd-none' }}" value="{{ $inTime }}"></td>
+                                                        <td><input type="time" name="out_time[]" class="form-control outTime {{ ($inTime) ? '' : 'd-none' }}" value="{{ $outTime }}"></td>
                                                         <td><button type="button" class="btn btn-primary btn-sm  {{ ($inTime) ? $inTime : 'd-none' }} markButton" id="markButton{{ $key+1 }}">Mark</button></td>
                                                     </tr>
                                                 @endforeach
@@ -179,7 +179,7 @@
                                                             <input type="text" name="department_name[]" class="form-control departmentInputName" required>
                                                         </td>
                                                         <td>
-                                                            <input type="time" value="{{ date('h:i:s') }}" name="department_in_time[]" class="form-control departmentInTime" required></td>
+                                                            <input type="time" value="{{ date('h:i') }}" name="department_in_time[]" class="form-control departmentInTime" required></td>
                                                         <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime"></td>
                                                         <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button></td>
                                                     </tr>
@@ -193,12 +193,12 @@
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="col-form-label" for="date">Date</label>
-                                        <input class="form-control" id="date" name="meeting_end_date" type="date" value="@if($attendance->meeting_end_date){{ date('Y-m-d', strtotime($attendance->date)) }}@endif">
+                                        <input class="form-control" id="date" name="meeting_end_date" type="date" value="@if($attendance->meeting_end_date){{ date('Y-m-d', strtotime($attendance->meeting_end_date)) }}@endif">
                                     </div>
 
                                     <div class="col-md-4">
                                         <label class="col-form-label" for="time">Time</label>
-                                        <input class="form-control" id="time" name="meeting_end_time" type="time" value="@if($attendance->meeting_end_time){{ date('h:i:s', strtotime($attendance->time)) }}@endif">
+                                        <input class="form-control" id="time" name="meeting_end_time" type="time" value="@if($attendance->meeting_end_time){{ date('h:i', strtotime($attendance->meeting_end_time)) }}@endif">
                                     </div>
 
                                     <div class="col-md-4">
@@ -207,7 +207,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" onclick="return confirm('Are you sure you want to comple this meeting')" value="completed" class="btn btn-primary" name="close_meeting" id="addSubmit">Close Meeting</button>
-                                <button type="submit" class="btn btn-success" name="to_be_continue" id="addSubmit">To be Continued </button>
+                                <button type="submit" class="btn btn-success" name="to_be_continue" id="addSubmit" value="to_be_continue">To be Continued </button>
                                 {{-- <a href="{{ route('attendance.index') }}" class="btn btn-warning">Cancel</a> --}}
                             </div>
 
@@ -230,7 +230,7 @@
                         $(this).closest('tr').find('.inTime').removeClass('d-none')
                         $(this).closest('tr').find('.outTime').removeClass('d-none')
                         $(this).closest('tr').find('.markButton').removeClass('d-none')
-                        $(this).closest('tr').find('.inTime').val("{{ date('h:i:s') }}")
+                        $(this).closest('tr').find('.inTime').val("{{ date('h:i') }}")
                     } else {
                         $(this).closest('tr').find('.markButton').addClass('d-none')
                         $(this).closest('tr').find('.inTime').addClass('d-none')
