@@ -39,7 +39,7 @@
                                         </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="6">No Data Found</td>
+                                                <td align="center" colspan="6">No Data Found</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -98,7 +98,7 @@
                                         </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="5"></td>
+                                                <td align="center" colspan="5">No Data Found</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -156,15 +156,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if($scheduleMeeting->proceedingRecord)
                                         <tr>
                                             <td>1</td>
                                             <td>{{ $scheduleMeeting?->proceedingRecord?->meeting?->name }}</td>
                                             <td>{{ $scheduleMeeting->unique_id }}</td>
                                             <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->proceedingRecord?->date)) }}</td>
                                             <td>{{ date('h:i A', strtotime($scheduleMeeting?->proceedingRecord?->time)) }}</td>
-                                            <td>{{ $scheduleMeeting?->proceedingRecord->remark }}</td>
-                                            <td><a href="{{ asset('storage/'.$scheduleMeeting?->proceedingRecord->file) }}" class="btn btn-primary btn-sm">View</a></td>
+                                            <td>{{ $scheduleMeeting?->proceedingRecord?->remark }}</td>
+                                            <td><a href="{{ asset('storage/'.$scheduleMeeting?->proceedingRecord?->file) }}" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
+                                        @else
+                                        <tr>
+                                            <td align="center" colspan="7">No Data Found</td>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -185,6 +191,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if($scheduleMeeting->tharav)
                                         <tr>
                                             <td>1</td>
                                             <td>{{ $scheduleMeeting?->tharav?->meeting?->name }}</td>
@@ -194,6 +201,11 @@
                                             <td>{{ $scheduleMeeting?->tharav->remark }}</td>
                                             <td><a href="{{ asset('storage/'.$scheduleMeeting?->tharav->file) }}" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
+                                        @else
+                                        <tr>
+                                            <td align="center" colspan="7">No Data Found</td>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
