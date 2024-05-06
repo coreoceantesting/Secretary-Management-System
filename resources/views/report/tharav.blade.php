@@ -17,15 +17,15 @@
                                 <form method="get">
                                     <div class="mb-3 row">
                                         <div class="col-md-3">
-                                            <label class="col-form-label" for="from">From Date(या तारखेपासून) <span class="text-danger">*</span></label>
+                                            <label class="col-form-label" for="from">From Date(या तारखेपासून)</label>
                                             <input class="form-control" id="from" name="from" type="date" value="@if(isset(Request()->from)){{ Request()->from }}@endif">
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="col-form-label" for="to">To Date(आजपर्यंत) <span class="text-danger">*</span></label>
+                                            <label class="col-form-label" for="to">To Date(आजपर्यंत)</label>
                                             <input class="form-control" id="to" name="to" type="date" value="@if(isset(Request()->to)){{ Request()->to }}@endif">
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="col-form-label" for="department">Select Department <span class="text-danger">*</span></label>
+                                            <label class="col-form-label" for="department">Select Department</label>
                                             <select name="department" id="department" class="form-select">
                                                 <option value="">Select</option>
                                                 @foreach($departments as $department)
@@ -41,7 +41,7 @@
                                 </form>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table id="dataTable" class="dataTable table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>
@@ -94,3 +94,14 @@
 
 
 </x-admin.layout>
+
+<script>
+    $(document).ready(function(){
+        $('#dataTable').DataTable({
+            pageLength: 25,
+            info: false,
+            legth: false,
+            order:false,
+        });
+    })
+</script>
