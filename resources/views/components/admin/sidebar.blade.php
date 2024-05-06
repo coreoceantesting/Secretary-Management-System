@@ -59,6 +59,12 @@
                                 <a href="{{ route('master.home-department.index') }}" class="nav-link {{ request()->routeIs('master.home-department.*') ? 'active' : '' }}" data-key="t-horizontal">Home&nbsp;Department(गृह विभाग)</a>
                             </li>
                             @endcan
+
+                            @can('party.view')
+                            <li class="nav-item">
+                                <a href="{{ route('master.party.index') }}" class="nav-link {{ request()->routeIs('master.party.*') ? 'active' : '' }}" data-key="t-horizontal">Party(पक्ष)</a>
+                            </li>
+                            @endcan
                             @can('wards.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.ward.index') }}" class="nav-link {{ request()->routeIs('master.ward.*') ? 'active' : '' }}" data-key="t-horizontal">Ward(वार्ड)</a>
@@ -72,11 +78,6 @@
                             @can('meeting.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.meeting.index') }}" class="nav-link {{ request()->routeIs('master.meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Meeting(बैठक)</a>
-                            </li>
-                            @endcan
-                            @can('party.view')
-                            <li class="nav-item">
-                                <a href="{{ route('master.party.index') }}" class="nav-link {{ request()->routeIs('master.party.*') ? 'active' : '' }}" data-key="t-horizontal">Party(पक्ष)</a>
                             </li>
                             @endcan
                         </ul>

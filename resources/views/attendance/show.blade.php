@@ -244,7 +244,7 @@
                 // });
 
                 $('body').on('click', '.markButton', function(){
-                    $(this).prop('disabled', true);
+                    //$(this).prop('disabled', true);
                     let dataId = $(this).closest('tr').find('.dataId').val();
                     let memberId = $(this).closest('tr').find('.memberId').val();
                     let inTime = $(this).closest('tr').find('.inTime').val();
