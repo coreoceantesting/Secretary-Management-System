@@ -197,4 +197,24 @@ class QuestionController extends Controller
             ]);
         }
     }
+
+    // accpet question by mayor
+    public function acceptMayorQuetion(Request $request)
+    {
+        $data = $this->questionRepository->acceptMayorQuetion($request);
+
+        return response()->json([
+            'success' => "Question accepted successfully!"
+        ]);
+    }
+
+    // send question to department
+    public function sendQuestionToDepartment(Request $request)
+    {
+        $data = $this->questionRepository->sendQuestionToDepartment($request);
+
+        return response()->json([
+            'success' => "Question sended successfully!"
+        ]);
+    }
 }

@@ -173,9 +173,7 @@
                                     <th>Date</th>
                                     <th>Meeting Venue</th>
                                     <th>Question File</th>
-                                    @canany(['question.edit', 'question.delete', 'question.response'])
                                     <th>Action</th>
-                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -211,8 +209,8 @@
 
                                         <td>{{ ($question->scheduleMeeting?->place) ? $question->scheduleMeeting?->place : '-' }}</td>
                                         <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-sm btn-primary">View File</a></td>
-                                        @canany(['question.edit', 'question.delete', 'question.response'])
                                         <td>
+                                            @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
                                             <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm @if($question->subQuestions->whereNotNull('response')->count() > 0 || $question->response_file != "") btn-success @else btn-primary @endif px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
                                                 @can('question.response')
                                                     @if($question->subQuestions->whereNotNull('response')->count() > 0 || $question->response_file != "") Responded @else Response @endif
@@ -220,7 +218,14 @@
                                                     Check Response
                                                 @endif
                                             </a>
-                                            @if($question->subQuestions->whereNotNull('response')->count() == 0 || $question->response_file == "")
+                                            @endif
+
+
+                                            @if(Auth::user()->hasRole('Mayor'))
+                                            <a href="{{ route('question.show', $question->id) }}" class="btn btn-primary btn-sm">View Question</a>
+                                            @endif
+
+                                            @if($question->subQuestions->where('is_mayor_selected', 0)->count() > 0)
                                             @can('question.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Question" data-id="{{ $question->id }}"><i data-feather="edit"></i></button>
                                             @endcan
@@ -229,7 +234,6 @@
                                             @endcan
                                             @endif
                                         </td>
-                                        @endcan
                                     </tr>
                                 @endforeach
                         </table>

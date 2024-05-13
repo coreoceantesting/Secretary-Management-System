@@ -121,6 +121,9 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('question/schedule_meeting/get-department/{id}', [QuestionController::class, 'getScheduleMeetingDepartments'])->name('question.getScheduleMeetingDepartments');
     Route::post('question/response', [QuestionController::class, 'response'])->name('question.response');
     Route::post('question/saveSingleResponse', [QuestionController::class, 'saveSingleResponse'])->name('question.saveSingleResponse');
+
+    Route::post('question/schedule_meeting/mayor-accept', [QuestionController::class, 'acceptMayorQuetion'])->name('question.acceptQuetionByMayor');
+    Route::post('question/schedule_meeting/send-question', [QuestionController::class, 'sendQuestionToDepartment'])->name('question.sendQuestion');
     Route::resource('question', QuestionController::class);
     // end of route for question
 

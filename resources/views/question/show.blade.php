@@ -63,17 +63,24 @@
                                     <thead>
                                         <tr>
                                             <th>Question</th>
+                                            @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
                                             <th>Response</th>
-                                            @can('question.response')<th>Action</th>@endcan
+                                            @endif
+
+                                            @if(Auth::user()->hasRole('Home Department'))
+                                            <th>Status</th>
+                                            @endif
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($subQuestions as $subQuestion)
+                                        @forelse($subQuestions as $subQuestion)
                                         <tr>
                                             <td>
                                                 <input type="hidden" name="subQuestionId[]" class="questionId" value="{{ $subQuestion->id }}">
                                                 {{ $subQuestion->question }}
                                             </td>
+                                            @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
                                             <td>
                                                 @can('question.response')
                                                     @if($subQuestion->response == "")
@@ -89,17 +96,36 @@
                                                     @endif
                                                 @endif
                                             </td>
-                                            @can('question.response')
+                                            @endif
+                                            @if(Auth::user()->hasRole('Home Department'))
                                             <td>
-                                                @if($subQuestion->response == "")
-                                                <button type="button" class="btn btn-sm btn-primary sendQuestionResponse @if($subQuestion->response == "")d-none @endif">Send</button>
+                                                @if($subQuestion->is_mayor_selected == "0")
+                                                Hold By Mayor
+                                                @else
+                                                Accepted By Mayor
+                                                @endif
+                                            </td>
+                                            @endif
+                                            <td>
+                                                @if($subQuestion->response == "" && $subQuestion->is_sended == "1")
+                                                    @can('question.response')
+                                                    <button type="button" onclick="return confirm('Are you sure you want to send this question')" class="btn btn-sm btn-primary sendQuestionResponse @if($subQuestion->response == "")d-none @endif">Send</button>
+                                                    @endcan
+                                                @elseif(Auth::user()->hasRole('Mayor') && $subQuestion->is_mayor_selected == "0")
+                                                    <button type="button" onclick="return confirm('Are you sure you want to accept this question')" class="btn btn-sm btn-primary acceptQuestion">Accept</button>
+                                                @elseif(Auth::user()->hasRole('Home Department') && $subQuestion->is_mayor_selected == "1" && $subQuestion->is_sended == "0")
+                                                    <button type="button" onclick="return confirm('Are you sure you want to send this question to department')" class="btn btn-sm btn-primary sendQuestion">Send</button>
                                                 @else
                                                 -
                                                 @endif
                                             </td>
-                                            @endcan
+
                                         </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr align="center">
+                                                <td colspan="3">No Date Found</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                     @can('question.response')
                                     <tfoot>
@@ -201,6 +227,120 @@
                 })
             })
         </script>
+
+        {{-- accept question --}}
+        <script>
+            $(document).ready(function(){
+                $('body').on('click', '.acceptQuestion', function(){
+                    let id = $(this).closest('tr').find('.questionId').val();
+                    $(this).attr('id', 'acceptButtonQuestion');
+
+                    $.ajax({
+                        url: "{{ route('question.acceptQuetionByMayor') }}",
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id
+                        },
+                        beforeSend: function()
+                        {
+                            $('#preloader').css('opacity', '0.5');
+                            $('#preloader').css('visibility', 'visible');
+                        },
+                        success: function(data)
+                        {
+                            if (!data.error){
+                                $('body').find('#acceptButtonQuestion').remove()
+                                swal("Successful!", data.success, "success");
+                            }
+                            else{
+                                swal("Error!", data.error, "error");
+                            }
+                        },
+                        statusCode: {
+                            422: function(responseObject, textStatus, jqXHR) {
+                                $("#editSubmit").prop('disabled', false);
+                                resetErrors();
+                                printErrMsg(responseObject.responseJSON.errors);
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            },
+                            500: function(responseObject, textStatus, errorThrown) {
+                                swal("Error occured!", "Something went wrong please try again", "error");
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            }
+                        },
+                        error: function(xhr) {
+                            $('#preloader').css('opacity', '0');
+                            $('#preloader').css('visibility', 'hidden');
+                        },
+                        complete: function() {
+                            $('#preloader').css('opacity', '0');
+                            $('#preloader').css('visibility', 'hidden');
+                        },
+                    });
+                });
+            });
+        </script>
+        {{-- end of accept question --}}
+
+
+        {{-- send question --}}
+        <script>
+            $(document).ready(function(){
+                $('body').on('click', '.sendQuestion', function(){
+                    let id = $(this).closest('tr').find('.questionId').val();
+                    $(this).attr('id', 'sendButtonQuestion');
+                    $.ajax({
+                        url: "{{ route('question.sendQuestion') }}",
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id
+                        },
+                        beforeSend: function()
+                        {
+                            $('#preloader').css('opacity', '0.5');
+                            $('#preloader').css('visibility', 'visible');
+                        },
+                        success: function(data)
+                        {
+                            if (!data.error){
+                                swal("Successful!", data.success, "success");
+                            }
+                            else{
+                                $('body').find('#sendButtonQuestion').remove();
+                                swal("Error!", data.error, "error");
+                            }
+                        },
+                        statusCode: {
+                            422: function(responseObject, textStatus, jqXHR) {
+                                $("#editSubmit").prop('disabled', false);
+                                resetErrors();
+                                printErrMsg(responseObject.responseJSON.errors);
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            },
+                            500: function(responseObject, textStatus, errorThrown) {
+                                swal("Error occured!", "Something went wrong please try again", "error");
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            }
+                        },
+                        error: function(xhr) {
+                            $('#preloader').css('opacity', '0');
+                            $('#preloader').css('visibility', 'hidden');
+                        },
+                        complete: function() {
+                            $('#preloader').css('opacity', '0');
+                            $('#preloader').css('visibility', 'hidden');
+                        },
+                    });
+                });
+            });
+        </script>
+        {{-- end of send question --}}
     @endpush
 
 

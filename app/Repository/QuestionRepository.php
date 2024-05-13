@@ -16,11 +16,9 @@ class QuestionRepository
 {
     public function index()
     {
-        $role = Auth::user()->roles[0]->name;
-
         $question =  Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'subQuestions'])->when(Auth::user()->hasRole('Clerk'), function ($query) {
             return $query->where('meeting_id', Auth::user()->meeting_id);
-        })->when($role == "Department", function ($q) {
+        })->when(Auth::user()->roles[0]->name == "Department", function ($q) {
             return $q->where('department_id', Auth::user()->department_id);
         })->latest()->get();
 
@@ -134,7 +132,11 @@ class QuestionRepository
 
     public function getSubQuestions($id)
     {
-        return SubQuestion::where('question_id', $id)->get();
+        return SubQuestion::where('question_id', $id)
+            ->when(Auth::user()->roles[0]->name == "Department", function ($q) {
+                $q->where('is_sended', 1);
+            })
+            ->get();
     }
 
     public function show($id)
@@ -212,5 +214,25 @@ class QuestionRepository
         $data = AssignScheduleMeetingDepartment::with(['department'])->whereNotIn('department_id', $scheduleMeetingQuestionIds)->where('schedule_meeting_id', $id)->get();
 
         return $data;
+    }
+
+    // accpet question by mayor
+    public function acceptMayorQuetion($request)
+    {
+        $subQuestion = SubQuestion::find($request->id);
+        $subQuestion->is_mayor_selected = 1;
+        $subQuestion->save();
+
+        return true;
+    }
+
+    // send question to department
+    public function sendQuestionToDepartment($request)
+    {
+        $subQuestion = SubQuestion::find($request->id);
+        $subQuestion->is_sended = 1;
+        $subQuestion->save();
+
+        return true;
     }
 }
