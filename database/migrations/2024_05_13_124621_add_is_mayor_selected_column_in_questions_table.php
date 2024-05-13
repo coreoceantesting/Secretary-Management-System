@@ -11,11 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('questions', function (Blueprint $table) {
-            $table->boolean('is_mayor_selected')->default(0)->after('response_file');
-            $table->boolean('is_sended')->default(0)->after('is_mayor_selected');
-        });
-
         Schema::table('sub_questions', function (Blueprint $table) {
             $table->boolean('is_mayor_selected')->default(0)->after('response_file');
             $table->boolean('is_sended')->default(0)->after('is_mayor_selected');
@@ -27,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('questions', function (Blueprint $table) {
-            //
+        Schema::table('sub_questions', function (Blueprint $table) {
+            $table->dropColumn('is_mayor_selected');
+            $table->dropColumn('is_sended');
         });
     }
 };
