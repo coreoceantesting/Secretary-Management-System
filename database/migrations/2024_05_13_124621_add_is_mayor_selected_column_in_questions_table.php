@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('sub_questions', function (Blueprint $table) {
-            $table->boolean('is_mayor_selected')->default(0)->after('response_file');
+            $table->boolean('is_mayor_selected')->default(0)->after('response');
             $table->boolean('is_sended')->default(0)->after('is_mayor_selected');
         });
     }
