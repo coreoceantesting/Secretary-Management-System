@@ -68,10 +68,10 @@
                                             <td>{{ $attendanceMeetingReport->member?->party?->name }}</td>
                                             <td>{{ $attendanceMeetingReport->member?->name }}</td>
                                             <td>{{ $attendanceMeetingReport->member?->designation }}</td>
-                                            <td>{{ date('d-m-Y h:i: A', strtotime($attendanceMeetingReport->scheduleMeeting->datetime)) }}</td>
+                                            <td>{{ ($attendanceMeetingReport->scheduleMeeting->datetime) ? date('d-m-Y h:i: A', strtotime($attendanceMeetingReport->scheduleMeeting->datetime)) : '-' }}</td>
                                             <td>{{ $attendanceMeetingReport->scheduleMeeting?->place }}</td>
-                                            <td>{{ date('H:i A', strtotime($attendanceMeetingReport->in_time)) }}</td>
-                                            <td>{{ date('H:i A', strtotime($attendanceMeetingReport->out_time)) }}</td>
+                                            <td>{{ ($attendanceMeetingReport->in_time) ? date('H:i A', strtotime($attendanceMeetingReport->in_time)) : '-' }}</td>
+                                            <td>{{ ($attendanceMeetingReport->out_time) ? date('H:i A', strtotime($attendanceMeetingReport->out_time)) : '-' }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

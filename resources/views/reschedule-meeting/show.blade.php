@@ -59,15 +59,19 @@
                                         <tr>
                                             <th>Go to attendance</th>
                                             <td>
-                                                @php
-                                                $diff = strtotime($rescheduleMeeting->date) - strtotime(date('Y-m-d'));
+                                                @if($rescheduleMeeting->is_meeting_completed == "0")
+                                                    @php
+                                                    $diff = strtotime($rescheduleMeeting->date) - strtotime(date('Y-m-d'));
 
-                                                $daysleft = abs(round($diff / 86400));
-                                                @endphp
-                                                @if($diff <= 0)
-                                                <a href="{{ route('attendance.show', $rescheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a>
+                                                    $daysleft = abs(round($diff / 86400));
+                                                    @endphp
+                                                    @if($diff <= 0)
+                                                    <a href="{{ route('attendance.show', $rescheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a>
+                                                    @else
+                                                    <span style="color:#308f18!important">{{ $daysleft }} day left for meeting</span>
+                                                    @endif
                                                 @else
-                                                <span style="color:#308f18!important">{{ $daysleft }} day left for meeting</span>
+                                                -
                                                 @endif
                                             </td>
                                         </tr>
