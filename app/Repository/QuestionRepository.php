@@ -20,6 +20,10 @@ class QuestionRepository
             return $query->where('meeting_id', Auth::user()->meeting_id);
         })->when(Auth::user()->roles[0]->name == "Department", function ($q) {
             return $q->where('department_id', Auth::user()->department_id);
+        })->when(Auth::user()->roles[0]->name == "Department", function ($q) {
+            return $q->whereHas('subQuestions', function($q){
+                $q->where('is_sended', 1);
+            });
         })->latest()->get();
 
         return $question;
