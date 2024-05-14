@@ -91,8 +91,6 @@
                                                 @else
                                                     @if($subQuestion->response != "")
                                                     {{ $subQuestion->response }}
-                                                    @else
-                                                    -
                                                     @endif
                                                 @endif
                                             </td>
@@ -307,10 +305,10 @@
                         success: function(data)
                         {
                             if (!data.error){
+                                $('body').find('#sendButtonQuestion').remove();
                                 swal("Successful!", data.success, "success");
                             }
                             else{
-                                $('body').find('#sendButtonQuestion').remove();
                                 swal("Error!", data.error, "error");
                             }
                         },

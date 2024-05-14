@@ -225,7 +225,7 @@
                                             <a href="{{ route('question.show', $question->id) }}" class="btn btn-primary btn-sm">View Question</a>
                                             @endif
 
-                                            @if($question->subQuestions->where('is_mayor_selected', 0)->count() > 0)
+                                            @if($question->subQuestions->where('is_mayor_selected', 1)->count() == 0)
                                             @can('question.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Question" data-id="{{ $question->id }}"><i data-feather="edit"></i></button>
                                             @endcan
