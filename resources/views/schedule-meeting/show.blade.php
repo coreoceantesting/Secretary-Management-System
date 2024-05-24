@@ -74,7 +74,6 @@
                                                 @else
                                                 -
                                                 @endif
-                                                @endif
                                             </td>
                                         </tr>
                                         @endif
