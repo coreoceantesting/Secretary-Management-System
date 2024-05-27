@@ -83,7 +83,7 @@ class AgendaRepository
 
                 // code to generate pdf
                 $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
-                    ->where('goshwara_id', $agenda->id)->get();
+                    ->where('agenda_id', $agenda->id)->get();
                 $pdf = PDF::loadView('agenda.pdf', compact('agenda', 'goshwaras'));
                 $name = 'pdf/' . 'agenda-' . time() . '.pdf';
 
@@ -153,7 +153,7 @@ class AgendaRepository
 
                 // code to generate pdf
                 $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
-                    ->where('goshwara_id', $agenda->id)->get();
+                    ->where('agenda_id', $agenda->id)->get();
                 $pdf = PDF::loadView('agenda.pdf', compact('agenda', 'goshwaras'));
                 $name = 'pdf/' . $agenda->file . '.pdf';
 
