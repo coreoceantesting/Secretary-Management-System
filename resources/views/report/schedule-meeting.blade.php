@@ -41,7 +41,7 @@
                                 </form>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table id="dataTable" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>
@@ -93,3 +93,14 @@
 
 
 </x-admin.layout>
+
+<script>
+    $(document).ready(function(){
+        $('#dataTable').DataTable({
+            pageLength: 25,
+            info: false,
+            legth: false,
+            order:false,
+        });
+    })
+</script>

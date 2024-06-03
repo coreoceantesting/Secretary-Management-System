@@ -35,7 +35,7 @@ class ReportRepository
     public function attendanceMeetingReport($request)
     {
         $attendanceReport = Attendance::withWhereHas('member', function ($q) use ($request) {
-            $q->when(isset($request->schedule_meeting_id) && $request->schedule_meeting_id != '', function ($q) use ($request) {
+            $q->when(isset($request->party_id) && $request->party_id != '', function ($q) use ($request) {
                 return $q->where('party_id', $request->party_id)->with('party');
             });
         })->with(['scheduleMeeting.agenda', 'meeting'])

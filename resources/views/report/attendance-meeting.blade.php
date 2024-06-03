@@ -17,7 +17,7 @@
                                 <form method="get">
                                     <div class="mb-3 row">
                                         <div class="col-md-3">
-                                            <label class="col-form-label" for="party_id">Select Party Name <span class="text-danger">*</span></label>
+                                            <label class="col-form-label" for="party_id">Select Party Name</label>
                                             <select name="party_id" id="party_id" class="form-select">
                                                 <option value="">Select</option>
                                                 @foreach($parties as $party)
@@ -26,7 +26,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting <span class="text-danger">*</span></label>
+                                            <label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting</label>
                                             <select name="schedule_meeting_id" id="schedule_meeting_id" class="form-select">
                                                 <option value="">Select</option>
                                                 @foreach($scheduleMeetings as $scheduleMeeting)
@@ -42,7 +42,7 @@
                                 </form>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table id="dataTable" class="dataTable table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>
@@ -86,3 +86,14 @@
 
 
 </x-admin.layout>
+
+<script>
+    $(document).ready(function(){
+        $('#dataTable').DataTable({
+            pageLength: 25,
+            info: false,
+            legth: false,
+            order:false,
+        });
+    })
+</script>
