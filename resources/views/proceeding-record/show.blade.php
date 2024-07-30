@@ -17,6 +17,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Department</th>
                                     <th>Goshwara Name(गोषवारा नाव)</th>
                                     <th>Goshwara File(गोषवारा फाईल)</th>
                                 </tr>
@@ -24,6 +25,7 @@
                             <tbody>
                                 @foreach($proceedingRecord->scheduleMeeting->agenda->assignGoshwaraToAgenda as $goshwara)
                                 <tr>
+                                    <td>{{ $goshwara->goshwara?->department?->name }}</td>
                                     <td>{{ $goshwara->goshwara?->name }}</td>
                                     <td><a target="_blank" href="{{ asset('storage/'.$goshwara?->goshwara?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>

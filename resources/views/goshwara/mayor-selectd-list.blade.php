@@ -20,6 +20,7 @@
                                         <th>Meeting</th>
                                         <th>Goshwara Name</th>
                                         <th>Goshwara Subject</th>
+                                        <th>Goshwara Sub Subject</th>
                                         <th>Sent Date</th>
                                         <th>Goshwara</th>
                                         @if(Request()->status == "0")<th>Action</th>@endif
@@ -33,6 +34,7 @@
                                             <td>{{ $goshwara?->meeting?->name ?? '-' }}</td>
                                             <td>{{ $goshwara->name ?? '-' }}</td>
                                             <td>{{ $goshwara->subject }}</td>
+                                            <td>{{ $goshwara->sub_subject }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($goshwara->date)) }}</td>
                                             <td>
                                                 <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a>

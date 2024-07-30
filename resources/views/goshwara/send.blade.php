@@ -37,6 +37,11 @@
                                     <span class="text-danger is-invalid subject_err"></span>
                                 </div>
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="sub_subject">Sub Subject(विषय) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="sub_subject" required name="sub_subject" placeholder="Enter sub subject" />
+                                    <span class="text-danger is-invalid sub_subject_err"></span>
+                                </div>
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="goshwarafile">Select Goshwara(गोषवारा निवडा)</label>
                                     <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara">
                                     <span class="text-danger is-invalid goshwarafile_err"></span>
@@ -68,6 +73,7 @@
                                         <th>Meeting</th>
                                         <th>Goshwara Name</th>
                                         <th>Subject</th>
+                                        <th>Sub Subject</th>
                                         <th>Goshwara File</th>
                                         <th>Action</th>
                                     </tr>
@@ -79,6 +85,7 @@
                                             <td>{{ $goshwara?->meeting?->name }}</td>
                                             <td>{{ $goshwara->name }}</td>
                                             <td>{{ $goshwara->subject }}</td>
+                                            <td>{{ $goshwara->sub_subject ?? '-' }}</td>
                                             <td><a target="_blank" href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm">View Goshwara</a></td>
                                             <td>
                                                 <div class="d-flex">

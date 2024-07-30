@@ -249,6 +249,48 @@
         </div>
     </div>
 
+    @if(Auth::user()->hasRole('Mayor'))
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Latest 5 Agenda</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Meeting</th>
+                                    <th>Name</th>
+                                    <th>File</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Place</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($agendas as $agenda)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $agenda?->meeting?->name }}</td>
+                                    <td>{{ $agenda->name }}</td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">Vie File</a></td>
+                                    <td>{{ \Carbon\Carbon::parse($agenda->date)->format('d-m-Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($agenda->time)->format('h:i A') }}</td>
+                                    <td>{{ $agenda->place }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
 
 
     @push('scripts')

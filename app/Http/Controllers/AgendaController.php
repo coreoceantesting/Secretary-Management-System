@@ -26,7 +26,6 @@ class AgendaController extends Controller
 
         return view('agenda.index')->with([
             'agendas' => $agendas,
-            // 'goshwaras' => $goshwaras,
             'meetings' => $meetings
         ]);
     }

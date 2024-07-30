@@ -18,7 +18,7 @@
                             <div class="mb-3 row">
                                 <div class="col-sm-12 col-lg-4 col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="from">Select Meeting</label>
+                                        <label for="from">Select Meeting <span class="text-danger">*</span></label>
                                         <select name="meeting_id" class="form-select" id="meeting_id" required>
                                             <option value="">Select Meeting</option>
                                             @foreach($meetings as $meeting)
@@ -39,6 +39,13 @@
                                     <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject" value="{{ old('subject') }}" required />
                                     @error('subject')
                                     <span class="text-danger is-invalid subject_err">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="sub_subject">Sub Subject(विषय) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="sub_subject" name="sub_subject" placeholder="Enter sub subject" value="{{ old('sub_subject') }}" required />
+                                    @error('sub_subject')
+                                    <span class="text-danger is-invalid sub_subject_err">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-4">

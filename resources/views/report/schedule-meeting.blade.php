@@ -41,7 +41,7 @@
                                 </form>
                             </div>
                             <div class="table-responsive">
-                                <table id="dataTable" class="table table-bordered">
+                                <table id="buttons-datatables" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>

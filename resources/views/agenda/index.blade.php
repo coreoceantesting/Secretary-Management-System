@@ -191,6 +191,7 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Agenda Name</th>
+                                    <th>Department</th>
                                     <th>Goshwara Subject</th>
                                     <th>Agenda File</th>
                                     <th>Date</th>
@@ -207,7 +208,12 @@
                                         <td>{{ $agenda->name }}</td>
                                         <td>
                                             @foreach($agenda?->assignGoshwaraToAgenda as $subject)
-                                            {{ $subject?->goshwara?->subject.', ' }}<br>
+                                            {{ $loop->iteration.'. '. $subject?->goshwara?->department?->name }}<br>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($agenda?->assignGoshwaraToAgenda as $subject)
+                                            {{ $loop->iteration.'. '. $subject?->goshwara?->subject }}<br>
                                             @endforeach
                                         </td>
                                         <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>

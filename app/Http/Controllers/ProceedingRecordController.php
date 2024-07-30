@@ -70,7 +70,7 @@ class ProceedingRecordController extends Controller
 
     public function show($id)
     {
-        $proceedingRecord = ProceedingRecord::with(['meeting', 'scheduleMeeting.agenda.assignGoshwaraToAgenda.goshwara'])->find($id);
+        $proceedingRecord = ProceedingRecord::with(['meeting', 'scheduleMeeting.agenda.assignGoshwaraToAgenda.goshwara.department'])->find($id);
 
         $scheduleMeeting = ScheduleMeeting::where('id', $proceedingRecord->schedule_meeting_id)->first();
 
@@ -115,7 +115,7 @@ class ProceedingRecordController extends Controller
 
     public function pdf($id)
     {
-        $proceedingRecord = ProceedingRecord::with(['meeting', 'scheduleMeeting.agenda.assignGoshwaraToAgenda.goshwara'])->find($id);
+        $proceedingRecord = ProceedingRecord::with(['meeting', 'scheduleMeeting.agenda.assignGoshwaraToAgenda.goshwara.department'])->find($id);
 
         $scheduleMeeting = ScheduleMeeting::where('id', $proceedingRecord->schedule_meeting_id)->first();
 

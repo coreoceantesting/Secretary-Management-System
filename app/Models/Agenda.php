@@ -16,4 +16,9 @@ class Agenda extends Model
     {
         return $this->hasMany(AssignGoshwaraToAgenda::class, 'agenda_id', 'id');
     }
+
+    public function meeting()
+    {
+        return $this->belongsTo(Meeting::class, 'meeting_id', 'id');
+    }
 }

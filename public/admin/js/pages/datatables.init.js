@@ -29,6 +29,7 @@ function initializeTables() {
             paging: !0,
             // pagingType: "full_numbers",
             dom: "Blfrtip",
+            responsive: true,
             buttons: ["copy", "csv", "excel", "print", "pdf"],
         }),
         new DataTable("#ajax-datatables", {

@@ -85,6 +85,7 @@ class CommonRepository
     public function checkMeetingExist($request)
     {
         $check = ScheduleMeeting::whereDate('date', date('Y-m-d', strtotime($request->date)))
+            ->where('time', date('H:i:s', strtotime($request->time)))
             ->where('meeting_id', $request->meeting_id)->exists();
 
         return $check;

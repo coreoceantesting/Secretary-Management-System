@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\RescheduleMeetingRepository;
 use App\Repository\CommonRepository;
 use App\Http\Requests\RescheduleMeetingRequest;
+use Carbon\Carbon;
 
 class RescheduleMeetingController extends Controller
 {
@@ -88,7 +89,7 @@ class RescheduleMeetingController extends Controller
         $check = $this->commonRepository->checkMeetingExist($request);
 
         if ($check) {
-            return response()->json(['error' => 'Meeting Already Exists on date ' . date('d-m-Y', strtotime($request->date))]);
+            return response()->json(['error' => 'Meeting Already Exists on date ' . date('d-m-Y', strtotime($request->date)) . " " . Carbon::parse($request->time)->format('h:i A')]);
         }
 
         $rescheduleMeeting = $this->rescheduleMeetingRepository->store($request);
