@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\AttendanceRepository;
 use App\Repository\CommonRepository;
 use App\Http\Requests\AttendanceRequest;
+use App\Models\ScheduleMeeting;
 
 class AttendanceController extends Controller
 {
@@ -80,6 +81,41 @@ class AttendanceController extends Controller
 
             if ($attendance) {
                 return response()->json(['success' => 'Attendance updated successfully!', 'id' => $request->id, 'departmentAttenceId' => $attendance[1]]);
+            } else {
+                return response()->json(['error' => 'Something went wrong please try again', 'id' => $request->id]);
+            }
+        }
+    }
+
+    public function startMeetingSendSms(Request $request)
+    {
+        if ($request->ajax()) {
+
+            if ($request->name == "start") {
+                $attendance = $this->attendanceRepository->show($request->id);
+                $members = $this->attendanceRepository->getMeetingMembers($attendance->meeting_id);
+
+                foreach ($members as $member) {
+                    \Log::info('SMS Send to No. ' . $member?->member?->contact_number);
+                }
+
+                ScheduleMeeting::where('id', $request->id)->update([
+                    'is_sms_send' => 1,
+                    'sms_send_time' => now()
+                ]);
+
+                return response()->json([
+                    'success' => 'Sms send successfully'
+                ]);
+            } elseif ($request->name == "pause") {
+                ScheduleMeeting::where('id', $request->id)->update([
+                    'is_sms_send' => 0,
+                    'sms_send_time' => now()
+                ]);
+
+                return response()->json([
+                    'success' => 'Sms send successfully'
+                ]);
             } else {
                 return response()->json(['error' => 'Something went wrong please try again', 'id' => $request->id]);
             }

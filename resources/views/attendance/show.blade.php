@@ -17,6 +17,12 @@
                             <h4 class="card-title">Attendance(उपस्थिती)</h4>
                         </div>
                         <div class="card-body">
+
+                            <div class="text-center">
+                                <button type="button" class="btn btn-warning m-3 @if(!$attendance->is_sms_send) d-none @endif" id="pauseMeeting">Pause Meeting</button>
+                                <button type="button" class="btn btn-success m-3  @if($attendance->is_sms_send) d-none @endif" id="startMeeting">Send Remainder SMS</button>
+                            </div>
+                                
                             <div class="mb-3 row">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
@@ -420,6 +426,111 @@
                             $('#preloader').css('visibility', 'hidden');
                         },
                     });
+                });
+            });
+
+
+            $(document).ready(function(){
+                $('body').on('click', '#startMeeting', function(){
+                    if (confirm('Are you sure you want to send the sms to member?')) {
+                        $.ajax({
+                            url: "{{ route('attendance.startMeetingSendSms') }}",
+                            type: 'GET',
+                            data: {
+                                name : "start",
+                                id: "{{ Request()->attendance }}"
+                            },
+                            beforeSend: function()
+                            {
+                                $('#preloader').css('opacity', '0.5');
+                                $('#preloader').css('visibility', 'visible');
+                            },
+                            success: function(data)
+                            {
+                                if (!data.error){
+                                    $('#startMeeting').addClass('d-none');
+                                    $('#pauseMeeting').removeClass('d-none');
+                                }
+                                else{
+                                    swal("Error!", data.error, "error");
+                                }
+                            },
+                            statusCode: {
+                                422: function(responseObject, textStatus, jqXHR) {
+                                    $("#editSubmit").prop('disabled', false);
+                                    resetErrors();
+                                    printErrMsg(responseObject.responseJSON.errors);
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                },
+                                500: function(responseObject, textStatus, errorThrown) {
+                                    $("#editSubmit").prop('disabled', false);
+                                    swal("Error occured!", "Something went wrong please try again", "error");
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                }
+                            },
+                            error: function(xhr) {
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            },
+                            complete: function() {
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            },
+                        });
+                    }
+                });
+
+                $('body').on('click', '#pauseMeeting', function(){
+                    if (confirm('Are you sure you want to pause meeting?')) {
+                        $.ajax({
+                            url: "{{ route('attendance.startMeetingSendSms') }}",
+                            type: 'GET',
+                            data: {
+                                name : "pause",
+                                id: "{{ Request()->attendance }}"
+                            },
+                            beforeSend: function()
+                            {
+                                $('#preloader').css('opacity', '0.5');
+                                $('#preloader').css('visibility', 'visible');
+                            },
+                            success: function(data)
+                            {
+                                if (!data.error){
+                                    $('#startMeeting').removeClass('d-none');
+                                    $('#pauseMeeting').addClass('d-none');
+                                }
+                                else{
+                                    swal("Error!", data.error, "error");
+                                }
+                            },
+                            statusCode: {
+                                422: function(responseObject, textStatus, jqXHR) {
+                                    $("#editSubmit").prop('disabled', false);
+                                    resetErrors();
+                                    printErrMsg(responseObject.responseJSON.errors);
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                },
+                                500: function(responseObject, textStatus, errorThrown) {
+                                    $("#editSubmit").prop('disabled', false);
+                                    swal("Error occured!", "Something went wrong please try again", "error");
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                }
+                            },
+                            error: function(xhr) {
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            },
+                            complete: function() {
+                                $('#preloader').css('opacity', '0');
+                                $('#preloader').css('visibility', 'hidden');
+                            },
+                        });
+                    }
                 });
             });
         </script>

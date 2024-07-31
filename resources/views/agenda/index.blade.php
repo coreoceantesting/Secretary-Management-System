@@ -198,6 +198,7 @@
                                     <th>Time</th>
                                     <th>Meeting Venue</th>
                                     <th>PDF</th>
+                                    @can('agenda.receipt')<th>Receipt</th>@endcan
                                     @canany(['agenda.edit', 'agenda.delete'])<th>Action</th>@endcan
                                 </tr>
                             </thead>
@@ -225,6 +226,15 @@
                                             <a target="_blank" href="{{ asset('storage/'.$agenda->pdf) }}" class="btn btn-sm btn-primary">View</a>
                                             @endif
                                         </td>
+                                        @can('agenda.receipt')
+                                        <td>
+                                            @if($agenda->is_mayor_view)
+                                            <a target="_blank" href="{{ route('agenda.receipt', $agenda->id) }}" class="btn btn-sm btn-primary">View</a>
+                                            @else
+                                            -
+                                            @endif
+                                        </td>
+                                        @endcan
                                         @canany(['agenda.edit', 'agenda.delete'])
                                         <td>
                                             @if($agenda->is_meeting_schedule == 0)

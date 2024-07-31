@@ -30,7 +30,7 @@ class UserRolesAndPermissionSeeder extends Seeder
 
         $mayor = Role::where('name', 'Mayor')->first();
 
-        $mayor->syncPermissions(['dashboard.view', 'agenda.view', 'agenda.edit', 'question.view', 'tharav.view']);
+        $mayor->syncPermissions(['dashboard.view', 'agenda.view', 'agenda.edit', 'question.view', 'goshwara.view', 'tharav.view', 'schedule_meeting.view', 'schedule_meeting.show']);
 
 
 
@@ -42,12 +42,12 @@ class UserRolesAndPermissionSeeder extends Seeder
 
         $homeDepartment = Role::where('name', 'Home Department')->first();
 
-        $homeDepartment->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'agenda.create', 'agenda.edit', 'agenda.delete', 'schedule_meeting.view', 'schedule_meeting.create', 'schedule_meeting.cancel', 'schedule_meeting.show', 'question.view', 'question.create', 'question.edit', 'question.delete', 'attendance.view', 'attendance.mark', 'reschedule_meeting.view', 'reschedule_meeting.create', 'reschedule_meeting.cancel', 'reschedule_meeting.show', 'suplimentry-agenda.view', 'suplimentry-agenda.create', 'suplimentry-agenda.edit', 'suplimentry-agenda.delete', 'proceeding-record.show', 'proceeding-record.view', 'proceeding-record.create', 'tharav.view', 'tharav.create']);
+        $homeDepartment->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'agenda.create', 'agenda.edit', 'agenda.delete', 'schedule_meeting.view', 'schedule_meeting.create', 'schedule_meeting.cancel', 'schedule_meeting.show', 'question.view', 'question.create', 'question.edit', 'question.delete', 'attendance.view', 'attendance.mark', 'reschedule_meeting.view', 'reschedule_meeting.create', 'reschedule_meeting.cancel', 'reschedule_meeting.show', 'suplimentry-agenda.view', 'suplimentry-agenda.create', 'suplimentry-agenda.edit', 'suplimentry-agenda.delete', 'proceeding-record.show', 'proceeding-record.view', 'proceeding-record.create', 'tharav.view', 'tharav.create', 'agenda.receipt']);
 
 
 
         $admin = Role::where('name', 'Clerk')->first();
 
-        $admin->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'schedule_meeting.show', 'reschedule_meeting.view', 'reschedule_meeting.show', 'reschedule_meeting.show', 'question.view', 'proceeding-record.show', 'proceeding-record.view', 'tharav.view']);
+        $admin->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'agenda.create', 'suplimentry-agenda.view', 'suplimentry-agenda.create', 'schedule_meeting.view', 'schedule_meeting.create', 'schedule_meeting.show', 'reschedule_meeting.view', 'reschedule_meeting.view', 'reschedule_meeting.show', 'attendance.view', 'attendance.mark', 'question.view', 'question.create', 'proceeding-record.show', 'proceeding-record.view', 'tharav.view', 'meeting.view', 'meeting.create', 'meeting.edit', 'meeting.delete', 'tharav.view', 'tharav.create']);
     }
 }

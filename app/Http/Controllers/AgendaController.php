@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\AgendaRepository;
 use App\Http\Requests\AgendaRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Agenda;
 use PDF;
 
 class AgendaController extends Controller
@@ -95,6 +97,14 @@ class AgendaController extends Controller
         } else {
             $response = ['result' => 0];
         }
+
+        if (Auth::user()->hasRole('Mayor')) {
+            Agenda::where('id', $id)->update([
+                'is_mayor_view' => 1,
+                'mayor_view_datetime' => now()
+            ]);
+        }
+
         return $response;
     }
 
@@ -123,6 +133,15 @@ class AgendaController extends Controller
     public function generatePdf()
     {
         $pdf = PDF::loadView('agenda.pdf');
+
+        return $pdf->stream('document.pdf');
+    }
+
+    public function receipt(Request $request)
+    {
+        $agenda = Agenda::with(['assignGoshwaraToAgenda.goshwara.department'])->find($request->id);
+
+        $pdf = PDF::loadView('agenda.receipt', compact('agenda'));
 
         return $pdf->stream('document.pdf');
     }

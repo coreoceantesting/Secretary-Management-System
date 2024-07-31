@@ -108,6 +108,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     // route for agenda
     Route::get('agenda/meeting/pdf', [AgendaController::class, 'generatePdf'])->name('agenda.generatePdf');
     Route::get('agenda/meeting/select-meeting', [AgendaController::class, 'selectMeeting'])->name('agenda.selectMeeting');
+    Route::get('agenda/receipt/{id}', [AgendaController::class, 'receipt'])->name('agenda.receipt');
     Route::resource('agenda', AgendaController::class);
 
     // route for schedule meeting
@@ -141,6 +142,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     // route for attendance
     Route::post('attendance/update/singleMark', [AttendanceController::class, 'saveSingleMark'])->name('attendance.saveSingleMark');
     Route::post('attendance/update/saveDepartmentSingleMark', [AttendanceController::class, 'saveDepartmentSingleMark'])->name('attendance.saveDepartmentSingleMark');
+    Route::get('attendance/startMeetingSendSms', [AttendanceController::class, 'startMeetingSendSms'])->name('attendance.startMeetingSendSms');
     Route::resource('attendance', AttendanceController::class);
     // end of route for attendance
 
