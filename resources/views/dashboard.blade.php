@@ -4,14 +4,7 @@
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
     <div class="row">
-        <div class="col-xxl-5">
-            <div class="d-flex flex-column h-100">
-
-
-            </div>
-        </div>
-
-        <div class="col-xxl-7">
+        <div class="col-12">
             <div class="row h-100">
 
                 <div class="col-xl-4 col-lg-4 col-sm-12 col-12">

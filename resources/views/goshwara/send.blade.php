@@ -142,6 +142,7 @@
                     $("#editForm select[name='meeting_id']").val(data.goshwara.meeting_id);
                     $("#editForm input[name='name']").val(data.goshwara.name);
                     $("#editForm input[name='subject']").val(data.goshwara.subject);
+                    $("#editForm input[name='sub_subject']").val(data.goshwara.sub_subject);
                 }
                 else
                 {
