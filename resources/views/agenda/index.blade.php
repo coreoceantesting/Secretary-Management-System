@@ -102,7 +102,7 @@
                         <div class="mb-3 row">
                             <div class="col-md-4">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select @if(Auth::user()->hasRole('Mayor'))readonly @endif name="meeting_id" id="meetingId" required class="form-select">
+                                <select @if(Auth::user()->hasRole('Mayor'))disabled @endif name="meeting_id" id="meetingId" required class="form-select">
                                     <option value="">Select Meeting</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -123,23 +123,23 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="agendafile">Select File(फाइल निवडा)</label>
-                                <input @if(Auth::user()->hasRole('Mayor'))readonly @endif class="form-control" id="agendafile" name="agendafile" type="file">
+                                <input @if(Auth::user()->hasRole('Mayor'))disabled @endif class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Meeting Date <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" type="date" placeholder="Select date" required>
+                                <input class="form-control" @if(Auth::user()->hasRole('Mayor'))disabled @endif id="date" name="date" type="date" placeholder="Select date" required>
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="time">Meeting Time <span class="text-danger">*</span></label>
-                                <input class="form-control" id="time" name="time" type="time" placeholder="Select time" required>
+                                <input class="form-control" @if(Auth::user()->hasRole('Mayor'))disabled @endif id="time" name="time" type="time" placeholder="Select time" required>
                                 <span class="text-danger is-invalid time_err"></span>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="col-form-label" for="place">Meeting Venue <span class="text-danger">*</span></label>
-                                <input class="form-control" id="place" name="place" type="place" placeholder="Enter place" required>
+                                <input class="form-control" id="place" name="place" type="place" placeholder="Enter place" @if(Auth::user()->hasRole('Mayor'))disabled @endif required>
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
                         </div>
@@ -214,7 +214,7 @@
                                         </td>
                                         <td>
                                             @foreach($agenda?->assignGoshwaraToAgenda as $subject)
-                                            {{ $loop->iteration.'. '. $subject?->goshwara?->subject }}<br>
+                                            @if($subject?->goshwara?->file)<a target="_blank" href="{{ asset('storage/'.$subject?->goshwara?->file) }}">{{ $loop->iteration.'. '.$subject?->goshwara?->subject }}</a>@endif<br>
                                             @endforeach
                                         </td>
                                         <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
@@ -352,7 +352,7 @@
                 if (!data.error)
                 {
                     $("#editForm input[name='edit_model_id']").val(data.agenda.id);
-                    $("#editForm select[name='meeting_id']").val(data.agenda.meeting_id);
+                    $("#editForm select[name='meeting_id']").html(data.meetingHtml);
                     $("#editForm input[name='name']").val(data.agenda.name);
                     $("#editForm input[name='date']").val(data.agenda.date);
                     $("#editForm input[name='time']").val(data.agenda.time);

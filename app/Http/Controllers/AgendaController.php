@@ -7,6 +7,7 @@ use App\Repository\AgendaRepository;
 use App\Http\Requests\AgendaRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Agenda;
+use App\Models\Meeting;
 use PDF;
 
 class AgendaController extends Controller
@@ -88,11 +89,26 @@ class AgendaController extends Controller
                                 </tr>';
         }
 
+        $meetingHtml = '<option value="">Select Meeting</option>';
+        $editMeetings = Meeting::whereHas('goshwara', function ($q) use ($id) {
+            return $q->where([
+                'is_sent' => 1
+            ])->orWhere('meeting_id', '!=', $id);
+        })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
+            return $q->where("id", Auth::user()->meeting_id);
+        })->latest()->get();
+
+        foreach ($editMeetings as $editMeeting) {
+            $selected = ($id == $editMeeting->id) ? 'selected' : '';
+            $meetingHtml .= '<option ' . $selected . ' value="' . $editMeeting->id . '">' . $editMeeting->name . '</option>';
+        }
+
         if ($agenda) {
             $response = [
                 'result' => 1,
                 'agenda' => $agenda,
-                'goshwaraHtml' => $goshwaraHtml
+                'goshwaraHtml' => $goshwaraHtml,
+                'meetingHtml' => $meetingHtml
             ];
         } else {
             $response = ['result' => 0];

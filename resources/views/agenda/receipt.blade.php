@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Receipt</title>
     <style>
+        body {
+            font-family: 'freeserif', 'normal';
+            padding: 0;
+            margin: 0;
+        }
         table {
             border-collapse: collapse;
             width: 100%
