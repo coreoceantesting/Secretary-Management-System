@@ -22,7 +22,7 @@ class ScheduleMeetingController extends Controller
     {
         $scheduleMeetings = $this->scheduleMeetingRepository->index();
 
-        // $meetings = $this->commonRepository->getMeeting();
+        $meetings = $this->commonRepository->getMeeting();
 
         $agendas = $this->commonRepository->getNotScheduleMeetingAgenda();
 
@@ -30,7 +30,7 @@ class ScheduleMeetingController extends Controller
 
         return view('schedule-meeting.index')->with([
             'scheduleMeetings' => $scheduleMeetings,
-            // 'meetings' => $meetings,
+            'meetings' => $meetings,
             'agendas' => $agendas,
             'departments' => $departments
         ]);
@@ -129,15 +129,6 @@ class ScheduleMeetingController extends Controller
     }
 
     public function fetchAgendaDetails(Request $request)
-    {
-        if ($request->ajax()) {
-            $agenda = $this->scheduleMeetingRepository->getAgendaById($request->agenda_id);
-
-            return response()->json(['agenda' => $agenda]);
-        }
-    }
-
-    public function fetchAgendaMeetingDetails(Request $request)
     {
         if ($request->ajax()) {
             $agenda = $this->scheduleMeetingRepository->getAgendaById($request->agenda_id);

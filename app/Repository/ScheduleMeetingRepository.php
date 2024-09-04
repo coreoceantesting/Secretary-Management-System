@@ -43,6 +43,11 @@ class ScheduleMeetingRepository
         return Agenda::find($id);
     }
 
+    public function fetchAgendaMeetingDetails($id)
+    {
+        return Agenda::with('meeting')->where('id', $id)->get();
+    }
+
     public function store($request)
     {
         DB::beginTransaction();

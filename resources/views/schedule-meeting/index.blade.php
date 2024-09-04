@@ -31,14 +31,15 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="meeting_id" name="meeting_id" required>
+                                <select class="form-select col-sm-12" disabled id="meeting_id" name="meeting_ids" required>
                                     <option value="">--Select Meeting--</option>
-                                    {{-- @foreach($meetings as $meeting)
+                                    @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
-                                    @endforeach --}}
+                                    @endforeach
                                 </select>
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
+                            <input type="hidden" name="meeting_id" id="hiddenMeetingId">
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="date" name="date" type="date" required />
@@ -536,8 +537,8 @@
         $('#agenda_id').change(function(){
             let agendaId = $(this).val();
             $.ajax({
-                url: "{{ route('schedule-meeting.fetch-agenda-meeting') }}",
-                type: 'get',
+                url: "{{ route('schedule-meeting.fetch-agenda') }}",
+                type: 'POST',
                 data: {
                     '_method': "get",
                     'agenda_id': agendaId,
@@ -549,7 +550,8 @@
                 },
                 success: function(data, textStatus, jqXHR) {
                     if (!data.error && !data.error2) {
-                        $("#addForm select[name='meeting_id']").val(data.agenda.meeting_id);
+                        $("#addForm select[name='meeting_ids']").val(data.agenda.meeting_id);
+                        $("#addForm #hiddenMeetingId").val(data.agenda.meeting_id);
                         $("#addForm input[name='date']").val(data.agenda.date);
                         $("#addForm input[name='time']").val(data.agenda.time);
                         $("#addForm input[name='place']").val(data.agenda.place);
