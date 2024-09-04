@@ -33,9 +33,9 @@
                                 <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
                                 <select class="form-select col-sm-12" id="meeting_id" name="meeting_id" required>
                                     <option value="">--Select Meeting--</option>
-                                    @foreach($meetings as $meeting)
+                                    {{-- @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
@@ -536,8 +536,8 @@
         $('#agenda_id').change(function(){
             let agendaId = $(this).val();
             $.ajax({
-                url: "{{ route('schedule-meeting.fetch-agenda') }}",
-                type: 'POST',
+                url: "{{ route('schedule-meeting.fetch-agenda-meeting') }}",
+                type: 'get',
                 data: {
                     '_method': "get",
                     'agenda_id': agendaId,

@@ -58,7 +58,7 @@ Route::middleware(['guest', 'PreventBackHistory'])->group(function () {
 Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     // Auth Routes
-    Route::get('home', fn () => redirect()->route('dashboard'))->name('home');
+    Route::get('home', fn() => redirect()->route('dashboard'))->name('home');
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('logout', [AuthController::class, 'Logout'])->name('logout');
     Route::get('change-theme-mode', [DashboardController::class, 'changeThemeMode'])->name('change-theme-mode');
@@ -113,6 +113,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
 
     // route for schedule meeting
     Route::get('schedule-meeting/fetch-agenda-details', [ScheduleMeetingController::class, 'fetchAgendaDetails'])->name('schedule-meeting.fetch-agenda');
+    Route::get('schedule-meeting/fetch-agenda-meeting-details', [ScheduleMeetingController::class, 'fetchAgendaMeetingDetails'])->name('schedule-meeting.fetch-agenda-meeting');
     Route::post('schedule-meeting/{id}/cancel', [ScheduleMeetingController::class, 'cancel'])->name('schedule-meeting.cancel');
     Route::resource('schedule-meeting', ScheduleMeetingController::class);
     // end of route for schedule meeting

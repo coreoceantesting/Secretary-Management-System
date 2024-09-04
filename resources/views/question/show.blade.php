@@ -166,8 +166,8 @@
         <script>
             $(document).ready(function(){
                 $('body').on('click', '.sendQuestionResponse', function(){
-                    let confirm = confirm('Are you sure you want to send this question');
-                    if(confirm){
+                    let userConfirmation  = confirm('Are you sure you want to send this question');
+                    if(userConfirmation ){
                         let id = $(this).closest('tr').find('.questionId').val();
                         let response = $(this).closest('tr').find('.questionResponse').val();
 
@@ -233,8 +233,8 @@
         <script>
             $(document).ready(function(){
                 $('body').on('click', '.acceptQuestion', function(){
-                    let confirm = confirm('Are you sure you want to accept this question');
-                    if(confirm){
+                    let userConfirmation  = confirm('Are you sure you want to accept this question');
+                    if(userConfirmation ){
                         let id = $(this).closest('tr').find('.questionId').val();
                         $(this).attr('id', 'acceptButtonQuestion');
 
@@ -295,9 +295,9 @@
             $(document).ready(function(){
                 $('body').on('click', '.sendQuestion', function(){
 
-                    let confirm = confirm('Are you sure you want to send this question to department');
+                    let userConfirmation  = confirm('Are you sure you want to send this question to department');
 
-                    if(confirm){
+                    if(userConfirmation ){
                         let id = $(this).closest('tr').find('.questionId').val();
                         $(this).attr('id', 'sendButtonQuestion');
                         $.ajax({
