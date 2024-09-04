@@ -33,4 +33,9 @@ class Question extends Model
     {
         return $this->hasMany(SubQuestion::class, 'question_id', 'id');
     }
+
+    public function department()
+    {
+        return $this->hasOne(Department::class, 'department_id');
+    }
 }
