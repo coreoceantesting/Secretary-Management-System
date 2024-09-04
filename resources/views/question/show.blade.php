@@ -107,12 +107,12 @@
                                             <td>
                                                 @if($subQuestion->response == "" && $subQuestion->is_sended == "1")
                                                     @can('question.response')
-                                                    <button type="button" onclick="return confirm('Are you sure you want to send this question')" class="btn btn-sm btn-primary sendQuestionResponse @if($subQuestion->response == "")d-none @endif">Send</button>
+                                                    <button type="button" class="btn btn-sm btn-primary sendQuestionResponse @if($subQuestion->response == "")d-none @endif">Send</button>
                                                     @endcan
                                                 @elseif(Auth::user()->hasRole('Mayor') && $subQuestion->is_mayor_selected == "0")
-                                                    <button type="button" onclick="return confirm('Are you sure you want to accept this question')" class="btn btn-sm btn-primary acceptQuestion">Accept</button>
+                                                    <button type="button" class="btn btn-sm btn-primary acceptQuestion">Accept</button>
                                                 @elseif(Auth::user()->hasRole('Home Department') && $subQuestion->is_mayor_selected == "1" && $subQuestion->is_sended == "0")
-                                                    <button type="button" onclick="return confirm('Are you sure you want to send this question to department')" class="btn btn-sm btn-primary sendQuestion">Send</button>
+                                                    <button type="button" class="btn btn-sm btn-primary sendQuestion">Send</button>
                                                 @else
                                                 -
                                                 @endif
@@ -166,52 +166,55 @@
         <script>
             $(document).ready(function(){
                 $('body').on('click', '.sendQuestionResponse', function(){
-                    let id = $(this).closest('tr').find('.questionId').val();
-                    let response = $(this).closest('tr').find('.questionResponse').val();
+                    let confirm = confirm('Are you sure you want to send this question');
+                    if(confirm){
+                        let id = $(this).closest('tr').find('.questionId').val();
+                        let response = $(this).closest('tr').find('.questionResponse').val();
 
-                    $.ajax({
-                        url: "{{ route('question.saveSingleResponse') }}",
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            id: id,
-                            response: response
-                        },
-                        beforeSend: function()
-                        {
-                            $('#preloader').css('opacity', '0.5');
-                            $('#preloader').css('visibility', 'visible');
-                        },
-                        success: function(data)
-                        {
-                            if (!data.error)
-                                swal("Successful!", data.success, "success");
-                            else
-                                swal("Error!", data.error, "error");
-                        },
-                        statusCode: {
-                            422: function(responseObject, textStatus, jqXHR) {
-                                $("#editSubmit").prop('disabled', false);
-                                resetErrors();
-                                printErrMsg(responseObject.responseJSON.errors);
+                        $.ajax({
+                            url: "{{ route('question.saveSingleResponse') }}",
+                            type: 'POST',
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                id: id,
+                                response: response
+                            },
+                            beforeSend: function()
+                            {
+                                $('#preloader').css('opacity', '0.5');
+                                $('#preloader').css('visibility', 'visible');
+                            },
+                            success: function(data)
+                            {
+                                if (!data.error)
+                                    swal("Successful!", data.success, "success");
+                                else
+                                    swal("Error!", data.error, "error");
+                            },
+                            statusCode: {
+                                422: function(responseObject, textStatus, jqXHR) {
+                                    $("#editSubmit").prop('disabled', false);
+                                    resetErrors();
+                                    printErrMsg(responseObject.responseJSON.errors);
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                },
+                                500: function(responseObject, textStatus, errorThrown) {
+                                    swal("Error occured!", "Something went wrong please try again", "error");
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                }
+                            },
+                            error: function(xhr) {
                                 $('#preloader').css('opacity', '0');
                                 $('#preloader').css('visibility', 'hidden');
                             },
-                            500: function(responseObject, textStatus, errorThrown) {
-                                swal("Error occured!", "Something went wrong please try again", "error");
+                            complete: function() {
                                 $('#preloader').css('opacity', '0');
                                 $('#preloader').css('visibility', 'hidden');
-                            }
-                        },
-                        error: function(xhr) {
-                            $('#preloader').css('opacity', '0');
-                            $('#preloader').css('visibility', 'hidden');
-                        },
-                        complete: function() {
-                            $('#preloader').css('opacity', '0');
-                            $('#preloader').css('visibility', 'hidden');
-                        },
-                    });
+                            },
+                        });
+                    }
                 });
 
                 $('body').on('keyup', '.questionResponse', function(){
@@ -230,54 +233,57 @@
         <script>
             $(document).ready(function(){
                 $('body').on('click', '.acceptQuestion', function(){
-                    let id = $(this).closest('tr').find('.questionId').val();
-                    $(this).attr('id', 'acceptButtonQuestion');
+                    let confirm = confirm('Are you sure you want to accept this question');
+                    if(confirm){
+                        let id = $(this).closest('tr').find('.questionId').val();
+                        $(this).attr('id', 'acceptButtonQuestion');
 
-                    $.ajax({
-                        url: "{{ route('question.acceptQuetionByMayor') }}",
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            id: id
-                        },
-                        beforeSend: function()
-                        {
-                            $('#preloader').css('opacity', '0.5');
-                            $('#preloader').css('visibility', 'visible');
-                        },
-                        success: function(data)
-                        {
-                            if (!data.error){
-                                $('body').find('#acceptButtonQuestion').remove()
-                                swal("Successful!", data.success, "success");
-                            }
-                            else{
-                                swal("Error!", data.error, "error");
-                            }
-                        },
-                        statusCode: {
-                            422: function(responseObject, textStatus, jqXHR) {
-                                $("#editSubmit").prop('disabled', false);
-                                resetErrors();
-                                printErrMsg(responseObject.responseJSON.errors);
+                        $.ajax({
+                            url: "{{ route('question.acceptQuetionByMayor') }}",
+                            type: 'POST',
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                id: id
+                            },
+                            beforeSend: function()
+                            {
+                                $('#preloader').css('opacity', '0.5');
+                                $('#preloader').css('visibility', 'visible');
+                            },
+                            success: function(data)
+                            {
+                                if (!data.error){
+                                    $('body').find('#acceptButtonQuestion').remove()
+                                    swal("Successful!", data.success, "success");
+                                }
+                                else{
+                                    swal("Error!", data.error, "error");
+                                }
+                            },
+                            statusCode: {
+                                422: function(responseObject, textStatus, jqXHR) {
+                                    $("#editSubmit").prop('disabled', false);
+                                    resetErrors();
+                                    printErrMsg(responseObject.responseJSON.errors);
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                },
+                                500: function(responseObject, textStatus, errorThrown) {
+                                    swal("Error occured!", "Something went wrong please try again", "error");
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                }
+                            },
+                            error: function(xhr) {
                                 $('#preloader').css('opacity', '0');
                                 $('#preloader').css('visibility', 'hidden');
                             },
-                            500: function(responseObject, textStatus, errorThrown) {
-                                swal("Error occured!", "Something went wrong please try again", "error");
+                            complete: function() {
                                 $('#preloader').css('opacity', '0');
                                 $('#preloader').css('visibility', 'hidden');
-                            }
-                        },
-                        error: function(xhr) {
-                            $('#preloader').css('opacity', '0');
-                            $('#preloader').css('visibility', 'hidden');
-                        },
-                        complete: function() {
-                            $('#preloader').css('opacity', '0');
-                            $('#preloader').css('visibility', 'hidden');
-                        },
-                    });
+                            },
+                        });
+                    }
                 });
             });
         </script>
@@ -288,53 +294,58 @@
         <script>
             $(document).ready(function(){
                 $('body').on('click', '.sendQuestion', function(){
-                    let id = $(this).closest('tr').find('.questionId').val();
-                    $(this).attr('id', 'sendButtonQuestion');
-                    $.ajax({
-                        url: "{{ route('question.sendQuestion') }}",
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            id: id
-                        },
-                        beforeSend: function()
-                        {
-                            $('#preloader').css('opacity', '0.5');
-                            $('#preloader').css('visibility', 'visible');
-                        },
-                        success: function(data)
-                        {
-                            if (!data.error){
-                                $('body').find('#sendButtonQuestion').remove();
-                                swal("Successful!", data.success, "success");
-                            }
-                            else{
-                                swal("Error!", data.error, "error");
-                            }
-                        },
-                        statusCode: {
-                            422: function(responseObject, textStatus, jqXHR) {
-                                $("#editSubmit").prop('disabled', false);
-                                resetErrors();
-                                printErrMsg(responseObject.responseJSON.errors);
+
+                    let confirm = confirm('Are you sure you want to send this question to department');
+
+                    if(confirm){
+                        let id = $(this).closest('tr').find('.questionId').val();
+                        $(this).attr('id', 'sendButtonQuestion');
+                        $.ajax({
+                            url: "{{ route('question.sendQuestion') }}",
+                            type: 'POST',
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                id: id
+                            },
+                            beforeSend: function()
+                            {
+                                $('#preloader').css('opacity', '0.5');
+                                $('#preloader').css('visibility', 'visible');
+                            },
+                            success: function(data)
+                            {
+                                if (!data.error){
+                                    $('body').find('#sendButtonQuestion').remove();
+                                    swal("Successful!", data.success, "success");
+                                }
+                                else{
+                                    swal("Error!", data.error, "error");
+                                }
+                            },
+                            statusCode: {
+                                422: function(responseObject, textStatus, jqXHR) {
+                                    $("#editSubmit").prop('disabled', false);
+                                    resetErrors();
+                                    printErrMsg(responseObject.responseJSON.errors);
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                },
+                                500: function(responseObject, textStatus, errorThrown) {
+                                    swal("Error occured!", "Something went wrong please try again", "error");
+                                    $('#preloader').css('opacity', '0');
+                                    $('#preloader').css('visibility', 'hidden');
+                                }
+                            },
+                            error: function(xhr) {
                                 $('#preloader').css('opacity', '0');
                                 $('#preloader').css('visibility', 'hidden');
                             },
-                            500: function(responseObject, textStatus, errorThrown) {
-                                swal("Error occured!", "Something went wrong please try again", "error");
+                            complete: function() {
                                 $('#preloader').css('opacity', '0');
                                 $('#preloader').css('visibility', 'hidden');
-                            }
-                        },
-                        error: function(xhr) {
-                            $('#preloader').css('opacity', '0');
-                            $('#preloader').css('visibility', 'hidden');
-                        },
-                        complete: function() {
-                            $('#preloader').css('opacity', '0');
-                            $('#preloader').css('visibility', 'hidden');
-                        },
-                    });
+                            },
+                        });
+                    }
                 });
             });
         </script>
