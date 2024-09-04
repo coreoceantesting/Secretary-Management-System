@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="time">Time(वेळ) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="time" name="time" type="time" placeholder="Enter time" value="{{ date('h:i:s') }}" readonly>
+                                <input class="form-control" id="time" name="time" type="time" placeholder="Enter time" value="{{ date('H:i:s') }}" readonly>
                                 <span class="text-danger is-invalid time_err"></span>
                             </div>
                             <div class="col-md-4">
