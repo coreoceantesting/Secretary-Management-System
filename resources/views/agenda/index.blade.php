@@ -190,6 +190,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr no.</th>
+                                    <th>Meeting</th>
                                     <th>Agenda Name</th>
                                     <th>Department</th>
                                     <th>Goshwara Subject</th>
@@ -206,6 +207,7 @@
                                 @foreach ($agendas as $agenda)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $agenda?->meeting?->name }}</td>
                                         <td>{{ $agenda->name }}</td>
                                         <td>
                                             @foreach($agenda?->assignGoshwaraToAgenda as $subject)
@@ -242,13 +244,13 @@
                                             @if(Auth::user()->hasRole('Mayor'))
                                             <button class="edit-element btn btn-secondary btn-sm px-2 py-1" title="Edit Agenda" data-id="{{ $agenda->id }}">Select Goshwara</button>
                                             @else
-                                            @if($agenda->is_mayor_selected == 0)
+                                            @if($agenda->is_mayor_view == 0)
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Agenda" data-id="{{ $agenda->id }}"><i data-feather="edit"></i></button>
                                             @endif
                                             @endif
                                             @endcan
 
-                                            @if($agenda->is_mayor_selected == 0)
+                                            @if($agenda->is_mayor_view == 0)
                                             @can('agenda.delete')
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete Agenda" data-id="{{ $agenda->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan

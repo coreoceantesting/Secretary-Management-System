@@ -168,6 +168,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr no.</th>
+                                    <th>Department</th>
                                     <th>Meeting</th>
                                     <th>Meeting No.</th>
                                     <th>Date</th>
@@ -180,6 +181,7 @@
                                 @foreach ($questions as $question)
                                     <tr>
                                         <td>{{ $loop->iteration }}  {{ $question->scheduleMeeting->id }}</td>
+                                        <td>{{ $question->department?->name ?? '-' }}</td>
                                         <td>{{ $question->meeting?->name ?? '-' }}</td>
                                         <td>{{ $question->scheduleMeeting?->unique_id ?? '-' }}</td>
 

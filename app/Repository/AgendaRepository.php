@@ -16,7 +16,7 @@ class AgendaRepository
 {
     public function index()
     {
-        return Agenda::with(['assignGoshwaraToAgenda.goshwara.department'])
+        return Agenda::with(['meeting', 'assignGoshwaraToAgenda.goshwara.department'])
             ->when(Auth::user()->hasRole('Clerk'), function ($query) {
                 return $query->where('meeting_id', Auth::user()->meeting_id);
             })->when(Auth::user()->hasRole('Department'), function ($query) {

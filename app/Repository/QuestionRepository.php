@@ -16,12 +16,12 @@ class QuestionRepository
 {
     public function index()
     {
-        $question =  Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'subQuestions'])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+        $question =  Question::with(['department', 'meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'subQuestions'])->when(Auth::user()->hasRole('Clerk'), function ($query) {
             return $query->where('meeting_id', Auth::user()->meeting_id);
         })->when(Auth::user()->roles[0]->name == "Department", function ($q) {
             return $q->where('department_id', Auth::user()->department_id);
         })->when(Auth::user()->roles[0]->name == "Department", function ($q) {
-            return $q->whereHas('subQuestions', function($q){
+            return $q->whereHas('subQuestions', function ($q) {
                 $q->where('is_sended', 1);
             });
         })->latest()->get();
