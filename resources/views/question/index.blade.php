@@ -180,7 +180,7 @@
                             <tbody>
                                 @foreach ($questions as $question)
                                     <tr>
-                                        <td>{{ $loop->iteration }}  {{ $question->scheduleMeeting->id }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $question->department?->name ?? '-' }}</td>
                                         <td>{{ $question->meeting?->name ?? '-' }}</td>
                                         <td>{{ $question->scheduleMeeting?->unique_id ?? '-' }}</td>
