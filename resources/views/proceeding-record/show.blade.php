@@ -196,7 +196,7 @@
                                     <th>Question(प्रश्न)</th>
                                     <th>Question File(प्रश्न फाइल)</th>
                                     <th>Answer(उत्तर)</th>
-                                    <th>Answer File(उत्तर फाईल)</th>
+                                    <th>Response File(उत्तर फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>

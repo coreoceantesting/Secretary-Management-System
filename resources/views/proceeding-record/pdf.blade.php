@@ -219,7 +219,7 @@
                                     <th>Question</th>
                                     <th>Question File</th>
                                     <th>Answer</th>
-                                    <th>Answer File</th>
+                                    <th>Response File</th>
                                 </tr>
                             </thead>
                             <tbody>
