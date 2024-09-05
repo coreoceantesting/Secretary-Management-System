@@ -43,7 +43,7 @@ class ScheduleMeetingController extends Controller
         $check = $this->commonRepository->checkMeetingExist($request);
 
         if ($check) {
-            return response()->json(['error' => 'Meeting Already Exists on date ' . date('d-m-Y', strtotime($request->date))]);
+            return response()->json(['error' => 'Meeting Already Created on date time ' . date('d-m-Y h:i A', strtotime($request->date . ' ' . $request->time)) . '. Please select diffrent datetime']);
         }
 
         $scheduleMeeting = $this->scheduleMeetingRepository->store($request);
