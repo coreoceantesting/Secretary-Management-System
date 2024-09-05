@@ -130,7 +130,7 @@
                                         <tr>
                                             <th>Response File</th>
                                             <td colspan="2">
-                                                @if($question->scheduleMeeting?->parentLatestScheduleMeeting?->is_meeting_completed == "0" && $question->scheduleMeeting?->parentLatestScheduleMeeting?->is_meeting_cancel == "0")
+                                                @if($question->scheduleMeeting?->parentLatestScheduleMeetings?->is_meeting_completed == "0" && $question->scheduleMeeting?->parentLatestScheduleMeetings?->is_meeting_cancel == "0")
                                                 <div class="col-md-4">
                                                     <label class="col-form-label" for="responsefile">File(फाईल) <span class="text-danger">*</span></label>
                                                     @if($question->response_file)

@@ -145,7 +145,7 @@ class QuestionRepository
 
     public function show($id)
     {
-        return Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeeting'])
+        return Question::with(['meeting', 'scheduleMeeting.parentLatestScheduleMeetings'])
             ->where('id', $id)
             ->first();
     }

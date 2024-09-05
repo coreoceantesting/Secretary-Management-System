@@ -40,7 +40,12 @@ class ScheduleMeeting extends Model
 
     public function parentLatestScheduleMeeting()
     {
-        return $this->hasOne(ScheduleMeeting::class, 'parent_id', 'id')->latest();
+        return $this->hasOne(ScheduleMeeting::class, 'parent_id', 'id');
+    }
+
+    public function parentLatestScheduleMeetings()
+    {
+        return $this->belongsTo(ScheduleMeeting::class, 'parent_id', 'id');
     }
 
     public function questions()
