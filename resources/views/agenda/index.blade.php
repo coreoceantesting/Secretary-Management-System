@@ -529,7 +529,7 @@
                                     <td>${val.meeting.name}</td>
                                     <td>${val.name}</td>
                                     <td>${val.subject}</td>
-                                    <td><a href="{{ asset('storage/') }}${val.file}" class="btn btn-primary btn-sm">View</a></td>
+                                    <td><a target="_blank" href="{{ asset('storage') }}/${val.file}" class="btn btn-primary btn-sm">View</a></td>
                                 </tr>`;
                     });
 
