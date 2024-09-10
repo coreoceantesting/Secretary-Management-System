@@ -145,7 +145,7 @@ class AgendaRepository
                     if (Auth::user()->roles[0]->name == "Mayor") {
                         Goshwara::where('id', $request->goshwara_id[$i])->update([
                             'is_mayor_selected' => 1,
-                            'selected_datetime' => date('Y-m-d h:i:s'),
+                            'selected_datetime' => date('Y-m-d H:i:s'),
                             'selected_by' => Auth::user()->id
                         ]);
                     }

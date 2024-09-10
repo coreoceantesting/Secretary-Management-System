@@ -48,8 +48,8 @@ class TharavRepository
         try {
 
             $request['date'] = date('Y-m-d', strtotime($request->date));
-            $request['time'] = date('h:i:s', strtotime($request->time));
-            $request['datetime'] = date('Y-m-d', strtotime($request->date)) . " " . date('h:i:s', strtotime($request->time));
+            $request['time'] = date('H:i:s', strtotime($request->time));
+            $request['datetime'] = date('Y-m-d', strtotime($request->date)) . " " . date('H:i:s', strtotime($request->time));
 
             $file = null;
             if ($request->hasFile('uploadfile')) {

@@ -42,7 +42,7 @@
                             <input type="hidden" name="meeting_id" id="hiddenMeetingId">
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" type="date" required />
+                                <input class="form-control" id="date" name="date" min='{{ date('Y-m-d') }}' type="date" required />
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">

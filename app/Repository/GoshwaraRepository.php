@@ -125,7 +125,7 @@ class GoshwaraRepository
         try {
             $goshwara = Goshwara::find($request->id);
             $goshwara->sent_by = Auth::user()->id;
-            $goshwara->date = date('Y-m-d h:i:s');
+            $goshwara->date = date('Y-m-d H:i:s');
             $goshwara->is_sent = 1;
             $goshwara->save();
             DB::commit();

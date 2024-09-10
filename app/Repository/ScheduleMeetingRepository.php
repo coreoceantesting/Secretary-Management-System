@@ -61,7 +61,7 @@ class ScheduleMeetingRepository
 
 
             $date = date('Y-m-d', strtotime($request->date));
-            $time = date('h:i:s', strtotime($request->time));
+            $time = date('H:i:s', strtotime($request->time));
 
             $request['date'] = $date;
             $request['time'] = $time;
@@ -129,7 +129,7 @@ class ScheduleMeetingRepository
             ]);
 
             $date = date('Y-m-d', strtotime($request->date));
-            $time = date('h:i:s', strtotime($request->time));
+            $time = date('H:i:s', strtotime($request->time));
             $request['date'] = $date;
             $request['time'] = $time;
             $request['datetime'] = $date . " " . $time;

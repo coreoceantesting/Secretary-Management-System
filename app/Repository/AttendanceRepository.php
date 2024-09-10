@@ -36,7 +36,7 @@ class AttendanceRepository
 
                 ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
                     'meeting_end_date' => ($request->meeting_end_date) ? date('Y-m-d', strtotime($request->meeting_end_date)) : null,
-                    'meeting_end_time' => ($request->meeting_end_time) ? date('h:i:s', strtotime($request->meeting_end_time)) : null,
+                    'meeting_end_time' => ($request->meeting_end_time) ? date('H:i:s', strtotime($request->meeting_end_time)) : null,
                     'meeting_end_reason' => $request->meeting_end_reason
                 ]);
 
@@ -46,12 +46,12 @@ class AttendanceRepository
                 for ($i = 0; $i < count($request->member_id); $i++) {
                     $inTime = null;
                     if ($request->in_time[$i] != "") {
-                        $inTime = date('h:i:s', strtotime($request->in_time[$i]));
+                        $inTime = date('H:i:s', strtotime($request->in_time[$i]));
                     }
 
                     $outTime = null;
                     if ($request->out_time[$i] != "") {
-                        $outTime = date('h:i:s', strtotime($request->out_time[$i]));
+                        $outTime = date('H:i:s', strtotime($request->out_time[$i]));
                     }
 
                     if ($request->in_time[$i] != "") {
@@ -72,12 +72,12 @@ class AttendanceRepository
                     // Log::info($request->department_in_time[$i]);
                     $inTime = null;
                     if ($request->department_in_time[$i] != "") {
-                        $inTime = date('h:i:s', strtotime($request->department_in_time[$i]));
+                        $inTime = date('H:i:s', strtotime($request->department_in_time[$i]));
                     }
 
                     $outTime = null;
                     if ($request->department_out_time[$i] != "") {
-                        $outTime = date('h:i:s', strtotime($request->department_out_time[$i]));
+                        $outTime = date('H:i:s', strtotime($request->department_out_time[$i]));
                     }
 
                     if ($request->department_in_time[$i] != "") {
@@ -99,7 +99,7 @@ class AttendanceRepository
                 ScheduleMeeting::where('id', $request->schedule_meeting_id)->update([
                     'is_meeting_completed' => 1,
                     'meeting_end_date' => ($request->meeting_end_date) ? date('Y-m-d', strtotime($request->meeting_end_date)) : null,
-                    'meeting_end_time' => ($request->meeting_end_time) ? date('h:i:s', strtotime($request->meeting_end_time)) : null,
+                    'meeting_end_time' => ($request->meeting_end_time) ? date('H:i:s', strtotime($request->meeting_end_time)) : null,
                     'meeting_end_reason' => $request->meeting_end_reason
                 ]);
 
@@ -116,9 +116,7 @@ class AttendanceRepository
         }
     }
 
-    public function edit($id)
-    {
-    }
+    public function edit($id) {}
 
 
 
@@ -189,8 +187,8 @@ class AttendanceRepository
                 'schedule_meeting_id' => $request->schedule_meeting_id,
                 'meeting_id' => $request->meeting_id,
                 'member_id' => $request->memberId,
-                'in_time' => date('h:i:s', strtotime($request->inTime)),
-                'out_time' => ($request->outTime != "") ? date('h:i:s', strtotime($request->outTime)) : null,
+                'in_time' => date('H:i:s', strtotime($request->inTime)),
+                'out_time' => ($request->outTime != "") ? date('H:i:s', strtotime($request->outTime)) : null,
             ]);
             return true;
         } catch (\Exception $e) {
@@ -219,8 +217,8 @@ class AttendanceRepository
                     'meeting_id' => $request->meeting_id,
                     'department_id' => $request->department_id,
                     'name' => $request->name,
-                    'in_time' => ($request->inTime != "") ? date('h:i:s', strtotime($request->inTime)) : null,
-                    'out_time' => ($request->outTime != "") ? date('h:i:s', strtotime($request->outTime)) : null,
+                    'in_time' => ($request->inTime != "") ? date('H:i:s', strtotime($request->inTime)) : null,
+                    'out_time' => ($request->outTime != "") ? date('H:i:s', strtotime($request->outTime)) : null,
                 ]);
             } else {
                 $department = DepartmentAttendance::create([
@@ -228,8 +226,8 @@ class AttendanceRepository
                     'meeting_id' => $request->meeting_id,
                     'department_id' => $request->department_id,
                     'name' => $request->name,
-                    'in_time' => ($request->inTime != "") ? date('h:i:s', strtotime($request->inTime)) : null,
-                    'out_time' => ($request->outTime != "") ? date('h:i:s', strtotime($request->outTime)) : null,
+                    'in_time' => ($request->inTime != "") ? date('H:i:s', strtotime($request->inTime)) : null,
+                    'out_time' => ($request->outTime != "") ? date('H:i:s', strtotime($request->outTime)) : null,
                 ]);
             }
             return [true, $department->id];
