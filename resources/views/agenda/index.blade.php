@@ -47,7 +47,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Meeting Date <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" type="date" placeholder="Select date" required>
+                                <input class="form-control" id="date" name="date" type="date" placeholder="Select date" max="9999-12-31" min="{{ date('Y-m-d') }}" required>
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
@@ -128,7 +128,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Meeting Date <span class="text-danger">*</span></label>
-                                <input class="form-control" @if(Auth::user()->hasRole('Mayor'))disabled @endif id="date" name="date" type="date" placeholder="Select date" required>
+                                <input class="form-control" @if(Auth::user()->hasRole('Mayor'))disabled @endif id="date" name="date" max="9999-12-31" min="{{ date('Y-m-d') }}" type="date" placeholder="Select date" required>
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">

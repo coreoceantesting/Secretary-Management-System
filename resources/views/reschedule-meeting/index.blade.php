@@ -37,7 +37,7 @@
                             <div class="col-md-12 mt-3"><h5>Select New Details(नवीन तपशील निवडा)</h5></div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" type="date" required />
+                                <input class="form-control" id="date" name="date" max="9999-12-31" type="date" required />
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
@@ -91,7 +91,7 @@
                             <div class="col-md-12 mt-3"><h5>Select New Details</h5></div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" type="date" />
+                                <input class="form-control" id="date" name="date" max="9999-12-31" type="date" />
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">

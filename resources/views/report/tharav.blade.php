@@ -18,11 +18,11 @@
                                     <div class="mb-3 row">
                                         <div class="col-md-3">
                                             <label class="col-form-label" for="from">From Date(या तारखेपासून)</label>
-                                            <input class="form-control" id="from" name="from" type="date" value="@if(isset(Request()->from)){{ Request()->from }}@endif">
+                                            <input class="form-control" id="from" name="from" max="9999-12-31" type="date" value="@if(isset(Request()->from)){{ Request()->from }}@endif">
                                         </div>
                                         <div class="col-md-3">
                                             <label class="col-form-label" for="to">To Date(आजपर्यंत)</label>
-                                            <input class="form-control" id="to" name="to" type="date" value="@if(isset(Request()->to)){{ Request()->to }}@endif">
+                                            <input class="form-control" id="to" name="to" max="9999-12-31" type="date" value="@if(isset(Request()->to)){{ Request()->to }}@endif">
                                         </div>
                                         <div class="col-md-3">
                                             <label class="col-form-label" for="department">Select Department</label>

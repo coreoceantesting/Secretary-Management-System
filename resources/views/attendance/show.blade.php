@@ -199,7 +199,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="col-form-label" for="date">Date</label>
-                                        <input class="form-control" id="date" name="meeting_end_date" type="date" value="@if($attendance->meeting_end_date){{ date('Y-m-d', strtotime($attendance->meeting_end_date)) }}@endif">
+                                        <input class="form-control" id="date" name="meeting_end_date" type="date" max="9999-12-31" value="@if($attendance->meeting_end_date){{ date('Y-m-d', strtotime($attendance->meeting_end_date)) }}@endif">
                                     </div>
 
                                     <div class="col-md-4">

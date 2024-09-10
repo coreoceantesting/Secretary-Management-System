@@ -59,7 +59,7 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="dob">Date Of Birth <span class="text-danger">*</span></label>
-                                <input class="form-control" id="dob" name="dob" type="date">
+                                <input class="form-control" id="dob" name="dob" type="date" max="9999-12-31">
                                 <span class="text-danger is-invalid dob_err"></span>
                             </div>
 
@@ -161,7 +161,7 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="dob">Date Of Birth <span class="text-danger">*</span></label>
-                                <input class="form-control" id="dob" name="dob" type="date">
+                                <input class="form-control" id="dob" name="dob" type="date" max="9999-12-31">
                                 <span class="text-danger is-invalid dob_err"></span>
                             </div>
 

@@ -29,7 +29,7 @@
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" type="date" placeholder="Enter date" value="{{ date('Y-m-d') }}" readonly>
+                                <input class="form-control" id="date" name="date" max="9999-12-31" type="date" placeholder="Enter date" value="{{ date('Y-m-d') }}" readonly>
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">

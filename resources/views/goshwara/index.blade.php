@@ -17,13 +17,13 @@
                                 <div class="col-sm-12 col-lg-4 col-md-4 col-12">
                                     <div class="form-group">
                                         <label for="from">From Date(या तारखेपासून)</label>
-                                        <input type="date" value="@if(isset(request()->from) && request()->from != ""){{ date('Y-m-d', strtotime(request()->from)) }}@endif" id="from" class="form-control" name="from" />
+                                        <input type="date" value="@if(isset(request()->from) && request()->from != ""){{ date('Y-m-d', strtotime(request()->from)) }}@endif" max="9999-12-31" id="from" class="form-control" name="from" />
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-lg-4 col-md-4 col-12">
                                     <div class="form-group">
                                         <label for="to">To Date(आजपर्यंत)</label>
-                                        <input type="date" value="@if(isset(request()->to) && request()->to != ""){{ date('Y-m-d', strtotime(request()->to)) }}@endif" id="to" class="form-control" name="to" />
+                                        <input type="date" value="@if(isset(request()->to) && request()->to != ""){{ date('Y-m-d', strtotime(request()->to)) }}@endif" id="to" max="9999-12-31" class="form-control" name="to" />
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-lg-4 col-md-4 col-12">

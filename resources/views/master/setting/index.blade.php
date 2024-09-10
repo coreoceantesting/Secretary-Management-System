@@ -29,13 +29,13 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="from_date">Select From Date <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="from_date" name="from_date" type="date" required>
+                                    <input class="form-control" id="from_date" name="from_date" type="date" max="9999-12-31" required>
                                     <span class="text-danger is-invalid from_date_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="to_date">Select To Date <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="to_date" name="to_date" type="date" required>
+                                    <input class="form-control" id="to_date" name="to_date" max="9999-12-31" type="date" required>
                                     <span class="text-danger is-invalid to_date_err"></span>
                                 </div>
 
@@ -101,13 +101,13 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="from_date">Select From Date <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="from_date" name="from_date" type="date" required>
+                                    <input class="form-control" id="from_date" name="from_date" type="date" max="9999-12-31" required>
                                     <span class="text-danger is-invalid from_date_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="to_date">Select To Date <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="to_date" name="to_date" type="date" required>
+                                    <input class="form-control" id="to_date" name="to_date" max="9999-12-31" type="date" required>
                                     <span class="text-danger is-invalid to_date_err"></span>
                                 </div>
 
