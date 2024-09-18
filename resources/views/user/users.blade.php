@@ -59,7 +59,7 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="dob">Date Of Birth(जन्मतारीख) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="dob" name="dob" max="9999-12-31" type="date">
+                                <input class="form-control" id="dob" name="dob" max="{{ date('Y-m-d') }}" type="date">
                                 <span class="text-danger is-invalid dob_err"></span>
                             </div>
 
@@ -96,14 +96,29 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="password">Password(पासवर्ड) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="password" name="password" type="password" placeholder="********">
+                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                    <input class="form-control pe-5 password-input" id="password" name="password" type="password" placeholder="********">
+                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                </div>
                                 <span class="text-danger is-invalid password_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="confirm_password">Confirm Password(पासवर्डची पुष्टी करा) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="confirm_password" name="confirm_password" type="password" placeholder="********">
-                                <span class="text-danger is-invalid confirm_password_err"></span>
+                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                    <input class="form-control pe-5 password-input" id="confirm_password" name="confirm_password" type="password" placeholder="********">
+                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                    <span class="text-danger is-invalid confirm_password_err"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mt-3">
+                                <label class="col-form-label" for="active_status">Select Status <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12" id="active_status" name="active_status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                                <span class="text-danger is-invalid active_status_err"></span>
                             </div>
                         </div>
 
@@ -175,7 +190,7 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="dob">Date Of Birth(जन्मतारीख) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="dob" name="dob" max="9999-12-31" type="date">
+                                <input class="form-control" id="dob" name="dob" max="{{ date('Y-m-d') }}" type="date">
                                 <span class="text-danger is-invalid dob_err"></span>
                             </div>
 
@@ -207,6 +222,15 @@
                                 <label class="col-form-label" for="username">Username(वापरकर्तानाव) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="username" name="username" type="text" placeholder="Enter Username">
                                 <span class="text-danger is-invalid username_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3">
+                                <label class="col-form-label" for="active_status">Select Status <span class="text-danger">*</span></label>
+                                <select class="form-select col-sm-12" id="active_status" name="active_status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                                <span class="text-danger is-invalid active_status_err"></span>
                             </div>
 
                         </div>
@@ -248,6 +272,7 @@
                                     {{-- <th style="min-width: 100px;">Status</th> --}}
                                     <th>Username</th>
                                     <th>Gender</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -261,6 +286,13 @@
                                         <td>{{ $user->roles[0]?->name }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>{{ ($user->gender) ? ['m' => 'Male', 'f' => 'Female'][$user->gender] : '' }}</td>
+                                        <td>
+                                            @if($user->active_status)
+                                            <span class="badge bg-success">Active</span>
+                                            @else
+                                            <span class="badge bg-danger">Inctive</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <button class="edit-element btn text-primary px-2 py-1" title="Edit User" data-id="{{ $user->id }}"><i data-feather="edit"></i></button>
                                             <button class="btn text-primary change-password px-2 py-1" title="Change Password" data-id="{{ $user->id }}"><i data-feather="lock"></i></button>
@@ -294,8 +326,9 @@
                         <div class="col-8 mx-auto my-2">
                             <div class="form-group">
                                 <label>Password(पासवर्ड)</label>
-                                <div class="input-group"><span class="input-group-text"><i class="fas fa-unlock-keyhole"></i></span>
-                                    <input class="form-control" type="password" id="new_password" name="new_password">
+                                <div class="input-group position-relative auth-pass-inputgroup"><span class="input-group-text"><i class="fas fa-unlock-keyhole"></i></span>
+                                    <input class="form-control pe-5 password-input" type="password" id="new_password" name="new_password">
+                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                     {{-- <div class="show-hide"><span class="show"></span></div> --}}
                                 </div>
                                 <span class="text-danger is-invalid password_err"></span>
@@ -305,8 +338,9 @@
                         <div class="col-8 mx-auto my-2">
                             <div class="form-group">
                                 <label>Confirm Password(पासवर्डची पुष्टी करा)</label>
-                                <div class="input-group"><span class="input-group-text"><i class="fas fa-unlock-keyhole"></i></span>
-                                    <input class="form-control" type="password" id="confirmed_password" name="confirmed_password">
+                                <div class="input-group position-relative auth-pass-inputgroup"><span class="input-group-text"><i class="fas fa-unlock-keyhole"></i></span>
+                                    <input class="form-control pe-5 password-input" type="password" id="confirmed_password" name="confirmed_password">
+                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                     {{-- <div class="show-hide"><span class="show"></span></div> --}}
                                 </div>
                                 <span class="text-danger is-invalid confirmed_password_err"></span>
@@ -507,6 +541,7 @@
                     .then((action) => {
                         $("#change-password-modal").modal('hide');
                         $("#changePasswordSubmit").prop('disabled', false);
+                        window.location.href = '{{ route('users.index') }}';
                     });
                 else
                     swal("Error!", data.error, "error");
@@ -591,6 +626,7 @@
                     $("#editForm input[name='email']").val(data.user.email);
                     $("#editForm input[name='contact']").val(data.user.contact);
                     $("#editForm input[name='username']").val(data.user.username);
+                    $("#editForm select[name='active_status']").val(data.user.active_status);
                     $("#editForm select[name='gender']").val(data.user.gender).change();
                     if(data.departmentHtml != ""){
                         $("#editForm .selectMeeting").addClass('d-none');
@@ -743,6 +779,7 @@
                     swal("Successful!", data.success, "success")
                     .then((action) => {
                         $("#assign-role-modal").modal('hide');
+                        window.location.href = '{{ route('users.index') }}';
                     });
                 else
                     swal("Error!", data.error, "error");
@@ -831,3 +868,5 @@
         }
     })
 </script>
+
+<script src="{{ asset('admin/js/pages/password-addon.init.js') }}"></script>

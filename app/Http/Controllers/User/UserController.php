@@ -51,6 +51,7 @@ class UserController extends Controller
             $input = $request->validated();
             $input['password'] = Hash::make($input['password']);
             $input['dob'] = date('Y-m-d', strtotime($input['dob']));
+            $input['active_status'] = $request->active_status;
             $user = User::create(Arr::only($input, Auth::user()->getFillable()));
             DB::table('model_has_roles')->insert(['role_id' => $input['role'], 'model_type' => 'App\Models\User', 'model_id' => $user->id]);
             DB::commit();
@@ -123,7 +124,7 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
             $input = $request->validated();
-
+            $input['active_status'] = $request->active_status;
             $user->update(Arr::only($input, Auth::user()->getFillable()));
             $user->roles()->detach();
             DB::table('model_has_roles')->insert(['role_id' => $input['role'], 'model_type' => 'App\Models\User', 'model_id' => $user->id]);
