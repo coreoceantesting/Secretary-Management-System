@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('political_party', 100)->nullable();
             $table->text('address')->nullable();
             $table->string('designation')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('alternate_number')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');

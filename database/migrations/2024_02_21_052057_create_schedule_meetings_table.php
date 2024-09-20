@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('agenda_id')->nullable()->constrained('agendas');
             $table->foreignId('meeting_id')->nullable()->constrained('meetings');
+            $table->string('unique_id')->nullable();
             $table->integer('schedule_meeting_id')->nullable();
             $table->date('date')->nullable();
             $table->time('time')->nullable();
@@ -23,7 +24,12 @@ return new class extends Migration
             $table->datetime('datetime')->nullable();
             $table->boolean('is_meeting_reschedule')->default(0);
             $table->boolean('is_meeting_completed')->default(0);
+            $table->date('meeting_end_date')->nullable();
+            $table->time('meeting_end_time')->nullable();
+            $table->text('meeting_end_reason')->nullable();
             $table->boolean('is_record_proceeding')->default(0);
+            $table->boolean('is_sms_send')->default(0);
+            $table->datetime('sms_send_time')->nullable();
             $table->timestamps();
         });
     }

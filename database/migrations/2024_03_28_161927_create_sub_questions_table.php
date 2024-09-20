@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreignId('question_id')->nullable()->constrained('questions')->after('id');
             $table->string('question');
             $table->string('response')->nullable();
+            $table->boolean('is_mayor_selected')->default(0);
+            $table->boolean('is_sended')->default(0);
             $table->timestamps();
         });
     }

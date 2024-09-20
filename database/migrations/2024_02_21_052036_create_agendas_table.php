@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('agendas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('meeting_id')->nullable()->constrained('meetings');
             $table->string('name');
             $table->string('file')->nullable();
+            $table->date('date')->nullable();
+            $table->time('time')->nullable();
+            $table->string('place')->nullable();
+            $table->string('pdf')->nullable();
             $table->boolean('is_meeting_schedule')->default(0);
             $table->timestamps();
         });

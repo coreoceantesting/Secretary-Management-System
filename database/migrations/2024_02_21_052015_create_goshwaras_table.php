@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('goshwaras', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('meeting_id')->nullable()->constrained('meetings');
             $table->foreignId('department_id')->nullable()->constrained('departments');
+            $table->string('name')->nullable();
             $table->string('file')->nullable();
-            $table->text('remark')->nullable();
+            $table->string('subject')->nullable();
+            $table->string('sub_subject')->nullable();
+            $table->boolean('is_mayor_selected')->default(0);
+            $table->datetime('selected_datetime')->nullable();
+            $table->integer('selected_by')->nullable();
             $table->foreignId('sent_by')->nullable()->constrained('users');
             $table->datetime('date')->nullable();
             $table->boolean('is_sent')->default(0);
