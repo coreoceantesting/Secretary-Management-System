@@ -4,19 +4,19 @@
         <!-- Dark Logo-->
         <a href="{{ route('dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ asset('admin/images/logo-sm.png') }}" alt="" height="22" />
+                <img src="{{ asset('admin/images/logo-light.png') }}" height="22" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/images/logo-dark.png') }}" alt="" height="17" />
+                <img src="{{ asset('admin/images/logo-light.png') }}" height="55" />
             </span>
         </a>
         <!-- Light Logo-->
         <a href="{{ route('dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ asset('admin/images/logo-sm.png') }}" alt="" height="22" />
+                <img src="{{ asset('admin/images/logo-light.png') }}" height="22" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/images/logo-light.png') }}" alt="" height="17" />
+                <img src="{{ asset('admin/images/logo-light.png') }}" height="55" />
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -48,7 +48,7 @@
                         <span data-key="t-layouts">Masters</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarMaster">
-                        <ul class="nav nav-sm flex-column">
+                        <ul class="nav nav-sm flex-column  {{ request()->routeIs('master.*') ? 'show' : '' }}">
                             @can('department.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.department.index') }}" class="nav-link {{ request()->routeIs('master.department.*') ? 'active' : '' }}" data-key="t-horizontal">Department(विभाग)</a>
@@ -112,10 +112,10 @@
                 @canany(['goshwara.view', 'goshwara.create', 'goshwara.send', 'goshwara.get-selected-status', 'goshwara.select-goshwara'])
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('goshwara.*') ? 'active' : '' }}" href="#sidebarGoshwara" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGoshwara">
-                        <i class="bx bx-user-circle"></i>
+                        <i class="bx bxs-notification"></i>
                         <span data-key="t-layouts">Goshwara</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarGoshwara">
+                    <div class="collapse menu-dropdown {{ request()->routeIs('goshwara.*') ? 'show' : '' }}" id="sidebarGoshwara">
                         <ul class="nav nav-sm flex-column">
 
                             @can('goshwara.create')
@@ -145,11 +145,11 @@
 
                 @canany(['agenda.view', 'suplimentry-agenda.view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('agenda.*') ? 'active' : '' }} {{ request()->routeIs('suplimentry-agenda.*') ? 'active' : '' }}" href="#sidebarGoshwara" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGoshwara">
-                        <i class="bx bx-user-circle"></i>
+                    <a class="nav-link menu-link {{ request()->routeIs('agenda.*') ? 'active' : '' }} {{ request()->routeIs('suplimentry-agenda.*') ? 'active' : '' }}" href="#sidebarAgenda" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAgenda">
+                        <i class="bx bxs-hourglass-top"></i>
                         <span data-key="t-layouts">Agenda</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarGoshwara">
+                    <div class="collapse menu-dropdown" id="sidebarAgenda">
                         <ul class="nav nav-sm flex-column">
                             @can('agenda.view')
                             <li class="nav-item">
@@ -170,11 +170,11 @@
 
                 @canany(['schedule_meeting.view', 'reschedule_meeting.view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarGoshwara" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGoshwara">
-                        <i class="bx bx-user-circle"></i>
+                    <a class="nav-link menu-link" href="#sidebarMeeting" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMeeting">
+                        <i class="bx bx-target-lock"></i>
                         <span data-key="t-layouts">Meeting</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarGoshwara">
+                    <div class="collapse menu-dropdown" id="sidebarMeeting">
                         <ul class="nav nav-sm flex-column">
                             @can('schedule_meeting.view')
                             <li class="nav-item">
@@ -197,7 +197,7 @@
                 @can('question.view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('question.*') ? 'active' : '' }}" href="{{ route('question.index') }}" >
-                        <i class="ri-dashboard-2-line"></i>
+                        <i class="bx bx-question-mark"></i>
                         <span data-key="t-dashboards">Questions</span>
                     </a>
                 </li>
@@ -206,7 +206,7 @@
                 @can('attendance.view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('attendance.*') ? 'active' : '' }}" href="{{ route('attendance.index') }}">
-                        <i class="ri-dashboard-2-line"></i>
+                        <i class="bx bx-bell"></i>
                         <span data-key="t-dashboards">Attendance</span>
                     </a>
                 </li>
@@ -215,7 +215,7 @@
                 @can('proceeding-record.view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('proceeding-record.*') ? 'active' : '' }}" href="{{ route('proceeding-record.index') }}">
-                        <i class="ri-dashboard-2-line"></i>
+                        <i class="bx bxs-coin-stack"></i>
                         <span data-key="t-dashboards">Proceeding Records</span>
                     </a>
                 </li>
@@ -224,31 +224,32 @@
                 @can('tharav.view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('tharav.*') ? 'active' : '' }}" href="{{ route('tharav.index') }}">
-                        <i class="ri-dashboard-2-line"></i>
+                        <i class="bx bx-info-circle"></i>
                         <span data-key="t-dashboards">Tharav</span>
                     </a>
                 </li>
                 @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('report.schedule-meeting') ? 'active' : '' }} {{ request()->routeIs('report.schedule-meeting.*') ? 'active' : '' }}" href="{{ route('report.schedule-meeting') }}">
-                        <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Meeting Report</span>
-                    </a>
-                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('report.attendance-meeting') ? 'active' : '' }}" href="{{ route('report.attendance-meeting') }}">
-                        <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Attendance Report</span>
+                    <a class="nav-link menu-link {{ request()->routeIs('report.*') ? 'active' : '' }}" href="#sidebarReport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarReport">
+                        <i class="bx bxs-report"></i>
+                        <span data-key="t-layouts">Report</span>
                     </a>
-                </li>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('report.*') ? 'show' : '' }}" id="sidebarReport">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('report.schedule-meeting') }}" class="nav-link {{ request()->routeIs('report.schedule-meeting') ? 'active' : '' }} {{ request()->routeIs('report.schedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Meeting Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('report.attendance-meeting') }}" class="nav-link {{ request()->routeIs('report.attendance-meeting') ? 'active' : '' }}" data-key="t-horizontal">Attendance Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('report.tharav') }}" class="nav-link {{ request()->routeIs('report.tharav') ? 'active' : '' }}" data-key="t-horizontal">Tharav Report</a>
+                            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('report.tharav') ? 'active' : '' }}" href="{{ route('report.tharav') }}">
-                        <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Tharav Report</span>
-                    </a>
+                        </ul>
+                    </div>
                 </li>
 
             </ul>

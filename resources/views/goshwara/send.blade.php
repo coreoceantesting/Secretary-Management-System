@@ -27,9 +27,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="name">Goshwara Name(गोषवारा नाव) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="name" required name="name" placeholder="Enter name">
-                                    <span class="text-danger is-invalid name_err"></span>
+                                    <label class="col-form-label" for="outward_no">Outward No(जावक क्र)<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="outward_no" required name="outward_no" placeholder="Enter outward no">
+                                    <span class="text-danger is-invalid outward_no_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="subject">Subject(विषय) <span class="text-danger">*</span></label>
@@ -43,6 +43,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="goshwarafile">Select Goshwara(गोषवारा निवडा)</label>
+                                    <a href="#" target="_blank" class="btn btn-primary btn-sm viewGoshWaraFile d-none">View</a>
                                     <input class="form-control" id="goshwarafile" name="goshwarafile" type="file" placeholder="Select Goshwara">
                                     <span class="text-danger is-invalid goshwarafile_err"></span>
                                 </div>
@@ -71,9 +72,9 @@
                                     <tr>
                                         <th>Sr no.</th>
                                         <th>Meeting</th>
-                                        <th>Goshwara Name</th>
                                         <th>Subject</th>
                                         <th>Sub Subject</th>
+                                        <th>Outward No</th>
                                         <th>Goshwara File</th>
                                         <th>Action</th>
                                     </tr>
@@ -83,9 +84,9 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $goshwara?->meeting?->name }}</td>
-                                            <td>{{ $goshwara->name }}</td>
                                             <td>{{ $goshwara->subject }}</td>
                                             <td>{{ $goshwara->sub_subject ?? '-' }}</td>
+                                            <td>{{ $goshwara->outward_no }}</td>
                                             <td><a target="_blank" href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm">View Goshwara</a></td>
                                             <td>
                                                 <div class="d-flex">
@@ -140,9 +141,15 @@
                 {
                     $("#editForm input[name='edit_model_id']").val(data.goshwara.id);
                     $("#editForm select[name='meeting_id']").val(data.goshwara.meeting_id);
-                    $("#editForm input[name='name']").val(data.goshwara.name);
+                    $("#editForm input[name='outward_no']").val(data.goshwara.outward_no);
                     $("#editForm input[name='subject']").val(data.goshwara.subject);
                     $("#editForm input[name='sub_subject']").val(data.goshwara.sub_subject);
+                    $('#editForm .viewGoshWaraFile').attr('href', "{{ asset('storage/') }}/"+data.goshwara.file)
+                    if(data.goshwara.file && data.goshwara.file != ""){
+                        $('#editForm .viewGoshWaraFile').removeClass('d-none');
+                    }else{
+                        $('#editForm .viewGoshWaraFile').addClass('d-none');
+                    }
                 }
                 else
                 {

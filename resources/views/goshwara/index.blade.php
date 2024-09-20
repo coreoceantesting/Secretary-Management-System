@@ -41,9 +41,9 @@
                                         <th>Sr no.</th>
                                         @if(Auth::user()->roles[0]->name != "Department")<th>Department</th>@endif
                                         <th>Meeting</th>
-                                        <th>Goshwara Name</th>
                                         <th>Goshwara Subject</th>
                                         <th>Goshwara Sub Subject</th>
+                                        <th>Outward No</th>
                                         <th>Sent Date</th>
                                         <th>Goshwara</th>
                                         <th>Mayor Status</th>
@@ -55,9 +55,9 @@
                                             <td>{{ $loop->iteration }}</td>
                                             @if(Auth::user()->roles[0]->name != "Department")<td>{{ $goshwara->department?->name ?? '-' }}</td>@endif
                                             <td>{{ $goshwara?->meeting?->name ?? '-' }}</td>
-                                            <td>{{ $goshwara->name ?? '-' }}</td>
                                             <td>{{ $goshwara->subject }}</td>
                                             <td>{{ $goshwara->sub_subject ?? '-' }}</td>
+                                            <td>{{ $goshwara->outward_no ?? '-' }}</td>
                                             <td>{{ date('d-m-Y h:i A', strtotime($goshwara->date)) }}</td>
                                             <td>
                                                 <a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a>
