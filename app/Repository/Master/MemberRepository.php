@@ -20,11 +20,25 @@ class MemberRepository
     {
         DB::beginTransaction();
         try {
-            $file = null;
             if ($request->hasFile('photos')) {
-                $file = $request->photos->store('members');
+                $request['photo'] = $request->photos->store('members');
             }
-            $request['photo'] = $file;
+
+            if ($request->hasFile('aadhars')) {
+                $request['aadhar'] = $request->aadhars->store('members');
+            }
+
+            if ($request->hasFile('pancards')) {
+                $request['pancard'] = $request->pancards->store('members');
+            }
+
+            if ($request->hasFile('bank_detailss')) {
+                $request['bank_details'] = $request->bank_detailss->store('members');
+            }
+
+            if ($request->hasFile('cancel_cheques')) {
+                $request['cancel_cheque'] = $request->cancel_cheques->store('members');
+            }
             Member::create($request->all());
 
             DB::commit();
@@ -50,16 +64,50 @@ class MemberRepository
         try {
             $member = Member::find($id);
 
-            $file = $member->photo;
             if ($request->hasFile('photos')) {
                 if ($member->photo != "") {
                     if (Storage::exists($member->photo)) {
                         Storage::delete($member->photo);
                     }
                 }
-                $file = $request->photos->store('members');
+                $request['photo'] = $request->photos->store('members');
             }
-            $request['photo'] = $file;
+
+            if ($request->hasFile('aadhars')) {
+                if ($member->aadhar != "") {
+                    if (Storage::exists($member->aadhar)) {
+                        Storage::delete($member->aadhar);
+                    }
+                }
+                $request['aadhar'] = $request->aadhars->store('members');
+            }
+
+            if ($request->hasFile('pancards')) {
+                if ($member->pancard != "") {
+                    if (Storage::exists($member->pancard)) {
+                        Storage::delete($member->pancard);
+                    }
+                }
+                $request['pancard'] = $request->pancards->store('members');
+            }
+
+            if ($request->hasFile('bank_detailss')) {
+                if ($member->bank_details != "") {
+                    if (Storage::exists($member->bank_details)) {
+                        Storage::delete($member->bank_details);
+                    }
+                }
+                $request['bank_details'] = $request->bank_detailss->store('members');
+            }
+
+            if ($request->hasFile('cancel_cheques')) {
+                if ($member->cancel_cheque != "") {
+                    if (Storage::exists($member->cancel_cheque)) {
+                        Storage::delete($member->cancel_cheque);
+                    }
+                }
+                $request['cancel_cheque'] = $request->cancel_cheques->store('members');
+            }
 
             $member->update($request->all());
 
@@ -88,7 +136,5 @@ class MemberRepository
         }
     }
 
-    public function assignMemberToMeeting($id)
-    {
-    }
+    public function assignMemberToMeeting($id) {}
 }

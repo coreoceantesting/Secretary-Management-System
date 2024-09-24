@@ -38,8 +38,8 @@
                                                 <td>{{ $attendance->unique_id }}</td>
                                             </tr>
                                             <tr>
-                                                <th style="width: 25%">Agenda Name(अजेंडाचे नाव)</th>
-                                                <td>{{ $attendance->agenda?->name }}</td>
+                                                <th style="width: 25%">Agenda Subject(अजेंडाचे विषय)</th>
+                                                <td>{{ $attendance->agenda?->subject }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Agenda File(अजेंडा फाइल)</th>

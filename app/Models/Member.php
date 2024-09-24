@@ -14,7 +14,7 @@ class Member extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['ward_id', 'name', 'contact_number', 'email', 'party_id', 'address', 'designation', 'deleted_at', 'photo', 'alternate_number'];
+    protected $fillable = ['ward_id', 'name', 'contact_number', 'email', 'party_id', 'address', 'designation', 'deleted_at', 'photo', 'alternate_number', 'aadhar', 'pancard', 'bank_details', 'cancel_cheque'];
 
     public function ward()
     {

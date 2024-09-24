@@ -11,7 +11,7 @@ class SuplimentryAgenda extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['meeting_id', 'schedule_meeting_id', 'name', 'file', 'is_meeting_completed'];
+    protected $fillable = ['meeting_id', 'schedule_meeting_id', 'subject', 'file', 'is_meeting_completed'];
 
     public function scheduleMeeting()
     {

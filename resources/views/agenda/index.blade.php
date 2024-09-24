@@ -16,15 +16,6 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
-                            {{-- <div class="col-md-4">
-                                <label class="col-form-label" for="goshwara_id1">Select Goshwara(विभाग निवडा) <span class="text-danger">*</span></label>
-                                <select multiple class="js-example-basic-multiple form-select col-sm-12" id="goshwara_id1" name="goshwara_id[]" required>
-                                    @foreach($goshwaras as $goshwara)
-                                    <option value="{{ $goshwara->id }}">{{ $goshwara->name }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="text-danger is-invalid goshwara_id_err"></span>
-                            </div> --}}
                             <div class="col-md-4">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
                                 <select name="meeting_id" id="meetingId" required class="form-select">
@@ -36,9 +27,9 @@
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Agenda Name" required>
-                                <span class="text-danger is-invalid name_err"></span>
+                                <label class="col-form-label" for="subject">Agenda Subject(अजेंडा विषय) <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="subject" name="subject" placeholder="Enter Agenda Subject" required></textarea>
+                                <span class="text-danger is-invalid subject_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="agendafile">Select File(फाइल निवडा) <span class="text-danger">*</span></label>
@@ -67,7 +58,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Meeting Name</th>
-                                    <th>Goshwara Name</th>
+                                    <th>Goshwara Outward no.</th>
                                     <th>Goshwara Subject</th>
                                     <th>Goshwara File</th>
                                 </tr>
@@ -110,16 +101,11 @@
                                 </select>
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
-                            {{-- <div class="col-md-4">
-                                <label class="col-form-label" for="goshwara_id">Select Goshwara(विभाग निवडा) <span class="text-danger">*</span></label>
-                                <select multiple class="js-example-basic-multiple form-select col-sm-12 editSelectGoshwaraToAgenda" id="goshwara_id" name="goshwara_id[]" required>
-                                </select>
-                                <span class="text-danger is-invalid goshwara_id_err"></span>
-                            </div> --}}
+                           
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Agenda Name(अजेंडा नाव) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Agenda Name" required>
-                                <span class="text-danger is-invalid name_err"></span>
+                                <label class="col-form-label" for="subject">Agenda Subject(अजेंडा विषय) <span class="text-danger">*</span></label>
+                                <textarea class="form-control" @if(Auth::user()->hasRole('Mayor'))readonly @endif id="subject" name="subject" placeholder="Agenda Subject" required></textarea>
+                                <span class="text-danger is-invalid subject_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="agendafile">Select File(फाइल निवडा)</label>
@@ -128,12 +114,12 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Meeting Date <span class="text-danger">*</span></label>
-                                <input class="form-control" @if(Auth::user()->hasRole('Mayor'))disabled @endif id="date" name="date" max="9999-12-31" min="{{ date('Y-m-d') }}" type="date" placeholder="Select date" required>
+                                <input class="form-control" id="date" name="date" max="9999-12-31" min="{{ date('Y-m-d') }}" type="date" placeholder="Select date" required>
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="time">Meeting Time <span class="text-danger">*</span></label>
-                                <input class="form-control" @if(Auth::user()->hasRole('Mayor'))disabled @endif id="time" name="time" type="time" placeholder="Select time" required>
+                                <input class="form-control" id="time" name="time" type="time" placeholder="Select time" required>
                                 <span class="text-danger is-invalid time_err"></span>
                             </div>
 
@@ -149,7 +135,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Meeting Name</th>
-                                    <th>Goshwara Name</th>
+                                    <th>Goshwara Outward no.</th>
                                     <th>Goshwara Subject</th>
                                     <th>Goshwara File</th>
                                 </tr>
@@ -191,7 +177,7 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
-                                    <th>Agenda Name</th>
+                                    <th>Agenda Subject</th>
                                     <th>Department</th>
                                     <th>Goshwara Subject</th>
                                     <th>Agenda File</th>
@@ -208,7 +194,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $agenda?->meeting?->name }}</td>
-                                        <td>{{ $agenda->name }}</td>
+                                        <td>{{ $agenda->subject }}</td>
                                         <td>
                                             @foreach($agenda?->assignGoshwaraToAgenda as $subject)
                                             {{ $loop->iteration.'. '. $subject?->goshwara?->department?->name }}<br>
@@ -355,7 +341,7 @@
                 {
                     $("#editForm input[name='edit_model_id']").val(data.agenda.id);
                     $("#editForm select[name='meeting_id']").html(data.meetingHtml);
-                    $("#editForm input[name='name']").val(data.agenda.name);
+                    $("#editForm textarea[name='subject']").val(data.agenda.subject);
                     $("#editForm input[name='date']").val(data.agenda.date);
                     $("#editForm input[name='time']").val(data.agenda.time);
                     $("#editForm input[name='place']").val(data.agenda.place);
@@ -527,7 +513,7 @@
                                         <input type="checkbox" name="goshwara_id[]" value="${val.id}" class="form-check" checked>
                                     </td>
                                     <td>${val.meeting.name}</td>
-                                    <td>${val.name}</td>
+                                    <td>${val.outward_no}</td>
                                     <td>${val.subject}</td>
                                     <td><a target="_blank" href="{{ asset('storage') }}/${val.file}" class="btn btn-primary btn-sm">View</a></td>
                                 </tr>`;

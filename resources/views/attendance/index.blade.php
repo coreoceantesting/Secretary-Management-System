@@ -13,7 +13,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr no.</th>
-                                    <th>Agenda Name</th>
+                                    <th>Agenda Subject</th>
                                     <th>Meeting Name</th>
                                     <th>Meeting No.</th>
                                     <th>Datetime</th>
@@ -26,7 +26,7 @@
                                 @foreach ($attendances as $attendance)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $attendance->agenda?->name }}</td>
+                                        <td>{{ $attendance->agenda?->subject }}</td>
                                         <td>{{ $attendance->meeting?->name }}</td>
                                         <td>{{ $attendance->unique_id }}</td>
                                         <td>{{ date('d-m-Y h:i A', strtotime($attendance->datetime)) }}</td>

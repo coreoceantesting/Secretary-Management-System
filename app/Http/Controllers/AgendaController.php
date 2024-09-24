@@ -71,7 +71,7 @@ class AgendaController extends Controller
                                         <input type="checkbox" name="goshwara_id[]" value="' . $goshwara->id . '" class="form-check" checked>
                                     </td>
                                     <td>' . $goshwara?->meeting->name . '</td>
-                                    <td>' . $goshwara->name . '</td>
+                                    <td>' . $goshwara->outward_no . '</td>
                                     <td>' . $goshwara->subject . '</td>
                                     <td><a href="' . asset("storage/") . $goshwara->file . '" class="btn btn-primary btn-sm">View</a></td>
                                 </tr>';
@@ -83,7 +83,7 @@ class AgendaController extends Controller
                                         <input type="checkbox" name="goshwara_id[]" value="' . $notAssignedGoshwara->id . '" class="form-check">
                                     </td>
                                     <td>' . $notAssignedGoshwara?->meeting->name . '</td>
-                                    <td>' . $notAssignedGoshwara->name . '</td>
+                                    <td>' . $notAssignedGoshwara->outward_no . '</td>
                                     <td>' . $notAssignedGoshwara->subject . '</td>
                                     <td><a href="' . asset("storage/") . $notAssignedGoshwara->file . '" class="btn btn-primary btn-sm">View</a></td>
                                 </tr>';

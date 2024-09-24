@@ -29,9 +29,9 @@
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Supplementary Agenda Name(पूरक अजेंडाचे नाव) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Supplementary Agenda Name" required>
-                                <span class="text-danger is-invalid name_err"></span>
+                                <label class="col-form-label" for="subject">Supplementary Agenda Subject(पूरक अजेंडाचे विषय) <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="subject" name="subject" placeholder="Enter Supplementary Agenda Subject" required></textarea>
+                                <span class="text-danger is-invalid subject_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="agendafile">Select File(फाइल निवडा) <span class="text-danger">*</span></label>
@@ -76,23 +76,15 @@
                             </div>
 
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
-                            {{-- <div class="col-md-4">
-                                <label for="schedule_meeting_id" class="col-form-label">Select Schedule Meeting(शेड्यूल मीटिंग निवडा) <span class="text-danger">*</span></label>
-                                <select name="schedule_meeting_id" id="schedule_meeting_id" required class="form-select">
-                                    <option value="">Select Schedule Meeting</option>
-                                    @foreach($scheduleMeetings as $scheduleMeeting)
-                                    <option value="{{ $scheduleMeeting->id }}">{{ date('d-m-Y h:i A', strtotime($scheduleMeeting->datetime)) }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="text-danger is-invalid schedule_meeting_id_err"></span>
-                            </div> --}}
+                            
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">Supplementary Agenda Name(पूरक अजेंडाचे नाव) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter Supplementary Agenda Name" required>
-                                <span class="text-danger is-invalid name_err"></span>
+                                <label class="col-form-label" for="subject">Supplementary Agenda Subject(पूरक अजेंडाचे विषय) <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="subject" name="subject" placeholder="Enter Supplementary Agenda Subject" required></textarea>
+                                <span class="text-danger is-invalid subject_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="agendafile">Select File(फाइल निवडा)</label>
+                                <a href="javascript:void(0)" class="btn btn-primary btn-sm" id="supllimentryAgendaFile" target="_blank">View File</a>
                                 <input class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
@@ -134,7 +126,7 @@
                                     <th>Meeting No.</th>
                                     <th>Datetime</th>
                                     <th>Meeting Venue</th>
-                                    <th>Supplementary Name</th>
+                                    <th>Supplementary Subject</th>
                                     <th>Supplementary File</th>
                                     @canany(['suplimentry-agenda.edit', 'suplimentry-agenda.delete'])<th>Action</th>@endcan
                                 </tr>
@@ -147,7 +139,7 @@
                                         <td>{{ $agenda->scheduleMeeting?->unique_id }}</td>
                                         <td>{{ date('d-m-Y h:i A', strtotime($agenda->scheduleMeeting->datetime)) }}</td>
                                         <td>{{ $agenda->scheduleMeeting?->place }}</td>
-                                        <td>{{ $agenda->name }}</td>
+                                        <td>{{ $agenda->subject }}</td>
                                         <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                         @canany(['suplimentry-agenda.edit', 'suplimentry-agenda.delete'])
                                         <td>
@@ -259,7 +251,8 @@
                     $("#editForm select[name='meeting_id']").val(data.suplimentryAgenda.meeting_id);
                     $("#editForm .selectScheduleMeeting").html(data.scheduleMeetingDateTime);
                     $("#editForm .selectScheduleMeeting").removeClass('d-none');
-                    $("#editForm input[name='name']").val(data.suplimentryAgenda.name);
+                    $("#editForm textarea[name='subject']").val(data.suplimentryAgenda.subject);
+                    $("#editForm #supllimentryAgendaFile").attr('href', "{{ asset('storage') }}/"+data.suplimentryAgenda.file)
                 }
                 else
                 {

@@ -17,8 +17,8 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="w-25">Agenda Name(अजेंडाचे नाव)</th>
-                                            <td>{{ $scheduleMeeting->agenda?->name }}</td>
+                                            <th class="w-25">Agenda Subject(अजेंडाचे विषय)</th>
+                                            <td>{{ $scheduleMeeting->agenda?->subject }}</td>
                                         </tr>
                                     </thead>
                                     <tbody>

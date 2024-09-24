@@ -27,11 +27,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="outward_no">Outward No(जावक क्र)<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="outward_no" required name="outward_no" placeholder="Enter outward no">
-                                    <span class="text-danger is-invalid outward_no_err"></span>
-                                </div>
-                                <div class="col-md-4">
                                     <label class="col-form-label" for="subject">Subject(विषय) <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="subject" required name="subject" placeholder="Enter subject" />
                                     <span class="text-danger is-invalid subject_err"></span>
@@ -40,6 +35,11 @@
                                     <label class="col-form-label" for="sub_subject">Sub Subject(विषय) <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="sub_subject" required name="sub_subject" placeholder="Enter sub subject" />
                                     <span class="text-danger is-invalid sub_subject_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="outward_no">Outward No(जावक क्र)<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="outward_no" required name="outward_no" placeholder="Enter outward no">
+                                    <span class="text-danger is-invalid outward_no_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="goshwarafile">Select Goshwara(गोषवारा निवडा)</label>

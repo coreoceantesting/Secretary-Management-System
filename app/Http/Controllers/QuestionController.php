@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\QuestionRepository;
 use App\Repository\CommonRepository;
 use App\Http\Requests\QuestionRequest;
+use App\Models\Department;
 
 class QuestionController extends Controller
 {
@@ -24,9 +25,12 @@ class QuestionController extends Controller
 
         $questions = $this->questionRepository->index();
 
+        $departments = Department::where('is_home_department', 0)->select('id', 'name')->get();
+
         return view('question.index')->with([
             'questions' => $questions,
             'meetings' => $meetings,
+            'departments' => $departments
         ]);
     }
 
@@ -61,13 +65,13 @@ class QuestionController extends Controller
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>';
 
             // logic to get department
-            $departmentHtml = '<option value="">Select Department</option>';
-            $departments = $this->questionRepository->getScheduleMeetingDepartments($question->schedule_meeting_id, $id);
+            // $departmentHtml = '<option value="">Select Department</option>';
+            // $departments = $this->questionRepository->getScheduleMeetingDepartments($question->schedule_meeting_id, $id);
 
-            foreach ($departments as $department) {
-                $isSelected = ($department->department?->id == $question->department_id) ? 'selected' : '';
-                $departmentHtml .= '<option ' . $isSelected . ' value="' . $department->department?->id . '">' . $department->department?->name . '</option>';
-            }
+            // foreach ($departments as $department) {
+            //     $isSelected = ($department->department?->id == $question->department_id) ? 'selected' : '';
+            //     $departmentHtml .= '<option ' . $isSelected . ' value="' . $department->department?->id . '">' . $department->department?->name . '</option>';
+            // }
 
             // sub question
             $count = 1;
@@ -78,7 +82,7 @@ class QuestionController extends Controller
                 if ($count == "1") {
                     $subQuestionHtml .= "<tr id='editrow$count'>
                                 <td>
-                                    <input class='form-control' name='question[]' value='" . $subQuestion->question . "' type='text' placeholder='Enter Question' required>
+                                    <textarea class='form-control' name='question[]' value='" . $subQuestion->question . "' placeholder='Enter Question' required></textarea>
                                 </td>
                                 <td>
                                     <button type='button' class='btn btn-sm btn-primary editAddMore' data-id='" . $count . "'>Add</button>
@@ -87,7 +91,7 @@ class QuestionController extends Controller
                 } else {
                     $subQuestionHtml .= "<tr id='editrow$count'>
                                 <td>
-                                    <input class='form-control' name='question[]' value='" . $subQuestion->question . "' type='text' placeholder='Enter Question' required>
+                                    <textarea class='form-control' name='question[]' value='" . $subQuestion->question . "' placeholder='Enter Question' required></textarea>
                                 </td>
                                 <td>
                                     <button type='button' class='btn btn-sm btn-danger editRemoveMore' data-id='" . $count . "'>Remove</button>
@@ -102,7 +106,7 @@ class QuestionController extends Controller
                 'question' => $question,
                 'scheduleMeeting' => $scheduleMeetingHtml,
                 'subQuestionHtml' => $subQuestionHtml,
-                'departmentHtml' => $departmentHtml
+                // 'departmentHtml' => $departmentHtml
             ];
         } else {
             $response = ['result' => 0];

@@ -17,8 +17,8 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="w-25">Agenda Name(अजेंडाचे नाव)</th>
-                                            <td>{{ $rescheduleMeeting->agenda?->name }}</td>
+                                            <th class="w-25">Agenda Subject(अजेंडाचे विषय)</th>
+                                            <td>{{ $rescheduleMeeting->agenda?->subject }}</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,6 +53,10 @@
                                         <tr>
                                             <th>Meeting Venue(बैठकीचे स्थळ)</th>
                                             <td>{{ $rescheduleMeeting->place }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Reschedule Reason</th>
+                                            <td>{{ $rescheduleMeeting->reschedule_reason }}</td>
                                         </tr>
                                         @if(!$rescheduleMeeting->is_meeting_cancel)
                                         @if (Auth::user()->hasRole('Home Department'))

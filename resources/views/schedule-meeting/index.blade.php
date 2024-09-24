@@ -24,7 +24,7 @@
                                 <select class="form-select col-sm-12" id="agenda_id" name="agenda_id" required>
                                     <option value="">--Select Agenda--</option>
                                     @foreach($agendas as $agenda)
-                                    <option value="{{ $agenda->id }}">{{ $agenda->name }}</option>
+                                    <option value="{{ $agenda->id }}">{{ $agenda->subject }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid agenda_id_err"></span>
@@ -79,73 +79,6 @@
 
 
 
-    {{-- Edit Form --}}
-    {{-- <div class="row" id="editContainer" style="display:none;">
-        <div class="col">
-            <form class="form-horizontal form-bordered" method="post" id="editForm">
-                @csrf
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Edit Schedule Meeting(बैठकीचे वेळापत्रक संपादित करा)</h4>
-                    </div>
-                    <div class="card-body py-2">
-                        <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
-                        <div class="mb-3 row">
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="agenda_id">Select Agenda(अजेंडा निवडा) <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="agenda_id" name="agenda_id">
-
-                                </select>
-                                <span class="text-danger is-invalid agenda_id_err"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-multiple form-select col-sm-12" id="meeting_id" name="meeting_id">
-                                    <option value="">--Select Meeting--</option>
-                                    @foreach($meetings as $meeting)
-                                    <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="text-danger is-invalid gender_err"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" max="9999-12-31" type="date" />
-                                <span class="text-danger is-invalid date_err"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="time">Time(वेळ) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="time" name="time" type="time">
-                                <span class="text-danger is-invalid time_err"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="place">Place(ठिकाण) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="place" name="place" type="text">
-                                <span class="text-danger is-invalid place_err"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
-                                <select multiple class="js-example-basic-multiple col-sm-12" id="department_id" name="department_id[]">
-                                    <option value="">--Select Department--</option>
-                                    @foreach($departments as $department)
-                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="text-danger is-invalid department_id_err"></span>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary" id="editSubmit">Submit</button>
-                        <button type="reset" class="btn btn-warning">Reset</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div> --}}
-
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -183,7 +116,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $scheduleMeeting->meeting?->name }}</td>
                                         <td>{{ $scheduleMeeting->unique_id }}</td>
-                                        <td>{{ $scheduleMeeting->agenda?->name }}</td>
+                                        <td>{{ $scheduleMeeting->agenda?->subject }}</td>
                                         <td><a href="{{ asset('storage/'.$scheduleMeeting->agenda->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
                                         <td>{{ date('d-m-Y', strtotime($scheduleMeeting->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>

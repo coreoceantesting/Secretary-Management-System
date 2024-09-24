@@ -44,7 +44,17 @@
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
-                            <div class="col-md-4 selectScheduleMeetingDepartment d-none"></div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
+                                <select name="department_id" id="department_id" class="form-select" required>
+                                    <option value="">Select Department</option>
+                                    @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid department_id_err"></span>
+                            </div>
+                            {{-- <div class="col-md-4 selectScheduleMeetingDepartment d-none"></div> --}}
 
                         </div>
                         <table class="table table-bordered">
@@ -57,7 +67,7 @@
                             <tbody id="addQuestion">
                                 <tr id="row1">
                                     <td>
-                                        <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
+                                        <textarea class="form-control" name="question[]" placeholder="Enter Question" required></textarea>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary addMore" data-id="1">Add</button>
@@ -103,15 +113,18 @@
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="uploadfile">Upload Question File(प्रश्न फाइल अपलोड करा)</label>
+                                <a href="javascript:void(0)" class="btn btn-primary btn-sm d-none uploadfile" target="_blank">View File</a>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="col-form-label" for="department_id">Select Department(विभाग निवडा) <span class="text-danger">*</span></label>
-                                <select name="department_id" id="department_id" class="form-select selectMeetingId" required>
+                                <select name="department_id" id="department_id" class="form-select" required>
                                     <option value="">Select Department</option>
-
+                                    @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
                                 </select>
                                 <span class="text-danger is-invalid department_id_err"></span>
                             </div>
@@ -127,7 +140,7 @@
                             <tbody id="editQuestion">
                                 <tr id="editrow1">
                                     <td>
-                                        <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
+                                        <textarea class="form-control" name="question[]" placeholder="Enter Question" required></textarea>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary editAddMore" data-id="1">Add</button>
@@ -326,10 +339,17 @@
                     $("#editForm input[name='edit_model_id']").val(data.question.id);
                     $("#editForm select[name='meeting_id']").val(data.question.meeting_id);
                     $("#editForm select[name='department_id']").val(data.question.department_id);
+
+                    if(data.question.question_file){
+                        $('#editForm .uploadfile').removeClass('d-none');
+                        $('#editForm .uploadfile').attr('href', "{{ asset('storage') }}/"+data.question.question_file);
+                    }else{
+                        $('#editForm .uploadfile').addClass('d-none');
+                    }
                     $("#editForm #editQuestion").html(data.subQuestionHtml);
                     $('body').find('.selectScheduleMeeting').html(data.scheduleMeeting);
                     $('body').find('.selectScheduleMeeting').removeClass('d-none');
-                    $("#editForm #department_id").html(data.departmentHtml);
+                    // $("#editForm #department_id").html(data.question.);
                 }
                 else
                 {
@@ -518,7 +538,7 @@
         $('body').on('click', '.addMore', function(){
             let html = `<tr id="row${addcount}">
                         <td>
-                            <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
+                            <textarea class="form-control" name="question[]" placeholder="Enter Question" required></textarea>
                         </td>
                         <td>
                             <button type="button" class="btn btn-sm btn-danger removeMore" data-id="${addcount}">Remove</button>
@@ -539,7 +559,7 @@
         $('body').on('click', '.editAddMore', function(){
             let html = `<tr id="editrow${count}">
                         <td>
-                            <input class="form-control" name="question[]" type="text" placeholder="Enter Question" required>
+                            <textarea class="form-control" name="question[]" placeholder="Enter Question" required></textarea>
                         </td>
                         <td>
                             <button type="button" class="btn btn-sm btn-danger editRemoveMore" data-id="${count}">Remove</button>
@@ -557,16 +577,16 @@
 
 
         // selecct schedule meeting to get departments
-        $('body').on('change', '#schedule_meeting_id', function(){
-            let meetingId = $(this).val();
-            if(meetingId != ""){
-                getScheduleMeetingDepartments(meetingId, 'add');
-                $('body').find('.selectScheduleMeetingDepartment').removeClass('d-none');
-            }else{
-                $('body').find('.selectScheduleMeetingDepartment').html('');
-                $('body').find('.selectScheduleMeetingDepartment').addClass('d-none');
-            }
-        });
+        // $('body').on('change', '#schedule_meeting_id', function(){
+        //     let meetingId = $(this).val();
+        //     if(meetingId != ""){
+        //         getScheduleMeetingDepartments(meetingId, 'add');
+        //         $('body').find('.selectScheduleMeetingDepartment').removeClass('d-none');
+        //     }else{
+        //         $('body').find('.selectScheduleMeetingDepartment').html('');
+        //         $('body').find('.selectScheduleMeetingDepartment').addClass('d-none');
+        //     }
+        // });
 
         // for edit
         $('body').on('change', '#schedule_meeting_id1', function(){

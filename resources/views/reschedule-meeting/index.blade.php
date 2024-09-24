@@ -37,7 +37,7 @@
                             <div class="col-md-12 mt-3"><h5>Select New Details(नवीन तपशील निवडा)</h5></div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Date(तारीख) <span class="text-danger">*</span></label>
-                                <input class="form-control" id="date" name="date" max="9999-12-31" type="date" required />
+                                <input class="form-control" id="date" name="date" min="{{ date('Y-m-d') }}" max="9999-12-31" type="date" required />
                                 <span class="text-danger is-invalid date_err"></span>
                             </div>
                             <div class="col-md-4">
@@ -49,6 +49,11 @@
                                 <label class="col-form-label" for="place">Place(ठिकाण) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="place" name="place" type="text" required>
                                 <span class="text-danger is-invalid place_err"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="reschedule_reason">Reason <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="reschedule_reason" name="reschedule_reason" required></textarea>
+                                <span class="text-danger is-invalid reschedule_reason_err"></span>
                             </div>
                         </div>
 
@@ -104,6 +109,11 @@
                                 <input class="form-control" id="place" name="place" type="text">
                                 <span class="text-danger is-invalid place_err"></span>
                             </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="reschedule_reason">Reason <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="reschedule_reason" name="reschedule_reason" required></textarea>
+                                <span class="text-danger is-invalid reschedule_reason_err"></span>
+                            </div>
                         </div>
 
                     </div>
@@ -140,7 +150,7 @@
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
                                     <th>Meeting No.</th>
-                                    <th>Agenda</th>
+                                    <th>Agenda Subject</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Meeting Venue</th>
@@ -154,7 +164,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $rescheduleMeeting->meeting?->name }}</td>
                                         <td>{{ $rescheduleMeeting->unique_id }}</td>
-                                        <td>{{ $rescheduleMeeting->agenda?->name }}</td>
+                                        <td>{{ $rescheduleMeeting->agenda?->subject }}</td>
                                         <td>{{ date('d-m-Y', strtotime($rescheduleMeeting->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($rescheduleMeeting->time)) }}</td>
                                         <td>{{ $rescheduleMeeting->place }}</td>
@@ -519,7 +529,7 @@
                                             <th colspan="5">Old Meeting Details</th>
                                         </tr>
                                         <tr>
-                                            <th>Agenda</th>
+                                            <th>Agenda Subject</th>
                                             <th>Meeting</th>
                                             <th>Date</th>
                                             <th>Time</th>

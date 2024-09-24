@@ -68,8 +68,32 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="photos">Member Photo(सदस्य फोटो) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="photos" name="photos" type="file" placeholder="Enter Photo" required>
+                                    <input class="form-control" id="photos" name="photos" type="file" accept="image/*" required>
                                     <span class="text-danger is-invalid photos_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="aadhars">Aadhar Photo</label>
+                                    <input class="form-control" id="aadhars" name="aadhars" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid aadhars_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="pancards">Pancard Photo</label>
+                                    <input class="form-control" id="pancards" name="pancards" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid pancards_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="bank_detailss">Bank Details Photo</label>
+                                    <input class="form-control" id="bank_detailss" name="bank_detailss" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid bank_detailss_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="cancel_cheques">Cancel Cheque Photo</label>
+                                    <input class="form-control" id="cancel_cheques" name="cancel_cheques" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid cancel_cheques_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
@@ -155,8 +179,37 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="photo">Member Photo(सदस्य फोटो)</label>
-                                    <input class="form-control" id="photo" name="photos" type="file" placeholder="Enter Photo">
+                                    <a href="javascript:void(0)" class="btn btn-primary d-none btn-sm photos" target="_blank">View File</a>
+                                    <input class="form-control" id="photo" name="photos" type="file" placeholder="Enter Photo" accept="image/*">
                                     <span class="text-danger is-invalid photos_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="aadhars">Aadhar Photo</label>
+                                    <a href="javascript:void(0)" class="btn btn-primary d-none btn-sm aadhars" target="_blank">View File</a>
+                                    <input class="form-control" id="aadhars" name="aadhars" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid aadhars_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="pancards">Pancard Photo</label>
+                                    <a href="javascript:void(0)" class="btn btn-primary d-none btn-sm pancards" target="_blank">View File</a>
+                                    <input class="form-control" id="pancards" name="pancards" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid pancards_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="bank_detailss">Bank Details Photo</label>
+                                    <a href="javascript:void(0)" class="btn btn-primary d-none btn-sm bank_detailss" target="_blank">View File</a>
+                                    <input class="form-control" id="bank_detailss" name="bank_detailss" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid bank_detailss_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="cancel_cheques">Cancel Cheque Photo</label>
+                                    <a href="javascript:void(0)" class="btn btn-primary d-none btn-sm cancel_cheques" target="_blank">View File</a>
+                                    <input class="form-control" id="cancel_cheques" name="cancel_cheques" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid cancel_cheques_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
@@ -331,6 +384,41 @@
                     $("#editForm input[name='alternate_number']").val(data.member.alternate_number);
                     $("#editForm input[name='address']").val(data.member.address);
                     $("#editForm input[name='designation']").val(data.member.designation);
+
+                    if(data.member.photo){
+                        $("#editForm .photos").removeClass('d-none');
+                        $("#editForm .photos").attr('href', "{{ asset('storage/') }}/"+ data.member.photo);
+                    }else{
+                        $("#editForm .photos").addClass('d-none');
+                    }
+
+                    if(data.member.aadhar){
+                        $("#editForm .aadhars").removeClass('d-none');
+                        $("#editForm .aadhars").attr('href', "{{ asset('storage/') }}/"+ data.member.aadhar);
+                    }else{
+                        $("#editForm .aadhars").addClass('d-none');
+                    }
+
+                    if(data.member.pancard){
+                        $("#editForm .pancards").removeClass('d-none');
+                        $("#editForm .pancards").attr('href', "{{ asset('storage/') }}/"+ data.member.pancard);
+                    }else{
+                        $("#editForm .pancards").addClass('d-none');
+                    }
+
+                    if(data.member.bank_details){
+                        $("#editForm .bank_detailss").removeClass('d-none');
+                        $("#editForm .bank_detailss").attr('href', "{{ asset('storage/') }}/"+ data.member.bank_details);
+                    }else{
+                        $("#editForm .bank_detailss").addClass('d-none');
+                    }
+
+                    if(data.member.cancel_cheque){
+                        $("#editForm .cancel_cheques").removeClass('d-none');
+                        $("#editForm .cancel_cheques").attr('href', "{{ asset('storage/') }}/"+ data.member.cancel_cheque);
+                    }else{
+                        $("#editForm .cancel_cheques").addClass('d-none');
+                    }
                 }
                 else
                 {

@@ -29,7 +29,11 @@ class MemberRequest extends FormRequest
             'party_id' => 'required',
             'address' => 'required',
             'designation' => 'required',
-            'photos' => 'nullable|mimes:png,jpg,jpeg,PNG,JPEG,JPG'
+            'photos' => 'nullable|mimes:png,jpg,jpeg,PNG,JPEG,JPG',
+            'aadhars' => 'nullable|mimes:png,jpg,jpeg,PNG,JPEG,JPG',
+            'pancards' => 'nullable|mimes:png,jpg,jpeg,PNG,JPEG,JPG',
+            'bank_detailss' => 'nullable|mimes:png,jpg,jpeg,PNG,JPEG,JPG',
+            'cancel_cheques' => 'nullable|mimes:png,jpg,jpeg,PNG,JPEG,JPG',
         ];
     }
 
@@ -43,7 +47,11 @@ class MemberRequest extends FormRequest
             'party_id.required' => 'Please select party',
             'address.required' => 'Please enter address',
             'designation.required' => 'Please enter designation',
-            'photos.mimes' => 'Image should be png and jpg type'
+            'photos.mimes' => 'Image should be png and jpg type',
+            'aadhars.mimes' => 'Image should be png and jpg type',
+            'pancards.mimes' => 'Image should be png and jpg type',
+            'bank_detailss.mimes' => 'Image should be png and jpg type',
+            'cancel_cheques.mimes' => 'Image should be png and jpg type'
         ];
     }
 }

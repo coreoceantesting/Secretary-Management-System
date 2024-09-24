@@ -55,7 +55,7 @@ class RescheduleMeetingController extends Controller
             $rescheduleMeeting = $this->rescheduleMeetingRepository->getScheduleMeetingDetails($id);
 
             $result = [
-                'agenda' => $rescheduleMeeting->agenda?->name,
+                'agenda' => $rescheduleMeeting->agenda?->subject,
                 'meeting' => $rescheduleMeeting->meeting?->name,
                 'date' => date('d-m-Y', strtotime($rescheduleMeeting->date)),
                 'time' => date('h:i A', strtotime($rescheduleMeeting->time)),
@@ -128,7 +128,7 @@ class RescheduleMeetingController extends Controller
                                     <th colspan="5">Old Meeting Details(जुन्या बैठकीचे तपशील)</th>
                                 </tr>
                                 <tr>
-                                    <th>Agenda</th>
+                                    <th>Agenda Subject</th>
                                     <th>Meeting</th>
                                     <th>Date</th>
                                     <th>Time</th>
@@ -137,7 +137,7 @@ class RescheduleMeetingController extends Controller
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>' . $rescheduleMeeting->agenda?->name . '</td>
+                                    <td>' . $rescheduleMeeting->agenda?->subject . '</td>
                                     <td>' . $rescheduleMeeting->meeting?->name . '</td>
                                     <td>' . date('d-m-Y', strtotime($rescheduleMeeting->date)) . '</td>
                                     <td>' . date('h:i A', strtotime($rescheduleMeeting->time)) . '</td>

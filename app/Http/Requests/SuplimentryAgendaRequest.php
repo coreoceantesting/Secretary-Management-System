@@ -26,13 +26,13 @@ class SuplimentryAgendaRequest extends FormRequest
         if ($this->edit_model_id) {
             return [
                 'schedule_meeting_id' => 'required',
-                'name' => 'required',
+                'subject' => 'required',
                 'agendafile' => 'nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG',
             ];
         } else {
             return [
                 'schedule_meeting_id' => 'required',
-                'name' => 'required',
+                'subject' => 'required',
                 'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG',
             ];
         }

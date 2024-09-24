@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Agenda</th>
-            <td>{{ $data?->agenda?->name }}</td>
+            <td>{{ $data?->agenda?->subject }}</td>
         </tr>
     </thead>
     <tbody>
