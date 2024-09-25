@@ -46,7 +46,7 @@
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>
-                                            <th>Agenda Name</th>
+                                            <th>Agenda Subject</th>
                                             <th>Meeting Name</th>
                                             <th>Meeting No.</th>
                                             <th>Party Name</th>
@@ -62,7 +62,7 @@
                                         @foreach($attendanceMeetingReports as $attendanceMeetingReport)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $attendanceMeetingReport->scheduleMeeting?->agenda?->name }}</td>
+                                            <td>{{ $attendanceMeetingReport->scheduleMeeting?->agenda?->subject }}</td>
                                             <td>{{ $attendanceMeetingReport->meeting?->name }}</td>
                                             <td>{{ $attendanceMeetingReport->scheduleMeeting?->unique_id }}</td>
                                             <td>{{ $attendanceMeetingReport->member?->party?->name }}</td>

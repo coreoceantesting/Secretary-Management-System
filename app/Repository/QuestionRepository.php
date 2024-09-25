@@ -46,6 +46,7 @@ class QuestionRepository
                     $subQuestion = new SubQuestion;
                     $subQuestion->question_id = $ques->id;
                     $subQuestion->question = $request->question[$i];
+                    $subQuestion->member_id = $request->member_id[$i];
                     $subQuestion->save();
                 }
             }
@@ -89,6 +90,7 @@ class QuestionRepository
                     $subQuestion = new SubQuestion;
                     $subQuestion->question_id = $id;
                     $subQuestion->question = $request->question[$i];
+                    $subQuestion->member_id = $request->member_id[$i];
                     $subQuestion->save();
                 }
             }
@@ -140,6 +142,7 @@ class QuestionRepository
             ->when(Auth::user()->roles[0]->name == "Department", function ($q) {
                 $q->where('is_sended', 1);
             })
+            ->with('member')
             ->get();
     }
 

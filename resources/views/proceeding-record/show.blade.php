@@ -18,7 +18,7 @@
                             <thead>
                                 <tr>
                                     <th>Department</th>
-                                    <th>Goshwara Name(गोषवारा नाव)</th>
+                                    <th>Goshwara Subject(गोषवारा विषय)</th>
                                     <th>Goshwara File(गोषवारा फाईल)</th>
                                 </tr>
                             </thead>
@@ -26,7 +26,7 @@
                                 @foreach($proceedingRecord->scheduleMeeting->agenda->assignGoshwaraToAgenda as $goshwara)
                                 <tr>
                                     <td>{{ $goshwara->goshwara?->department?->name }}</td>
-                                    <td>{{ $goshwara->goshwara?->name }}</td>
+                                    <td>{{ $goshwara->goshwara?->subject }}</td>
                                     <td><a target="_blank" href="{{ asset('storage/'.$goshwara?->goshwara?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach
@@ -44,13 +44,13 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Agenda Name(नाव)</th>
+                                    <th>Agenda Subject(विषय)</th>
                                     <th>Agenda File(फाईल)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $agenda->name }}</td>
+                                    <td>{{ $agenda->subject }}</td>
                                     <td><a target="_blank" href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                             </tbody>
@@ -163,7 +163,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Supplementary Name(नाव)</th>
+                                    <th>Supplementary Subject(विषय)</th>
                                     <th>Supplementary File(फाईल)</th>
                                 </tr>
                             </thead>
@@ -171,7 +171,7 @@
                                 @foreach($suplimentryAgendas as $suplimentryAgenda)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <th>{{ $suplimentryAgenda->name }}</th>
+                                    <th>{{ $suplimentryAgenda->subject }}</th>
                                     <td><a target="_blank" href="{{ asset('storage/'.$suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach

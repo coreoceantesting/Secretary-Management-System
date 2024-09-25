@@ -60,7 +60,8 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 40%">Questions</th>
+                                    <th>Questions</th>
+                                    <th>Member</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -68,6 +69,14 @@
                                 <tr id="row1">
                                     <td>
                                         <textarea class="form-control" name="question[]" placeholder="Enter Question" required></textarea>
+                                    </td>
+                                    <td>
+                                        <select name="member_id[]" class="form-select" required>
+                                            <option value="">Select Member</option>
+                                            @foreach($members as $member)
+                                            <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary addMore" data-id="1">Add</button>
@@ -133,7 +142,8 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 40%">Questions</th>
+                                    <th>Questions</th>
+                                    <th>Member</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -541,6 +551,14 @@
                             <textarea class="form-control" name="question[]" placeholder="Enter Question" required></textarea>
                         </td>
                         <td>
+                            <select name="member_id[]" class="form-select" required>
+                                <option value="">Select Member</option>
+                                @foreach($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
                             <button type="button" class="btn btn-sm btn-danger removeMore" data-id="${addcount}">Remove</button>
                         </td>
                     </tr>`;
@@ -560,6 +578,14 @@
             let html = `<tr id="editrow${count}">
                         <td>
                             <textarea class="form-control" name="question[]" placeholder="Enter Question" required></textarea>
+                        </td>
+                        <td>
+                            <select name="member_id[]" class="form-select" required>
+                                <option value="">Select Member</option>
+                                @foreach($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                @endforeach
+                            </select>
                         </td>
                         <td>
                             <button type="button" class="btn btn-sm btn-danger editRemoveMore" data-id="${count}">Remove</button>

@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="designation">Designation(पदनाम) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
+                                    <input class="form-control" onkeydown="return isAlphanumericKey(event)" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
                                     <span class="text-danger is-invalid designation_err"></span>
                                 </div>
 
@@ -173,7 +173,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="designation">Designation(पदनाम) <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="designation" name="designation" type="text" placeholder="Enter Designation" required>
+                                    <input class="form-control" id="designation" onkeydown="return isAlphanumericKey(event)" name="designation" type="text" placeholder="Enter Designation" required>
                                     <span class="text-danger is-invalid designation_err"></span>
                                 </div>
 
@@ -350,6 +350,16 @@
         });
 
     });
+
+    function isAlphanumericKey(event) {
+            // Allow backspace, delete, tab, escape, and enter keys
+            if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Tab') {
+                return true;
+            }
+
+            // Allow alphanumeric characters and spaces
+            return /[A-Za-z ]/.test(event.key);
+        }
 </script>
 
 

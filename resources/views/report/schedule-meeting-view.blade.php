@@ -21,8 +21,8 @@
                                         <tr>
                                             <th>Sr No.</th>
                                             <th>Meeting</th>
-                                            <th>Goshwara Name</th>
                                             <th>Goshwara Subject</th>
+                                            <th>Goshwara Outward No</th>
                                             <th>Sent Date</th>
                                             <th>Goshwara File</th>
                                         </tr>
@@ -32,8 +32,8 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $goshwara?->goshwara?->meeting?->name }}</td>
-                                            <td>{{ $goshwara?->goshwara?->name }}</td>
                                             <td>{{ $goshwara?->goshwara?->subject }}</td>
+                                            <td>{{ $goshwara?->goshwara?->outward_no }}</td>
                                             <td>{{ date('d-m-Y', strtotime($goshwara?->goshwara?->date)) }}</td>
                                             <td><a href="{{ asset('storage/'.$goshwara?->goshwara?->file) }}" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
@@ -53,7 +53,7 @@
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>
-                                            <th>Name</th>
+                                            <th>Subject</th>
                                             <th>File</th>
                                             <th>Date</th>
                                             <th>Time</th>
@@ -64,7 +64,7 @@
                                     <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td>{{ $scheduleMeeting?->agenda?->name }}</td>
+                                            <td>{{ $scheduleMeeting?->agenda?->subject }}</td>
                                             <td><a href="{{ asset('storage/'.$scheduleMeeting?->agenda?->file) }}" class="btn btn-primary btn-sm">View</a></td>
                                             <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->agenda?->date)) }}</td>
                                             <td>{{ date('h:i A', strtotime($scheduleMeeting?->agenda?->time)) }}</td>
@@ -83,7 +83,7 @@
                                             <th>Sr No.</th>
                                             <th>Meeting Name</th>
                                             <th>Meeting No.</th>
-                                            <th>Suplimentry Name</th>
+                                            <th>Suplimentry Subject</th>
                                             <th>Suplimentry File</th>
                                         </tr>
                                     </thead>
@@ -93,7 +93,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $suplimentryAgenda?->meeting?->name }}</td>
                                             <td>{{ $scheduleMeeting->unique_id }}</td>
-                                            <td>{{ $suplimentryAgenda?->name }}</td>
+                                            <td>{{ $suplimentryAgenda?->subject }}</td>
                                             <td><a href="{{ asset('storage/'.$suplimentryAgenda?->file) }}" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
                                         @empty

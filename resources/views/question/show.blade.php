@@ -63,6 +63,7 @@
                                     <thead>
                                         <tr>
                                             <th>Question</th>
+                                            <th>Member</th>
                                             @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
                                             <th>Response</th>
                                             @endif
@@ -79,6 +80,9 @@
                                             <td>
                                                 <input type="hidden" name="subQuestionId[]" class="questionId" value="{{ $subQuestion->id }}">
                                                 {{ $subQuestion->question }}
+                                            </td>
+                                            <td>
+                                                {{ $subQuestion?->member?->name }}
                                             </td>
                                             @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
                                             <td>

@@ -47,8 +47,8 @@
                         <i class="ri-layout-3-line"></i>
                         <span data-key="t-layouts">Masters</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarMaster">
-                        <ul class="nav nav-sm flex-column  {{ request()->routeIs('master.*') ? 'show' : '' }}">
+                    <div class="collapse menu-dropdown {{ request()->routeIs('master.*') ? 'show' : '' }}" id="sidebarMaster">
+                        <ul class="nav nav-sm flex-column">
                             @can('department.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.department.index') }}" class="nav-link {{ request()->routeIs('master.department.*') ? 'active' : '' }}" data-key="t-horizontal">Department(विभाग)</a>
@@ -88,20 +88,20 @@
 
                 @canany(['users.view', 'roles.view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarUserManagement" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarUserManagement">
+                    <a class="nav-link menu-link {{ request()->routeIs('users.*') ? 'active' : '' }} {{ request()->routeIs('roles.*') ? 'active' : '' }}" href="#sidebarUserManagement" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarUserManagement">
                         <i class="bx bx-user-circle"></i>
                         <span data-key="t-layouts">User&nbsp;Management</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarUserManagement">
+                    <div class="collapse menu-dropdown {{ request()->routeIs('users.*') ? 'show' : '' }} {{ request()->routeIs('roles.*') ? 'show' : '' }}" id="sidebarUserManagement">
                         <ul class="nav nav-sm flex-column">
                             @can('users.view')
                                 <li class="nav-item">
-                                    <a href="{{ route('users.index') }}" class="nav-link" data-key="t-horizontal">Users(वापरकर्ते)</a>
+                                    <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" data-key="t-horizontal">Users(वापरकर्ते)</a>
                                 </li>
                             @endcan
                             @can('roles.view')
                                 <li class="nav-item">
-                                    <a href="{{ route('roles.index') }}" class="nav-link" data-key="t-horizontal">Roles(भूमिका)</a>
+                                    <a href="{{ route('roles.index') }}" class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}" data-key="t-horizontal">Roles(भूमिका)</a>
                                 </li>
                             @endcan
                         </ul>

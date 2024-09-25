@@ -7,6 +7,7 @@ use App\Repository\QuestionRepository;
 use App\Repository\CommonRepository;
 use App\Http\Requests\QuestionRequest;
 use App\Models\Department;
+use App\Models\Member;
 
 class QuestionController extends Controller
 {
@@ -27,10 +28,13 @@ class QuestionController extends Controller
 
         $departments = Department::where('is_home_department', 0)->select('id', 'name')->get();
 
+        $members = Member::select('id', 'name')->get();
+
         return view('question.index')->with([
             'questions' => $questions,
             'meetings' => $meetings,
-            'departments' => $departments
+            'departments' => $departments,
+            'members' => $members,
         ]);
     }
 
@@ -78,11 +82,22 @@ class QuestionController extends Controller
             $subQuestionHtml = "";
             $subQuestions = $this->questionRepository->getSubQuestions($question->id);
 
+            $members = Member::select('id', 'name')->get();
+
             foreach ($subQuestions as $subQuestion) {
                 if ($count == "1") {
                     $subQuestionHtml .= "<tr id='editrow$count'>
                                 <td>
-                                    <textarea class='form-control' name='question[]' value='" . $subQuestion->question . "' placeholder='Enter Question' required></textarea>
+                                    <textarea class='form-control' name='question[]' placeholder='Enter Question' required>" . $subQuestion->question . "</textarea>
+                                </td>
+                                <td>
+                                    <select name='member_id[]' class='form-select' required>
+                                        <option value=''>Select Member</option>";
+                    foreach ($members as $member) {
+                        $isSelected = ($member->id == $subQuestion->member_id) ? "selected" : "";
+                        $subQuestionHtml .= "<option " . $isSelected . " value='" . $member->id . "'>" . $member->name . "</option>";
+                    }
+                    $subQuestionHtml .= "</select>
                                 </td>
                                 <td>
                                     <button type='button' class='btn btn-sm btn-primary editAddMore' data-id='" . $count . "'>Add</button>
@@ -91,7 +106,16 @@ class QuestionController extends Controller
                 } else {
                     $subQuestionHtml .= "<tr id='editrow$count'>
                                 <td>
-                                    <textarea class='form-control' name='question[]' value='" . $subQuestion->question . "' placeholder='Enter Question' required></textarea>
+                                    <textarea class='form-control' name='question[]' placeholder='Enter Question' required>" . $subQuestion->question . "</textarea>
+                                </td>
+                                <td>
+                                    <select name='member_id[]' class='form-select' required>
+                                        <option value=''>Select Member</option>";
+                    foreach ($members as $member) {
+                        $isSelected = ($member->id == $subQuestion->member_id) ? "selected" : "";
+                        $subQuestionHtml .= "<option " . $isSelected . " value='" . $member->id . "'>" . $member->name . "</option>";
+                    }
+                    $subQuestionHtml .= "</select>
                                 </td>
                                 <td>
                                     <button type='button' class='btn btn-sm btn-danger editRemoveMore' data-id='" . $count . "'>Remove</button>

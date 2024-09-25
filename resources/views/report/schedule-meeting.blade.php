@@ -59,7 +59,7 @@
                                         @foreach($scheduleMeetings as $scheduleMeeting)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $scheduleMeeting?->agenda?->name }}</td>
+                                            <td>{{ $scheduleMeeting?->agenda?->subject }}</td>
                                             <td>{{ $scheduleMeeting?->meeting?->name }}</td>
                                             <td>{{ $scheduleMeeting->unique_id }}</td>
                                             <td>{{ date('d-m-Y', strtotime($scheduleMeeting?->date)) }}</td>
