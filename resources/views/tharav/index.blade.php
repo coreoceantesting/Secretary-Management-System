@@ -109,15 +109,15 @@
                                         <td>{{ ($tharav->date) ? date('d-m-Y', strtotime($tharav->date)) : '-' }}</td>
                                         <td>
                                             @foreach($tharav->assignTharavDepartment as $department)
-                                            {{ $department?->department?->name }},
+                                            {{ $loop->iteration. ". " .$department?->department?->name }}<br>
                                             @endforeach
                                             {{-- {{ $tharav->meeting?->name ?? '-' }} --}}
                                         </td>
                                         <td>{{ ($tharav->remark) ? $tharav->remark : '-' }}</td>
                                         <td><a target="_blank" href="{{ asset('storage/'.$tharav->file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         <td>
-                                            <button class="btn btn-primary askQuestionBtn btn-sm" data-id="{{ $tharav->id }}" data-controls-modal="addQuestionModel" data-backdrop="static" data-keyboard="false">Ask Question</button>
-                                            <button class="btn btn-primary viewResponseBtn btn-sm" data-id="{{ $tharav->id }}">View Response</button>
+                                            <button class="btn btn-primary askQuestionBtn btn-sm" data-id="{{ $tharav->id }}">Ask Question</button>
+                                            <button class="btn btn-success viewResponseBtn btn-sm" data-id="{{ $tharav->id }}">View Response</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -131,21 +131,38 @@
 
 
     {{-- Add Objection Modal --}}
-    <div class="modal fade" id="addQuestionModel" role="dialog">
+    <div class="modal fade" id="addQuestionModel" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form action="" id="addForm" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header border-bottom">
                         <h5 class="modal-title">Question </h5>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        
+                    <div class="modal-body border-bottom">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="mb-3">
+                                    <label for="question">Question</label>
+                                    <textarea name="question" class="form-control" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="mb-3">
+                                    <label for="department_id">Select Department</label>
+                                    <select name="department_id" class="form-select" id="department_id">
+                                        <option value="">Select Department</option>
+                                        <option value="">Select Department</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="hideFormSubmit">
-                            <button class="btn btn-secondary close-modal" data-bs-dismiss="modal" type="button" >Close</button>
+                            <button class="btn btn-secondary close-modal" data-bs-dismiss="modal" type="button">Close</button>
                             <button class="btn btn-primary" id="addQuestion" type="submit">Submit</button>
                         </div>
                     </div>
