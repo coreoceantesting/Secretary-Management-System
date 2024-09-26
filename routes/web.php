@@ -18,6 +18,8 @@ use App\Http\Controllers\GoshwaraController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\ScheduleMeetingController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\PrastavSuchanaController;
+use App\Http\Controllers\LaxvadiController;
 use App\Http\Controllers\RescheduleMeetingController;
 use App\Http\Controllers\SuplimentryAgendaController;
 use App\Http\Controllers\AttendanceController;
@@ -127,6 +129,30 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::post('question/schedule_meeting/send-question', [QuestionController::class, 'sendQuestionToDepartment'])->name('question.sendQuestion');
     Route::resource('question', QuestionController::class);
     // end of route for question
+
+
+    // route for prastav suchana
+    Route::get('laxvadi/schedule_meeting/{id}', [LaxvadiController::class, 'getScheduleMeeting'])->name('laxvadi.getScheduleMeeting');
+    Route::get('laxvadi/schedule_meeting/get-department/{id}', [LaxvadiController::class, 'getScheduleMeetingDepartments'])->name('laxvadi.getScheduleMeetingDepartments');
+    Route::post('laxvadi/response', [LaxvadiController::class, 'response'])->name('laxvadi.response');
+    Route::post('laxvadi/saveSingleResponse', [LaxvadiController::class, 'saveSingleResponse'])->name('laxvadi.saveSingleResponse');
+    Route::post('laxvadi/schedule_meeting/mayor-accept', [LaxvadiController::class, 'acceptMayorQuetion'])->name('laxvadi.acceptQuetionByMayor');
+    Route::post('laxvadi/schedule_meeting/send-question', [LaxvadiController::class, 'sendQuestionToDepartment'])->name('laxvadi.sendQuestion');
+    Route::resource('laxvadi', LaxvadiController::class);
+    // end of route for prastav suchana
+
+
+    // route for prastav suchana
+    Route::get('prastav-suchana/schedule_meeting/{id}', [PrastavSuchanaController::class, 'getScheduleMeeting'])->name('prastav-suchana.getScheduleMeeting');
+    Route::get('prastav-suchana/schedule_meeting/get-department/{id}', [PrastavSuchanaController::class, 'getScheduleMeetingDepartments'])->name('prastav-suchana.getScheduleMeetingDepartments');
+    Route::post('prastav-suchana/response', [PrastavSuchanaController::class, 'response'])->name('prastav-suchana.response');
+    Route::post('prastav-suchana/saveSingleResponse', [PrastavSuchanaController::class, 'saveSingleResponse'])->name('prastav-suchana.saveSingleResponse');
+    Route::post('prastav-suchana/schedule_meeting/mayor-accept', [PrastavSuchanaController::class, 'acceptMayorQuetion'])->name('prastav-suchana.acceptQuetionByMayor');
+    Route::post('prastav-suchana/schedule_meeting/send-question', [PrastavSuchanaController::class, 'sendQuestionToDepartment'])->name('prastav-suchana.sendQuestion');
+    Route::resource('prastav-suchana', PrastavSuchanaController::class);
+    // end of route for prastav suchana
+
+
 
     // route for reschedule meeting
     Route::get('reschedule-meeting/schedule_meeting/{id}', [RescheduleMeetingController::class, 'getScheduleMeeting'])->name('reschedule-meeting.getScheduleMeeting');

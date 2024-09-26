@@ -231,6 +231,109 @@
             </div>
             @endif
 
+
+            @if(count($prastavSuchanas) > 0)
+            <div class="card">
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Prastav Suchana</h5></div>
+                <div class="card-body">
+                    @foreach($prastavSuchanas as $que)
+                    <h5>{{ $que->name }}</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Prastav Suchana(प्रस्तव सुचना)</th>
+                                    <th>Prastav Suchana File(प्रस्तव सुचना फाइल)</th>
+                                    <th>Answer(उत्तर)</th>
+                                    <th>Response File(उत्तर फाईल)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($que?->prastavSuchana as $question)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        @foreach($question->prastavSuchanaSubQuestion as $subQues)
+                                        <b>{{ $loop->iteration }} :-</b> {{ ($subQues->question) ? $subQues->question : '-' }}<br>
+                                        @endforeach
+                                    </td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                    <td>
+                                        @foreach($question->prastavSuchanaSubQuestion as $subQues)
+                                        <b>{{ $loop->iteration }} :-</b> {{ ($subQues->response) ? $subQues->response : '-' }}<br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @if($question->response_file)
+                                        <a target="_blank" href="{{ asset('storage/'.$question->response_file) }}" class="btn btn-primary btn-sm">View File</a>
+                                        @else
+                                        -
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+
+
+            @if(count($laxvadis) > 0)
+            <div class="card">
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Laxvadi</h5></div>
+                <div class="card-body">
+                    @foreach($laxvadis as $que)
+                    <h5>{{ $que->name }}</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Laxvadi(लक्षवडी)</th>
+                                    <th>Laxvadi File(लक्षवडी फाइल)</th>
+                                    <th>Answer(उत्तर)</th>
+                                    <th>Response File(उत्तर फाईल)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($que?->laxvadi as $question)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        @foreach($question->laxvadiSubQuestions as $subQues)
+                                        <b>{{ $loop->iteration }} :-</b> {{ ($subQues->question) ? $subQues->question : '-' }}<br>
+                                        @endforeach
+                                    </td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                    <td>
+                                        @foreach($question->laxvadiSubQuestions as $subQues)
+                                        <b>{{ $loop->iteration }} :-</b> {{ ($subQues->response) ? $subQues->response : '-' }}<br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @if($question->response_file)
+                                        <a target="_blank" href="{{ asset('storage/'.$question->response_file) }}" class="btn btn-primary btn-sm">View File</a>
+                                        @else
+                                        -
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+
+
             <div class="card">
                 <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Attendance</h5></div>
                 <div class="card-body">

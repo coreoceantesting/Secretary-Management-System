@@ -101,6 +101,14 @@ class ProceedingRecordController extends Controller
             return $q->whereIn('schedule_meeting_id', $ids)->with(['subQuestions']);
         })->get();
 
+        $prastavSuchanas = Department::withWhereHas('prastavSuchana', function ($q) use ($ids) {
+            return $q->whereIn('schedule_meeting_id', $ids)->with(['prastavSuchanaSubQuestion']);
+        })->get();
+
+        $laxvadis = Department::withWhereHas('laxvadi', function ($q) use ($ids) {
+            return $q->whereIn('schedule_meeting_id', $ids)->with(['laxvadiSubQuestions']);
+        })->get();
+
         return view('proceeding-record.show')->with([
             'agenda' => $agenda,
             'scheduleMeetings' => $scheduleMeetings,
@@ -109,7 +117,9 @@ class ProceedingRecordController extends Controller
             'departments' => $departments,
             'suplimentryAgendas' => $suplimentryAgendas,
             'questions' => $questions,
-            'departmentAttendances' => $departmentAttendances
+            'departmentAttendances' => $departmentAttendances,
+            'prastavSuchanas' => $prastavSuchanas,
+            'laxvadis' => $laxvadis
         ]);
     }
 
@@ -146,6 +156,14 @@ class ProceedingRecordController extends Controller
             ->where('meeting_id', $proceedingRecord->meeting_id)
             ->get();
 
+        $prastavSuchanas = Department::withWhereHas('prastavSuchana', function ($q) use ($ids) {
+            return $q->whereIn('schedule_meeting_id', $ids)->with(['prastavSuchanaSubQuestion']);
+        })->get();
+
+        $laxvadis = Department::withWhereHas('laxvadi', function ($q) use ($ids) {
+            return $q->whereIn('schedule_meeting_id', $ids)->with(['laxvadiSubQuestions']);
+        })->get();
+
         $pdf = PDF::loadView('proceeding-record.pdf', [
             'agenda' => $agenda,
             'scheduleMeetings' => $scheduleMeetings,
@@ -154,7 +172,9 @@ class ProceedingRecordController extends Controller
             'departments' => $departments,
             'suplimentryAgendas' => $suplimentryAgendas,
             'questions' => $questions,
-            'departmentAttendances' => $departmentAttendances
+            'departmentAttendances' => $departmentAttendances,
+            'prastavSuchanas' => $prastavSuchanas,
+            'laxvadis' => $laxvadis
         ]);
 
         return $pdf->stream('document.pdf');

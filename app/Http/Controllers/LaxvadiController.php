@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\QuestionRepository;
+use App\Repository\LaxvadiRepository;
 use App\Repository\CommonRepository;
-use App\Http\Requests\QuestionRequest;
+use App\Http\Requests\LaxvadiRequest;
 use App\Models\Department;
 use App\Models\Member;
 
-class QuestionController extends Controller
+class LaxvadiController extends Controller
 {
-    protected $questionRepository;
+    protected $laxvadiRepository;
     protected $commonRepository;
 
-    public function __construct(QuestionRepository $questionRepository, CommonRepository $commonRepository)
+    public function __construct(LaxvadiRepository $laxvadiRepository, CommonRepository $commonRepository)
     {
-        $this->questionRepository = $questionRepository;
+        $this->laxvadiRepository = $laxvadiRepository;
         $this->commonRepository = $commonRepository;
     }
 
@@ -24,26 +24,26 @@ class QuestionController extends Controller
     {
         $meetings = $this->commonRepository->getRescheduleMeeting();
 
-        $questions = $this->questionRepository->index();
+        $laxvadis = $this->laxvadiRepository->index();
 
         $departments = Department::where('is_home_department', 0)->select('id', 'name')->get();
 
         $members = Member::select('id', 'name')->get();
 
-        return view('question.index')->with([
-            'questions' => $questions,
+        return view('laxvadi.index')->with([
+            'laxvadis' => $laxvadis,
             'meetings' => $meetings,
             'departments' => $departments,
             'members' => $members,
         ]);
     }
 
-    public function store(QuestionRequest $request)
+    public function store(LaxvadiRequest $request)
     {
-        $question = $this->questionRepository->store($request);
+        $laxvadi = $this->laxvadiRepository->store($request);
 
-        if ($question) {
-            return response()->json(['success' => 'Question created successfully!']);
+        if ($laxvadi) {
+            return response()->json(['success' => 'Laxvadi created successfully!']);
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
         }
@@ -51,14 +51,14 @@ class QuestionController extends Controller
 
     public function edit($id)
     {
-        $question = $this->questionRepository->edit($id);
+        $question = $this->laxvadiRepository->edit($id);
 
         if ($question) {
             $scheduleMeetingHtml = '<label class="col-form-label" for="schedule_meeting_id">Select Schedule Meeting Date(शेड्यूल मीटिंग तारीख निवडा) <span class="text-danger">*</span></label>
             <select class="form-select col-sm-12" id="schedule_meeting_id1" name="schedule_meeting_id" required>
                 <option value="">--Select Schedule Meeting--</option>';
             if ($question->schedule_meeting_id) {
-                $scheduleMeetings = $this->questionRepository->getScheduleMeeting($question->meeting_id);
+                $scheduleMeetings = $this->laxvadiRepository->getScheduleMeeting($question->meeting_id);
 
                 foreach ($scheduleMeetings as $scheduleMeeting) :
                     $isSelected = $scheduleMeeting->id == $question->schedule_meeting_id ? 'selected' : '';
@@ -68,19 +68,11 @@ class QuestionController extends Controller
             $scheduleMeetingHtml .= '</select>
                                 <span class="text-danger is-invalid schedule_meeting_id_err"></span>';
 
-            // logic to get department
-            // $departmentHtml = '<option value="">Select Department</option>';
-            // $departments = $this->questionRepository->getScheduleMeetingDepartments($question->schedule_meeting_id, $id);
-
-            // foreach ($departments as $department) {
-            //     $isSelected = ($department->department?->id == $question->department_id) ? 'selected' : '';
-            //     $departmentHtml .= '<option ' . $isSelected . ' value="' . $department->department?->id . '">' . $department->department?->name . '</option>';
-            // }
 
             // sub question
             $count = 1;
             $subQuestionHtml = "";
-            $subQuestions = $this->questionRepository->getSubQuestions($question->id);
+            $subQuestions = $this->laxvadiRepository->getSubQuestions($question->id);
 
             $members = Member::select('id', 'name')->get();
 
@@ -138,12 +130,12 @@ class QuestionController extends Controller
         return $response;
     }
 
-    public function update(QuestionRequest $request, $id)
+    public function update(LaxvadiRequest $request, $id)
     {
-        $question = $this->questionRepository->update($request, $id);
+        $question = $this->laxvadiRepository->update($request, $id);
 
         if ($question) {
-            return response()->json(['success' => 'Question updated successfully!']);
+            return response()->json(['success' => 'Laxvadi updated successfully!']);
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
         }
@@ -151,10 +143,10 @@ class QuestionController extends Controller
 
     public function destroy($id)
     {
-        $question = $this->questionRepository->destroy($id);
+        $question = $this->laxvadiRepository->destroy($id);
 
         if ($question) {
-            return response()->json(['success' => 'Schedule meeting deleted successfully!']);
+            return response()->json(['success' => 'Laxvadi deleted successfully!']);
         } else {
             return response()->json(['error' => 'Something went wrong please try again']);
         }
@@ -163,7 +155,7 @@ class QuestionController extends Controller
     public function getScheduleMeeting(Request $request, $id)
     {
         if ($request->ajax()) {
-            $scheduleMeetings = $this->questionRepository->getScheduleMeeting($id);
+            $scheduleMeetings = $this->laxvadiRepository->getScheduleMeeting($id);
 
             $results = $scheduleMeetings->map(function ($item, $key) {
                 $item["datetime"] =  $item['unique_id'] . ' (' . date('d-m-Y h:i A', strtotime($item["datetime"])) . ')';
@@ -179,11 +171,11 @@ class QuestionController extends Controller
 
     public function show($id)
     {
-        $question = $this->questionRepository->show($id);
+        $question = $this->laxvadiRepository->show($id);
 
-        $subQuestions = $this->questionRepository->getSubQuestions($id);
+        $subQuestions = $this->laxvadiRepository->getSubQuestions($id);
 
-        return view('question.show')->with([
+        return view('laxvadi.show')->with([
             'question' => $question,
             'subQuestions' => $subQuestions
         ]);
@@ -191,12 +183,12 @@ class QuestionController extends Controller
 
     public function response(Request $request)
     {
-        $question = $this->questionRepository->response($request);
+        $question = $this->laxvadiRepository->response($request);
 
         if ($question) {
-            return redirect()->route('question.index')->with(['success' => 'Schedule meeting deleted successfully!']);
+            return redirect()->route('laxvadi.index')->with(['success' => 'Laxvadi deleted successfully!']);
         } else {
-            return redirect()->route('question.index')->with(['error' => 'Something went wrong please try again']);
+            return redirect()->route('laxvadi.index')->with(['error' => 'Something went wrong please try again']);
         }
     }
 
@@ -204,10 +196,10 @@ class QuestionController extends Controller
     {
         // dd($request);
         if ($request->ajax()) {
-            $question = $this->questionRepository->saveSingleResponse($request);
+            $question = $this->laxvadiRepository->saveSingleResponse($request);
 
             if ($question) {
-                return response()->json(['success' => 'Question Response updated successfully!']);
+                return response()->json(['success' => 'Laxvadi Response updated successfully!']);
             } else {
                 return response()->json(['error' => 'Something went wrong please try again']);
             }
@@ -218,7 +210,7 @@ class QuestionController extends Controller
     public function getScheduleMeetingDepartments(Request $request, $id)
     {
         if ($request->ajax()) {
-            $departments = $this->questionRepository->getScheduleMeetingDepartments($id, $request->type);
+            $departments = $this->laxvadiRepository->getScheduleMeetingDepartments($id, $request->type);
 
             return response()->json([
                 'departments' => $departments
@@ -229,20 +221,20 @@ class QuestionController extends Controller
     // accpet question by mayor
     public function acceptMayorQuetion(Request $request)
     {
-        $this->questionRepository->acceptMayorQuetion($request);
+        $this->laxvadiRepository->acceptMayorQuetion($request);
 
         return response()->json([
-            'success' => "Question accepted successfully!"
+            'success' => "Laxvadi accepted successfully!"
         ]);
     }
 
     // send question to department
     public function sendQuestionToDepartment(Request $request)
     {
-        $this->questionRepository->sendQuestionToDepartment($request);
+        $this->laxvadiRepository->sendQuestionToDepartment($request);
 
         return response()->json([
-            'success' => "Question sended successfully!"
+            'success' => "Laxvadi sended successfully!"
         ]);
     }
 }

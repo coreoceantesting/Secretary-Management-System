@@ -149,7 +149,7 @@
                         <i class="bx bxs-hourglass-top"></i>
                         <span data-key="t-layouts">Agenda</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarAgenda" {{ request()->routeIs('agenda.*') ? 'show' : '' }} {{ request()->routeIs('suplimentry-agenda.*') ? 'show' : '' }}>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('agenda.*') ? 'show' : '' }} {{ request()->routeIs('suplimentry-agenda.*') ? 'show' : '' }}" id="sidebarAgenda">
                         <ul class="nav nav-sm flex-column">
                             @can('agenda.view')
                             <li class="nav-item">
@@ -170,21 +170,21 @@
 
                 @canany(['schedule_meeting.view', 'reschedule_meeting.view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarMeeting" data-bs-toggle="collapse" role="button" aria-expanded="false" {{ request()->routeIs('schedule-meeting.*') ? 'active' : '' }} {{ request()->routeIs('reschedule-meeting.*') ? 'active' : '' }} aria-controls="sidebarMeeting">
+                    <a class="nav-link menu-link {{ request()->routeIs('schedule-meeting.*') ? 'active' : '' }} {{ request()->routeIs('reschedule-meeting.*') ? 'active' : '' }} " href="#sidebarMeeting" data-bs-toggle="collapse" role="button" aria-expanded="false"aria-controls="sidebarMeeting">
                         <i class="bx bx-target-lock"></i>
                         <span data-key="t-layouts">Meeting</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarMeeting" {{ request()->routeIs('schedule-meeting.*') ? 'show' : '' }} {{ request()->routeIs('reschedule-meeting.*') ? 'show' : '' }}>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('schedule-meeting.*') ? 'show' : '' }} {{ request()->routeIs('reschedule-meeting.*') ? 'show' : '' }}" id="sidebarMeeting">
                         <ul class="nav nav-sm flex-column">
                             @can('schedule_meeting.view')
                             <li class="nav-item">
-                                <a href="{{ route('schedule-meeting.index') }}" {{ request()->routeIs('schedule-meeting.*') ? 'active' : '' }} class="nav-link" data-key="t-horizontal">Schedule&nbsp;Meeting(बैठकीचे वेळापत्रक)</a>
+                                <a href="{{ route('schedule-meeting.index') }}" class="nav-link {{ request()->routeIs('schedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Schedule&nbsp;Meeting(बैठकीचे वेळापत्रक)</a>
                             </li>
                             @endcan
 
                             @can('reschedule_meeting.view')
                             <li class="nav-item">
-                                <a href="{{ route('reschedule-meeting.index') }}" {{ request()->routeIs('reschedule-meeting.*') ? 'active' : '' }} class="nav-link" data-key="t-horizontal">Reschedule&nbsp;Meeting(मीटिंग पुन्हा शेड्युल करा)</a>
+                                <a href="{{ route('reschedule-meeting.index') }}" class="nav-link {{ request()->routeIs('reschedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Reschedule&nbsp;Meeting(मीटिंग पुन्हा शेड्युल करा)</a>
                             </li>
                             @endcan
                         </ul>
@@ -199,6 +199,24 @@
                     <a class="nav-link menu-link {{ request()->routeIs('question.*') ? 'active' : '' }}" href="{{ route('question.index') }}" >
                         <i class="bx bx-question-mark"></i>
                         <span data-key="t-dashboards">Questions</span>
+                    </a>
+                </li>
+                @endcan
+
+                @can('question.view')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('prastav-suchana.*') ? 'active' : '' }}" href="{{ route('prastav-suchana.index') }}" >
+                        <i class="bx bx-spreadsheet"></i>
+                        <span data-key="t-dashboards">Prastav Suchana</span>
+                    </a>
+                </li>
+                @endcan
+
+                @can('question.view')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('laxvadi.*') ? 'active' : '' }}" href="{{ route('laxvadi.index') }}" >
+                        <i class="bx bx-layout"></i>
+                        <span data-key="t-dashboards">Laxvadi</span>
                     </a>
                 </li>
                 @endcan

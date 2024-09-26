@@ -364,6 +364,56 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'agenda.receipt',
                 'group' => 'agenda',
             ],
+            [
+                'id' => 81,
+                'name' => 'laxvadi.view',
+                'group' => 'laxvadi',
+            ],
+            [
+                'id' => 82,
+                'name' => 'laxvadi.create',
+                'group' => 'laxvadi',
+            ],
+            [
+                'id' => 83,
+                'name' => 'laxvadi.edit',
+                'group' => 'laxvadi',
+            ],
+            [
+                'id' => 84,
+                'name' => 'laxvadi.delete',
+                'group' => 'laxvadi',
+            ],
+            [
+                'id' => 85,
+                'name' => 'laxvadi.response',
+                'group' => 'laxvadi',
+            ],
+            [
+                'id' => 86,
+                'name' => 'prastav-suchana.view',
+                'group' => 'prastav-suchana',
+            ],
+            [
+                'id' => 87,
+                'name' => 'prastav-suchana.create',
+                'group' => 'prastav-suchana',
+            ],
+            [
+                'id' => 88,
+                'name' => 'prastav-suchana.edit',
+                'group' => 'prastav-suchana',
+            ],
+            [
+                'id' => 89,
+                'name' => 'prastav-suchana.delete',
+                'group' => 'prastav-suchana',
+            ],
+            [
+                'id' => 90,
+                'name' => 'prastav-suchana.response',
+                'group' => 'prastav-suchana',
+            ]
         ];
 
         foreach ($permissions as $permission) {

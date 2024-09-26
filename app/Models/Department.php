@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Question;
+use App\Models\PrastavSuchana;
+use App\Models\Laxvadi;
 
 class Department extends Model
 {
@@ -17,6 +19,16 @@ class Department extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function prastavSuchana()
+    {
+        return $this->hasMany(PrastavSuchana::class);
+    }
+
+    public function laxvadi()
+    {
+        return $this->hasMany(Laxvadi::class);
     }
 
     public static function booted()
