@@ -28,4 +28,9 @@ class Tharav extends Model
     {
         return $this->hasMany(AssignDepartmentToTharav::class, 'tharav_id', 'id');
     }
+
+    public function tharavQuestions()
+    {
+        return $this->hasMany(TharavQuestion::class, 'tharav_id', 'id');
+    }
 }

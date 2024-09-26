@@ -97,6 +97,7 @@
                                     <th>Department</th>
                                     <th>Remark</th>
                                     <th>Tharav File</th>
+                                    <th>Ask Question</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,6 +115,10 @@
                                         </td>
                                         <td>{{ ($tharav->remark) ? $tharav->remark : '-' }}</td>
                                         <td><a target="_blank" href="{{ asset('storage/'.$tharav->file) }}" class="btn btn-sm btn-primary">View File</a></td>
+                                        <td>
+                                            <button class="btn btn-primary askQuestionBtn btn-sm" data-id="{{ $tharav->id }}" data-controls-modal="addQuestionModel" data-backdrop="static" data-keyboard="false">Ask Question</button>
+                                            <button class="btn btn-primary viewResponseBtn btn-sm" data-id="{{ $tharav->id }}">View Response</button>
+                                        </td>
                                     </tr>
                                 @endforeach
                         </table>
@@ -125,10 +130,39 @@
 
 
 
+    {{-- Add Objection Modal --}}
+    <div class="modal fade" id="addQuestionModel" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="" id="addForm" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Question </h5>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <div class="hideFormSubmit">
+                            <button class="btn btn-secondary close-modal" data-bs-dismiss="modal" type="button" >Close</button>
+                            <button class="btn btn-primary" id="addQuestion" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </x-admin.layout>
 
-
+<script>
+    $(document).ready(function(){
+        $('.askQuestionBtn').click(function(){
+            $('#addQuestionModel').modal('show');
+        })
+    })
+</script>
 
 {{-- Add --}}
 <script>
