@@ -8,7 +8,7 @@
     <div class="row" id="addContainer" style="display:none;">
         <div class="col-sm-12">
             <div class="card">
-                <form class="theme-form" name="addForm" id="addForm" enctype="multipart/form-data">
+                <form class="theme-form" name="Question" id="Question" enctype="multipart/form-data">
                     @csrf
 
                     <div class="card-header">
@@ -116,8 +116,10 @@
                                         <td>{{ ($tharav->remark) ? $tharav->remark : '-' }}</td>
                                         <td><a target="_blank" href="{{ asset('storage/'.$tharav->file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         <td>
-                                            <button class="btn btn-primary askQuestionBtn btn-sm" data-id="{{ $tharav->id }}">Ask Question</button>
-                                            <button class="btn btn-success viewResponseBtn btn-sm" data-id="{{ $tharav->id }}">View Response</button>
+                                            @if(Auth::user()->hasRole('Home Department'))
+                                                <button class="btn btn-primary askQuestionBtn btn-sm" data-id="{{ $tharav->id }}">Ask Question</button>
+                                            @endif
+                                            <button class="btn btn-success viewResponseBtn btn-sm" data-id="{{ $tharav->id }}">View Question / Response</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -133,8 +135,9 @@
     {{-- Add Objection Modal --}}
     <div class="modal fade" id="addQuestionModel" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <form action="" id="addForm" enctype="multipart/form-data">
+            <form action="" id="addQuestionForm" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="tharav_id" id="askQuestionId">
                 <div class="modal-content">
                     <div class="modal-header border-bottom">
                         <h5 class="modal-title">Question </h5>
@@ -154,7 +157,6 @@
                                     <label for="department_id">Select Department</label>
                                     <select name="department_id" class="form-select" id="department_id">
                                         <option value="">Select Department</option>
-                                        <option value="">Select Department</option>
                                     </select>
                                 </div>
                             </div>
@@ -171,19 +173,275 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="addQuestionAnswerModel" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="" id="addQuestionResponseForm" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="tharav_id" id="askQuestionId">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom">
+                        <h5 class="modal-title">Response </h5>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body border-bottom">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Department</th>
+                                                <th>Question</th>
+                                                <th>Response</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="questionAnswerTbody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="hideFormSubmit">
+                            <button class="btn btn-secondary close-modal" data-bs-dismiss="modal" type="button">Close</button>
+                            <button class="btn btn-primary" id="addQuestionResponse" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </x-admin.layout>
 
 <script>
     $(document).ready(function(){
-        $('.askQuestionBtn').click(function(){
-            $('#addQuestionModel').modal('show');
-        })
+        $('body').on('click', '.askQuestionBtn', function(){
+
+            var model_id = $(this).attr("data-id");
+            var url = "{{ route('tharav.getTharavDepartment', ":model_id") }}";
+            $('#askQuestionId').val(model_id)
+            $.ajax({
+                url: url.replace(':model_id', model_id),
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                beforeSend: function()
+                {
+                    $('#preloader').css('opacity', '0.5');
+                    $('#preloader').css('visibility', 'visible');
+                },
+                success: function(data)
+                {
+                    $("#addSubmit").prop('disabled', false);
+                    if (!data.error){
+                        $('#addQuestionForm #department_id').html(data.department)
+                        $('#addQuestionModel').modal('show');
+                    }
+                    else{
+                        swal("Error!", data.error, "error");
+                    }
+
+                },
+                statusCode: {
+                    422: function(responseObject, textStatus, jqXHR) {
+                        $("#addSubmit").prop('disabled', false);
+                        resetErrors();
+                        printErrMsg(responseObject.responseJSON.errors);
+                        $('#preloader').css('opacity', '0');
+                        $('#preloader').css('visibility', 'hidden');
+                    },
+                    500: function(responseObject, textStatus, errorThrown) {
+                        $("#addSubmit").prop('disabled', false);
+                        swal("Error occured!", "Something went wrong please try again", "error");
+                        $('#preloader').css('opacity', '0');
+                        $('#preloader').css('visibility', 'hidden');
+                    }
+                },
+                error: function(xhr) {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+                complete: function() {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+            });
+
+        });
+
+        $("#addQuestionForm").submit(function(e) {
+            e.preventDefault();
+            $("#addQuestion").prop('disabled', true);
+            var formdata = new FormData(this);
+            //
+            $.ajax({
+                url: "{{ route('tharav.saveDepartmentQuestion') }}",
+                type: 'POST',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                beforeSend: function()
+                {
+                    $('#preloader').css('opacity', '0.5');
+                    $('#preloader').css('visibility', 'visible');
+                },
+                success: function(data)
+                {
+                    $("#addQuestion").prop('disabled', false);
+                    if (!data.error)
+                        swal("Successful!", data.success, "success")
+                            .then((action) => {
+                                window.location.href = '{{ route('tharav.index') }}';
+                            });
+                    else
+                        swal("Error!", data.error, "error");
+                },
+                statusCode: {
+                    422: function(responseObject, textStatus, jqXHR) {
+                        $("#addQuestion").prop('disabled', false);
+                        resetErrors();
+                        printErrMsg(responseObject.responseJSON.errors);
+                        $('#preloader').css('opacity', '0');
+	                    $('#preloader').css('visibility', 'hidden');
+                    },
+                    500: function(responseObject, textStatus, errorThrown) {
+                        $("#addQuestion").prop('disabled', false);
+                        swal("Error occured!", "Something went wrong please try again", "error");
+                        $('#preloader').css('opacity', '0');
+	                    $('#preloader').css('visibility', 'hidden');
+                    }
+                },
+                error: function(xhr) {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+                complete: function() {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+            });
+
+        });
+
+
+        $('body').on('click', '.viewResponseBtn', function(){
+
+            var model_id = $(this).attr("data-id");
+            var url = "{{ route('tharav.getTharavDepartmentQuestion', ":model_id") }}";
+            $('#askQuestionId').val(model_id);
+            $.ajax({
+                url: url.replace(':model_id', model_id),
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                beforeSend: function()
+                {
+                    $('#preloader').css('opacity', '0.5');
+                    $('#preloader').css('visibility', 'visible');
+                },
+                success: function(data)
+                {
+                    $("#addSubmit").prop('disabled', false);
+                    if (!data.error){
+                        $('#addQuestionResponseForm #questionAnswerTbody').html(data.question)
+                        $('#addQuestionAnswerModel').modal('show');
+                    }
+                    else{
+                        swal("Error!", data.error, "error");
+                    }
+
+                },
+                statusCode: {
+                    422: function(responseObject, textStatus, jqXHR) {
+                        $("#addSubmit").prop('disabled', false);
+                        resetErrors();
+                        printErrMsg(responseObject.responseJSON.errors);
+                        $('#preloader').css('opacity', '0');
+                        $('#preloader').css('visibility', 'hidden');
+                    },
+                    500: function(responseObject, textStatus, errorThrown) {
+                        $("#addSubmit").prop('disabled', false);
+                        swal("Error occured!", "Something went wrong please try again", "error");
+                        $('#preloader').css('opacity', '0');
+                        $('#preloader').css('visibility', 'hidden');
+                    }
+                },
+                error: function(xhr) {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+                complete: function() {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+            });
+
+        });
+
+
+        $("#addQuestionResponseForm").submit(function(e) {
+            e.preventDefault();
+            $("#addQuestionResponse").prop('disabled', true);
+            var formdata = new FormData(this);
+            //
+            $.ajax({
+                url: "{{ route('tharav.saveDepartmentQuestionResponse') }}",
+                type: 'POST',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                beforeSend: function()
+                {
+                    $('#preloader').css('opacity', '0.5');
+                    $('#preloader').css('visibility', 'visible');
+                },
+                success: function(data)
+                {
+                    $("#addQuestionResponse").prop('disabled', false);
+                    if (!data.error)
+                        swal("Successful!", data.success, "success")
+                            .then((action) => {
+                                window.location.href = '{{ route('tharav.index') }}';
+                            });
+                    else
+                        swal("Error!", data.error, "error");
+                },
+                statusCode: {
+                    422: function(responseObject, textStatus, jqXHR) {
+                        $("#addQuestionResponse").prop('disabled', false);
+                        resetErrors();
+                        printErrMsg(responseObject.responseJSON.errors);
+                        $('#preloader').css('opacity', '0');
+	                    $('#preloader').css('visibility', 'hidden');
+                    },
+                    500: function(responseObject, textStatus, errorThrown) {
+                        $("#addQuestionResponse").prop('disabled', false);
+                        swal("Error occured!", "Something went wrong please try again", "error");
+                        $('#preloader').css('opacity', '0');
+	                    $('#preloader').css('visibility', 'hidden');
+                    }
+                },
+                error: function(xhr) {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+                complete: function() {
+                    $('#preloader').css('opacity', '0');
+                    $('#preloader').css('visibility', 'hidden');
+                },
+            });
+
+        });
     })
 </script>
 
 {{-- Add --}}
 <script>
-    $("#addForm").submit(function(e) {
+    $("#Question").submit(function(e) {
         e.preventDefault();
         $("#addSubmit").prop('disabled', true);
 

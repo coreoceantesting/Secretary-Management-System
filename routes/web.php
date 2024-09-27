@@ -179,6 +179,17 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     // end of route for proceeding record
 
     // route for tharav
+    Route::get('tharav/get-tharav-department/{id}', [TharavController::class, 'getTharavDepartment'])->name('tharav.getTharavDepartment');
+    Route::post('tharav/save-department-question', [TharavController::class, 'saveDepartmentQuestion'])->name('tharav.saveDepartmentQuestion');
+    Route::get('tharav/get-tharav-department-question/{id}', [TharavController::class, 'getTharavDepartmentQuestion'])->name('tharav.getTharavDepartmentQuestion');
+
+    Route::post('tharav/save-department-question-response', [TharavController::class, 'saveDepartmentQuestionResponse'])->name('tharav.saveDepartmentQuestionResponse');
+
+
+    // Route::post('tharav/save-department-question', [TharavController::class, 'saveDepartmentQuestion'])->name('tharav.saveDepartmentQuestion');
+
+
+
     Route::get('tharav/getScheduleMeeting/{id}', [TharavController::class, 'getScheduleMeeting'])->name('tharav.getScheduleMeeting');
     Route::get('tharav/get-schedule_meeting-department/{id}', [TharavController::class, 'getScheduleMeetingDepartment'])->name('tharav.getScheduleMeetingDepartment');
     Route::resource('tharav', TharavController::class);
