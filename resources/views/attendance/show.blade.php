@@ -97,7 +97,7 @@
                                                         @if($member->member?->id == $attendanceMark->member_id)
                                                         @php
                                                             $memberId = "checked";
-                                                            $inTime = date('H:i', strtotime($attendanceMark->in_time));
+                                                            $inTime = date('h:i', strtotime($attendanceMark->in_time));
                                                             $outTime = $attendanceMark->out_time;
                                                         @endphp
                                                         @endif

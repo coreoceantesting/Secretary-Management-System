@@ -66,7 +66,7 @@ class CommonRepository
 
     public function getNotScheduleMeetingAgenda($id = null)
     {
-        $agenda = Agenda::where('is_meeting_schedule', 0);
+        $agenda = Agenda::where('is_meeting_schedule', 0)->where('is_mayor_view', 1);
 
         if ($id) {
             $agenda = $agenda->orWhere('id', $id);

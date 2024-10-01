@@ -32,12 +32,12 @@ class AgendaRepository
         return Goshwara::doesntHave('assignGoshwaraToAgenda')->where([
             'is_sent' => 1,
             'meeting_id' => $meetingId
-        ])->with('meeting')->get();
+        ])->with(['meeting', 'department'])->get();
     }
 
     public function getAddNotAssignedGoshwara($meetingId)
     {
-        return Goshwara::with('meeting')->doesntHave('assignGoshwaraToAgenda')->where([
+        return Goshwara::with(['meeting', 'department'])->doesntHave('assignGoshwaraToAgenda')->where([
             'is_sent' => 1,
             'meeting_id' => $meetingId
         ])->get();
@@ -59,7 +59,7 @@ class AgendaRepository
     {
         return Goshwara::orWhereHas('assignGoshwaraToAgenda', function ($q) use ($id) {
             return $q->where('agenda_id', $id);
-        })->with('meeting')->where('meeting_id', $meetingId)->where('is_sent', 1)->get();
+        })->with(['meeting', 'department'])->where('meeting_id', $meetingId)->where('is_sent', 1)->get();
     }
 
     public function store($request)

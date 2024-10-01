@@ -70,7 +70,8 @@ class AgendaController extends Controller
                                     <td>
                                         <input type="checkbox" name="goshwara_id[]" value="' . $goshwara->id . '" class="form-check" checked>
                                     </td>
-                                    <td>' . $goshwara?->meeting->name . '</td>
+                                    <td>' . $goshwara?->meeting?->name . '</td>
+                                    <td>' . $goshwara?->department?->name . '</td>
                                     <td>' . $goshwara->outward_no . '</td>
                                     <td>' . $goshwara->subject . '</td>
                                     <td><a href="' . asset("storage/") . $goshwara->file . '" class="btn btn-primary btn-sm">View</a></td>
@@ -82,7 +83,8 @@ class AgendaController extends Controller
                                     <td>
                                         <input type="checkbox" name="goshwara_id[]" value="' . $notAssignedGoshwara->id . '" class="form-check">
                                     </td>
-                                    <td>' . $notAssignedGoshwara?->meeting->name . '</td>
+                                    <td>' . $notAssignedGoshwara?->meeting?->name . '</td>
+                                    <td>' . $notAssignedGoshwara?->department?->name . '</td>
                                     <td>' . $notAssignedGoshwara->outward_no . '</td>
                                     <td>' . $notAssignedGoshwara->subject . '</td>
                                     <td><a href="' . asset("storage/") . $notAssignedGoshwara->file . '" class="btn btn-primary btn-sm">View</a></td>
@@ -99,7 +101,7 @@ class AgendaController extends Controller
         })->latest()->get();
 
         foreach ($editMeetings as $editMeeting) {
-            $selected = ($id == $editMeeting->id) ? 'selected' : '';
+            $selected = ($agenda->meeting_id == $editMeeting->id) ? 'selected' : '';
             $meetingHtml .= '<option ' . $selected . ' value="' . $editMeeting->id . '">' . $editMeeting->name . '</option>';
         }
 

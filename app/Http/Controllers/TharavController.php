@@ -82,7 +82,7 @@ class TharavController extends Controller
 
     public function getTharavDepartment(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $departments = AssignDepartmentToTharav::where('tharav_id', $request->id)->with('department')->get();
 
             $departmentHtml = "";
@@ -99,8 +99,9 @@ class TharavController extends Controller
         };
     }
 
-    public function saveDepartmentQuestion(Request $request){
-        if($request->ajax()){
+    public function saveDepartmentQuestion(Request $request)
+    {
+        if ($request->ajax()) {
             $request['question_by'] = Auth::user()->id;
             $request['question_time'] = now();
             $tharavQuestion = TharavQuestion::create($request->all());
@@ -113,20 +114,21 @@ class TharavController extends Controller
         }
     }
 
-    public function getTharavDepartmentQuestion(Request $request, $id){
-        if($request->ajax()){
-            $questions = TharavQuestion::where('tharav_id', $id)->when(Auth::user()->hasRole('Department'), function($q){
+    public function getTharavDepartmentQuestion(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $questions = TharavQuestion::where('tharav_id', $id)->when(Auth::user()->hasRole('Department'), function ($q) {
                 $q->where('department_id', Auth::user()->department_id);
             })->with('department')->get();
 
             $html = "";
 
-            foreach($questions as $question){
+            foreach ($questions as $question) {
                 $html .= '
                     <tr>
-                        <td><input type="hidden" name="id[]" value="'.$question->id.'" >'.$question?->department?->name.'</td>
-                        <td>'.$question->question.'</td>
-                        <td>'.(($question->answer == "" && Auth::user()->hasRole('Department')) ? '<textarea name="answer[]" class="form-control"></textarea>' : $question->answer).'</td>
+                        <td><input type="hidden" name="id[]" value="' . $question->id . '" >' . $question?->department?->name . '</td>
+                        <td>' . $question->question . '</td>
+                        <td>' . (($question->answer == "" && Auth::user()->hasRole('Department')) ? '<textarea name="answer[]" class="form-control"></textarea>' : (($question->answer && $question->answer != "") ? $question->answer : '-')) . '</td>
                     </tr>
                 ';
             }
@@ -139,13 +141,14 @@ class TharavController extends Controller
     }
 
 
-    public function saveDepartmentQuestionResponse(Request $request){
-        if($request->ajax()){
+    public function saveDepartmentQuestionResponse(Request $request)
+    {
+        if ($request->ajax()) {
             DB::beginTransaction();
-            try{
-                if(isset($request->id) && count($request->id) > 0){
-                    for($i=0; $i < count($request->id); $i++){
-                        if(isset($request->answer[$i]) && $request->answer[$i] != ""){
+            try {
+                if (isset($request->id) && count($request->id) > 0) {
+                    for ($i = 0; $i < count($request->id); $i++) {
+                        if (isset($request->answer[$i]) && $request->answer[$i] != "") {
                             $tharavQuestion = TharavQuestion::find($request->id[$i]);
                             $tharavQuestion->answer = $request->answer[$i];
                             $tharavQuestion->answer_by = Auth::user()->id;
@@ -156,7 +159,7 @@ class TharavController extends Controller
                 }
                 DB::commit();
                 return response()->json(['success' => 'Answer save successfully']);
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 \Log::info($e);
                 return response()->json(['error' => 'Something went wrong please try again']);
             }

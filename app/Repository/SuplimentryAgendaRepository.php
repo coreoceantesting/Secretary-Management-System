@@ -99,7 +99,7 @@ class SuplimentryAgendaRepository
     public function getMeetings()
     {
         return Meeting::whereHas('scheduleMeeting', function ($q) {
-            return $q->where(['is_meeting_completed' => 0, 'is_meeting_reschedule' => 0]);
+            return $q->where(['is_meeting_completed' => 0, 'is_meeting_reschedule' => 0, 'is_meeting_cancel' => 0]);
         })->get();
     }
 

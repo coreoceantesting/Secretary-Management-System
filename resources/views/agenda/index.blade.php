@@ -58,6 +58,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Meeting Name</th>
+                                    <th>Department</th>
                                     <th>Goshwara Outward no.</th>
                                     <th>Goshwara Subject</th>
                                     <th>Goshwara File</th>
@@ -109,6 +110,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="agendafile">Select File(फाइल निवडा)</label>
+                                <a href="#" id="editAgendaValueFile" target="_blank" class="btn btn-primary btn-sm p-2">View File</a>
                                 <input @if(Auth::user()->hasRole('Mayor'))disabled @endif class="form-control" id="agendafile" name="agendafile" type="file">
                                 <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
@@ -135,6 +137,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Meeting Name</th>
+                                    <th>Department</th>
                                     <th>Goshwara Outward no.</th>
                                     <th>Goshwara Subject</th>
                                     <th>Goshwara File</th>
@@ -345,6 +348,7 @@
                     $("#editForm input[name='date']").val(data.agenda.date);
                     $("#editForm input[name='time']").val(data.agenda.time);
                     $("#editForm input[name='place']").val(data.agenda.place);
+                    $('#editForm #editAgendaValueFile').prop('href', "{{ asset('storage') }}/"+data.agenda.file)
                     $('body').find("#editForm .showEditGoshwaraTableTbodyData").html(data.goshwaraHtml)
                 }
                 else
@@ -513,6 +517,7 @@
                                         <input type="checkbox" name="goshwara_id[]" value="${val.id}" class="form-check" checked>
                                     </td>
                                     <td>${val.meeting.name}</td>
+                                    <td>${val.department.name}</td>
                                     <td>${val.outward_no}</td>
                                     <td>${val.subject}</td>
                                     <td><a target="_blank" href="{{ asset('storage') }}/${val.file}" class="btn btn-primary btn-sm">View</a></td>
