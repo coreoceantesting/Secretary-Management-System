@@ -55,6 +55,18 @@ class AgendaRepository
         })->latest()->get();
     }
 
+    public function getMeetingsNotAssignGoshwara()
+    {
+        return Meeting::whereHas('goshwara', function ($q) {
+            return $q->where([
+                'is_sent' => 1,
+                'is_mayor_selected' => 0,
+            ]);
+        })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
+            return $q->where("id", Auth::user()->meeting_id);
+        })->latest()->get();
+    }
+
     public function getAssignedGoshwaraById($id, $meetingId)
     {
         return Goshwara::orWhereHas('assignGoshwaraToAgenda', function ($q) use ($id) {
