@@ -61,7 +61,7 @@ class AgendaRepository
             return $q->where([
                 'is_sent' => 1,
                 'is_mayor_selected' => 0,
-            ]);
+            ])->doesntHave('assignGoshwaraToAgenda');
         })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
             return $q->where("id", Auth::user()->meeting_id);
         })->latest()->get();
