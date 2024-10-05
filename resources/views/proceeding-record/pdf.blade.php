@@ -36,6 +36,7 @@
                                 <tr>
                                     <th>Department</th>
                                     <th>Goshwara Subject</th>
+                                    <th>Outward No</th>
                                     <th>Goshwara File</th>
                                 </tr>
                             </thead>
@@ -44,6 +45,7 @@
                                 <tr>
                                     <td>{{ $goshwara->goshwara?->department?->name }}</td>
                                     <td>{{ $goshwara->goshwara?->subject }}</td>
+                                    <td>{{ $goshwara->goshwara?->outward_no }}</td>
                                     <td><a target="_blank" target="_blank" href="{{ asset('storage/'.$goshwara->goshwara?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach

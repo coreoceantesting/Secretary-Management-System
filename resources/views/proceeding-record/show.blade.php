@@ -19,6 +19,7 @@
                                 <tr>
                                     <th>Department</th>
                                     <th>Goshwara Subject(गोषवारा विषय)</th>
+                                    <th>Outward No</th>
                                     <th>Goshwara File(गोषवारा फाईल)</th>
                                 </tr>
                             </thead>
@@ -27,6 +28,7 @@
                                 <tr>
                                     <td>{{ $goshwara->goshwara?->department?->name }}</td>
                                     <td>{{ $goshwara->goshwara?->subject }}</td>
+                                    <td>{{ $goshwara->goshwara?->outward_no }}</td>
                                     <td><a target="_blank" href="{{ asset('storage/'.$goshwara?->goshwara?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach
@@ -171,7 +173,7 @@
                                 @foreach($suplimentryAgendas as $suplimentryAgenda)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <th>{{ $suplimentryAgenda->subject }}</th>
+                                    <td>{{ $suplimentryAgenda->subject }}</td>
                                     <td><a target="_blank" href="{{ asset('storage/'.$suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                 </tr>
                                 @endforeach
