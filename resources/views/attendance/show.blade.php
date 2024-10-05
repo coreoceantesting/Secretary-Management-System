@@ -97,7 +97,7 @@
                                                         @if($member->member?->id == $attendanceMark->member_id)
                                                         @php
                                                             $memberId = "checked";
-                                                            $inTime = date('h:i', strtotime($attendanceMark->in_time));
+                                                            $inTime = date('H:i', strtotime($attendanceMark->in_time));
                                                             $outTime = $attendanceMark->out_time;
                                                         @endphp
                                                         @endif
@@ -185,7 +185,7 @@
                                                             <input type="text" name="department_name[]" class="form-control departmentInputName" required>
                                                         </td>
                                                         <td>
-                                                            <input type="time" value="{{ date('h:i') }}" name="department_in_time[]" class="form-control departmentInTime" required></td>
+                                                            <input type="time" value="{{ date('H:i') }}" name="department_in_time[]" class="form-control departmentInTime" required></td>
                                                         <td><input type="time" name="department_out_time[]" class="form-control departmentOutTime"></td>
                                                         <td><button type="button" class="btn btn-primary btn-sm markDepartment">Mark</button></td>
                                                     </tr>
@@ -204,7 +204,7 @@
 
                                     <div class="col-md-4">
                                         <label class="col-form-label" for="time">Time</label>
-                                        <input class="form-control" id="time" name="meeting_end_time" type="time" value="@if($attendance->meeting_end_time){{ date('h:i', strtotime($attendance->meeting_end_time)) }}@endif">
+                                        <input class="form-control" id="time" name="meeting_end_time" type="time" value="@if($attendance->meeting_end_time){{ date('H:i', strtotime($attendance->meeting_end_time)) }}@endif">
                                     </div>
 
                                     <div class="col-md-4">
@@ -236,7 +236,7 @@
                         $(this).closest('tr').find('.inTime').removeClass('d-none')
                         $(this).closest('tr').find('.outTime').removeClass('d-none')
                         $(this).closest('tr').find('.markButton').removeClass('d-none')
-                        $(this).closest('tr').find('.inTime').val("{{ date('h:i') }}")
+                        $(this).closest('tr').find('.inTime').val("{{ date('H:i') }}")
                     } else {
                         $(this).closest('tr').find('.markButton').addClass('d-none')
                         $(this).closest('tr').find('.inTime').addClass('d-none')
