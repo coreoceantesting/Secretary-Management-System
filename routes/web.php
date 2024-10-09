@@ -8,6 +8,7 @@ use App\Http\Controllers\Master\MeetingController;
 use App\Http\Controllers\Master\WardController;
 use App\Http\Controllers\Master\MemberController;
 use App\Http\Controllers\Master\PartyController;
+use App\Http\Controllers\Master\ReservationCategoryController;
 use App\Http\Controllers\Master\HomeDepartmentController;
 use App\Http\Controllers\Master\SettingController;
 use App\Http\Controllers\User\UserController;
@@ -95,6 +96,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::resource('meeting', MeetingController::class);
         Route::resource('setting', SettingController::class);
         Route::resource('party', PartyController::class);
+        Route::resource('reservation-category', ReservationCategoryController::class);
     });
     // end of route for master
 
@@ -199,6 +201,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('report/schedule-meeting', [ReportController::class, 'scheduleMeetingReport'])->name('report.schedule-meeting');
     Route::get('report/schedule-meeting/{id}', [ReportController::class, 'viewScheduleMeetingReport'])->name('report.viewScheduleMeetingReport');
     Route::get('report/attendance-meeting', [ReportController::class, 'attendanceMeetingReport'])->name('report.attendance-meeting');
+    Route::get('report/question-response', [ReportController::class, 'questionResponseReport'])->name('report.question-response');
     Route::get('report/tharav', [ReportController::class, 'tharavReport'])->name('report.tharav');
     // end of route for report
 });

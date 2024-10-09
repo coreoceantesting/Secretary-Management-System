@@ -25,7 +25,7 @@ class UserRolesAndPermissionSeeder extends Seeder
 
         $dmc = Role::where('name', 'DMC')->first();
 
-        $dmc->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'schedule_meeting.show', 'reschedule_meeting.view', 'reschedule_meeting.show', 'question.view', 'laxvadi.view', 'prastav-suchana.view', 'proceeding-record.show', 'proceeding-record.view', 'tharav.view']);
+        $dmc->syncPermissions(['dashboard.view', 'goshwara.view', 'agenda.view', 'suplimentry-agenda.view', 'schedule_meeting.view', 'schedule_meeting.show', 'reschedule_meeting.view', 'reschedule_meeting.show', 'question.view', 'laxvadi.view', 'prastav-suchana.view', 'proceeding-record.show', 'proceeding-record.view', 'tharav.view', 'reservation-category.index', 'reservation-category.create', 'reservation-category.edit', 'reservation-category.delete']);
 
 
         $mayor = Role::where('name', 'Mayor')->first();

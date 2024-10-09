@@ -413,7 +413,27 @@ class PermissionTableSeeder extends Seeder
                 'id' => 90,
                 'name' => 'prastav-suchana.response',
                 'group' => 'prastav-suchana',
-            ]
+            ],
+            [
+                'id' => 91,
+                'name' => 'reservation-category.index',
+                'group' => 'reservation-category',
+            ],
+            [
+                'id' => 92,
+                'name' => 'reservation-category.create',
+                'group' => 'reservation-category',
+            ],
+            [
+                'id' => 93,
+                'name' => 'reservation-category.edit',
+                'group' => 'reservation-category',
+            ],
+            [
+                'id' => 94,
+                'name' => 'reservation-category.delete',
+                'group' => 'reservation-category',
+            ],
         ];
 
         foreach ($permissions as $permission) {

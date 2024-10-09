@@ -11,7 +11,7 @@ class MemberRepository
 {
     public function index()
     {
-        $members = Member::with(['ward', 'party'])->select('id', 'ward_id', 'name', 'contact_number', 'email', 'address', 'designation', 'party_id')->latest()->get();
+        $members = Member::with(['ward', 'party', 'reservationCategory'])->select('id', 'ward_id', 'reservation_category_id', 'name', 'contact_number', 'email', 'address', 'designation', 'party_id')->latest()->get();
 
         return $members;
     }
@@ -38,6 +38,10 @@ class MemberRepository
 
             if ($request->hasFile('cancel_cheques')) {
                 $request['cancel_cheque'] = $request->cancel_cheques->store('members');
+            }
+
+            if ($request->hasFile('cast_certificates')) {
+                $request['cast_certificate'] = $request->cast_certificates->store('members');
             }
             Member::create($request->all());
 
@@ -107,6 +111,15 @@ class MemberRepository
                     }
                 }
                 $request['cancel_cheque'] = $request->cancel_cheques->store('members');
+            }
+
+            if ($request->hasFile('cast_certificates')) {
+                if ($member->cancel_cheque != "") {
+                    if (Storage::exists($member->cast_certificate)) {
+                        Storage::delete($member->cast_certificate);
+                    }
+                }
+                $request['cast_certificate'] = $request->cast_certificates->store('members');
             }
 
             $member->update($request->all());

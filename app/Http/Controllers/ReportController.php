@@ -7,6 +7,7 @@ use App\Repository\ReportRepository;
 use App\Models\Party;
 use App\Models\ScheduleMeeting;
 use App\Models\Department;
+use App\Models\Meeting;
 
 class ReportController extends Controller
 {
@@ -62,6 +63,19 @@ class ReportController extends Controller
         return view('report.tharav')->with([
             'tharavs' => $tharavs,
             'departments' => $departments
+        ]);
+    }
+
+    // function ffor question response report
+    public function questionResponseReport(Request $request)
+    {
+        $questionResponses = $this->reportRepository->getQuestionResponse($request);
+
+        $meetings = Meeting::select('id', 'name')->get();
+
+        return view('report.question-response')->with([
+            'questionResponses' => $questionResponses,
+            'meetings' => $meetings
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Laxvadi(लक्षवडी)</x-slot>
-    <x-slot name="heading">Laxvadi(लक्षवडी)</x-slot>
+    <x-slot name="title">Laxvebhi(लक्षवडी)</x-slot>
+    <x-slot name="heading">Laxvebhi(लक्षवडी)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,7 +12,7 @@
                     @csrf
                     <input type="hidden" name="id" value="{{ $question->id }}">
                     <div class="card-header">
-                        <h4 class="card-title">Laxvadi(लक्षवडी)</h4>
+                        <h4 class="card-title">Laxvebhi(लक्षवडी)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -43,7 +43,7 @@
                                         </tr>
                                         @if($question->question_file)
                                         <tr>
-                                            <th>Laxvadi File(लक्षवडी फाइल)</th>
+                                            <th>Laxvebhi File(लक्षवडी फाइल)</th>
                                             <td><a target="_blank" href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-primary btn-sm">View File</a></td>
                                         </tr>
                                         @endif
@@ -62,7 +62,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Laxvadi</th>
+                                            <th>Laxvebhi</th>
                                             <th>Member</th>
                                             @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
                                             <th>Response</th>
@@ -299,7 +299,7 @@
             $(document).ready(function(){
                 $('body').on('click', '.sendQuestion', function(){
 
-                    let userConfirmation  = confirm('Are you sure you want to send this laxvadi to department');
+                    let userConfirmation  = confirm('Are you sure you want to send this laxvebhi to department');
 
                     if(userConfirmation ){
                         let id = $(this).closest('tr').find('.questionId').val();

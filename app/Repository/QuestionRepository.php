@@ -176,7 +176,8 @@ class QuestionRepository
                     SubQuestion::updateOrCreate([
                         'id' => $request->subQuestionId[$i]
                     ], [
-                        'response' => $request->response[$i]
+                        'response' => $request->response[$i],
+                        'response_datetime' => now()
                     ]);
                 }
             }
@@ -198,7 +199,8 @@ class QuestionRepository
             SubQuestion::updateOrCreate([
                 'id' => $request->id
             ], [
-                'response' => $request->response
+                'response' => $request->response,
+                'response_datetime' => now()
             ]);
             DB::commit();
             return true;
@@ -228,6 +230,7 @@ class QuestionRepository
     {
         $subQuestion = SubQuestion::find($request->id);
         $subQuestion->is_mayor_selected = 1;
+        $subQuestion->is_mayor_selected_datetime = now();
         $subQuestion->save();
 
         return true;
@@ -238,6 +241,7 @@ class QuestionRepository
     {
         $subQuestion = SubQuestion::find($request->id);
         $subQuestion->is_sended = 1;
+        $subQuestion->is_sended_datetime = now();
         $subQuestion->save();
 
         return true;

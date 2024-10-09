@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Ward;
 use App\Models\Attendance;
 use App\Models\Party;
+use App\Models\ReservationCategory;
 
 class Member extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['ward_id', 'name', 'contact_number', 'email', 'party_id', 'address', 'designation', 'deleted_at', 'photo', 'alternate_number', 'aadhar', 'pancard', 'bank_details', 'cancel_cheque'];
+    protected $fillable = ['ward_id', 'name', 'contact_number', 'email', 'party_id', 'address', 'designation', 'deleted_at', 'photo', 'alternate_number', 'aadhar', 'pancard', 'bank_details', 'cancel_cheque', 'reservation_category_id', 'cast_certificate', 'gender'];
 
     public function ward()
     {
@@ -29,6 +30,11 @@ class Member extends Model
     public function attendance()
     {
         return $this->hasOne(Attendance::class, 'member_id', 'id');
+    }
+
+    public function reservationCategory()
+    {
+        return $this->belongsTo(ReservationCategory::class, 'reservation_category_id', 'id');
     }
 
     public static function booted()

@@ -8,6 +8,7 @@ use App\Repository\Master\MemberRepository;
 use App\Repository\Master\WardRepository;
 use App\Http\Requests\Master\MemberRequest;
 use App\Models\Party;
+use App\Models\ReservationCategory;
 
 class MemberController extends Controller
 {
@@ -28,10 +29,13 @@ class MemberController extends Controller
 
         $parties = Party::select('id', 'name')->get();
 
+        $reservationCategory = ReservationCategory::select('id', 'name')->get();
+
         return view('master.member.member')->with([
             'members' => $members,
             'wards' => $wards,
-            'parties' => $parties
+            'parties' => $parties,
+            'reservationCategory' => $reservationCategory
         ]);
     }
 

@@ -28,6 +28,17 @@
                                 </div>
 
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="reservation_category_id">Select Reservation Category(आरक्षण श्रेणी) <span class="text-danger">*</span></label>
+                                    <select name="reservation_category_id" id="reservation_category_id" required class="form-select">
+                                        <option value="">Select Reservation Category</option>
+                                        @foreach($reservationCategory as $reservationCat)
+                                        <option value="{{ $reservationCat->id }}">{{ $reservationCat->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid reservation_category_id_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="name">Name(नाव) <span class="text-danger">*</span></label>
                                     <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
@@ -53,6 +64,16 @@
                                         @endforeach
                                     </select>
                                     <span class="text-danger is-invalid party_id_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="gender">Select Gender <span class="text-danger">*</span></label>
+                                    <select name="gender" id="gender" required class="form-select">
+                                        <option value="">Select Gender</option>
+                                        <option value="m">Male</option>
+                                        <option value="f">Female</option>
+                                        <option value="o">Other</option>
+                                    </select>
+                                    <span class="text-danger is-invalid gender_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
@@ -94,6 +115,12 @@
                                     <label class="col-form-label" for="cancel_cheques">Cancel Cheque Photo</label>
                                     <input class="form-control" id="cancel_cheques" name="cancel_cheques" type="file" accept="image/*">
                                     <span class="text-danger is-invalid cancel_cheques_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="cast_certificate">Cast Certificate</label>
+                                    <input class="form-control" id="cast_certificate" name="cast_certificates" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid cast_certificate_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
@@ -139,6 +166,17 @@
                                 </div>
 
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="reservation_category_id">Select Reservation Category(आरक्षण श्रेणी) <span class="text-danger">*</span></label>
+                                    <select name="reservation_category_id" id="reservation_category_id" required class="form-select">
+                                        <option value="">Select Reservation Category</option>
+                                        @foreach($reservationCategory as $reservationCat)
+                                        <option value="{{ $reservationCat->id }}">{{ $reservationCat->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid reservation_category_id_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="name">Name(नाव) <span class="text-danger">*</span></label>
                                     <input class="form-control" id="name" name="name" type="text" placeholder="Enter Member Name" required>
                                     <span class="text-danger is-invalid name_err"></span>
@@ -164,6 +202,17 @@
                                         @endforeach
                                     </select>
                                     <span class="text-danger is-invalid party_id_err"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="gender">Select Gender <span class="text-danger">*</span></label>
+                                    <select name="gender" id="gender" required class="form-select">
+                                        <option value="">Select Gender</option>
+                                        <option value="m">Male</option>
+                                        <option value="f">Female</option>
+                                        <option value="o">Other</option>
+                                    </select>
+                                    <span class="text-danger is-invalid gender_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
@@ -211,6 +260,12 @@
                                     <input class="form-control" id="cancel_cheques" name="cancel_cheques" type="file" accept="image/*">
                                     <span class="text-danger is-invalid cancel_cheques_err"></span>
                                 </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="cast_certificate">Cast Certificate</label>
+                                    <a href="javascript:void(0)" class="btn btn-primary d-none btn-sm cast_certificate" target="_blank">View File</a>
+                                    <input class="form-control" id="cast_certificate" name="cast_certificates" type="file" accept="image/*">
+                                    <span class="text-danger is-invalid cast_certificate_err"></span>
+                                </div>
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="alternate_number">Alternate Number(पर्यायी क्रमांक)</label>
@@ -253,6 +308,7 @@
                                         <th>Sr no.</th>
                                         <th>Ward</th>
                                         <th>Party</th>
+                                        <th>Reservation Category</th>
                                         <th>Name</th>
                                         <th>Contact Number</th>
                                         <th>Email</th>
@@ -267,6 +323,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $member->ward?->name }}</td>
                                             <td>{{ $member->party?->name ?? '-' }}</td>
+                                            <td>{{ $member->reservationCategory?->name ?? '-' }}</td>
                                             <td>{{ $member->name }}</td>
                                             <td>{{ $member->contact_number }}</td>
                                             <td>{{ $member->email }}</td>
@@ -387,6 +444,8 @@
                 {
                     $("#editForm input[name='edit_model_id']").val(data.member.id);
                     $("#editForm select[name='ward_id']").val(data.member.ward_id).change();
+                    $("#editForm select[name='reservation_category_id']").val(data.member.reservation_category_id).change();
+                    $("#editForm select[name='gender']").val(data.member.gender).change();
                     $("#editForm input[name='name']").val(data.member.name);
                     $("#editForm input[name='contact_number']").val(data.member.contact_number);
                     $("#editForm input[name='email']").val(data.member.email);
@@ -428,6 +487,13 @@
                         $("#editForm .cancel_cheques").attr('href', "{{ asset('storage/') }}/"+ data.member.cancel_cheque);
                     }else{
                         $("#editForm .cancel_cheques").addClass('d-none');
+                    }
+
+                    if(data.member.cast_certificate){
+                        $("#editForm .cast_certificate").removeClass('d-none');
+                        $("#editForm .cast_certificate").attr('href', "{{ asset('storage/') }}/"+ data.member.cast_certificate);
+                    }else{
+                        $("#editForm .cast_certificate").addClass('d-none');
                     }
                 }
                 else

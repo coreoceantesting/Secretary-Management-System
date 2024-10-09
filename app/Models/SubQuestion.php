@@ -10,7 +10,7 @@ class SubQuestion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['question_id', 'question', 'member_id', 'response', 'is_mayor_selected', 'is_sended'];
+    protected $fillable = ['question_id', 'question', 'member_id', 'response', 'is_mayor_selected', 'is_sended', 'is_mayor_selected_datetime', 'response_datetime'];
 
     public function question()
     {

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Laxvadi(लक्षवडी)</x-slot>
-    <x-slot name="heading">Laxvadi(लक्षवडी)</x-slot>
+    <x-slot name="title">Laxvebhi(लक्षवडी)</x-slot>
+    <x-slot name="heading">Laxvebhi(लक्षवडी)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
     <style>
@@ -23,7 +23,7 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Laxvadi(लक्षवडी जोडा)</h4>
+                        <h4 class="card-title">Add Laxvebhi(लक्षवडी जोडा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -60,7 +60,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Laxvadi</th>
+                                    <th>Laxvebhi</th>
                                     <th>Member</th>
                                     <th>Action</th>
                                 </tr>
@@ -68,7 +68,7 @@
                             <tbody id="laxvadiQuestion">
                                 <tr id="row1">
                                     <td>
-                                        <textarea class="form-control" name="question[]" placeholder="Enter laxvadi" required></textarea>
+                                        <textarea class="form-control" name="question[]" placeholder="Enter Laxvebhi" required></textarea>
                                     </td>
                                     <td>
                                         <select name="member_id[]" class="form-select" required>
@@ -104,7 +104,7 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Laxvadi(लक्षवडी संपादित करा)</h4>
+                        <h4 class="card-title">Edit Laxvebhi(लक्षवडी संपादित करा)</h4>
                     </div>
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
@@ -142,7 +142,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Laxvadi</th>
+                                    <th>Laxvebhi</th>
                                     <th>Member</th>
                                     <th>Action</th>
                                 </tr>
@@ -204,7 +204,7 @@
                                     <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Meeting Venue</th>
-                                    <th>Laxvadi File</th>
+                                    <th>Laxvebhi File</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

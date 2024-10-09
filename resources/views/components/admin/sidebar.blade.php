@@ -80,6 +80,11 @@
                                 <a href="{{ route('master.meeting.index') }}" class="nav-link {{ request()->routeIs('master.meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Meeting(बैठक)</a>
                             </li>
                             @endcan
+                            @can('reservation-category.index')
+                            <li class="nav-item">
+                                <a href="{{ route('master.reservation-category.index') }}" class="nav-link {{ request()->routeIs('master.reservation-category.*') ? 'active' : '' }}" data-key="t-horizontal">Reservation Category(आरक्षण श्रेणी)</a>
+                            </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
@@ -216,7 +221,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('laxvadi.*') ? 'active' : '' }}" href="{{ route('laxvadi.index') }}" >
                         <i class="bx bx-layout"></i>
-                        <span data-key="t-dashboards">Laxvadi</span>
+                        <span data-key="t-dashboards">Laxvebhi</span>
                     </a>
                 </li>
                 @endcan
@@ -265,7 +270,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('report.tharav') }}" class="nav-link {{ request()->routeIs('report.tharav') ? 'active' : '' }}" data-key="t-horizontal">Tharav Report</a>
                             </li>
-
+                            <li class="nav-item">
+                                <a href="{{ route('report.question-response') }}" class="nav-link {{ request()->routeIs('report.question-response') ? 'active' : '' }}" data-key="t-horizontal">Question Response Report</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

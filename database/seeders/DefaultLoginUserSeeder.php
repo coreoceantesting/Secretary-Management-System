@@ -56,10 +56,10 @@ class DefaultLoginUserSeeder extends Seeder
         $user->assignRole([$adminRole->id]);
 
 
-        Role::create(['name' => 'DMC']);
-        Role::create(['name' => 'Mayor']);
-        Role::create(['name' => 'Department']);
-        Role::create(['name' => 'Home Department']);
-        Role::create(['name' => 'Clerk']);
+        Role::updateOrCreate(['name' => 'DMC']);
+        Role::updateOrCreate(['name' => 'Mayor']);
+        Role::updateOrCreate(['name' => 'Department']);
+        Role::updateOrCreate(['name' => 'Home Department']);
+        Role::updateOrCreate(['name' => 'Clerk']);
     }
 }

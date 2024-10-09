@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\Attendance;
 use App\Models\ScheduleMeeting;
 use App\Models\Tharav;
+use App\Models\Question;
 
 class ReportRepository
 {
@@ -60,5 +61,18 @@ class ReportRepository
             })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
                 return $q->whereDate("date", "<=", $request->to);
             })->get();
+    }
+
+    public function getQuestionResponse($request)
+    {
+        return Question::with(['meeting'])->withWherehas('subQuestions', function ($q) use ($request) {
+            $q->when(isset($request->from) && $request->from != "", function ($q) use ($request) {
+                $q->whereDate('created_at', '>=', date('Y-m-d', strtotime($request->from)));
+            })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
+                $q->whereDate('created_at', '<=', date('Y-m-d', strtotime($request->to)));
+            })->whereNotNull('response')->orderBy('response_datetime', 'asc')->with(['member']);
+        })->when(isset($request->meeting) && $request->meeting != "", function ($q) use ($request) {
+            $q->where('meeting_id', $request->meeting);
+        })->latest()->get();
     }
 }
