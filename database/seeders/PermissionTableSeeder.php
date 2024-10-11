@@ -491,7 +491,7 @@ class PermissionTableSeeder extends Seeder
             ],
             [
                 'id' => 106,
-                'name' => 'election-election-schedule-meeting.show',
+                'name' => 'election-schedule-meeting.show',
                 'group' => 'election-schedule-meeting',
             ],
             [
