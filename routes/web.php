@@ -28,6 +28,7 @@ use App\Http\Controllers\LaxvadiController;
 use App\Http\Controllers\RescheduleMeetingController;
 use App\Http\Controllers\SuplimentryAgendaController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\ElectionAttendanceController;
 use App\Http\Controllers\ProceedingRecordController;
 use App\Http\Controllers\TharavController;
 use App\Http\Controllers\ReportController;
@@ -123,15 +124,23 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     // route for election agenda
     Route::prefix('election')->name('election.')->group(function () {
         Route::resource('agenda', ElectionAgendaController::class);
+
+        // schedule meeting
         Route::get('schedule-meeting/fetch-agenda', [ElectionScheduleMeetingController::class, 'fetchAgenda'])->name('schedule-meeting.fetch-agenda');
         Route::post('schedule-meeting/{id}/cancel', [ElectionScheduleMeetingController::class, 'cancel'])->name('schedule-meeting.cancel');
         Route::resource('schedule-meeting', ElectionScheduleMeetingController::class);
 
-
+        // reschedule meeting
         Route::get('reschedule-meeting/schedule_meeting/{id}', [ElectionRescheduleMeetingController::class, 'getScheduleMeeting'])->name('reschedule-meeting.getScheduleMeeting');
         Route::get('reschedule-meeting/get-schedule_meeting-details/{id}', [ElectionRescheduleMeetingController::class, 'getScheduleMeetingDetails'])->name('reschedule-meeting.getScheduleMeetingDetails');
         Route::post('reschedule-meeting/{id}/cancel', [ElectionRescheduleMeetingController::class, 'cancel'])->name('reschedule-meeting.cancel');
         Route::resource('reschedule-meeting', ElectionRescheduleMeetingController::class);
+
+        // attendance
+        Route::post('attendance/update/singleMark', [ElectionAttendanceController::class, 'saveSingleMark'])->name('attendance.saveSingleMark');
+        Route::post('attendance/update/saveDepartmentSingleMark', [ElectionAttendanceController::class, 'saveDepartmentSingleMark'])->name('attendance.saveDepartmentSingleMark');
+        Route::get('attendance/startMeetingSendSms', [ElectionAttendanceController::class, 'startMeetingSendSms'])->name('attendance.startMeetingSendSms');
+        Route::resource('attendance', ElectionAttendanceController::class);
     });
 
     // route for schedule meeting
