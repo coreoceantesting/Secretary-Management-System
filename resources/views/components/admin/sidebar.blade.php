@@ -85,6 +85,13 @@
                                 <a href="{{ route('master.reservation-category.index') }}" class="nav-link {{ request()->routeIs('master.reservation-category.*') ? 'active' : '' }}" data-key="t-horizontal">Reservation Category(आरक्षण श्रेणी)</a>
                             </li>
                             @endcan
+
+                            
+                            @can('election-meeting.index')
+                            <li class="nav-item">
+                                <a href="{{ route('master.election-meeting.index') }}" class="nav-link {{ request()->routeIs('master.election-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Election Meeting(निवडणूक बैठक)</a>
+                            </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
@@ -191,6 +198,35 @@
                             <li class="nav-item">
                                 <a href="{{ route('reschedule-meeting.index') }}" class="nav-link {{ request()->routeIs('reschedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Reschedule&nbsp;Meeting(मीटिंग पुन्हा शेड्युल करा)</a>
                             </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+                @endcan
+
+
+                @canany(['election-agenda.index', 'election-schedule-meeting.index', 'election-reschedule-meeting.index'])
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('election.*') ? 'active' : '' }}" href="#sidebarElection" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarElection">
+                        <i class="bx bx-user-circle"></i>
+                        <span data-key="t-layouts">Election</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('election.*') ? 'show' : '' }}" id="sidebarElection">
+                        <ul class="nav nav-sm flex-column">
+                            @can('election-agenda.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('election.agenda.index') }}" class="nav-link {{ request()->routeIs('election.agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Agenda(अजेंडा)</a>
+                                </li>
+                            @endcan
+                            @can('election-schedule-meeting.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('election.schedule-meeting.index') }}" class="nav-link {{ request()->routeIs('election.schedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Schedule Meeting(बैठकीचे वेळापत्रक)</a>
+                                </li>
+                            @endcan
+                            @can('election-reschedule-meeting.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('election.reschedule-meeting.index') }}" class="nav-link {{ request()->routeIs('election.reschedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Reschedule Meeting(बैठक पुन्हा शेड्यूल करा)</a>
+                                </li>
                             @endcan
                         </ul>
                     </div>

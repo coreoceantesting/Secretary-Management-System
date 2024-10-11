@@ -434,6 +434,86 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'reservation-category.delete',
                 'group' => 'reservation-category',
             ],
+            [
+                'id' => 95,
+                'name' => 'election-meeting.index',
+                'group' => 'election-meeting',
+            ],
+            [
+                'id' => 96,
+                'name' => 'election-meeting.create',
+                'group' => 'election-meeting',
+            ],
+            [
+                'id' => 97,
+                'name' => 'election-meeting.edit',
+                'group' => 'election-meeting',
+            ],
+            [
+                'id' => 98,
+                'name' => 'election-meeting.delete',
+                'group' => 'election-meeting',
+            ],
+            [
+                'id' => 99,
+                'name' => 'election-agenda.index',
+                'group' => 'election-agenda',
+            ],
+            [
+                'id' => 100,
+                'name' => 'election-agenda.create',
+                'group' => 'election-agenda',
+            ],
+            [
+                'id' => 101,
+                'name' => 'election-agenda.edit',
+                'group' => 'election-agenda',
+            ],
+            [
+                'id' => 102,
+                'name' => 'election-agenda.delete',
+                'group' => 'election-agenda',
+            ],
+            [
+                'id' => 103,
+                'name' => 'election-schedule-meeting.index',
+                'group' => 'election-schedule-meeting',
+            ],
+            [
+                'id' => 104,
+                'name' => 'election-schedule-meeting.create',
+                'group' => 'election-schedule-meeting',
+            ],
+            [
+                'id' => 105,
+                'name' => 'election-schedule-meeting.cancel',
+                'group' => 'election-schedule-meeting',
+            ],
+            [
+                'id' => 106,
+                'name' => 'election-election-schedule-meeting.show',
+                'group' => 'election-schedule-meeting',
+            ],
+            [
+                'id' => 107,
+                'name' => 'election-reschedule-meeting.index',
+                'group' => 'election-reschedule-meeting',
+            ],
+            [
+                'id' => 108,
+                'name' => 'election-reschedule-meeting.create',
+                'group' => 'election-reschedule-meeting',
+            ],
+            [
+                'id' => 109,
+                'name' => 'election-reschedule-meeting.cancel',
+                'group' => 'election-reschedule-meeting',
+            ],
+            [
+                'id' => 110,
+                'name' => 'election-reschedule-meeting.show',
+                'group' => 'election-reschedule-meeting',
+            ],
         ];
 
         foreach ($permissions as $permission) {

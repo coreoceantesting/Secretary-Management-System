@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Master\DepartmentController;
 use App\Http\Controllers\Master\MeetingController;
+use App\Http\Controllers\Master\ElectionMeetingController;
 use App\Http\Controllers\Master\WardController;
 use App\Http\Controllers\Master\MemberController;
 use App\Http\Controllers\Master\PartyController;
@@ -17,6 +18,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoshwaraController;
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\ElectionAgendaController;
+use App\Http\Controllers\ElectionScheduleMeetingController;
+use App\Http\Controllers\ElectionRescheduleMeetingController;
 use App\Http\Controllers\ScheduleMeetingController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\PrastavSuchanaController;
@@ -94,6 +98,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::resource('ward', WardController::class);
         Route::resource('member', MemberController::class);
         Route::resource('meeting', MeetingController::class);
+        Route::resource('election-meeting', ElectionMeetingController::class);
         Route::resource('setting', SettingController::class);
         Route::resource('party', PartyController::class);
         Route::resource('reservation-category', ReservationCategoryController::class);
@@ -114,6 +119,20 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('agenda/meeting/select-meeting', [AgendaController::class, 'selectMeeting'])->name('agenda.selectMeeting');
     Route::get('agenda/receipt/{id}', [AgendaController::class, 'receipt'])->name('agenda.receipt');
     Route::resource('agenda', AgendaController::class);
+
+    // route for election agenda
+    Route::prefix('election')->name('election.')->group(function () {
+        Route::resource('agenda', ElectionAgendaController::class);
+        Route::get('schedule-meeting/fetch-agenda', [ElectionScheduleMeetingController::class, 'fetchAgenda'])->name('schedule-meeting.fetch-agenda');
+        Route::post('schedule-meeting/{id}/cancel', [ElectionScheduleMeetingController::class, 'cancel'])->name('schedule-meeting.cancel');
+        Route::resource('schedule-meeting', ElectionScheduleMeetingController::class);
+
+
+        Route::get('reschedule-meeting/schedule_meeting/{id}', [ElectionRescheduleMeetingController::class, 'getScheduleMeeting'])->name('reschedule-meeting.getScheduleMeeting');
+        Route::get('reschedule-meeting/get-schedule_meeting-details/{id}', [ElectionRescheduleMeetingController::class, 'getScheduleMeetingDetails'])->name('reschedule-meeting.getScheduleMeetingDetails');
+        Route::post('reschedule-meeting/{id}/cancel', [ElectionRescheduleMeetingController::class, 'cancel'])->name('reschedule-meeting.cancel');
+        Route::resource('reschedule-meeting', ElectionRescheduleMeetingController::class);
+    });
 
     // route for schedule meeting
     Route::get('schedule-meeting/fetch-agenda-details', [ScheduleMeetingController::class, 'fetchAgendaDetails'])->name('schedule-meeting.fetch-agenda');
