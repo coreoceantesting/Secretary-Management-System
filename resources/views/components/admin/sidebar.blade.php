@@ -86,7 +86,7 @@
                             </li>
                             @endcan
 
-                            
+
                             @can('election-meeting.index')
                             <li class="nav-item">
                                 <a href="{{ route('master.election-meeting.index') }}" class="nav-link {{ request()->routeIs('master.election-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Election Meeting(निवडणूक बैठक)</a>
@@ -228,6 +228,25 @@
                                     <a href="{{ route('election.reschedule-meeting.index') }}" class="nav-link {{ request()->routeIs('election.reschedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Reschedule Meeting(बैठक पुन्हा शेड्यूल करा)</a>
                                 </li>
                             @endcan
+                            @can('election-reschedule-meeting.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('election.attendance.index') }}" class="nav-link {{ request()->routeIs('election.attendance.*') ? 'active' : '' }}" data-key="t-horizontal">Attendance(उपस्थिती)</a>
+                                </li>
+                            @endcan
+
+                            @can('election-proceeding-record.view')
+                                <li class="nav-item">
+                                    <a href="{{ route('election.proceeding-record.index') }}" class="nav-link {{ request()->routeIs('election.proceeding-record.*') ? 'active' : '' }}" data-key="t-horizontal">Proceeding Records(कार्यवाही रेकॉर्ड)</a>
+                                </li>
+                            @endcan
+
+
+                            <li class="nav-item">
+                                <a href="{{ route('election.report.schedule-meeting') }}" class="nav-link {{ request()->routeIs('election.report.schedule-meeting') ? 'active' : '' }} {{ request()->routeIs('election.report.schedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Election Meeting Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('election.report.attendance-meeting') }}" class="nav-link {{ request()->routeIs('election.report.attendance-meeting') ? 'active' : '' }}" data-key="t-horizontal">Election Attendance Report</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

@@ -29,10 +29,11 @@ class ElectionAttendanceController extends Controller
 
     public function store(AttendanceRequest $request)
     {
+        // dd($request->all());
         $attendance = $this->electionAttendanceRepository->store($request);
 
         if ($attendance) {
-            return redirect()->route('attendance.show', $request->schedule_meeting_id)->with('success', 'Attendance taken successfully');
+            return redirect()->route('election.attendance.show', $request->election_schedule_meeting_id)->with('success', 'Election attendance taken successfully');
         }
     }
 
@@ -41,10 +42,11 @@ class ElectionAttendanceController extends Controller
         $attendance = $this->electionAttendanceRepository->show($id);
 
         if ($attendance->is_meeting_completed) {
-            return redirect()->route('attendance.index');
+            // dd('ff');
+            return redirect()->route('election.attendance.index');
         }
 
-        $members = $this->electionAttendanceRepository->getMeetingMembers($attendance->meeting_id);
+        $members = $this->electionAttendanceRepository->getMeetingMembers($attendance->election_meeting_id);
         // return $members;
         $attendanceMarks = $this->electionAttendanceRepository->getPresentAttendence($id);
 
@@ -64,7 +66,7 @@ class ElectionAttendanceController extends Controller
     public function saveSingleMark(Request $request)
     {
         if ($request->ajax()) {
-
+            // dd($request->all());
             $attendance = $this->electionAttendanceRepository->updateSingleMemberAttandance($request);
 
             if ($attendance) {
@@ -78,7 +80,6 @@ class ElectionAttendanceController extends Controller
     public function saveDepartmentSingleMark(Request $request)
     {
         if ($request->ajax()) {
-
             $attendance = $this->electionAttendanceRepository->saveDepartmentSingleMark($request);
 
             if ($attendance) {

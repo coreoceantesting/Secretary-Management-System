@@ -32,6 +32,11 @@ class Member extends Model
         return $this->hasOne(Attendance::class, 'member_id', 'id');
     }
 
+    public function electionAttendance()
+    {
+        return $this->hasOne(ElectionAttendance::class, 'member_id', 'id');
+    }
+
     public function reservationCategory()
     {
         return $this->belongsTo(ReservationCategory::class, 'reservation_category_id', 'id');

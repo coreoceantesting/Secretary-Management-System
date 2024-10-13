@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('election_department_attendances', function (Blueprint $table) {
+        Schema::create('election_proceeding_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('schedule_meeting_id')->nullable()->constrained('election_schedule_meetings');
             $table->foreignId('election_meeting_id')->nullable()->constrained('election_meetings');
-            $table->string('name')->nullable();
-            $table->string('designation')->nullable();
-            $table->time('in_time')->nullable();
-            $table->time('out_time')->nullable();
+            $table->foreignId('election_schedule_meeting_id')->nullable()->constrained('election_schedule_meetings');
+            $table->date('date')->nullable();
+            $table->time('time')->nullable();
+            $table->datetime('datetime')->nullable();
+            $table->string('file')->nullable();
+            $table->text('remark')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('election_department_attendances');
+        Schema::dropIfExists('election_proceeding_records');
     }
 };

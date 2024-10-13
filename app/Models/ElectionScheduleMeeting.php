@@ -25,4 +25,9 @@ class ElectionScheduleMeeting extends Model
     {
         return $this->hasMany(ElectionAssignScheduleMeetingDepartment::class, 'election_schedule_meeting_id', 'id');
     }
+
+    public function proceedingRecord()
+    {
+        return $this->hasOne(ElectionProceedingRecord::class, 'election_schedule_meeting_id', 'id');
+    }
 }

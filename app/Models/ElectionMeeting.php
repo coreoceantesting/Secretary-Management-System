@@ -13,6 +13,11 @@ class ElectionMeeting extends Model
 
     protected $fillable = ['name', 'head_person_name', 'head_person_designation', 'deleted_at'];
 
+    public function electionScheduleMeeting()
+    {
+        return $this->hasMany(ElectionScheduleMeeting::class, 'election_meeting_id', 'id');
+    }
+
     public static function booted()
     {
         static::created(function (self $user) {

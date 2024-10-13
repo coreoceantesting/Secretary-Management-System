@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\ElectionScheduleMeeting;
 use App\Models\ElectionAttendance;
 use App\Models\AssignMemberToMeeting;
+use App\Models\ElectionAssignMemberToMeeting;
 use App\Models\ElectionDepartmentAttendance;
 use App\Models\SuplimentryAgenda;
 use Illuminate\Support\Facades\DB;
@@ -65,7 +66,7 @@ class ElectionAttendanceRepository
                 }
 
 
-                ElectionDepartmentAttendance::where('schedule_meeting_id', $request->schedule_meeting_id)->delete();
+                ElectionDepartmentAttendance::where('schedule_meeting_id', $request->election_schedule_meeting_id)->delete();
 
                 for ($i = 0; $i < count($request->department_attendance_id); $i++) {
                     // Log::info($request->department_in_time[$i]);
@@ -81,10 +82,10 @@ class ElectionAttendanceRepository
 
                     if ($request->department_in_time[$i] != "") {
                         $departmentAttendance = new ElectionDepartmentAttendance;
-                        $departmentAttendance->schedule_meeting_id = $request->schedule_meeting_id;
-                        $departmentAttendance->meeting_id = $request->meeting_id;
-                        $departmentAttendance->department_id  = $request->department_id[$i];
+                        $departmentAttendance->schedule_meeting_id = $request->election_schedule_meeting_id;
+                        $departmentAttendance->election_meeting_id = $request->election_meeting_id;
                         $departmentAttendance->name  = $request->department_name[$i];
+                        $departmentAttendance->designation  = $request->designation[$i];
                         $departmentAttendance->in_time = $inTime;
                         $departmentAttendance->out_time = $outTime;
                         $departmentAttendance->save();
@@ -95,15 +96,12 @@ class ElectionAttendanceRepository
 
 
             if (isset($request->close_meeting)) {
-                ElectionDepartmentAttendance::where('id', $request->schedule_meeting_id)->update([
+                // Log::info('d');
+                ElectionScheduleMeeting::where('id', $request->election_schedule_meeting_id)->update([
                     'is_meeting_completed' => 1,
                     'meeting_end_date' => ($request->meeting_end_date) ? date('Y-m-d', strtotime($request->meeting_end_date)) : null,
                     'meeting_end_time' => ($request->meeting_end_time) ? date('H:i:s', strtotime($request->meeting_end_time)) : null,
                     'meeting_end_reason' => $request->meeting_end_reason
-                ]);
-
-                SuplimentryAgenda::where('schedule_meeting_id', $request->schedule_meeting_id)->update([
-                    'is_meeting_completed' => 1
                 ]);
             }
             DB::commit();
@@ -139,7 +137,7 @@ class ElectionAttendanceRepository
 
     public function getMeetingMembers($meetingId)
     {
-        return AssignMemberToMeeting::with(['member.party'])->where('meeting_id', $meetingId)->get();
+        return ElectionAssignMemberToMeeting::with(['member.party'])->where('election_meeting_id', $meetingId)->get();
     }
 
 
@@ -180,10 +178,10 @@ class ElectionAttendanceRepository
 
             ElectionAttendance::updateOrCreate([
                 'member_id' => $request->memberId,
-                'schedule_meeting_id' => $request->schedule_meeting_id,
+                'election_schedule_meeting_id' => $request->election_schedule_meeting_id,
                 'election_meeting_id' => $request->election_meeting_id
             ], [
-                'schedule_meeting_id' => $request->schedule_meeting_id,
+                'election_schedule_meeting_id' => $request->election_schedule_meeting_id,
                 'election_meeting_id' => $request->election_meeting_id,
                 'member_id' => $request->memberId,
                 'in_time' => date('H:i:s', strtotime($request->inTime)),
@@ -214,7 +212,7 @@ class ElectionAttendanceRepository
                 ], [
                     'schedule_meeting_id' => $request->schedule_meeting_id,
                     'election_meeting_id' => $request->election_meeting_id,
-                    'department_id' => $request->department_id,
+                    'designation' => $request->designation,
                     'name' => $request->name,
                     'in_time' => ($request->inTime != "") ? date('H:i:s', strtotime($request->inTime)) : null,
                     'out_time' => ($request->outTime != "") ? date('H:i:s', strtotime($request->outTime)) : null,
@@ -223,7 +221,7 @@ class ElectionAttendanceRepository
                 $department = ElectionDepartmentAttendance::create([
                     'schedule_meeting_id' => $request->schedule_meeting_id,
                     'election_meeting_id' => $request->election_meeting_id,
-                    'department_id' => $request->department_id,
+                    'designation' => $request->designation,
                     'name' => $request->name,
                     'in_time' => ($request->inTime != "") ? date('H:i:s', strtotime($request->inTime)) : null,
                     'out_time' => ($request->outTime != "") ? date('H:i:s', strtotime($request->outTime)) : null,

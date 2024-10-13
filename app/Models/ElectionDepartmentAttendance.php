@@ -9,5 +9,5 @@ class ElectionDepartmentAttendance extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['schedule_meeting_id', 'election_meeting_id', 'department_id', 'name', 'in_time', 'out_time'];
+    protected $fillable = ['schedule_meeting_id', 'election_meeting_id', 'designation', 'name', 'in_time', 'out_time'];
 }

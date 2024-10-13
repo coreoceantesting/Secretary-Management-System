@@ -9,10 +9,10 @@
         <div class="row" id="addContainer">
             <div class="col-sm-12">
                 <div class="card">
-                    <form class="theme-form" method="post" action="{{ route('attendance.store') }}" enctype="multipart/form-data">
+                    <form class="theme-form" method="post" action="{{ route('election.attendance.store') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" id="scheduleMeetingId" name="schedule_meeting_id" value="{{ $attendance->id }}">
-                        <input type="hidden" id="meetingId" name="meeting_id" value="{{ $attendance->meeting_id }}">
+                        <input type="hidden" id="scheduleMeetingId" name="election_schedule_meeting_id" value="{{ $attendance->id }}">
+                        <input type="hidden" id="meetingId" name="election_meeting_id" value="{{ $attendance->election_meeting_id }}">
                         <div class="card-header">
                             <h4 class="card-title">Attendance(उपस्थिती)</h4>
                         </div>
@@ -22,14 +22,14 @@
                                 <button type="button" class="btn btn-warning m-3 @if(!$attendance->is_sms_send) d-none @endif" id="pauseMeeting">Pause Meeting</button>
                                 <button type="button" class="btn btn-success m-3  @if($attendance->is_sms_send) d-none @endif" id="startMeeting">Send Remainder SMS</button>
                             </div>
-                                
+
                             <div class="mb-3 row">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Meeting Name(संमेलनाचे नाव)</th>
-                                                <td>{{ $attendance->meeting?->name }}</td>
+                                                <td>{{ $attendance->electionMeeting?->name }}</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -39,7 +39,7 @@
                                             </tr>
                                             <tr>
                                                 <th style="width: 25%">Agenda Subject(अजेंडाचे विषय)</th>
-                                                <td>{{ $attendance->agenda?->subject }}</td>
+                                                <td>{{ $attendance->electionAgenda?->subject }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Agenda File(अजेंडा फाइल)</th>
@@ -114,6 +114,8 @@
                                                             <a target="_blank" href="{{ asset('storage/'.$member->member->photo) }}">
                                                                 <img src="{{ asset('storage/'.$member->member->photo) }}" style="width: 100px;" alt="" />
                                                             </a>
+                                                            @else
+                                                            -
                                                             @endif
                                                         </td>
                                                         <td>{{ $member->member?->party?->name }}</td>
@@ -136,8 +138,8 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>Department</th>
                                                         <th>Name</th>
+                                                        <th>Designation</th>
                                                         <th>In Time</th>
                                                         <th>Out Time</th>
                                                         <th><button type="button" class="btn btn-primary btn-sm" id="addMoreDepartmentButton">Add</button></th>
@@ -150,15 +152,11 @@
                                                         <td>
                                                             <input type="hidden" class="dataId" value="{{ $key+1 }}">
                                                             <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="{{ $departmentAttendanceMark->id }}">
-                                                            <select name="department_id[]" class="form-select selectDepartmentForAttendance" required>
-                                                                <option value="">Select Department</option>
-                                                                @foreach($departments as $department)
-                                                                <option @if($departmentAttendanceMark->department_id == $department->id) selected @endif value="{{ $department->id }}">{{ $department->name }}</option>
-                                                                @endforeach
-                                                            </select>
+                                                            <input type="text" required name="department_name[]" class="form-control departmentInputName" value="{{ $departmentAttendanceMark->name }}">
+
                                                         </td>
                                                         <td>
-                                                            <input type="text" required name="department_name[]" class="form-control departmentInputName" value="{{ $departmentAttendanceMark->name }}">
+                                                            <input type="text" required name="designation[]" class="form-control designationInputName" value="{{ $departmentAttendanceMark->designation }}">
                                                         </td>
                                                         <td>
                                                             <input type="time" name="department_in_time[]" class="form-control departmentInTime" value="{{ $departmentAttendanceMark->in_time }}" required>
@@ -174,15 +172,10 @@
                                                         <td>
                                                             <input type="hidden" class="dataId" value="1">
                                                             <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="">
-                                                            <select name="department_id[]" class="form-select selectDepartmentForAttendance" required>
-                                                                <option value="">Select Department</option>
-                                                                @foreach($departments as $department)
-                                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                                                @endforeach
-                                                            </select>
+                                                            <input type="text" name="department_name[]" class="form-control departmentInputName" required>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="department_name[]" class="form-control departmentInputName" required>
+                                                            <input type="text" required name="designation[]" class="form-control designationInputName">
                                                         </td>
                                                         <td>
                                                             <input type="time" value="{{ date('H:i') }}" name="department_in_time[]" class="form-control departmentInTime" required></td>
@@ -258,12 +251,12 @@
                     let scheduleMeetingId = $('#scheduleMeetingId').val();
                     let meetingId = $('#meetingId').val();
                     $.ajax({
-                        url: "{{ route('attendance.saveSingleMark') }}",
+                        url: "{{ route('election.attendance.saveSingleMark') }}",
                         type: 'POST',
                         data: {
                             id: dataId,
-                            schedule_meeting_id: scheduleMeetingId,
-                            meeting_id: meetingId,
+                            election_schedule_meeting_id: scheduleMeetingId,
+                            election_meeting_id: meetingId,
                             memberId: memberId,
                             inTime: inTime,
                             outTime: outTime
@@ -316,15 +309,10 @@
                             <td>
                                 <input type="hidden" class="dataId" value="${departmentRowCount}">
                                 <input type="hidden" class="dataDepartmentAttendanceId" name="department_attendance_id[]" value="">
-                                <select name="department_id[]" class="form-select selectDepartmentForAttendance" required>
-                                    <option value="">Select Department</option>
-                                    @foreach($departments as $department)
-                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                    @endforeach
-                                </select>
+                               <input type="text" name="department_name[]" class="form-control departmentInputName" required>
                             </td>
                             <td>
-                                <input type="text" name="department_name[]" class="form-control departmentInputName" required>
+                                <input type="text" required name="designation[]" class="form-control designationInputName">
                             </td>
                             <td>
                                 <input type="time" name="department_in_time[]" class="form-control departmentInTime" required></td>
@@ -347,7 +335,7 @@
                     // $(this).prop('disabled', true);
                     let dataId = $(this).closest('tr').find('.dataId').val();
                     let dataDepartmentAttendanceId = $(this).closest('tr').find('.dataDepartmentAttendanceId').val();
-                    let department_id = $(this).closest('tr').find('.selectDepartmentForAttendance').val();
+                    let designation = $(this).closest('tr').find('.designationInputName').val();
 
                     let inTime = $(this).closest('tr').find('.departmentInTime').val();
                     let outTime = $(this).closest('tr').find('.departmentOutTime').val();
@@ -355,13 +343,13 @@
                     let meetingId = $('#meetingId').val();
                     let name = $(this).closest('tr').find('.departmentInputName').val();
 
-                    if(department_id == "" || inTime == "" || name == ""){
+                    if(designation == "" || inTime == "" || name == ""){
                         if(name == ""){
                             $(this).closest('tr').find('.departmentInputName').css('border', '1px solid red');
                         }
 
-                        if(department_id == ""){
-                            $(this).closest('tr').find('.selectDepartmentForAttendance').css('border', '1px solid red');
+                        if(designation == ""){
+                            $(this).closest('tr').find('.designationInputName').css('border', '1px solid red');
                         }
 
                         if(inTime == ""){
@@ -369,23 +357,23 @@
                         }
                         return false;
                     }else{
-                        $(this).closest('tr').find('.selectDepartmentForAttendance').css('border', '1px solid #e9ebec');
+                        $(this).closest('tr').find('.designationInputName').css('border', '1px solid #e9ebec');
                         $(this).closest('tr').find('.departmentInputName').css('border', '1px solid #e9ebec');
                         $(this).closest('tr').find('.departmentInTime').css('border', '1px solid #e9ebec');
                     }
 
                     $.ajax({
-                        url: "{{ route('attendance.saveDepartmentSingleMark') }}",
+                        url: "{{ route('election.attendance.saveDepartmentSingleMark') }}",
                         type: 'POST',
                         data: {
                             id: dataId,
                             schedule_meeting_id: scheduleMeetingId,
                             name: name,
-                            meeting_id: meetingId,
+                            election_meeting_id: meetingId,
                             dataDepartmentAttendanceId: dataDepartmentAttendanceId,
                             inTime: inTime,
                             outTime: outTime,
-                            department_id: department_id,
+                            designation: designation,
                         },
                         beforeSend: function()
                         {
@@ -434,7 +422,7 @@
                 $('body').on('click', '#startMeeting', function(){
                     if (confirm('Are you sure you want to send the sms to member?')) {
                         $.ajax({
-                            url: "{{ route('attendance.startMeetingSendSms') }}",
+                            url: "{{ route('election.attendance.startMeetingSendSms') }}",
                             type: 'GET',
                             data: {
                                 name : "start",
@@ -485,7 +473,7 @@
                 $('body').on('click', '#pauseMeeting', function(){
                     if (confirm('Are you sure you want to pause meeting?')) {
                         $.ajax({
-                            url: "{{ route('attendance.startMeetingSendSms') }}",
+                            url: "{{ route('election.attendance.startMeetingSendSms') }}",
                             type: 'GET',
                             data: {
                                 name : "pause",

@@ -514,6 +514,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'election-reschedule-meeting.show',
                 'group' => 'election-reschedule-meeting',
             ],
+            [
+                'id' => 111,
+                'name' => 'election-proceeding-record.view',
+                'group' => 'election-proceeding-record',
+            ],
+            [
+                'id' => 112,
+                'name' => 'election-proceeding-record.create',
+                'group' => 'election-proceeding-record',
+            ],
+            [
+                'id' => 113,
+                'name' => 'election-proceeding-record.show',
+                'group' => 'election-proceeding-record',
+            ],
+            [
+                'id' => 114,
+                'name' => 'election-proceeding-record.pdf',
+                'group' => 'election-proceeding-record',
+            ],
         ];
 
         foreach ($permissions as $permission) {

@@ -32,6 +32,8 @@ use App\Http\Controllers\ElectionAttendanceController;
 use App\Http\Controllers\ProceedingRecordController;
 use App\Http\Controllers\TharavController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ElectionProceedingRecordController;
+use App\Http\Controllers\ElectionReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +143,18 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::post('attendance/update/saveDepartmentSingleMark', [ElectionAttendanceController::class, 'saveDepartmentSingleMark'])->name('attendance.saveDepartmentSingleMark');
         Route::get('attendance/startMeetingSendSms', [ElectionAttendanceController::class, 'startMeetingSendSms'])->name('attendance.startMeetingSendSms');
         Route::resource('attendance', ElectionAttendanceController::class);
+
+
+        // proceesing record
+        Route::get('proceeding-record/pdf/{id}', [ElectionProceedingRecordController::class, 'pdf'])->name('proceeding-record.pdf');
+        Route::get('proceeding-record/getScheduleMeeting/{id}', [ElectionProceedingRecordController::class, 'getScheduleMeeting'])->name('proceeding-record.getScheduleMeeting');
+        Route::resource('proceeding-record', ElectionProceedingRecordController::class);
+        // end of route for proceeding record
+
+        // report
+        Route::get('report/schedule-meeting', [ElectionReportController::class, 'scheduleMeetingReport'])->name('report.schedule-meeting');
+        Route::get('report/schedule-meeting/{id}', [ElectionReportController::class, 'viewScheduleMeetingReport'])->name('report.viewScheduleMeetingReport');
+        Route::get('report/attendance-meeting', [ElectionReportController::class, 'attendanceMeetingReport'])->name('report.attendance-meeting');
     });
 
     // route for schedule meeting
