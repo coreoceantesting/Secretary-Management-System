@@ -44,6 +44,37 @@
                             </div>
 
 
+                            <h5 style="font-weight: 800" class="mt-3">Supplementary Agenda(पूरक अजेंडा)</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Meeting Name</th>
+                                            <th>Meeting No.</th>
+                                            <th>Suplimentry Subject</th>
+                                            <th>Suplimentry File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($scheduleMeeting?->electionSuplimentryAgenda as $suplimentryAgenda)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $suplimentryAgenda?->electionMeeting?->name }}</td>
+                                            <td>{{ $scheduleMeeting->unique_id }}</td>
+                                            <td>{{ $suplimentryAgenda?->subject }}</td>
+                                            <td><a href="{{ asset('storage/'.$suplimentryAgenda?->file) }}" class="btn btn-primary btn-sm">View</a></td>
+                                        </tr>
+                                        @empty
+                                            <tr>
+                                                <td align="center" colspan="5">No Data Found</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+
+
 
                             <h5 style="font-weight: 800" class="mt-3">Schedule Meeting(बैठकीचे वेळापत्रक)</h5>
                             <div class="table-responsive">

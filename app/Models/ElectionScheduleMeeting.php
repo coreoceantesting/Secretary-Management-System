@@ -30,4 +30,9 @@ class ElectionScheduleMeeting extends Model
     {
         return $this->hasOne(ElectionProceedingRecord::class, 'election_schedule_meeting_id', 'id');
     }
+
+    public function electionSuplimentryAgenda()
+    {
+        return $this->hasMany(ElectionSuplimentryAgenda::class, 'schedule_meeting_id', 'id');
+    }
 }

@@ -10,6 +10,9 @@ use App\Models\ElectionScheduleMeeting;
 use App\Models\ElectionAssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Mail\RescheduleMeetingMail;
+use App\Models\Meeting;
+use Illuminate\Support\Facades\Mail;
 
 class ElectionRescheduleMeetingController extends Controller
 {
@@ -91,6 +94,18 @@ class ElectionRescheduleMeetingController extends Controller
                         }
                     }
                     // end of logic to assign schedule meeting to department
+
+                    // logic to send sms and email
+                    // $members = ElectionAssignMemberToMeeting::with(['member'])->where('election_meeting_id', $request->election_meeting_id)->get();
+
+                    // $scheduleMeeting = ElectionScheduleMeeting::with(['electionAgenda', 'electionMeeting'])->where('id', $request->schedule_meeting_id)->first();
+                    // $rescheduleMeeting = ElectionScheduleMeeting::with(['electionAgenda', 'electionMeeting'])->where('id', $reScheduleMeeting->id)->first();
+
+                    // foreach ($members as $member) {
+                    //     Log::info('Sms Send to number' . $member->member->contact_number);
+                    //     Mail::to($member->member->email)->send(new RescheduleMeetingMail($scheduleMeeting, $rescheduleMeeting));
+                    // }
+                    // end of send sms and email login
 
                     DB::commit();
                     return response()->json([

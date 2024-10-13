@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\ElectionProceedingRecordRepository;
 use App\Repository\CommonRepository;
 use App\Models\ElectionAgenda;
-use App\Models\Department;
+use App\Models\ElectionSuplimentryAgenda;
 use App\Models\ElectionAssignMemberToMeeting;
 use App\Models\ElectionDepartmentAttendance;
 use App\Models\ElectionMeeting;
@@ -96,6 +96,8 @@ class ElectionProceedingRecordController extends Controller
             ->where('schedule_meeting_id', $proceedingRecord->election_schedule_meeting_id)
             ->get();
 
+        $suplimentryAgendas = ElectionSuplimentryAgenda::whereIn('schedule_meeting_id', $ids)->get();
+
 
         return view('election.proceeding-record.show')->with([
             'agenda' => $agenda,
@@ -104,6 +106,7 @@ class ElectionProceedingRecordController extends Controller
             'members' => $members,
             'departments' => $departments,
             'departmentAttendances' => $departmentAttendances,
+            'suplimentryAgendas' => $suplimentryAgendas
         ]);
     }
 
@@ -134,6 +137,8 @@ class ElectionProceedingRecordController extends Controller
             ->where('schedule_meeting_id', $proceedingRecord->election_schedule_meeting_id)
             ->get();
 
+        $suplimentryAgendas = ElectionSuplimentryAgenda::whereIn('schedule_meeting_id', $ids)->get();
+
         $pdf = PDF::loadView('election.proceeding-record.pdf', [
             'agenda' => $agenda,
             'scheduleMeetings' => $scheduleMeetings,
@@ -141,6 +146,7 @@ class ElectionProceedingRecordController extends Controller
             'members' => $members,
             'departments' => $departments,
             'departmentAttendances' => $departmentAttendances,
+            'suplimentryAgendas' => $suplimentryAgendas
         ]);
 
         return $pdf->stream('document.pdf');

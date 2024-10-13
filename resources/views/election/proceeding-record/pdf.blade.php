@@ -145,6 +145,35 @@
             @endif
 
 
+            @if(count($suplimentryAgendas) > 0)
+            <div class="card">
+                <div class="card-header bg-primary"><h5 class="card-title text-white">Step {{ $step++ }}:- Supplementary Agenda(पूरक अजेंडा)</h5></div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Supplementary Subject(विषय)</th>
+                                    <th>Supplementary File(फाईल)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($suplimentryAgendas as $suplimentryAgenda)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $suplimentryAgenda->subject }}</td>
+                                    <td><a target="_blank" href="{{ asset('storage/'.$suplimentryAgenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+
 
 
             <div class="card">

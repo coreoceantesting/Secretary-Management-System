@@ -34,6 +34,7 @@ use App\Http\Controllers\TharavController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ElectionProceedingRecordController;
 use App\Http\Controllers\ElectionReportController;
+use App\Http\Controllers\ElectionSuplimentryAgendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,6 +127,10 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     // route for election agenda
     Route::prefix('election')->name('election.')->group(function () {
         Route::resource('agenda', ElectionAgendaController::class);
+
+        // route for suplimentry agenda
+        Route::get('suplimentry-agenda/schedule_meeting/{id}', [ElectionSuplimentryAgendaController::class, 'getScheduleMeeting'])->name('suplimentry-agenda.getScheduleMeeting');
+        Route::resource('suplimentry-agenda', ElectionSuplimentryAgendaController::class);
 
         // schedule meeting
         Route::get('schedule-meeting/fetch-agenda', [ElectionScheduleMeetingController::class, 'fetchAgenda'])->name('schedule-meeting.fetch-agenda');

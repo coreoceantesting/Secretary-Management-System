@@ -7,7 +7,7 @@ use App\Models\ElectionAttendance;
 use App\Models\AssignMemberToMeeting;
 use App\Models\ElectionAssignMemberToMeeting;
 use App\Models\ElectionDepartmentAttendance;
-use App\Models\SuplimentryAgenda;
+use App\Models\ElectionSuplimentryAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -102,6 +102,10 @@ class ElectionAttendanceRepository
                     'meeting_end_date' => ($request->meeting_end_date) ? date('Y-m-d', strtotime($request->meeting_end_date)) : null,
                     'meeting_end_time' => ($request->meeting_end_time) ? date('H:i:s', strtotime($request->meeting_end_time)) : null,
                     'meeting_end_reason' => $request->meeting_end_reason
+                ]);
+
+                ElectionSuplimentryAgenda::where('schedule_meeting_id', $request->election_schedule_meeting_id)->update([
+                    'is_meeting_completed' => 1
                 ]);
             }
             DB::commit();

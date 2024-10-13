@@ -28,7 +28,7 @@ class ElectionReportRepository
 
     public function viewScheduleMeetingReport($id)
     {
-        return ElectionScheduleMeeting::with(['electionMeeting', 'electionAgenda', 'assignScheduleMeetingDepartment.department', 'proceedingRecord.electionMeeting'])->where('id', $id)->first();
+        return ElectionScheduleMeeting::with(['electionMeeting', 'electionAgenda', 'assignScheduleMeetingDepartment.department', 'proceedingRecord.electionMeeting', 'electionSuplimentryAgenda.electionMeeting'])->where('id', $id)->first();
     }
 
     public function attendanceMeetingReport($request)

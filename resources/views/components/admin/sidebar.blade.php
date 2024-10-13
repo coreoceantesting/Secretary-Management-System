@@ -214,9 +214,12 @@
                     <div class="collapse menu-dropdown {{ request()->routeIs('election.*') ? 'show' : '' }}" id="sidebarElection">
                         <ul class="nav nav-sm flex-column">
                             @can('election-agenda.index')
-                                <li class="nav-item">
-                                    <a href="{{ route('election.agenda.index') }}" class="nav-link {{ request()->routeIs('election.agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Agenda(अजेंडा)</a>
-                                </li>
+                            <li class="nav-item">
+                                <a href="{{ route('election.agenda.index') }}" class="nav-link {{ request()->routeIs('election.agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Agenda(अजेंडा)</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('election.suplimentry-agenda.index') }}" class="nav-link {{ request()->routeIs('election.suplimentry-agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Suplimentry Agenda(पूरक अजेंडा)</a>
+                            </li>
                             @endcan
                             @can('election-schedule-meeting.index')
                                 <li class="nav-item">

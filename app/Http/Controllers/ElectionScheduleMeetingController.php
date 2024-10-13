@@ -7,9 +7,12 @@ use App\Models\ElectionAgenda;
 use App\Models\ElectionMeeting;
 use App\Models\Department;
 use App\Models\ElectionScheduleMeeting;
+use App\Models\ElectionAssignMemberToMeeting;
 use App\Models\ElectionAssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Mail\ScheduleMeetingMail;
+use Illuminate\Support\Facades\Mail;
 
 class ElectionScheduleMeetingController extends Controller
 {
@@ -87,6 +90,19 @@ class ElectionScheduleMeetingController extends Controller
                     ElectionAgenda::where('id', $request->election_agenda_id)->update([
                         'is_meeting_schedule' => 1
                     ]);
+
+
+                    // logic to send sms and email
+                    // $members = ElectionAssignMemberToMeeting::with(['member'])->where('meeting_id', $request->meeting_id)->get();
+
+                    // $scheduleMeeting = ElectionScheduleMeeting::with(['agenda', 'meeting'])->where('id', $scheduleMeeting->id)->first();
+
+                    // foreach ($members as $member) {
+                    //     Log::info('Sms Send to number' . $member->member->contact_number);
+                    //     Mail::to($member->member->email)->send(new ScheduleMeetingMail($scheduleMeeting));
+                    // }
+                    // end of send sms and email login
+
 
                     DB::commit();
                     return response()->json(['success' => 'Election schedule meeting created successfully!']);
