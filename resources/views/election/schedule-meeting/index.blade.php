@@ -32,7 +32,6 @@
                             <div class="col-md-4">
                                 <label class="col-form-label" for="election_meeting_id">Select Meeting(मीटिंग निवडा) <span class="text-danger">*</span></label>
                                 <select class="form-select col-sm-12" disabled id="election_meeting_id" name="election_meeting_id" required>
-                                    <option value="">--Select Meeting--</option>
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
                                     @endforeach
