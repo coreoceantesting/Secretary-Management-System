@@ -14,7 +14,7 @@ class ElectionAgendaController extends Controller
         $meetings = ElectionMeeting::all();
 
         $electionAgendas = ElectionAgenda::with(['meeting'])->get();
-
+        // return $electionAgendas;
         return view('election.agenda.index')->with([
             'electionAgendas' => $electionAgendas,
             'meetings' => $meetings
@@ -94,7 +94,7 @@ class ElectionAgendaController extends Controller
                 $electionAgenda->delete();
 
                 return response()->json([
-                    'success' => 'Election agenda updated successfully'
+                    'success' => 'Election agenda deleted successfully'
                 ]);
             } catch (\Exception $e) {
                 return response()->json([

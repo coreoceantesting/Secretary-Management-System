@@ -105,6 +105,6 @@ class ElectionSuplimentryAgendaRepository
 
     public function getScheduleMeeting($id)
     {
-        return ElectionScheduleMeeting::where(['is_meeting_completed' => 0, 'is_meeting_reschedule' => 0, 'election_meeting_id' => $id])->get();
+        return ElectionScheduleMeeting::where(['is_meeting_completed' => 0, 'is_meeting_cancel' => 1, 'is_meeting_reschedule' => 0, 'election_meeting_id' => $id])->get();
     }
 }

@@ -21,15 +21,21 @@ class ReservationCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required'
-        ];
+        if ($this->edit_model_id) {
+            return [
+                'name' => "required|unique:reservation_categories,name,$this->edit_model_id,id,deleted_at,NULL"
+            ];
+        } else {
+            return [
+                'name' => 'required|unique:reservation_categories,name,NULL,NULL,deleted_at,NULL'
+            ];
+        }
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Please enter name'
+            'name.required' => 'Please enter name',
         ];
     }
 }

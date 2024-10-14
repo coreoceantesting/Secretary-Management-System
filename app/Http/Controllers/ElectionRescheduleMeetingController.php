@@ -20,7 +20,13 @@ class ElectionRescheduleMeetingController extends Controller
     {
         $agendas = ElectionAgenda::where('is_meeting_schedule', 0)->get();
 
-        $meetings = ElectionMeeting::get();
+        $meetings = ElectionMeeting::whereHas('electionScheduleMeeting', function ($q) {
+            return $q->where([
+                'is_meeting_cancel' => 0,
+                'is_meeting_reschedule' => 0,
+                'is_meeting_completed' => 0
+            ]);
+        })->get();
 
         $departments = Department::where('is_home_department', 0)->get();
 

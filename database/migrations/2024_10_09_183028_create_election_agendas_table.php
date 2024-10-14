@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('election_agendas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('meeting_id')->nullable()->constrained('meetings');
+            $table->foreignId('meeting_id')->nullable()->constrained('election_meetings');
             $table->string('subject');
             $table->string('file')->nullable();
             $table->date('date')->nullable();

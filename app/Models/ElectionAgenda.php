@@ -13,6 +13,6 @@ class ElectionAgenda extends Model
 
     public function meeting()
     {
-        return $this->belongsTo(Meeting::class, 'meeting_id', 'id');
+        return $this->belongsTo(ElectionMeeting::class, 'meeting_id', 'id');
     }
 }
