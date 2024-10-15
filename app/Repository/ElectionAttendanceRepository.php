@@ -21,9 +21,7 @@ class ElectionAttendanceRepository
                 'is_meeting_reschedule' => 0,
                 'is_meeting_cancel' => 0,
                 'is_meeting_completed' => 0
-            ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->where('meeting_id', Auth::user()->meeting_id);
-            })->get();
+            ])->get();
     }
 
     public function store($request)
