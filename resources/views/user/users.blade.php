@@ -76,13 +76,22 @@
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="meeting_id" name="meeting_id">
-                                    <option value="">--Select Meeting--</option>
+                                <select class="js-example-basic-multiple col-sm-12" multiple id="meeting_id" name="meeting_id[]">
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid meeting_id_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3 d-none selectMeeting">
+                                <label class="col-form-label" for="election_meeting_id">Select Election Meeting <span class="text-danger">*</span></label>
+                                <select class="js-example-basic-multiple col-sm-12" multiple id="election_meeting_id" name="election_meeting_id[]">
+                                    @foreach($electionMeetings as $electionMeeting)
+                                    <option value="{{ $electionMeeting->id }}">{{ $electionMeeting->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid election_meeting_id_err"></span>
                             </div>
 
 
@@ -207,13 +216,22 @@
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select class="form-select col-sm-12" id="meeting_id" name="meeting_id">
-                                    <option value="">--Select Meeting--</option>
+                                <select class="js-example-basic-multiple col-sm-12" multiple id="meeting_id" name="meeting_id[]">
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid meeting_id_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3 d-none selectMeeting">
+                                <label class="col-form-label" for="election_meeting_id">Select Election Meeting <span class="text-danger">*</span></label>
+                                <select class="js-example-basic-multiple col-sm-12" multiple id="election_meeting_id" name="election_meeting_id[]">
+                                    @foreach($electionMeetings as $electionMeeting)
+                                    <option value="{{ $electionMeeting->id }}">{{ $electionMeeting->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid election_meeting_id_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3 d-none selectDepartment"></div>
@@ -632,9 +650,11 @@
                         $("#editForm .selectMeeting").addClass('d-none');
                         $('body').find('.selectDepartment').removeClass('d-none');
                         $('body').find('.selectDepartment').html(data.departmentHtml)
-                    }else if(data.user.meeting_id != ""){
+                    }else if(data.user.roles[0].id == 7){
                         $("#editForm .selectMeeting").removeClass('d-none');
-                        $("#editForm select[name='meeting_id']").val(data.user.meeting_id).change();
+                        $("#editForm select[name='meeting_id[]']").html(data.meetingHtml);
+                        $("#editForm select[name='election_meeting_id[]']").html(data.electionMeetingHtml);
+                        $('body').find(".js-example-basic-multiple").select2();
                     }else{
                         $("#editForm .selectMeeting").addClass('d-none');
                         $('body').find('.selectDepartment').addClass('d-none');

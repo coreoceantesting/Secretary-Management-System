@@ -35,6 +35,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ElectionProceedingRecordController;
 use App\Http\Controllers\ElectionReportController;
 use App\Http\Controllers\ElectionSuplimentryAgendaController;
+use App\Http\Controllers\ElectionDocumentHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -155,6 +156,10 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::get('proceeding-record/getScheduleMeeting/{id}', [ElectionProceedingRecordController::class, 'getScheduleMeeting'])->name('proceeding-record.getScheduleMeeting');
         Route::resource('proceeding-record', ElectionProceedingRecordController::class);
         // end of route for proceeding record
+
+        // document history
+        Route::resource('document-history', ElectionDocumentHistoryController::class);
+        // end of document history
 
         // report
         Route::get('report/schedule-meeting', [ElectionReportController::class, 'scheduleMeetingReport'])->name('report.schedule-meeting');

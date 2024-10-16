@@ -104,7 +104,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                @can('suplimentry-agenda.create')
+                @can('election-suplimentry-agenda.create')
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6">
@@ -141,14 +141,14 @@
                                         <td>{{ $agenda->electionScheduleMeeting?->place }}</td>
                                         <td>{{ $agenda->subject }}</td>
                                         <td><a href="{{ asset('storage/'.$agenda->file) }}" class="btn btn-primary btn-sm">View File</a></td>
-                                        @canany(['suplimentry-agenda.edit', 'suplimentry-agenda.delete'])
+                                        @canany(['election-suplimentry-agenda.edit', 'election-suplimentry-agenda.delete'])
                                         <td>
                                             @if($agenda->is_meeting_completed == "0")
-                                            @can('suplimentry-agenda.edit')
+                                            @can('election-suplimentry-agenda.edit')
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit Agenda" data-id="{{ $agenda->id }}"><i data-feather="edit"></i></button>
                                             @endcan
 
-                                            @can('suplimentry-agenda.delete')
+                                            @can('election-suplimentry-agenda.delete')
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete Agenda" data-id="{{ $agenda->id }}"><i data-feather="trash-2"></i> </button>
                                             @endcan
                                             @endif

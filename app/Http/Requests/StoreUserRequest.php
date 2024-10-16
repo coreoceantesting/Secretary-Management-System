@@ -35,7 +35,6 @@ class StoreUserRequest extends FormRequest
             'username' => 'required|unique:users,username',
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password',
-            'meeting_id' => 'nullable'
         ];
     }
 }

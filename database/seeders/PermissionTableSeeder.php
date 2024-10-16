@@ -534,6 +534,56 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'election-proceeding-record.pdf',
                 'group' => 'election-proceeding-record',
             ],
+            [
+                'id' => 115,
+                'name' => 'election-document-history.index',
+                'group' => 'election-document-history',
+            ],
+            [
+                'id' => 116,
+                'name' => 'election-document-history.create',
+                'group' => 'election-document-history',
+            ],
+            [
+                'id' => 117,
+                'name' => 'election-document-history.edit',
+                'group' => 'election-document-history',
+            ],
+            [
+                'id' => 118,
+                'name' => 'election-document-history.delete',
+                'group' => 'election-document-history',
+            ],
+            [
+                'id' => 119,
+                'name' => 'report.election-meeting',
+                'group' => 'report',
+            ],
+            [
+                'id' => 120,
+                'name' => 'report.election-attendance',
+                'group' => 'report',
+            ],
+            [
+                'id' => 121,
+                'name' => 'election-suplimentry-agenda.index',
+                'group' => 'election-suplimentry-agenda',
+            ],
+            [
+                'id' => 122,
+                'name' => 'election-suplimentry-agenda.create',
+                'group' => 'election-suplimentry-agenda',
+            ],
+            [
+                'id' => 123,
+                'name' => 'election-suplimentry-agenda.edit',
+                'group' => 'election-suplimentry-agenda',
+            ],
+            [
+                'id' => 124,
+                'name' => 'election-suplimentry-agenda.delete',
+                'group' => 'election-suplimentry-agenda',
+            ],
         ];
 
         foreach ($permissions as $permission) {

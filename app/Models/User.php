@@ -31,7 +31,6 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
-        'meeting_id',
         'active_status'
     ];
 
@@ -58,5 +57,15 @@ class User extends Authenticatable
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+
+    public function userMeeting()
+    {
+        return $this->hasMany(UserMeeting::class, 'user_id', 'id');
+    }
+
+    public function userElectionMeeting()
+    {
+        return $this->hasMany(UserElectionMeeting::class, 'user_id', 'id');
     }
 }

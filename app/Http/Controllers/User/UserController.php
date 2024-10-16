@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Meeting;
+use App\Models\ElectionMeeting;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserElectionMeeting;
+use App\Models\UserMeeting;
 
 class UserController extends Controller
 {
@@ -30,7 +33,9 @@ class UserController extends Controller
 
         $meetings = Meeting::get();
 
-        return view('user.users')->with(['users' => $users, 'roles' => $roles, 'meetings' => $meetings]);
+        $electionMeetings = ElectionMeeting::get();
+
+        return view('user.users')->with(['users' => $users, 'roles' => $roles, 'meetings' => $meetings, 'electionMeetings' => $electionMeetings]);
     }
 
     /**
@@ -54,6 +59,26 @@ class UserController extends Controller
             $input['active_status'] = $request->active_status;
             $user = User::create(Arr::only($input, Auth::user()->getFillable()));
             DB::table('model_has_roles')->insert(['role_id' => $input['role'], 'model_type' => 'App\Models\User', 'model_id' => $user->id]);
+
+            if ($request->role_id == 7) {
+                if (isset($request->election_meeting_id)) {
+                    for ($i = 0; $i < count($request->election_meeting_id); $i++) {
+                        UserElectionMeeting::create([
+                            'user_id' => $user->id,
+                            'election_meeting_id' => $request->election_meeting_id
+                        ]);
+                    }
+                }
+
+                if (isset($request->meeting_id)) {
+                    for ($i = 0; $i < count($request->meeting_id); $i++) {
+                        UserMeeting::create([
+                            'user_id' => $user->id,
+                            'meeting_id' => $request->meeting_id
+                        ]);
+                    }
+                }
+            }
             DB::commit();
             return response()->json(['success' => 'User created successfully!']);
         } catch (\Exception $e) {
@@ -104,11 +129,40 @@ class UserController extends Controller
                 <span class="text-danger is-invalid department_id_err"></span>';
             }
 
+            $meetingHtml = "";
+            $electionMeetingHtml = "";
+            if ($user->roles[0]->id == 7) {
+                $userMeetings = UserMeeting::where('user_id', $user->id)->pluck('meeting_id')->toArray();
+                $meetings = Meeting::select('id', 'name')->get();
+
+                foreach ($meetings as $meeting) {
+                    $selected = "";
+                    if (in_array($meeting->id, $userMeetings)) {
+                        $selected = "selected";
+                    }
+                    $meetingHtml .= '<option ' . $selected . ' value="' . $meeting->id . '">' . $meeting->name . '</option>';
+                }
+
+
+                $electionUserMeetings = UserElectionMeeting::where('user_id', $user->id)->pluck('election_meeting_id')->toArray();
+                $electionMeetings = ElectionMeeting::select('id', 'name')->get();
+
+                foreach ($electionMeetings as $electionMeeting) {
+                    $selected = "";
+                    if (in_array($electionMeeting->id, $electionUserMeetings)) {
+                        $selected = "selected";
+                    }
+                    $electionMeetingHtml .= '<option ' . $selected . ' value="' . $electionMeeting->id . '">' . $electionMeeting->name . '</option>';
+                }
+            }
+
             $response = [
                 'result' => 1,
                 'user' => $user,
                 'roleHtml' => $roleHtml,
-                'departmentHtml' => $departmentHtml
+                'departmentHtml' => $departmentHtml,
+                'meetingHtml' => $meetingHtml,
+                'electionMeetingHtml' => $electionMeetingHtml
             ];
         } else {
             $response = ['result' => 0];
@@ -128,6 +182,28 @@ class UserController extends Controller
             $user->update(Arr::only($input, Auth::user()->getFillable()));
             $user->roles()->detach();
             DB::table('model_has_roles')->insert(['role_id' => $input['role'], 'model_type' => 'App\Models\User', 'model_id' => $user->id]);
+
+            UserElectionMeeting::where('user_id', $user->id)->delete();
+            UserMeeting::where('user_id', $user->id)->delete();
+            if ($request->role == 7) {
+                if (isset($request->election_meeting_id)) {
+                    for ($i = 0; $i < count($request->election_meeting_id); $i++) {
+                        UserElectionMeeting::create([
+                            'user_id' => $user->id,
+                            'election_meeting_id' => $request->election_meeting_id[$i]
+                        ]);
+                    }
+                }
+
+                if (isset($request->meeting_id)) {
+                    for ($i = 0; $i < count($request->meeting_id); $i++) {
+                        UserMeeting::create([
+                            'user_id' => $user->id,
+                            'meeting_id' => $request->meeting_id[$i]
+                        ]);
+                    }
+                }
+            }
             DB::commit();
 
             return response()->json(['success' => 'User updated successfully!']);

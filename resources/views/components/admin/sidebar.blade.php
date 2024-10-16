@@ -208,7 +208,7 @@
                 @endcan
 
 
-                @canany(['election-agenda.index', 'election-schedule-meeting.index', 'election-reschedule-meeting.index'])
+                @canany(['election-agenda.index', 'election-suplimentry-agenda.index', 'election-schedule-meeting.index', 'election-reschedule-meeting.index', 'election-reschedule-meeting.index', 'election-proceeding-record.view', 'election-document-history.index', 'report.election-meeting', 'report.election-attendance'])
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('election.*') ? 'active' : '' }}" href="#sidebarElection" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarElection">
                         <i class="bx bx-user-circle"></i>
@@ -220,39 +220,52 @@
                             <li class="nav-item">
                                 <a href="{{ route('election.agenda.index') }}" class="nav-link {{ request()->routeIs('election.agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Agenda(अजेंडा)</a>
                             </li>
+                            @endcan
+
+                            @can('election-suplimentry-agenda.index')
                             <li class="nav-item">
                                 <a href="{{ route('election.suplimentry-agenda.index') }}" class="nav-link {{ request()->routeIs('election.suplimentry-agenda.*') ? 'active' : '' }}" data-key="t-horizontal">Suplimentry Agenda(पूरक अजेंडा)</a>
                             </li>
                             @endcan
                             @can('election-schedule-meeting.index')
-                                <li class="nav-item">
-                                    <a href="{{ route('election.schedule-meeting.index') }}" class="nav-link {{ request()->routeIs('election.schedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Schedule Meeting(बैठकीचे वेळापत्रक)</a>
-                                </li>
+                            <li class="nav-item">
+                                <a href="{{ route('election.schedule-meeting.index') }}" class="nav-link {{ request()->routeIs('election.schedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Schedule Meeting(बैठकीचे वेळापत्रक)</a>
+                            </li>
                             @endcan
                             @can('election-reschedule-meeting.index')
-                                <li class="nav-item">
-                                    <a href="{{ route('election.reschedule-meeting.index') }}" class="nav-link {{ request()->routeIs('election.reschedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Reschedule Meeting(बैठक पुन्हा शेड्यूल करा)</a>
-                                </li>
+                            <li class="nav-item">
+                                <a href="{{ route('election.reschedule-meeting.index') }}" class="nav-link {{ request()->routeIs('election.reschedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Reschedule Meeting(बैठक पुन्हा शेड्यूल करा)</a>
+                            </li>
                             @endcan
                             @can('election-reschedule-meeting.index')
-                                <li class="nav-item">
-                                    <a href="{{ route('election.attendance.index') }}" class="nav-link {{ request()->routeIs('election.attendance.*') ? 'active' : '' }}" data-key="t-horizontal">Attendance(उपस्थिती)</a>
-                                </li>
+                            <li class="nav-item">
+                                <a href="{{ route('election.attendance.index') }}" class="nav-link {{ request()->routeIs('election.attendance.*') ? 'active' : '' }}" data-key="t-horizontal">Attendance(उपस्थिती)</a>
+                            </li>
                             @endcan
 
                             @can('election-proceeding-record.view')
-                                <li class="nav-item">
-                                    <a href="{{ route('election.proceeding-record.index') }}" class="nav-link {{ request()->routeIs('election.proceeding-record.*') ? 'active' : '' }}" data-key="t-horizontal">Proceeding Records(कार्यवाही रेकॉर्ड)</a>
-                                </li>
+                            <li class="nav-item">
+                                <a href="{{ route('election.proceeding-record.index') }}" class="nav-link {{ request()->routeIs('election.proceeding-record.*') ? 'active' : '' }}" data-key="t-horizontal">Proceeding Records(कार्यवाही रेकॉर्ड)</a>
+                            </li>
                             @endcan
 
+                            @can('election-document-history.index')
+                            <li class="nav-item">
+                                <a href="{{ route('election.document-history.index') }}" class="nav-link {{ request()->routeIs('election.document-history.*') ? 'active' : '' }}" data-key="t-horizontal">Document History(दस्तऐवज इतिहास)</a>
+                            </li>
+                            @endcan
 
+                            @can('report.election-meeting')
                             <li class="nav-item">
                                 <a href="{{ route('election.report.schedule-meeting') }}" class="nav-link {{ request()->routeIs('election.report.schedule-meeting') ? 'active' : '' }} {{ request()->routeIs('election.report.schedule-meeting.*') ? 'active' : '' }}" data-key="t-horizontal">Election Meeting Report</a>
                             </li>
+                            @endcan
+
+                            @can('report.election-attendance')
                             <li class="nav-item">
                                 <a href="{{ route('election.report.attendance-meeting') }}" class="nav-link {{ request()->routeIs('election.report.attendance-meeting') ? 'active' : '' }}" data-key="t-horizontal">Election Attendance Report</a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
