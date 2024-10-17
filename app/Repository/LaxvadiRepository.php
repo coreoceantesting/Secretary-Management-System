@@ -10,17 +10,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\UserMeeting;
 
 class LaxvadiRepository
 {
     public function index()
     {
         $laxvadi =  Laxvadi::with(['department', 'meeting', 'scheduleMeeting.parentLatestScheduleMeeting', 'laxvadiSubQuestions'])->when(Auth::user()->hasRole('Clerk'), function ($query) {
-            return $query->where('meeting_id', Auth::user()->meeting_id);
+            return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->when(Auth::user()->roles[0]->name == "Department", function ($q) {
-            return $q->where('department_id', Auth::user()->department_id);
-        })->when(Auth::user()->roles[0]->name == "Department", function ($q) {
-            return $q->whereHas('laxvadiSubQuestions', function ($q) {
+            return $q->where('department_id', Auth::user()->department_id)->whereHas('laxvadiSubQuestions', function ($q) {
                 $q->where('is_sended', 1);
             });
         })->latest()->get();
@@ -132,7 +131,9 @@ class LaxvadiRepository
             'is_meeting_reschedule' => 0,
             'is_meeting_completed' => 0,
             'is_meeting_cancel' => 0,
-        ])->get();
+        ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+        })->get();
     }
 
     public function getSubQuestions($id)

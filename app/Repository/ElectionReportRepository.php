@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Models\ElectionAttendance;
 use App\Models\ElectionScheduleMeeting;
+use App\Models\UserElectionMeeting;
+use Illuminate\Support\Facades\Auth;
 
 class ElectionReportRepository
 {
@@ -20,6 +22,8 @@ class ElectionReportRepository
                 return $q->where('is_meeting_completed', 1);
             else
                 return $q->where('is_meeting_cancel', 1);
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
         })
             ->latest()->get();
 
@@ -40,6 +44,8 @@ class ElectionReportRepository
         })->with(['electionScheduleMeeting.electionAgenda', 'electionMeeting'])
             ->when(isset($request->schedule_meeting_id) && $request->schedule_meeting_id != '', function ($q) use ($request) {
                 return $q->where('election_schedule_meeting_id', $request->schedule_meeting_id);
+            })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
             })
             ->get();
 

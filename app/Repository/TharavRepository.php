@@ -9,6 +9,7 @@ use App\Models\Tharav;
 use App\Models\AssignScheduleMeetingDepartment;
 use App\Models\ScheduleMeeting;
 use App\Models\AssignDepartmentToTharav;
+use App\Models\UserMeeting;
 
 class TharavRepository
 {
@@ -16,16 +17,12 @@ class TharavRepository
     {
         $tharav = Tharav::with(['meeting', 'assignTharavDepartment.department', 'scheduleMeeting'])
             ->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->where('meeting_id', Auth::user()->meeting_id);
-            });;
-
-        if (Auth::user()->hasRole('Department')) {
-            $tharav = $tharav->whereHas('assignTharavDepartment', function ($q) {
-                $q->where('department_id', Auth::user()->department_id);
-            });
-        }
-
-        $tharav = $tharav->latest()->get();
+                return $query->where('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+            })->when(Auth::user()->hasRole('Department'), function ($q) {
+                $q->whereHas('assignTharavDepartment', function ($q) {
+                    $q->where('department_id', Auth::user()->department_id);
+                });
+            })->latest()->get();
 
         return $tharav;
     }

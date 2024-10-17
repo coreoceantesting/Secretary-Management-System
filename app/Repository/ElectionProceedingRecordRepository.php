@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ProceedingRecordMail;
+use App\Models\UserElectionMeeting;
 
 class ElectionProceedingRecordRepository
 {
@@ -17,7 +18,7 @@ class ElectionProceedingRecordRepository
     {
         $proceddingRecords = ElectionProceedingRecord::with(['electionMeeting', 'electionScheduleMeeting'])
             ->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->where('election_meeting_id', Auth::user()->meeting_id);
+                return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
             })->latest()->get();
 
         return $proceddingRecords;
@@ -31,7 +32,9 @@ class ElectionProceedingRecordRepository
             'is_meeting_cancel' => 0,
             'is_record_proceeding' => 0,
             'election_meeting_id' => $id
-        ])->get();
+        ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+        })->get();
     }
 
     public function store($request)

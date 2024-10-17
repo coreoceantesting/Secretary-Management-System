@@ -13,12 +13,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Mail\ScheduleMeetingMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+use App\Models\UserElectionMeeting;
 
 class ElectionScheduleMeetingController extends Controller
 {
     public function index()
     {
-        $agendas = ElectionAgenda::where('is_meeting_schedule', 0)->get();
+        $agendas = ElectionAgenda::where('is_meeting_schedule', 0)
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+            })->get();
 
         $meetings = ElectionMeeting::get();
 
@@ -28,7 +33,11 @@ class ElectionScheduleMeetingController extends Controller
             ->whereNull('election_schedule_meeting_id')
             ->where([
                 'is_meeting_reschedule' => 0,
-            ])->whereDate('date', '>=', date('Y-m-d'))->latest()->get();
+            ])
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+            })
+            ->whereDate('date', '>=', date('Y-m-d'))->latest()->get();
 
         return view('election.schedule-meeting.index')->with([
             'agendas' => $agendas,
@@ -40,7 +49,6 @@ class ElectionScheduleMeetingController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         if ($request->ajax()) {
             try {
                 $check = ElectionScheduleMeeting::whereDate('date', date('Y-m-d', strtotime($request->date)))

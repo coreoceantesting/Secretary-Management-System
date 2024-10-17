@@ -15,6 +15,8 @@ use App\Models\AssignScheduleMeetingDepartment;
 use App\Models\ElectionProceedingRecord;
 use App\Http\Requests\ElectionProceedingRecordRequest;
 use PDF;
+use App\Models\UserElectionMeeting;
+use Illuminate\Support\Facades\Auth;
 
 class ElectionProceedingRecordController extends Controller
 {
@@ -33,6 +35,8 @@ class ElectionProceedingRecordController extends Controller
 
         $meetings = ElectionMeeting::whereHas('electionScheduleMeeting', function ($q) {
             return $q->where('is_meeting_completed', 1)->where('is_record_proceeding', 0);
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
         })->get();
 
         return view('election.proceeding-record.index')->with([

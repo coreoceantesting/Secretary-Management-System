@@ -76,7 +76,7 @@
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
                                 <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-multiple col-sm-12" multiple id="meeting_id" name="meeting_id[]">
+                                <select class="js-example-basic-multiple form-select select2-hidden-accessible" multiple id="meeting_id1" name="meeting_id[]">
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
                                     @endforeach
@@ -86,7 +86,7 @@
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
                                 <label class="col-form-label" for="election_meeting_id">Select Election Meeting <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-multiple col-sm-12" multiple id="election_meeting_id" name="election_meeting_id[]">
+                                <select class="js-example-basic-multiple col-sm-12" multiple id="election_meeting_id1" name="election_meeting_id[]">
                                     @foreach($electionMeetings as $electionMeeting)
                                     <option value="{{ $electionMeeting->id }}">{{ $electionMeeting->name }}</option>
                                     @endforeach
@@ -226,7 +226,7 @@
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
                                 <label class="col-form-label" for="election_meeting_id">Select Election Meeting <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-multiple col-sm-12" multiple id="election_meeting_id" name="election_meeting_id[]">
+                                <select class="js-example-basic-multiple" multiple id="election_meeting_id" name="election_meeting_id[]">
                                     @foreach($electionMeetings as $electionMeeting)
                                     <option value="{{ $electionMeeting->id }}">{{ $electionMeeting->name }}</option>
                                     @endforeach

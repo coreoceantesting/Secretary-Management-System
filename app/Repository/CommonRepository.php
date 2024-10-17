@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\ScheduleMeeting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserMeeting;
 
 class CommonRepository
 {
@@ -19,7 +20,9 @@ class CommonRepository
 
     public function getMeeting()
     {
-        return Meeting::get();
+        return Meeting::when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+        })->get();
     }
 
     public function getRescheduleMeeting()
@@ -30,6 +33,8 @@ class CommonRepository
                 'is_meeting_reschedule' => 0,
                 'is_meeting_completed' => 0
             ]);
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->get();
     }
 
@@ -37,6 +42,8 @@ class CommonRepository
     {
         $meeting = Meeting::whereHas('scheduleMeeting', function ($q) {
             return $q->where('is_meeting_completed', 1)->where('is_record_proceeding', 0);
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->get();
 
         return $meeting;
@@ -50,6 +57,8 @@ class CommonRepository
                 'is_record_proceeding' => 1,
                 'is_tharav_uploaded' => 0,
             ]);
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->get();
 
         return $meeting;
@@ -59,6 +68,8 @@ class CommonRepository
     {
         $meeting = Meeting::whereHas('scheduleMeeting', function ($q) {
             return $q->whereDate('date', '>=', date('Y-m-d', strtotime('+7 days')));
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->get();
 
         return $meeting;
@@ -66,13 +77,13 @@ class CommonRepository
 
     public function getNotScheduleMeetingAgenda($id = null)
     {
-        $agenda = Agenda::where('is_meeting_schedule', 0)->where('is_mayor_view', 1);
-
-        if ($id) {
-            $agenda = $agenda->orWhere('id', $id);
-        }
-
-        $agenda = $agenda->get();
+        $agenda = Agenda::where('is_meeting_schedule', 0)
+            ->where('is_mayor_view', 1)
+            ->when($id, function ($q) use ($id) {
+                $q->orWhere('id', $id);
+            })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+            })->get();
 
         return $agenda;
     }

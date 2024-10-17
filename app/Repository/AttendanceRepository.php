@@ -10,6 +10,7 @@ use App\Models\SuplimentryAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserMeeting;
 
 class AttendanceRepository
 {
@@ -22,7 +23,7 @@ class AttendanceRepository
                 'is_meeting_cancel' => 0,
                 'is_meeting_completed' => 0
             ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->where('meeting_id', Auth::user()->meeting_id);
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })->get();
     }
 

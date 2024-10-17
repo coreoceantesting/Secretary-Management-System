@@ -6,6 +6,8 @@ use App\Models\Attendance;
 use App\Models\ScheduleMeeting;
 use App\Models\Tharav;
 use App\Models\Question;
+use App\Models\UserMeeting;
+use Illuminate\Support\Facades\Auth;
 
 class ReportRepository
 {
@@ -23,14 +25,18 @@ class ReportRepository
             else
                 return $q->where('is_meeting_cancel', 1);
         })
-            ->latest()->get();
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+            })->latest()->get();
 
         return $scheduleMeeting;
     }
 
     public function viewScheduleMeetingReport($id)
     {
-        return ScheduleMeeting::with(['meeting', 'agenda.assignGoshwaraToAgenda.goshwara.meeting', 'suplimentryAgenda.meeting', 'assignScheduleMeetingDepartment.department', 'proceedingRecord.meeting', 'tharav.meeting'])->where('id', $id)->first();
+        return ScheduleMeeting::with(['meeting', 'agenda.assignGoshwaraToAgenda.goshwara.meeting', 'suplimentryAgenda.meeting', 'assignScheduleMeetingDepartment.department', 'proceedingRecord.meeting', 'tharav.meeting'])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+        })->where('id', $id)->first();
     }
 
     public function attendanceMeetingReport($request)
@@ -42,6 +48,9 @@ class ReportRepository
         })->with(['scheduleMeeting.agenda', 'meeting'])
             ->when(isset($request->schedule_meeting_id) && $request->schedule_meeting_id != '', function ($q) use ($request) {
                 return $q->where('schedule_meeting_id', $request->schedule_meeting_id);
+            })
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })
             ->get();
 
@@ -60,6 +69,8 @@ class ReportRepository
                 return $q->whereDate("date", ">=", $request->from);
             })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
                 return $q->whereDate("date", "<=", $request->to);
+            })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })->get();
     }
 
@@ -73,6 +84,8 @@ class ReportRepository
             })->whereNotNull('response')->orderBy('response_datetime', 'asc')->with(['member']);
         })->when(isset($request->meeting) && $request->meeting != "", function ($q) use ($request) {
             $q->where('meeting_id', $request->meeting);
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->latest()->get();
     }
 }

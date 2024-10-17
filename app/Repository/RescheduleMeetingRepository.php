@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Mail\RescheduleMeetingMail;
 use App\Models\Meeting;
 use Illuminate\Support\Facades\Mail;
+use App\Models\UserMeeting;
 
 class RescheduleMeetingRepository
 {
@@ -24,7 +25,7 @@ class RescheduleMeetingRepository
                 'is_meeting_completed' => 0,
                 'is_meeting_cancel' => 0
             ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->where('meeting_id', Auth::user()->meeting_id);
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })->whereDate('date', '>=', date('Y-m-d'));
 
         if (Auth::user()->hasRole('Department')) {
@@ -39,7 +40,9 @@ class RescheduleMeetingRepository
 
     public function getScheduleMeeting($meetingId)
     {
-        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0, 'is_meeting_cancel' => 0])->select('id', 'datetime', 'unique_id')->get();
+        return ScheduleMeeting::where(['meeting_id' => $meetingId, 'is_meeting_reschedule' => 0, 'is_meeting_completed' => 0, 'is_meeting_cancel' => 0])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+        })->select('id', 'datetime', 'unique_id')->get();
     }
 
     public function getEditScheduleMeeting($meetingId, $scheduleMeetingId, $id)
@@ -48,6 +51,8 @@ class RescheduleMeetingRepository
             ->where('id', '!=', $id)
             ->where(function ($q) use ($scheduleMeetingId) {
                 return $q->where('is_meeting_reschedule', 0)->orWhere('id', $scheduleMeetingId);
+            })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })
             ->select('id', 'datetime')
             ->get();
@@ -58,7 +63,9 @@ class RescheduleMeetingRepository
         return ScheduleMeeting::with(['meeting', 'agenda'])->where([
             'is_meeting_cancel' => 0,
             'is_meeting_completed' => 0
-        ])->where('id', $scheduleMeetingId)->first();
+        ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+        })->where('id', $scheduleMeetingId)->first();
     }
 
     public function assignScheduleMeetingDepartments($id)

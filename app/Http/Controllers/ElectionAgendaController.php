@@ -6,15 +6,22 @@ use Illuminate\Http\Request;
 use App\Models\ElectionAgenda;
 use App\Models\ElectionMeeting;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Models\UserElectionMeeting;
 
 class ElectionAgendaController extends Controller
 {
     public function index()
     {
-        $meetings = ElectionMeeting::all();
+        $meetings = ElectionMeeting::when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+        })->all();
 
-        $electionAgendas = ElectionAgenda::with(['meeting'])->get();
-        // return $electionAgendas;
+        $electionAgendas = ElectionAgenda::with(['meeting'])
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+            })->get();
+
         return view('election.agenda.index')->with([
             'electionAgendas' => $electionAgendas,
             'meetings' => $meetings

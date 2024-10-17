@@ -11,6 +11,7 @@ use App\Models\ElectionSuplimentryAgenda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserElectionMeeting;
 
 class ElectionAttendanceRepository
 {
@@ -21,7 +22,9 @@ class ElectionAttendanceRepository
                 'is_meeting_reschedule' => 0,
                 'is_meeting_cancel' => 0,
                 'is_meeting_completed' => 0
-            ])->get();
+            ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+            })->get();
     }
 
     public function store($request)
@@ -94,7 +97,6 @@ class ElectionAttendanceRepository
 
 
             if (isset($request->close_meeting)) {
-                // Log::info('d');
                 ElectionScheduleMeeting::where('id', $request->election_schedule_meeting_id)->update([
                     'is_meeting_completed' => 1,
                     'meeting_end_date' => ($request->meeting_end_date) ? date('Y-m-d', strtotime($request->meeting_end_date)) : null,

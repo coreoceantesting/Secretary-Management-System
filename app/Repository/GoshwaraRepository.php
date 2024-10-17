@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Goshwara;
 use App\Models\Meeting;
+use App\Models\UserMeeting;
 
 class GoshwaraRepository
 {
@@ -18,7 +19,7 @@ class GoshwaraRepository
         })->when(isset($request->to) && $request->to != "", function ($q) use ($request) {
             return $q->whereDate('date', '<=', date('Y-m-d', strtotime($request->to)));
         })->when(Auth::user()->hasRole('Clerk'), function ($query) {
-            return $query->where('meeting_id', Auth::user()->meeting_id);
+            return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->where('is_sent', 1)->with(['meeting', 'department', 'assignGoshwaraToAgenda']);
 
         if (Auth::user()->roles[0]->name == "Department")

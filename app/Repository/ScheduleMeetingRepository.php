@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\ScheduleMeetingMail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\UserMeeting;
 
 class ScheduleMeetingRepository
 {
@@ -25,7 +26,7 @@ class ScheduleMeetingRepository
                 'is_meeting_completed' => 0,
                 'is_meeting_cancel' => 0
             ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->where('meeting_id', Auth::user()->meeting_id);
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })->whereDate('date', '>=', date('Y-m-d'));
 
         if (Auth::user()->hasRole('Department')) {

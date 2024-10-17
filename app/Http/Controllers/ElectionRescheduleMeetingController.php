@@ -11,14 +11,17 @@ use App\Models\ElectionAssignScheduleMeetingDepartment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Mail\RescheduleMeetingMail;
-use App\Models\Meeting;
+use App\Models\UserElectionMeeting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class ElectionRescheduleMeetingController extends Controller
 {
     public function index()
     {
-        $agendas = ElectionAgenda::where('is_meeting_schedule', 0)->get();
+        $agendas = ElectionAgenda::where('is_meeting_schedule', 0)->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+        })->get();
 
         $meetings = ElectionMeeting::whereHas('electionScheduleMeeting', function ($q) {
             return $q->where([
@@ -26,6 +29,8 @@ class ElectionRescheduleMeetingController extends Controller
                 'is_meeting_reschedule' => 0,
                 'is_meeting_completed' => 0
             ]);
+        })->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
         })->get();
 
         $departments = Department::where('is_home_department', 0)->get();
@@ -36,8 +41,12 @@ class ElectionRescheduleMeetingController extends Controller
                 'is_meeting_reschedule' => 0,
                 'is_meeting_completed' => 0,
                 'is_meeting_cancel' => 0
-            ])->whereDate('date', '>=', date('Y-m-d'))->latest()->get();
-        // return $rescheduleMeetings;
+            ])
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+            })
+            ->whereDate('date', '>=', date('Y-m-d'))->latest()->get();
+
         return view('election.reschedule-meeting.index')->with([
             'agendas' => $agendas,
             'meetings' => $meetings,
@@ -48,7 +57,6 @@ class ElectionRescheduleMeetingController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         if ($request->ajax()) {
             try {
                 $check = ElectionScheduleMeeting::whereDate('date', date('Y-m-d', strtotime($request->date)))

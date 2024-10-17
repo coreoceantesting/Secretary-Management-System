@@ -23,8 +23,6 @@ class AgendaController extends Controller
     {
         $agendas = $this->agendaRepository->index();
 
-        // $goshwaras = $this->agendaRepository->getNotAssignedGoshwara();
-
         $meetings = $this->agendaRepository->getMeetingsNotAssignGoshwara();
 
         return view('agenda.index')->with([

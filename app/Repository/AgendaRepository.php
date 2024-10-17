@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Meeting;
+use App\Models\UserMeeting;
 use PDF;
 
 class AgendaRepository
@@ -18,7 +19,7 @@ class AgendaRepository
     {
         return Agenda::with(['meeting', 'assignGoshwaraToAgenda.goshwara.department'])
             ->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->where('meeting_id', Auth::user()->meeting_id);
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })->when(Auth::user()->hasRole('Department'), function ($query) {
                 return $query->whereHas('assignGoshwaraToAgenda.goshwara', function ($q) {
                     return $q->where('department_id', Auth::user()->id);
@@ -51,7 +52,7 @@ class AgendaRepository
                 'is_mayor_selected' => 0,
             ]);
         })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
-            return $q->where("id", Auth::user()->meeting_id);
+            return $q->where("id", UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->latest()->get();
     }
 
@@ -63,7 +64,7 @@ class AgendaRepository
                 'is_mayor_selected' => 0,
             ])->doesntHave('assignGoshwaraToAgenda');
         })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
-            return $q->where("id", Auth::user()->meeting_id);
+            return $q->whereIn("id", UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->latest()->get();
     }
 

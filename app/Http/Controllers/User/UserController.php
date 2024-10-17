@@ -65,7 +65,7 @@ class UserController extends Controller
                     for ($i = 0; $i < count($request->election_meeting_id); $i++) {
                         UserElectionMeeting::create([
                             'user_id' => $user->id,
-                            'election_meeting_id' => $request->election_meeting_id
+                            'election_meeting_id' => $request->election_meeting_id[$i]
                         ]);
                     }
                 }
@@ -74,7 +74,7 @@ class UserController extends Controller
                     for ($i = 0; $i < count($request->meeting_id); $i++) {
                         UserMeeting::create([
                             'user_id' => $user->id,
-                            'meeting_id' => $request->meeting_id
+                            'meeting_id' => $request->meeting_id[$i]
                         ]);
                     }
                 }
