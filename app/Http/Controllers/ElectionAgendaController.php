@@ -14,7 +14,7 @@ class ElectionAgendaController extends Controller
     public function index()
     {
         $meetings = ElectionMeeting::when(Auth::user()->hasRole('Clerk'), function ($query) {
-            return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+            return $query->whereIn('id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
         })->get();
 
         $electionAgendas = ElectionAgenda::with(['meeting'])
