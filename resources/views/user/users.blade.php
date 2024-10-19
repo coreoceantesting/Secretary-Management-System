@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
-                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="meeting_id">Select Meeting</label>
                                 <select class="js-example-basic-multiple form-select select2-hidden-accessible" multiple id="meeting_id1" name="meeting_id[]">
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -85,7 +85,7 @@
                             </div>
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
-                                <label class="col-form-label" for="election_meeting_id">Select Election Meeting <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="election_meeting_id">Select Election Meeting</label>
                                 <select class="js-example-basic-multiple col-sm-12" multiple id="election_meeting_id1" name="election_meeting_id[]">
                                     @foreach($electionMeetings as $electionMeeting)
                                     <option value="{{ $electionMeeting->id }}">{{ $electionMeeting->name }}</option>
@@ -215,7 +215,7 @@
                             </div>
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
-                                <label class="col-form-label" for="meeting_id">Select Meeting <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="meeting_id">Select Meeting</label>
                                 <select class="js-example-basic-multiple col-sm-12" multiple id="meeting_id" name="meeting_id[]">
                                     @foreach($meetings as $meeting)
                                     <option value="{{ $meeting->id }}">{{ $meeting->name }}</option>
@@ -225,7 +225,7 @@
                             </div>
 
                             <div class="col-md-4 mt-3 d-none selectMeeting">
-                                <label class="col-form-label" for="election_meeting_id">Select Election Meeting <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="election_meeting_id">Select Election Meeting</label>
                                 <select class="js-example-basic-multiple" multiple id="election_meeting_id" name="election_meeting_id[]">
                                     @foreach($electionMeetings as $electionMeeting)
                                     <option value="{{ $electionMeeting->id }}">{{ $electionMeeting->name }}</option>
@@ -466,7 +466,27 @@
 {{-- Add --}}
 <script>
     $("#addForm").submit(function(e) {
-        e.preventDefault();
+        let clerkRole = $(this).find('.selectRole').find(":selected").text();
+        
+        if(clerkRole == "Clerk"){
+            let meetingSelected = $('#meeting_id1').val().length > 0; // Check if any meeting is selected
+            let electionMeetingSelected = $('#election_meeting_id1').val().length > 0; // Check if any election meeting is selected
+
+            if (!meetingSelected && !electionMeetingSelected) {
+                // Neither field is selected, show error
+                $('.meeting_id_err').text('Please select at least one meeting or election meeting.');
+                $('.election_meeting_id_err').text('Please select at least one meeting or election meeting.');
+                e.preventDefault(); // Prevent form submission if validation fails
+                return;
+            } else {
+                // Clear error if one is selected
+                $('.meeting_id_err').text('');
+                $('.election_meeting_id_err').text('');
+            }
+        }
+
+        e.preventDefault(); // Prevent form submission
+
         $("#addSubmit").prop('disabled', true);
 
         var formdata = new FormData(this);
@@ -650,7 +670,7 @@
                         $("#editForm .selectMeeting").addClass('d-none');
                         $('body').find('.selectDepartment').removeClass('d-none');
                         $('body').find('.selectDepartment').html(data.departmentHtml)
-                    }else if(data.user.roles[0].id == 7){
+                    }else if(data.user.roles[0].name == "Clerk"){
                         $("#editForm .selectMeeting").removeClass('d-none');
                         $("#editForm select[name='meeting_id[]']").html(data.meetingHtml);
                         $("#editForm select[name='election_meeting_id[]']").html(data.electionMeetingHtml);
@@ -685,6 +705,26 @@
 <script>
     $(document).ready(function() {
         $("#editForm").submit(function(e) {
+            let clerkRole = $(this).find('.selectRole').find(":selected").text();
+        
+            if(clerkRole == "Clerk"){
+                let meetingSelected = $('#meeting_id').val().length > 0; // Check if any meeting is selected
+                let electionMeetingSelected = $('#election_meeting_id').val().length > 0; // Check if any election meeting is selected
+
+                if (!meetingSelected && !electionMeetingSelected) {
+                    // Neither field is selected, show error
+                    $('.meeting_id_err').text('Please select at least one meeting or election meeting.');
+                    $('.election_meeting_id_err').text('Please select at least one meeting or election meeting.');
+                    e.preventDefault(); // Prevent form submission if validation fails
+                    return;
+                } else {
+                    // Clear error if one is selected
+                    $('.meeting_id_err').text('');
+                    $('.election_meeting_id_err').text('');
+                }
+            }
+
+
             e.preventDefault();
             $("#editSubmit").prop('disabled', true);
             var formdata = new FormData(this);

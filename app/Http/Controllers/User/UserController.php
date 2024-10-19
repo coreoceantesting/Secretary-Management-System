@@ -51,6 +51,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        // dd($request->all());
         try {
             DB::beginTransaction();
             $input = $request->validated();
@@ -60,7 +61,7 @@ class UserController extends Controller
             $user = User::create(Arr::only($input, Auth::user()->getFillable()));
             DB::table('model_has_roles')->insert(['role_id' => $input['role'], 'model_type' => 'App\Models\User', 'model_id' => $user->id]);
 
-            if ($request->role_id == 7) {
+            if ($user->hasRole('Clerk')) {
                 if (isset($request->election_meeting_id)) {
                     for ($i = 0; $i < count($request->election_meeting_id); $i++) {
                         UserElectionMeeting::create([
@@ -185,7 +186,7 @@ class UserController extends Controller
 
             UserElectionMeeting::where('user_id', $user->id)->delete();
             UserMeeting::where('user_id', $user->id)->delete();
-            if ($request->role == 7) {
+            if ($user->hasRole('Clerk')) {
                 if (isset($request->election_meeting_id)) {
                     for ($i = 0; $i < count($request->election_meeting_id); $i++) {
                         UserElectionMeeting::create([
