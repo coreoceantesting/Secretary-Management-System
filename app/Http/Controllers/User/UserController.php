@@ -51,7 +51,6 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        // dd($request->all());
         try {
             DB::beginTransaction();
             $input = $request->validated();

@@ -29,7 +29,6 @@ class ElectionAttendanceController extends Controller
 
     public function store(AttendanceRequest $request)
     {
-        // dd($request->all());
         $attendance = $this->electionAttendanceRepository->store($request);
 
         if ($attendance) {
@@ -66,7 +65,6 @@ class ElectionAttendanceController extends Controller
     public function saveSingleMark(Request $request)
     {
         if ($request->ajax()) {
-            // dd($request->all());
             $attendance = $this->electionAttendanceRepository->updateSingleMemberAttandance($request);
 
             if ($attendance) {
