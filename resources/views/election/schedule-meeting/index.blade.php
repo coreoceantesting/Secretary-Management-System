@@ -81,7 +81,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                @can('schedule_meeting.create')
+                @can('election-schedule-meeting.create')
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6">
@@ -122,12 +122,12 @@
                                         <td>{{ $electionScheduleMeeting->place }}</td>
 
                                         <td>
-                                            @can('schedule_meeting.show')
+                                            @can('election-schedule-meeting.show')
                                             <a href="{{ route('election.schedule-meeting.show', $electionScheduleMeeting->id) }}" class="btn text-secondary px-1 py-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                             </a>
                                             @endcan
-                                            @can('schedule_meeting.cancel')
+                                            @can('election-schedule-meeting.cancel')
                                             @if(!$electionScheduleMeeting->is_meeting_cancel)
                                             <button class="btn btn-primary btn-sm text-cancel px-2 py-1" title="Cancel Election Schedule Meeting"  data-bs-toggle="modal" data-bs-target="#signupModals" data-id="{{ $electionScheduleMeeting->id }}">Cancel Meeting </button>
                                             @else
