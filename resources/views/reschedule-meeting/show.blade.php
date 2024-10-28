@@ -59,7 +59,7 @@
                                             <td>{{ $rescheduleMeeting->reschedule_reason }}</td>
                                         </tr>
                                         @if(!$rescheduleMeeting->is_meeting_cancel)
-                                        @if (Auth::user()->hasRole('Home Department'))
+                                        @if (Auth::user()->hasRole(['Home Department', 'Clerk']))
                                         <tr>
                                             <th>Go to attendance</th>
                                             <td>

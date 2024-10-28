@@ -102,7 +102,7 @@ class ElectionSuplimentryAgendaRepository
         return ElectionMeeting::whereHas('electionScheduleMeeting', function ($q) {
             return $q->where(['is_meeting_completed' => 0, 'is_meeting_reschedule' => 0, 'is_meeting_cancel' => 0]);
         })->when(Auth::user()->hasRole('Clerk'), function ($query) {
-            return $query->whereIn('election_meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('id')->toArray());
+            return $query->whereIn('id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('id')->toArray());
         })->get();
     }
 

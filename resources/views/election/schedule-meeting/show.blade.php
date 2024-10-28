@@ -56,7 +56,7 @@
                                             <td>{{ $scheduleMeeting->place }}</td>
                                         </tr>
                                         @if(!$scheduleMeeting->is_meeting_cancel)
-                                        @if (Auth::user()->hasRole('Home Department'))
+                                        @if (Auth::user()->hasRole(['Home Department', 'Clerk']))
                                         <tr>
                                             <th>Go to attendance</th>
                                             <td>
@@ -66,7 +66,7 @@
 
                                                     $daysleft = abs(round($diff / 86400));
                                                     @endphp
-                                                    @if($diff < 0)
+                                                    @if($diff <= 0)
                                                     <a href="{{ route('attendance.show', $scheduleMeeting->id) }}" class="btn btn-primary btn-sm">Attendance</a>
                                                     @else
                                                     <span style="color:#308f18!important">{{ $daysleft }} day left for meeting</span>
