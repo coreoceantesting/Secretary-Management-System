@@ -116,7 +116,7 @@
                                         <td>{{ ($tharav->remark) ? $tharav->remark : '-' }}</td>
                                         <td><a target="_blank" href="{{ asset('storage/'.$tharav->file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         <td>
-                                            @if(Auth::user()->hasRole('Home Department'))
+                                            @if(Auth::user()->hasRole(['Home Department', 'Clerk']))
                                                 <button class="btn btn-primary askQuestionBtn btn-sm" data-id="{{ $tharav->id }}">Ask Question</button>
                                             @endif
                                             <button class="btn btn-success viewResponseBtn btn-sm" data-id="{{ $tharav->id }}">View Question / Response</button>

@@ -235,7 +235,7 @@
                                         <td>{{ ($question->scheduleMeeting?->place) ? $question->scheduleMeeting?->place : '-' }}</td>
                                         <td><a href="{{ asset('storage/'.$question->question_file) }}" class="btn btn-sm btn-primary" target="_blank">View File</a></td>
                                         <td>
-                                            @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
+                                            @if(Auth::user()->hasRole(['Home Department', 'Clerk', 'Department']))
                                             <a href="{{ route('question.show', $question->id) }}" class="btn btn-sm @if($question->subQuestions->whereNotNull('response')->count() > 0 || $question->response_file != "") btn-success @else btn-primary @endif px-2 py-1" title="Response Question" data-id="{{ $question->id }}">
                                                 @can('question.response')
                                                     @if($question->subQuestions->whereNotNull('response')->count() > 0 || $question->response_file != "") Responded @else Response @endif

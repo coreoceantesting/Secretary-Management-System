@@ -243,7 +243,7 @@
                                         <td>{{ ($laxvadi->scheduleMeeting?->place) ? $laxvadi->scheduleMeeting?->place : '-' }}</td>
                                         <td><a href="{{ asset('storage/'.$laxvadi->question_file) }}" class="btn btn-sm btn-primary">View File</a></td>
                                         <td>
-                                            @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
+                                            @if(Auth::user()->hasRole(['Home Department', 'Clerk', 'Department']))
                                             <a href="{{ route('laxvadi.show', $laxvadi->id) }}" class="btn btn-sm @if($laxvadi->laxvadiSubQuestions->whereNotNull('response')->count() > 0 || $laxvadi->response_file != "") btn-success @else btn-primary @endif px-2 py-1" title="Response Question" data-id="{{ $laxvadi->id }}">
                                                 @can('laxvadi.response')
                                                     @if($laxvadi->laxvadiSubQuestions->whereNotNull('response')->count() > 0 || $laxvadi->response_file != "") Responded @else Response @endif

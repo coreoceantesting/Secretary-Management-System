@@ -68,7 +68,7 @@
                                             <th>Response</th>
                                             @endif
 
-                                            @if(Auth::user()->hasRole('Home Department'))
+                                            @if(Auth::user()->hasRole(['Home Department', 'Clerk']))
                                             <th>Status</th>
                                             @endif
                                             <th>Action</th>
@@ -84,7 +84,7 @@
                                             <td>
                                                 {{ $subQuestion?->member?->name }}
                                             </td>
-                                            @if(Auth::user()->hasRole('Department') || Auth::user()->hasRole('Home Department'))
+                                            @if(Auth::user()->hasRole(['Home Department', 'Department', 'Clerk']))
                                             <td>
                                                 @can('laxvadi.response')
                                                     @if($subQuestion->response == "")
@@ -99,7 +99,7 @@
                                                 @endif
                                             </td>
                                             @endif
-                                            @if(Auth::user()->hasRole('Home Department'))
+                                            @if(Auth::user()->hasRole(['Home Department', 'Clerk']))
                                             <td>
                                                 @if($subQuestion->is_mayor_selected == "0")
                                                 Hold By Mayor
@@ -115,7 +115,7 @@
                                                     @endcan
                                                 @elseif(Auth::user()->hasRole('Mayor') && $subQuestion->is_mayor_selected == "0")
                                                     <button type="button" class="btn btn-sm btn-primary acceptQuestion">Accept</button>
-                                                @elseif(Auth::user()->hasRole('Home Department') && $subQuestion->is_mayor_selected == "1" && $subQuestion->is_sended == "0")
+                                                @elseif(Auth::user()->hasRole(['Home Department', 'Clerk']) && $subQuestion->is_mayor_selected == "1" && $subQuestion->is_sended == "0")
                                                     <button type="button" class="btn btn-sm btn-primary sendQuestion">Send</button>
                                                 @else
                                                 -
