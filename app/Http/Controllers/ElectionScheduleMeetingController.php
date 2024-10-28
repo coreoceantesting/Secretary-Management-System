@@ -22,7 +22,7 @@ class ElectionScheduleMeetingController extends Controller
     {
         $agendas = ElectionAgenda::where('is_meeting_schedule', 0)
             ->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->whereIn('id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
+                return $query->whereIn('meeting_id', UserElectionMeeting::where('user_id', Auth::user()->id)->pluck('election_meeting_id')->toArray());
             })->get();
 
         $meetings = ElectionMeeting::get();
