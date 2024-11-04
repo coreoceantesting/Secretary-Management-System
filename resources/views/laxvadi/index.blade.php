@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Laxvebhi(लक्षवडी)</x-slot>
-    <x-slot name="heading">Laxvebhi(लक्षवडी)</x-slot>
+    <x-slot name="title">Laxvedhi(लक्षवेधी)</x-slot>
+    <x-slot name="heading">Laxvedhi(लक्षवेधी)</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
     <style>
@@ -23,7 +23,7 @@
                     @csrf
 
                     <div class="card-header">
-                        <h4 class="card-title">Add Laxvebhi(लक्षवडी जोडा)</h4>
+                        <h4 class="card-title">Add Laxvedhi(लक्षवेधी जोडा)</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
@@ -40,7 +40,7 @@
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload laxvadi File(लक्षवडी फाइल अपलोड करा) <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="uploadfile">Upload laxvadi File(लक्षवेधी फाइल अपलोड करा) <span class="text-danger">*</span></label>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file" required>
                                 <span class="text-danger is-invalid uploadfile_err"></span>
                             </div>
@@ -60,7 +60,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Laxvebhi</th>
+                                    <th>Laxvedhi</th>
                                     <th>Member</th>
                                     <th>Action</th>
                                 </tr>
@@ -68,7 +68,7 @@
                             <tbody id="laxvadiQuestion">
                                 <tr id="row1">
                                     <td>
-                                        <textarea class="form-control" name="question[]" placeholder="Enter Laxvebhi" required></textarea>
+                                        <textarea class="form-control" name="question[]" placeholder="Enter Laxvedhi" required></textarea>
                                     </td>
                                     <td>
                                         <select name="member_id[]" class="form-select" required>
@@ -104,7 +104,7 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Laxvebhi(लक्षवडी संपादित करा)</h4>
+                        <h4 class="card-title">Edit Laxvedhi(लक्षवेधी संपादित करा)</h4>
                     </div>
                     <div class="card-body py-2">
                         <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
@@ -121,7 +121,7 @@
                             </div>
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="uploadfile">Upload Laxvadi File(लक्षवडी फाइल अपलोड करा)</label>
+                                <label class="col-form-label" for="uploadfile">Upload Laxvadi File(लक्षवेधी फाइल अपलोड करा)</label>
                                 <a href="javascript:void(0)" class="btn btn-primary btn-sm d-none uploadfile" target="_blank">View File</a>
                                 <input class="form-control" id="uploadfile" name="uploadfile" type="file">
                                 <span class="text-danger is-invalid uploadfile_err"></span>
@@ -142,7 +142,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Laxvebhi</th>
+                                    <th>Laxvedhi</th>
                                     <th>Member</th>
                                     <th>Action</th>
                                 </tr>
@@ -204,7 +204,7 @@
                                     <th>Meeting No.</th>
                                     <th>Date</th>
                                     <th>Meeting Venue</th>
-                                    <th>Laxvebhi File</th>
+                                    <th>Laxvedhi File</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

@@ -295,7 +295,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('laxvadi.*') ? 'active' : '' }}" href="{{ route('laxvadi.index') }}" >
                         <i class="bx bx-layout"></i>
-                        <span data-key="t-dashboards">Laxvebhi</span>
+                        <span data-key="t-dashboards">Laxvedhi</span>
                     </a>
                 </li>
                 @endcan
