@@ -71,13 +71,13 @@
                             </li>
                             @endcan
 
-                            
+
                             @can('reservation-category.index')
                             <li class="nav-item">
                                 <a href="{{ route('master.reservation-category.index') }}" class="nav-link {{ request()->routeIs('master.reservation-category.*') ? 'active' : '' }}" data-key="t-horizontal">Reservation Category(आरक्षण श्रेणी)</a>
                             </li>
                             @endcan
-                            
+
                             @can('member.view')
                             <li class="nav-item">
                                 <a href="{{ route('master.member.index') }}" class="nav-link {{ request()->routeIs('master.member.*') ? 'active' : '' }}" data-key="t-horizontal">Member(सदस्य)</a>

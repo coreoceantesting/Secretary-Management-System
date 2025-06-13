@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="col-md-4 selectScheduleMeeting d-none"></div>
-                            
+
                             <div class="col-md-4">
                                 <label class="col-form-label" for="subject">Supplementary Agenda Subject(पूरक अजेंडाचे विषय) <span class="text-danger">*</span></label>
                                 <textarea class="form-control" id="subject" name="subject" placeholder="Enter Supplementary Agenda Subject" required></textarea>

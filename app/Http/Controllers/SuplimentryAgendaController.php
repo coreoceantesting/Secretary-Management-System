@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\SuplimentryAgendaRepository;
 use App\Http\Requests\SuplimentryAgendaRequest;
+use App\Models\ScheduleMeeting;
 
 class SuplimentryAgendaController extends Controller
 {
@@ -92,22 +93,43 @@ class SuplimentryAgendaController extends Controller
         }
     }
 
-    public function getScheduleMeeting(Request $request, $id)
+    // public function getScheduleMeeting(Request $request, $id)
+    // {
+    //     if ($request->ajax()) {
+    //         $scheduleMeetings = $this->suplimentryAgendaRepository->getScheduleMeeting($id);
+    //         // dd($scheduleMeetings);
+
+    //         $results = $scheduleMeetings->map(function ($item, $key) {
+    //             // dd($results);
+    //             $item["datetime"] =  $item["unique_id"] . ' (' . date('d-m-Y h:i A', strtotime($item["datetime"])) . ')';
+    //             $item["id"] =  $item["id"];
+    //             return $item;
+    //             // dd($item);
+    //         });
+
+
+    //         return response()->json([
+    //             'status' => 200,
+    //             'data' => $results
+    //         ]);
+    //     }
+    // }
+
+    public function getScheduleMeeting($id)
     {
-        if ($request->ajax()) {
-            $scheduleMeetings = $this->suplimentryAgendaRepository->getScheduleMeeting($id);
+    $scheduleMeetings = ScheduleMeeting::where('meeting_id', $id)->get();
 
-            $results = $scheduleMeetings->map(function ($item, $key) {
-                $item["datetime"] =  $item["unique_id"] . ' (' . date('d-m-Y h:i A', strtotime($item["datetime"])) . ')';
-                $item["id"] =  $item["id"];
-                return $item;
-            });
-
-
-            return response()->json([
-                'status' => 200,
-                'data' => $results
-            ]);
-        }
+    if ($scheduleMeetings->count()) {
+        return response()->json([
+            'status' => 200,
+            'data' => $scheduleMeetings
+        ]);
     }
+    return response()->json([
+        'status' => 404,
+        'message' => 'No schedule meetings found'
+    ]);
+
+   }
+
 }

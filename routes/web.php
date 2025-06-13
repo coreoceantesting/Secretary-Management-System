@@ -126,7 +126,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::resource('agenda', AgendaController::class);
 
     // route for election agenda
-    Route::prefix('election')->name('election.')->group(function () {
+        Route::prefix('election')->name('election.')->group(function () {
         Route::resource('agenda', ElectionAgendaController::class);
 
         // route for suplimentry agenda
