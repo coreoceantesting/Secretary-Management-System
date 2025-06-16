@@ -82,6 +82,11 @@
                     </td>
                     <td class="text-right" style="width: 20%">
                         {{-- Optional right-aligned section --}}
+                        @php
+                            $logoData = file_get_contents(public_path('admin/images/PMC-logo.png'));
+                            $base64Logo = base64_encode($logoData);
+                        @endphp
+                        <img src="data:image/png;base64,{{ $base64Logo }}" class="header-logo" alt="PMC Logo">
                     </td>
                 </tr>
             </table>
@@ -91,7 +96,8 @@
         <table style="width: 100%; margin-top: 20px;">
             <tr>
                 <td style="width: 80%;">जा.क्र.पमपा./सचिव/१९-२४/प्र.क्र.७२/१५/२४</td>
-                <td class="text-right">दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</td>
+                {{-- <td class="text-right">दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</td> --}}
+                <td>दिनांक {{ date('d/m/Y', strtotime($agenda->date)) }}</td>
             </tr>
         </table>
 
