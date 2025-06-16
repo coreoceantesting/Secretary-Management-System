@@ -98,7 +98,7 @@
             <tr>
                 <td style="width: 80%;">जा.क्र.पमपा./सचिव/१९-२४/प्र.क्र.७२/१५/२४</td>
                 {{-- <td class="text-right">दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</td> --}}
-                <td>दिनांक:{{ date('d/m/Y', strtotime($agenda->date)) }}</td>
+                <td style="font-display: none">दिनांक{{ date('d/m/Y', strtotime($agenda->date)) }}</td>
             </tr>
         </table>
 
