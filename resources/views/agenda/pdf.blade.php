@@ -13,27 +13,19 @@
         }
 
         header {
-            text-align: center;
             border-bottom: 1px solid #000;
-            padding: 10px 0 20px;
-            position: relative;
+            padding: 10px 30px 20px;
         }
 
-        .logo-left {
-            position: absolute;
-            top: 10px;
-            left: 30px;
-        }
-
-        .logo-right {
-            position: absolute;
-            top: 10px;
-            right: 30px;
+        .header-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .header-center {
-            display: inline-block;
-            padding: 0 100px;
+            text-align: center;
+            flex-grow: 1;
         }
 
         .subject {
@@ -68,18 +60,19 @@
 <body>
 
     <header>
-        <div class="logo-left">
-            <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="Left Logo" height="80" width="80">
-        </div>
-        <div class="logo-right">
-            <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="Right Logo" height="80" width="80">
-        </div>
-
-        <div class="header-center">
-            <div style="font-size: 21px; font-weight: 900;">पनवेल महानगरपालिका</div>
-            <div style="font-size: 19px;">सभेची नोटीस</div>
-            <div style="font-size: 18px;">स्थायी समिती सभा कामकाज पार पाडण्याबाबत प्रशासकाची सभा क्र.४७/११४</div>
-            <div style="font-size: 20px;">सोमवार दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</div>
+        <div class="header-flex">
+            <div class="logo">
+                <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="PMC Logo" height="80" width="80">
+            </div>
+            <div class="header-center">
+                <div style="font-size: 21px; font-weight: 900;">पनवेल महानगरपालिका</div>
+                <div style="font-size: 19px;">सभेची नोटीस</div>
+                <div style="font-size: 18px;">स्थायी समिती सभा कामकाज पार पाडण्याबाबत प्रशासकाची सभा क्र.४७/११४</div>
+                <div style="font-size: 20px;">सोमवार दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</div>
+            </div>
+            <div class="logo">
+                <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="PMC Logo" height="80" width="80">
+            </div>
         </div>
     </header>
 
