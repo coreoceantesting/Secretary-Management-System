@@ -22,41 +22,28 @@
             display: flex;
             align-items: center;
             border-bottom: 2px solid black;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
 
         .logo {
-            width: 80px;
+            width: 120px; /* Increased size */
             height: auto;
         }
 
         .header-text {
             flex: 1;
             text-align: center;
-            padding: 0 20px;
         }
 
         .header-text span {
             display: block;
+            margin: 4px 0;
         }
 
-        .title-1 {
-            font-size: 21px;
-            font-weight: bold;
-        }
-
-        .title-2 {
-            font-size: 19px;
-            font-weight: bold;
-        }
-
-        .title-3 {
-            font-size: 18px;
-        }
-
-        .title-4 {
-            font-size: 18px;
-        }
+        .title-1 { font-size: 24px; font-weight: bold; }
+        .title-2 { font-size: 20px; }
+        .title-3 { font-size: 19px; }
+        .title-4 { font-size: 19px; }
 
         table {
             width: 100%;
@@ -83,20 +70,19 @@
 </head>
 <body>
     <div class="page-border">
-        <!-- Header with only left logo -->
+        <!-- Header with bigger logo and one-line text layout -->
         <div class="header-flex">
             <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="Left Logo" class="logo">
             <div class="header-text">
                 <span class="title-1">पनवेल महानगरपालिका</span>
                 <span class="title-2">सभेची नोटीस</span>
                 <span class="title-3">स्थायी समिती सभा कामकाज पार पाडण्याबाबत</span>
-                <span class="title-4">
-                    प्रशासकाची सभा क्र.४७/११४ सोमवार दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}
-                </span>
+                <span class="title-4">प्रशासकाची सभा क्र.४७/११४</span>
+                <span class="title-4">सोमवार दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</span>
             </div>
         </div>
 
-        <!-- Reference Information -->
+        <!-- Reference Info -->
         <table>
             <tr>
                 <td style="width:80%">जा.क्र.पमपा./सचिव/१९-२४/प्र.क्र.७२/१५/२४</td>
