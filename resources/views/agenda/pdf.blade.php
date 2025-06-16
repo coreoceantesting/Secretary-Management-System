@@ -40,10 +40,23 @@
             display: block;
         }
 
-        .title-1 { font-size: 21px; font-weight: bold; }
-        .title-2 { font-size: 19px; }
-        .title-3 { font-size: 18px; }
-        .title-4 { font-size: 20px; }
+        .title-1 {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .title-2 {
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .title-3 {
+            font-size: 18px;
+        }
+
+        .title-4 {
+            font-size: 18px;
+        }
 
         table {
             width: 100%;
