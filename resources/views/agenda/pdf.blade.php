@@ -5,49 +5,55 @@
     <title>सभेची नोटीस</title>
     <style>
         body {
-            font-family: 'freeserif', 'normal';
+            font-family: 'freeserif', sans-serif;
             margin: 0;
             padding: 0;
             font-size: 16px;
-            line-height: 1.8;
+            line-height: 1.6;
         }
 
         .page-border {
-            margin: 20px;
-            padding: 20px;
-            border: 2px solid black;
+            border: 3px solid #000;
+            padding: 25px;
+            margin: 15px;
         }
 
-        .header-flex {
+        .header-container {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             border-bottom: 2px solid black;
             padding-bottom: 15px;
         }
 
         .logo {
-            width: 120px; /* Increased size */
+            width: 120px;
             height: auto;
         }
 
-        .header-text {
+        .header-content {
+            margin-left: 20px;
             flex: 1;
-            text-align: center;
         }
 
-        .header-text span {
+        .header-content span {
             display: block;
-            margin: 4px 0;
+            margin-bottom: 6px;
         }
 
-        .title-1 { font-size: 24px; font-weight: bold; }
-        .title-2 { font-size: 20px; }
-        .title-3 { font-size: 19px; }
-        .title-4 { font-size: 19px; }
+        .header-content .title-1 { font-size: 22px; font-weight: bold; }
+        .header-content .title-2 { font-size: 20px; }
+        .header-content .title-3 { font-size: 18px; }
+        .header-content .title-4 { font-size: 18px; }
 
         table {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        table td {
+            padding: 4px 0;
+            vertical-align: top;
         }
 
         p {
@@ -55,42 +61,48 @@
             margin: 10px 0;
         }
 
+        .meeting-info {
+            margin-top: 15px;
+        }
+
         .subject {
             text-align: center;
-            font-size: 21px;
+            font-size: 20px;
             font-weight: bold;
             margin-top: 25px;
+            margin-bottom: 10px;
         }
 
         .footer {
             text-align: right;
-            margin-top: 30px;
+            margin-top: 40px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="page-border">
-        <!-- Header with bigger logo and one-line text layout -->
-        <div class="header-flex">
-            <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="Left Logo" class="logo">
-            <div class="header-text">
+        <!-- Header with Logo + Header Text -->
+        <div class="header-container">
+            <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="PMC Logo" class="logo">
+            <div class="header-content">
                 <span class="title-1">पनवेल महानगरपालिका</span>
                 <span class="title-2">सभेची नोटीस</span>
                 <span class="title-3">स्थायी समिती सभा कामकाज पार पाडण्याबाबत</span>
-                <span class="title-4">प्रशासकाची सभा क्र.४७/११४</span>
+                <span class="title-3">प्रशासकाची सभा क्र.४७/११४</span>
                 <span class="title-4">सोमवार दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</span>
             </div>
         </div>
 
-        <!-- Reference Info -->
+        <!-- Reference Details Table -->
         <table>
             <tr>
-                <td style="width:80%">जा.क्र.पमपा./सचिव/१९-२४/प्र.क्र.७२/१५/२४</td>
-                <td>दिनांक {{ date('d/m/Y', strtotime($agenda->date)) }}</td>
+                <td style="width: 80%;">जा.क्र.पमपा./सचिव/१९-२४/प्र.क्र.७२/१५/२४</td>
+                <td style="text-align: right;">दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</td>
             </tr>
         </table>
 
-        <!-- Paragraphs -->
+        <!-- Body Paragraphs -->
         <p>
             ज्या अर्थी, महाराष्ट्र महानगरपालिका अधिनियमातील तरतुदीनुसार विविध कामकाज पार पाहण्यासाठी काही प्रस्तावांना स्थायी समितीची पूर्व मान्यता घेणे आवश्यक आहे आणि,
         </p>
@@ -105,11 +117,11 @@
         </p>
 
         <!-- Meeting Info -->
-        <p>
-            <b>बैठकीचे स्थळ :</b> {{ $agenda->place }}<br>
-            <b>दिनांक :</b> {{ date('d/m/Y', strtotime($agenda->date)) }}<br>
-            <b>वेळ :</b> {{ date('h:i A', strtotime($agenda->time)) }}
-        </p>
+        <div class="meeting-info">
+            <p><b>बैठकीचे स्थळ :</b> {{ $agenda->place }}</p>
+            <p><b>दिनांक :</b> {{ date('d/m/Y', strtotime($agenda->date)) }}</p>
+            <p><b>वेळ :</b> {{ date('h:i A', strtotime($agenda->time)) }}</p>
+        </div>
 
         <!-- Subject List -->
         <div class="subject">विषय सूची</div>
