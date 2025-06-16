@@ -45,10 +45,10 @@
 <body>
     <header>
         <div class="logo-left">
-            <img src="{{ asset('admin/images/PMC-logo.png') }}" alt="Left Logo" height="80" width="80">
+            <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="Left Logo" height="80" width="80">
         </div>
         <div class="logo-right">
-            <img src="{{ asset('admin/images/PMC-logo.png') }}" alt="Right Logo" height="80" width="80">
+            <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="Right Logo" height="80" width="80">
         </div>
 
         <span style="font-size: 21px; font-weight:900;">पनवेल महानगरपालिका</span><br>
