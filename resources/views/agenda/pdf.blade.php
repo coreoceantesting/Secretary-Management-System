@@ -18,32 +18,25 @@
             margin: 15px;
         }
 
-        .header-container {
-            display: flex;
-            align-items: flex-start;
-            border-bottom: 2px solid black;
-            padding-bottom: 15px;
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-and-header {
+            text-align: center;
         }
 
         .logo {
-            width: 120px;
+            width: 100px;
             height: auto;
+            margin-bottom: 10px;
         }
 
-        .header-content {
-            margin-left: 20px;
-            flex: 1;
-        }
-
-        .header-content span {
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .header-content .title-1 { font-size: 22px; font-weight: bold; }
-        .header-content .title-2 { font-size: 20px; }
-        .header-content .title-3 { font-size: 18px; }
-        .header-content .title-4 { font-size: 18px; }
+        .title-1 { font-size: 22px; font-weight: bold; display: block; }
+        .title-2 { font-size: 20px; display: block; }
+        .title-3 { font-size: 18px; display: block; }
+        .title-4 { font-size: 18px; display: block; }
 
         table {
             width: 100%;
@@ -82,16 +75,14 @@
 </head>
 <body>
     <div class="page-border">
-        <!-- Header with Logo + Header Text -->
-        <div class="header-container">
+        <!-- Logo and Header (vertically stacked) -->
+        <div class="logo-and-header">
             <img src="{{ public_path('admin/images/PMC-logo.png') }}" alt="PMC Logo" class="logo">
-            <div class="header-content">
-                <span class="title-1">पनवेल महानगरपालिका</span>
-                <span class="title-2">सभेची नोटीस</span>
-                <span class="title-3">स्थायी समिती सभा कामकाज पार पाडण्याबाबत</span>
-                <span class="title-3">प्रशासकाची सभा क्र.४७/११४</span>
-                <span class="title-4">सोमवार दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</span>
-            </div>
+            <span class="title-1">पनवेल महानगरपालिका</span>
+            <span class="title-2">सभेची नोटीस</span>
+            <span class="title-3">स्थायी समिती सभा कामकाज पार पाडण्याबाबत</span>
+            <span class="title-3">प्रशासकाची सभा क्र.४७/११४</span>
+            <span class="title-4">सोमवार दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</span>
         </div>
 
         <!-- Reference Details Table -->
