@@ -88,9 +88,9 @@
                         @endphp
                         <img src="data:image/png;base64,{{ $base64Logo }}" class="header-logo" alt="PMC Logo">
                     </td>
-                    <th><th>
                 </tr>
             </table>
+             <hr style="border: 1px solid #000; margin: 20px 0;">
         </section>
 
         <!-- Reference Number & Date -->
