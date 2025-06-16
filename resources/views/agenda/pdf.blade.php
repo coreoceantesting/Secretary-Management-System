@@ -88,6 +88,7 @@
                         @endphp
                         <img src="data:image/png;base64,{{ $base64Logo }}" class="header-logo" alt="PMC Logo">
                     </td>
+                    <th><th>
                 </tr>
             </table>
         </section>
