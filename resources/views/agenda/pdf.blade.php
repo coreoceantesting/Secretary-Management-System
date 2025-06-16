@@ -78,7 +78,7 @@
                         <h3 style="margin: 0;">सभेची नोटीस</h3>
                         <p style="margin: 0;">स्थायी समिती सभा कामकाज पार पाडण्याबाबत</p>
                         <p style="margin: 0;">प्रशासकाची सभा क्र.४७/११४</p>
-                        <p style="margin: 5px 0; font-size: 18px;"><b>सोमवार दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</b></p>
+                        <p style="margin: 5px 0; font-size: 18px;"><b>दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</b></p>
                     </td>
                     <td class="text-right" style="width: 20%">
                         {{-- Optional right-aligned section --}}
