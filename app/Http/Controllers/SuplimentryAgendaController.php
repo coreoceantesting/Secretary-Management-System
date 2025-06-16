@@ -120,16 +120,23 @@ class SuplimentryAgendaController extends Controller
     $scheduleMeetings = ScheduleMeeting::where('meeting_id', $id)->get();
 
     if ($scheduleMeetings->count()) {
+        $results = $scheduleMeetings->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'datetime' => $item->unique_id . ' (' . date('d-m-Y h:i A', strtotime($item->datetime)) . ')',
+            ];
+        });
+
         return response()->json([
             'status' => 200,
-            'data' => $scheduleMeetings
+            'data' => $results
         ]);
     }
+
     return response()->json([
         'status' => 404,
         'message' => 'No schedule meetings found'
     ]);
-
-   }
+  }
 
 }

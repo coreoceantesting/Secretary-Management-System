@@ -102,7 +102,7 @@
                                 </select>
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
-                           
+
                             <div class="col-md-4">
                                 <label class="col-form-label" for="subject">Agenda Subject(अजेंडा विषय) <span class="text-danger">*</span></label>
                                 <textarea class="form-control" @if(Auth::user()->hasRole('Mayor'))readonly @endif id="subject" name="subject" placeholder="Agenda Subject" required></textarea>
@@ -187,7 +187,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Meeting Venue</th>
-                                    <th>PDF</th>
+                                    <th>Notice</th>
                                     @can('agenda.receipt')<th>Receipt</th>@endcan
                                     @canany(['agenda.edit', 'agenda.delete'])<th>Action</th>@endcan
                                 </tr>
