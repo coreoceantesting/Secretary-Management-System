@@ -57,6 +57,15 @@
             text-align: right;
             font-weight: bold;
         }
+        .marathi-paragraph {
+        text-align: justify;
+        text-indent: 50px; /* First line indent */
+        margin: 20px 0;
+        font-size: 16px;
+        line-height: 1.8;
+        font-family: 'freeserif', 'Mangal', serif; /* For Marathi support */
+      }
+
     </style>
 </head>
 
@@ -85,38 +94,30 @@
                     </td>
                     <td class="text-right" style="width: 20%">
                         {{-- Optional right-aligned section --}}
-                        @php
-                            $logoData = file_get_contents(public_path('admin/images/PMC-logo.png'));
-                            $base64Logo = base64_encode($logoData);
-                        @endphp
                         <img src="data:image/png;base64,{{ $base64Logo }}" class="header-logo" alt="PMC Logo">
                     </td>
                 </tr>
             </table>
-             <hr style="border: 1px solid #000; margin: 20px 0;">
+            <hr style="border: 1px solid #000; margin: 20px 0;">
         </section>
 
         <!-- Reference Number & Date -->
         <table style="width: 100%; margin-top: 20px;">
             <tr>
                 <td style="width: 80%;">जा.क्र.पमपा./सचिव/१९-२४/प्र.क्र.७२/१५/२४</td>
-                {{-- <td class="text-right">दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</td> --}}
-                {{-- <td style="font-display: none">दिनांक:{{ date('d/m/Y', strtotime($agenda->date)) }}</td> --}}
                 <td style="white-space: nowrap;">दिनांक: {{ date('d/m/Y', strtotime($agenda->date)) }}</td>
             </tr>
         </table>
-        <br>
-        <br>
-        <!-- Main Content -->
-        <p class="first-line">
-        ज्या अर्थी, महाराष्ट्र महानगरपालिका अधिनियमातील तरतुदीनुसार विविध कामकाज पार पाहण्यासाठी काही प्रस्तावांना स्थायी समितीची पूर्व मान्यता घेणे आवश्यक आहे.
-       </p>
+        <br><br>
 
-       <p>
-        आणि, ज्या अर्थी, पनवेल महानगरपालिकेची मुदत दिनांक ०९ जुलै, २०२२ रोजी संपलेली असल्याने सद्यः स्थितीत स्थायी समिती अस्तित्वात नाही. आणि,
+        <!-- Main Content Paragraph -->
+       <p class="marathi-paragraph">
+        ज्या अर्थी, महाराष्ट्र महानगरपालिका अधिनियमातील तरतुदीनुसार विविध कामकाज पार पाहण्यासाठी काही प्रस्तावांना स्थायी समितीची पूर्व मान्यता घेणे आवश्यक आहे आणि,
+        ज्या अर्थी, पनवेल महानगरपालिकेची मुदत दिनांक ०९ जुलै, २०२२ रोजी संपलेली असल्याने सद्यः स्थितीत स्थायी समिती अस्तित्वात नाही. आणि,
         ज्या अर्थी, महाराष्ट्र महानगरपालिका अधिनियमाखाली सर्व अधिकारांचा वापर करण्यासाठी आणि तिची सर्व कामे व कर्तव्ये पार पाडण्यासाठी महाराष्ट्र महानगरपालिका अधिनियमातील तरतुदी व विशेषतः कलम ४५२ 'अ' च्या (१ अ) व (१ ब) मधील तरतुदींनुसार पनवेल महानगरपालिका येथे प्रशासक पदी आयुक्त, पनवेल महानगरपालिका यांची नियुक्ती महाराष्ट्र शासनाने केलेली आहे,
         त्या अर्थी, स्थायी समितीच्या मान्यतेने पार पाडावयाचे कामकाज पूर्ण करण्यासाठी प्रशासक यांच्या अध्यक्षतेखाली खालील प्रस्तावांवर निर्णय घेणेकरीता बैठकीचे आयोजन करण्यात येत आहे.
-       </p>
+     </p>
+
 
         <!-- Meeting Info -->
         <p><b>बैठकीचे स्थळ :</b> {{ $agenda->place }}</p>
