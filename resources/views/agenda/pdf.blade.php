@@ -98,10 +98,12 @@
             <tr>
                 <td style="width: 80%;">जा.क्र.पमपा./सचिव/१९-२४/प्र.क्र.७२/१५/२४</td>
                 {{-- <td class="text-right">दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}</td> --}}
-                <td style="font-display: none">दिनांक:{{ date('d/m/Y', strtotime($agenda->date)) }}</td>
+                {{-- <td style="font-display: none">दिनांक:{{ date('d/m/Y', strtotime($agenda->date)) }}</td> --}}
+                <td style="white-space: nowrap;">दिनांक: {{ date('d/m/Y', strtotime($agenda->date)) }}</td>
             </tr>
         </table>
-        <br><br>
+        <br>
+        <br>
         <!-- Main Content -->
         <p>ज्या अर्थी, महाराष्ट्र महानगरपालिका अधिनियमातील तरतुदीनुसार विविध कामकाज पार पाहण्यासाठी काही प्रस्तावांना स्थायी समितीची पूर्व मान्यता घेणे आवश्यक आहे आणि,</p>
 
