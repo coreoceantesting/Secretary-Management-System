@@ -115,9 +115,15 @@ class SuplimentryAgendaController extends Controller
     //     }
     // }
 
-    public function getScheduleMeeting($id)
-    {
-    $scheduleMeetings = ScheduleMeeting::where('meeting_id', $id)->get();
+   public function getScheduleMeeting($id)
+{
+    // Fetch only valid scheduled meetings (Not Completed, Not Cancelled, Not Rescheduled)
+    $scheduleMeetings = ScheduleMeeting::where([
+        'meeting_id' => $id,
+        'is_meeting_completed' => 0,
+        'is_meeting_cancel' => 0,
+        'is_meeting_reschedule' => 0
+    ])->get();
 
     if ($scheduleMeetings->count()) {
         $results = $scheduleMeetings->map(function ($item) {
@@ -135,8 +141,9 @@ class SuplimentryAgendaController extends Controller
 
     return response()->json([
         'status' => 404,
-        'message' => 'No schedule meetings found'
+        'message' => 'No valid schedule meetings found'
     ]);
-  }
+}
+
 
 }
