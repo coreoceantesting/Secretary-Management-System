@@ -35,10 +35,6 @@
                                         <td>{{ $goshwara->subject ?? '-' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Goshwara Sub Subject</th>
-                                        <td>{{ $goshwara->sub_subject ?? '-' }}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Goshwara  File</th>
                                         <td><a href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary">View File</a></td>
                                     </tr>

@@ -32,11 +32,6 @@
                                     <span class="text-danger is-invalid subject_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="sub_subject">Sub Subject(विषय) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="sub_subject" required name="sub_subject" placeholder="Enter sub subject" />
-                                    <span class="text-danger is-invalid sub_subject_err"></span>
-                                </div>
-                                <div class="col-md-4">
                                     <label class="col-form-label" for="outward_no">Outward No(जावक क्र)<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="outward_no" required name="outward_no" placeholder="Enter outward no">
                                     <span class="text-danger is-invalid outward_no_err"></span>
@@ -73,7 +68,6 @@
                                         <th>Sr no.</th>
                                         <th>Meeting</th>
                                         <th>Subject</th>
-                                        <th>Sub Subject</th>
                                         <th>Outward No</th>
                                         <th>Goshwara File</th>
                                         <th>Action</th>
@@ -85,7 +79,6 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $goshwara?->meeting?->name }}</td>
                                             <td>{{ $goshwara->subject }}</td>
-                                            <td>{{ $goshwara->sub_subject ?? '-' }}</td>
                                             <td>{{ $goshwara->outward_no }}</td>
                                             <td><a target="_blank" href="{{ asset('storage/'.$goshwara->file) }}" class="btn btn-primary btn-sm">View Goshwara</a></td>
                                             <td>
@@ -143,7 +136,6 @@
                     $("#editForm select[name='meeting_id']").val(data.goshwara.meeting_id);
                     $("#editForm input[name='outward_no']").val(data.goshwara.outward_no);
                     $("#editForm input[name='subject']").val(data.goshwara.subject);
-                    $("#editForm input[name='sub_subject']").val(data.goshwara.sub_subject);
                     $('#editForm .viewGoshWaraFile').attr('href', "{{ asset('storage/') }}/"+data.goshwara.file)
                     if(data.goshwara.file && data.goshwara.file != ""){
                         $('#editForm .viewGoshWaraFile').removeClass('d-none');

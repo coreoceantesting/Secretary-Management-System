@@ -35,13 +35,6 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="sub_subject">Sub Subject(विषय) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="sub_subject" name="sub_subject" placeholder="Enter sub subject" value="{{ old('sub_subject') }}" required />
-                                    @error('sub_subject')
-                                    <span class="text-danger is-invalid sub_subject_err">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4">
                                     <label class="col-form-label" for="outward_no">Outward No(जावक क्र) <span class="text-danger">*</span></label>
                                     <input class="form-control" id="outward_no" name="outward_no" type="text" placeholder="Enter outward no" value="{{ old('outward_no') }}" required>
                                     @error('outward_no')
