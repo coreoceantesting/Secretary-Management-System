@@ -146,6 +146,19 @@ class AgendaController extends Controller
         }
     }
 
+    public function agendaList()
+    {
+        if (!Auth::user()->hasRole('Mayor')) {
+            abort(403);
+        }
+
+        $agendas = $this->agendaRepository->finalAgendaList();
+
+        return view('agenda.list')->with([
+            'agendas' => $agendas
+        ]);
+    }
+
     public function generatePdf()
     {
         $pdf = PDF::loadView('agenda.pdf');

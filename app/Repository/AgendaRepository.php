@@ -3,21 +3,24 @@
 namespace App\Repository;
 
 use App\Models\Agenda;
-use App\Models\Goshwara;
 use App\Models\AssignGoshwaraToAgenda;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Goshwara;
 use App\Models\Meeting;
 use App\Models\UserMeeting;
-use PDF;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AgendaRepository
 {
     public function index()
     {
         return Agenda::with(['meeting', 'assignGoshwaraToAgenda.goshwara.department'])
+            ->when(Auth::user()->hasRole('Mayor'), function ($query) {
+                return $query->where('is_mayor_finalised', 0);
+            })
             ->when(Auth::user()->hasRole('Clerk'), function ($query) {
                 return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })->when(Auth::user()->hasRole('Department'), function ($query) {
@@ -28,20 +31,32 @@ class AgendaRepository
             ->latest()->get();
     }
 
+    public function finalAgendaList()
+    {
+        return Agenda::with(['meeting', 'assignGoshwaraToAgenda.goshwara.department'])
+            ->where('is_mayor_finalised', 1)
+            ->latest()->get();
+    }
+
     public function getNotAssignedGoshwara($meetingId)
     {
         return Goshwara::doesntHave('assignGoshwaraToAgenda')->where([
             'is_sent' => 1,
-            'meeting_id' => $meetingId
+            'meeting_id' => $meetingId,
         ])->with(['meeting', 'department'])->get();
     }
 
     public function getAddNotAssignedGoshwara($meetingId)
     {
-        return Goshwara::with(['meeting', 'department'])->doesntHave('assignGoshwaraToAgenda')->where([
-            'is_sent' => 1,
-            'meeting_id' => $meetingId
-        ])->get();
+        return Goshwara::select('id', 'meeting_id', 'department_id', 'subject', 'outward_no', 'file')
+            ->with([
+                'meeting:id,name',
+                'department:id,name',
+            ])
+            ->doesntHave('assignGoshwaraToAgenda')
+            ->where('is_sent', 1)
+            ->where('meeting_id', $meetingId)
+            ->get();
     }
 
     public function getMeetings()
@@ -51,8 +66,8 @@ class AgendaRepository
                 'is_sent' => 1,
                 'is_mayor_selected' => 0,
             ]);
-        })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
-            return $q->where("id", UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+        })->when(Auth::user()->roles[0]->name == 'Clerk', function ($q) {
+            return $q->where('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->latest()->get();
     }
 
@@ -63,8 +78,8 @@ class AgendaRepository
                 'is_sent' => 1,
                 'is_mayor_selected' => 0,
             ])->doesntHave('assignGoshwaraToAgenda');
-        })->when(Auth::user()->roles[0]->name == "Clerk", function ($q) {
-            return $q->whereIn("id", UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+        })->when(Auth::user()->roles[0]->name == 'Clerk', function ($q) {
+            return $q->whereIn('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->latest()->get();
     }
 
@@ -81,9 +96,8 @@ class AgendaRepository
         try {
             $file = null;
             if ($request->hasFile('agendafile')) {
-                $file = $request->agendafile->store('agenda');
+                $file = $request->agendafile->store('agenda', 'public');
             }
-            $request['file'] = $file;
             $agenda = Agenda::create($request->all());
 
             if (isset($request->goshwara_id)) {
@@ -95,24 +109,27 @@ class AgendaRepository
                 }
 
                 // code to generate pdf
+                $agenda->load('meeting');
                 $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
                     ->where('agenda_id', $agenda->id)->get();
-                $pdf = PDF::loadView('agenda.pdf', compact('agenda', 'goshwaras'));
-                $name = 'pdf/' . 'agenda-' . time() . '.pdf';
+                $pdf = PDF::loadView('agenda.pdf2', compact('agenda', 'goshwaras'));
+                $name = 'public/pdf/'.'agenda-'.time().'.pdf';
 
                 Storage::put($name, $pdf->output());
 
                 Agenda::where('id', $agenda->id)->update([
-                    'pdf' => $name
+                    'pdf' => 'pdf/'.'agenda-'.time().'.pdf',
                 ]);
                 // end of code to generate pdf
             }
 
             DB::commit();
+
             return true;
         } catch (\Exception $e) {
             Log::info($e);
             DB::rollback();
+
             return false;
         }
     }
@@ -129,12 +146,12 @@ class AgendaRepository
             $agenda = Agenda::find($id);
             $file = $agenda->file;
             if ($request->hasFile('agendafile')) {
-                if ($agenda->file != "") {
+                if ($agenda->file != '') {
                     if (Storage::exists($agenda->file)) {
                         Storage::delete($agenda->file);
                     }
                 }
-                $file = $request->agendafile->store('agenda');
+                $file = $request->agendafile->store('agenda', 'public');
             }
             $request['file'] = $file;
             $agenda->update($request->all());
@@ -145,7 +162,7 @@ class AgendaRepository
                 })->update([
                     'is_mayor_selected' => 0,
                     'selected_datetime' => null,
-                    'selected_by' => null
+                    'selected_by' => null,
                 ]);
 
                 AssignGoshwaraToAgenda::where('agenda_id', $id)->delete();
@@ -155,30 +172,37 @@ class AgendaRepository
                         'goshwara_id' => $request->goshwara_id[$i],
                     ]);
 
-                    if (Auth::user()->roles[0]->name == "Mayor") {
+                    if (Auth::user()->roles[0]->name == 'Mayor') {
                         Goshwara::where('id', $request->goshwara_id[$i])->update([
                             'is_mayor_selected' => 1,
                             'selected_datetime' => date('Y-m-d H:i:s'),
-                            'selected_by' => Auth::user()->id
+                            'selected_by' => Auth::user()->id,
                         ]);
                     }
                 }
 
+                if (Auth::user()->roles[0]->name == 'Mayor') {
+                    Agenda::where('id', $id)->update(['is_mayor_finalised' => 1]);
+                }
+
                 // code to generate pdf
+                $agenda->load('meeting');
                 $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
                     ->where('agenda_id', $agenda->id)->get();
-                $pdf = PDF::loadView('agenda.pdf', compact('agenda', 'goshwaras'));
-                $name = 'pdf/' . $agenda->file . '.pdf';
+                $pdf = PDF::loadView('agenda.pdf2', compact('agenda', 'goshwaras'));
+                $pdfName = $agenda->id.'-'.time().'.pdf';
+                $name = 'public/pdf/'.$pdfName;
 
                 Storage::put($name, $pdf->output());
 
                 Agenda::where('id', $agenda->id)->update([
-                    'pdf' => $name
+                    'pdf' => 'pdf/'.$pdfName,
                 ]);
                 // end of code to generate pdf
             }
 
             DB::commit();
+
             return true;
         } catch (\Exception $e) {
             Log::info($e);
@@ -195,7 +219,7 @@ class AgendaRepository
 
             AssignGoshwaraToAgenda::where('agenda_id', $id)->delete();
             $agenda = Agenda::find($id);
-            if ($agenda->file != "") {
+            if ($agenda->file != '') {
                 if (Storage::exists($agenda->file)) {
                     Storage::delete($agenda->file);
                 }
@@ -212,6 +236,7 @@ class AgendaRepository
         } catch (\Exception $e) {
             Log::info($e);
             DB::rollback();
+
             return false;
         }
     }

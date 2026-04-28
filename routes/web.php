@@ -123,6 +123,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
     Route::get('agenda/meeting/pdf', [AgendaController::class, 'generatePdf'])->name('agenda.generatePdf');
     Route::get('agenda/meeting/select-meeting', [AgendaController::class, 'selectMeeting'])->name('agenda.selectMeeting');
     Route::get('agenda/receipt/{id}', [AgendaController::class, 'receipt'])->name('agenda.receipt');
+    Route::get('agenda/final-agenda-list', [AgendaController::class, 'agendaList'])->name('agenda.list');
     Route::resource('agenda', AgendaController::class);
 
     // route for election agenda

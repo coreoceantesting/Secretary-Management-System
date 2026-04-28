@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Agenda(अजेंडा)</x-slot>
-    <x-slot name="heading">Agenda(अजेंडा)</x-slot>
+    <x-slot name="title">@if(Auth::user()->hasRole('Mayor'))Received Goshwara List @else Agenda List(अजेंडा यादी)@endif</x-slot>
+    <x-slot name="heading">@if(Auth::user()->hasRole('Mayor'))Received Goshwara List @else Agenda List(अजेंडा यादी)@endif</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -102,7 +102,7 @@
                                 </select>
                                 <span class="text-danger is-invalid meeting_id_err"></span>
                             </div>
-                           
+
                             <div class="col-md-4">
                                 <label class="col-form-label" for="subject">Agenda Subject(अजेंडा विषय) <span class="text-danger">*</span></label>
                                 <textarea class="form-control" @if(Auth::user()->hasRole('Mayor'))readonly @endif id="subject" name="subject" placeholder="Agenda Subject" required></textarea>
@@ -187,7 +187,6 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Meeting Venue</th>
-                                    <th>PDF</th>
                                     @can('agenda.receipt')<th>Receipt</th>@endcan
                                     @canany(['agenda.edit', 'agenda.delete'])<th>Action</th>@endcan
                                 </tr>
@@ -212,11 +211,6 @@
                                         <td>{{ date('d-m-Y', strtotime($agenda->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($agenda->time)) }}</td>
                                         <td>{{ $agenda->place }}</td>
-                                        <td>
-                                            @if($agenda->pdf)
-                                            <a target="_blank" href="{{ asset('storage/'.$agenda->pdf) }}" class="btn btn-sm btn-primary">View</a>
-                                            @endif
-                                        </td>
                                         @can('agenda.receipt')
                                         <td>
                                             @if($agenda->is_mayor_view)
@@ -516,10 +510,10 @@
                                     <td>
                                         <input type="checkbox" name="goshwara_id[]" value="${val.id}" class="form-check" checked>
                                     </td>
-                                    <td>${val.meeting.name}</td>
-                                    <td>${val.department.name}</td>
-                                    <td>${val.outward_no}</td>
-                                    <td>${val.subject}</td>
+                                    <td>${val.meeting ? val.meeting.name : '-'}</td>
+                                    <td>${val.department ? val.department.name : '-'}</td>
+                                    <td>${val.outward_no ?? '-'}</td>
+                                    <td>${val.subject ?? '-'}</td>
                                     <td><a target="_blank" href="{{ asset('storage') }}/${val.file}" class="btn btn-primary btn-sm">View</a></td>
                                 </tr>`;
                     });
