@@ -26,7 +26,8 @@ class ProceedingRecordRepository
 
     public function getScheduleMeeting($id)
     {
-        return ScheduleMeeting::where('meeting_id', $id)->where([
+
+        $schedule =  ScheduleMeeting::where('meeting_id', $id)->where([
             'is_meeting_reschedule' => 0,
             'is_meeting_completed' => 1,
             'is_meeting_cancel' => 0,
@@ -34,6 +35,8 @@ class ProceedingRecordRepository
         ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
             return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->get();
+
+        return $schedule;
     }
 
     public function store($request)
@@ -63,13 +66,14 @@ class ProceedingRecordRepository
 
             foreach ($members as $member) {
                 Log::info('Sms Send to number' . $member->member->contact_number);
-                Mail::to($member->member->email)->send(new ProceedingRecordMail($proceedingRecord));
+                //Mail::to($member->member->email)->send(new ProceedingRecordMail($proceedingRecord));
             }
             // end of send sms and email login
 
             DB::commit();
             return true;
         } catch (\Exception $e) {
+            //dd($e);
             Log::info($e);
             DB::rollback();
             return false;

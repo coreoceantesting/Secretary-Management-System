@@ -25,6 +25,9 @@ class AgendaController extends Controller
 
         $meetings = $this->agendaRepository->getMeetingsNotAssignGoshwara();
 
+        // Load latest schedule meeting with proceeding record and tharav relationships
+        $agendas->load(['latestScheduleMeeting.proceedingRecord', 'latestScheduleMeeting.tharav']);
+
         return view('agenda.index')->with([
             'agendas' => $agendas,
             'meetings' => $meetings
