@@ -7,6 +7,7 @@ use App\Models\AssignGoshwaraToAgenda;
 use App\Models\Goshwara;
 use App\Models\Meeting;
 use App\Models\UserMeeting;
+use App\Models\ScheduleMeeting;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -129,6 +130,7 @@ class AgendaRepository
 
             return true;
         } catch (\Exception $e) {
+            
             Log::info($e);
             DB::rollback();
 
@@ -185,6 +187,23 @@ class AgendaRepository
 
                 if (Auth::user()->roles[0]->name == 'Mayor') {
                     Agenda::where('id', $id)->update(['is_mayor_finalised' => 1]);
+
+                    // Auto-create schedule meeting when Mayor finalizes agenda
+                    $uniqueId = time();
+                    ScheduleMeeting::create([
+                        'agenda_id' => $id,
+                        'meeting_id' => $agenda->meeting_id,
+                        'place' => $agenda->place,
+                        'date' => $agenda->date,
+                        'time' => $agenda->time,
+                        'datetime' => $agenda->date . ' ' . $agenda->time,
+                        'unique_id' => $uniqueId,
+                        'is_meeting_reschedule' => 0,
+                        'is_meeting_completed' => 0,
+                    ]);
+
+                    // Mark agenda as scheduled
+                    Agenda::where('id', $id)->update(['is_meeting_schedule' => 1]);
                 }
 
                 // code to generate pdf

@@ -117,7 +117,7 @@
                                         <td>{{ $scheduleMeeting->meeting?->name }}</td>
                                         <td>{{ $scheduleMeeting->unique_id }}</td>
                                         <td>{{ $scheduleMeeting->agenda?->subject }}</td>
-                                        <td><a href="{{ asset('storage/'.$scheduleMeeting->agenda->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
+                                        <td><a href="{{ asset('storage/'.$scheduleMeeting->agenda->pdf) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
                                         <td>{{ date('d-m-Y', strtotime($scheduleMeeting->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($scheduleMeeting->time)) }}</td>
                                         <td>{{ $scheduleMeeting->place }}</td>
