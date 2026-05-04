@@ -579,6 +579,7 @@
                                     <td>${val.meeting ? val.meeting.name : '-'}</td>
                                     <td>${val.department ? val.department.name : '-'}</td>
                                     <td>${val.outward_no ?? '-'}</td>
+                                    <td>${val.subject ?? '-'}</td>
 
                                     <td><a target="_blank" href="{{ asset('storage') }}/${val.file}" class="btn btn-primary btn-sm">View</a></td>
                                 </tr>`;
