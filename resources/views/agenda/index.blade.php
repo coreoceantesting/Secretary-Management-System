@@ -291,10 +291,11 @@
                                                 @else
                                                     @php
                                                    // dd($agenda->scheduleMeeting);
-                                                        $hasProceedingRecord = $agenda->latestScheduleMeeting && $agenda->latestScheduleMeeting->is_record_proceeding;
-                                                        $hasTharav = $agenda->latestScheduleMeeting && $agenda->latestScheduleMeeting->is_tharav_uploaded;
-                                                    // dd($hasProceedingRecord, $agenda->latestScheduleMeeting->is_tharav_uploaded   );
+                                                        $hasProceedingRecord = $agenda->latestScheduleMeeting && $agenda->latestScheduleMeeting->proceedingRecord;
+                                                        $hasTharav = $agenda->latestScheduleMeeting && $agenda->latestScheduleMeeting->tharav;
+
                                                     @endphp
+                                                    @if(Auth::user()->hasRole('Secretary'))
                                                     <button class="btn btn-primary btn-sm add-proceeding-btn"
                                                         data-agenda-id="{{ $agenda->id }}"
                                                         data-meeting-id="{{ $agenda->meeting_id }}"
@@ -307,6 +308,7 @@
                                                         @if($hasTharav) disabled title="Already Uploaded" @endif>
                                                         Add Tharav
                                                     </button>
+                                                    @endif
                                                 @endif
                                             </td>
                                         @endcan
