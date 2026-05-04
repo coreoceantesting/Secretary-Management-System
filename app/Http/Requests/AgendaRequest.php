@@ -30,7 +30,7 @@ class AgendaRequest extends FormRequest
             ];
         } else {
             $rule = [
-                'agendafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG|max:2010',
+                'agendafile' => 'nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG|max:2010',
                 'subject' => 'required',
                 'goshwara_id' => ['required', new RequiredOne]
             ];

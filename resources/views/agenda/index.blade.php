@@ -46,12 +46,6 @@
                                 <span class="text-danger is-invalid subject_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Select File(फाइल निवडा) <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" id="agendafile" name="agendafile" type="file" required>
-                                <span class="text-danger is-invalid agendafile_err"></span>
-                            </div>
-                            <div class="col-md-4">
                                 <label class="col-form-label" for="date">Meeting Date <span
                                         class="text-danger">*</span></label>
                                 <input class="form-control" id="date" name="date" type="date"
@@ -132,14 +126,6 @@
                                 <textarea class="form-control" @if (Auth::user()->hasRole('Mayor')) readonly @endif id="subject" name="subject"
                                     placeholder="Agenda Subject" required></textarea>
                                 <span class="text-danger is-invalid subject_err"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="agendafile">Select File(फाइल निवडा)</label>
-                                <a href="#" id="editAgendaValueFile" target="_blank"
-                                    class="btn btn-primary btn-sm p-2">View File</a>
-                                <input @if (Auth::user()->hasRole('Mayor')) disabled @endif class="form-control"
-                                    id="agendafile" name="agendafile" type="file">
-                                <span class="text-danger is-invalid agendafile_err"></span>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="date">Meeting Date <span
