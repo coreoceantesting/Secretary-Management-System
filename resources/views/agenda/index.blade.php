@@ -218,7 +218,7 @@
                                     <th>Meeting</th>
                                     <th>Agenda Subject</th>
                                     <th>Department</th>
-                                    <th>Goshwara Subject</th>
+                                    {{-- <th>Goshwara Subject</th> --}}
                                     <th>Agenda File</th>
                                     <th>Date</th>
                                     <th>Time</th>
@@ -234,7 +234,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $agenda?->meeting?->name }}</td>
-                                        <td>{{ $agenda->subject }}</td>
+                                        {{-- <td>{{ $agenda->subject }}</td> --}}
                                         <td>
                                             @foreach ($agenda?->assignGoshwaraToAgenda as $subject)
                                                 {{ $loop->iteration . '. ' . $subject?->goshwara?->department?->name }}<br>
@@ -577,7 +577,7 @@
                                     <td>${val.meeting ? val.meeting.name : '-'}</td>
                                     <td>${val.department ? val.department.name : '-'}</td>
                                     <td>${val.outward_no ?? '-'}</td>
-                                    <td>${val.subject ?? '-'}</td>
+
                                     <td><a target="_blank" href="{{ asset('storage') }}/${val.file}" class="btn btn-primary btn-sm">View</a></td>
                                 </tr>`;
                     });
