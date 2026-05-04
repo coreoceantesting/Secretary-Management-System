@@ -117,7 +117,7 @@ class AgendaRepository
 
                 $name = 'pdf/'.$filename;
 
-                Storage::put($name, $pdf->output());
+                Storage::disk('public')->put($name, $pdf->output());
 
                 Agenda::where('id', $agenda->id)->update([
                     'pdf' => 'pdf/'.$filename,
@@ -193,9 +193,9 @@ class AgendaRepository
                     ->where('agenda_id', $agenda->id)->get();
                 $pdf = PDF::loadView('agenda.pdf2', compact('agenda', 'goshwaras'));
                 $pdfName = $agenda->id.'-'.time().'.pdf';
-                $name = 'public/pdf/'.$pdfName;
+                $name = 'pdf/'.$pdfName;
 
-                Storage::put($name, $pdf->output());
+                Storage::disk('public')->put($name, $pdf->output());
 
                 Agenda::where('id', $agenda->id)->update([
                     'pdf' => 'pdf/'.$pdfName,
