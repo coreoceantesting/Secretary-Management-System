@@ -173,6 +173,11 @@
                                             data-key="t-horizontal">Received Goshwara</a>
                                     </li>
                                 @else
+                                <li class="nav-item">
+                                        <a href="{{ route('agenda.index') }}"
+                                            class="nav-link {{ request()->routeIs('agenda.index') ? 'active' : '' }}"
+                                            data-key="t-horizontal">Goshwara List</a>
+                                    </li>
                                     @can('goshwara.create')
                                         <li class="nav-item">
                                             <a href="{{ route('goshwara.create') }}"
@@ -223,19 +228,13 @@
                             id="sidebarAgenda">
                             <ul class="nav nav-sm flex-column">
                                 @can('agenda.view')
-                                    @if (Auth::user()->hasRole('Mayor'))
+
                                         <li class="nav-item">
                                             <a href="{{ route('agenda.list') }}"
                                                 class="nav-link {{ request()->routeIs('agenda.list') ? 'active' : '' }}"
                                                 data-key="t-horizontal">Final Agenda</a>
                                         </li>
-                                    @else
-                                        <li class="nav-item">
-                                            <a href="{{ route('agenda.index') }}"
-                                                class="nav-link {{ request()->routeIs('agenda.index') ? 'active' : '' }}"
-                                                data-key="t-horizontal">Agenda List(अजेंडा यादी)</a>
-                                        </li>
-                                    @endif
+
                                 @endcan
 
                                 @can('suplimentry-agenda.view')

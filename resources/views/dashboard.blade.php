@@ -230,8 +230,8 @@
 
                 <div class="col-xl-5 col-lg-5 col-sm-12 col-12">
                     <div class="card card-h-100">
-                        <div class="card-body">
-                            <div id="calendar"></div>
+                        <div class="card-body p-2">
+                            <div id="calendar" style="font-size: 0.85rem;"></div>
                         </div>
                     </div>
                 </div><!-- end col -->
@@ -288,12 +288,31 @@
 
     @push('scripts')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <style>
+        #calendar {
+            max-height: 500px;
+        }
+        #calendar .fc-toolbar {
+            font-size: 0.9rem;
+        }
+        #calendar .fc-daygrid-day-number {
+            font-size: 0.85rem;
+        }
+        #calendar .fc-col-header-cell-cushion {
+            font-size: 0.85rem;
+        }
+        #calendar .fc-event {
+            font-size: 0.75rem;
+        }
+    </style>
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                height: 'auto',
+                contentHeight: 450,
             });
 
             @foreach($scheduleMeetings as $scheduleMeeting)

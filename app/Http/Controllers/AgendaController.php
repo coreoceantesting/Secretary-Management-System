@@ -151,9 +151,7 @@ class AgendaController extends Controller
 
     public function agendaList()
     {
-        if (!Auth::user()->hasRole('Mayor')) {
-            abort(403);
-        }
+       
 
         $agendas = $this->agendaRepository->finalAgendaList();
 
