@@ -36,6 +36,9 @@ class AgendaRepository
     {
         return Agenda::with(['meeting', 'assignGoshwaraToAgenda.goshwara.department'])
             ->where('is_mayor_finalised', 1)
+            ->when(Auth::user()->hasRole('Clerk'), function ($query) {
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+            })
             ->latest()->get();
     }
 
@@ -68,7 +71,7 @@ class AgendaRepository
                 'is_mayor_selected' => 0,
             ]);
         })->when(Auth::user()->roles[0]->name == 'Clerk', function ($q) {
-            return $q->where('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+            return $q->whereIn('id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
         })->latest()->get();
     }
 

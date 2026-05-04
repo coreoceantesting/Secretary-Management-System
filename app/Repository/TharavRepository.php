@@ -17,7 +17,7 @@ class TharavRepository
     {
         $tharav = Tharav::with(['meeting', 'assignTharavDepartment.department', 'scheduleMeeting'])
             ->when(Auth::user()->hasRole('Clerk'), function ($query) {
-                return $query->where('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+                return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
             })->when(Auth::user()->hasRole('Department'), function ($q) {
                 $q->whereHas('assignTharavDepartment', function ($q) {
                     $q->where('department_id', Auth::user()->department_id);
@@ -31,7 +31,9 @@ class TharavRepository
     {
         return ScheduleMeeting::where('meeting_id', $id)->where([
             'is_record_proceeding' => 1
-        ])->get();
+        ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
+            return $query->whereIn('meeting_id', UserMeeting::where('user_id', Auth::user()->id)->pluck('meeting_id')->toArray());
+        })->get();
     }
 
     public function getScheduleMeetingDepartment($id)

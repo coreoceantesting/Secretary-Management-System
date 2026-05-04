@@ -275,7 +275,25 @@
                                                                     data-feather="trash-2"></i> </button>
                                                         @endcan
                                                     @endif
-
+                                                @else
+                                                    @php
+                                                        $hasProceedingRecord = $agenda->latestScheduleMeeting && $agenda->latestScheduleMeeting->proceedingRecord;
+                                                        $hasTharav = $agenda->latestScheduleMeeting && $agenda->latestScheduleMeeting->tharav;
+                                                    @endphp
+                                                    @if(Auth::user()->hasRole(['Home Department', 'Clerk']))
+                                                    <button class="btn btn-primary btn-sm add-proceeding-btn"
+                                                        data-agenda-id="{{ $agenda->id }}"
+                                                        data-meeting-id="{{ $agenda->meeting_id }}"
+                                                        @if($hasProceedingRecord) disabled title="Already Uploaded" @endif>
+                                                        Add Proceeding Record
+                                                    </button>
+                                                    <button class="btn btn-success btn-sm add-tharav-btn"
+                                                        data-agenda-id="{{ $agenda->id }}"
+                                                        data-meeting-id="{{ $agenda->meeting_id }}"
+                                                        @if($hasTharav) disabled title="Already Uploaded" @endif>
+                                                        Add Tharav
+                                                    </button>
+                                                    @endif
                                                 @endif
                                             </td>
                                         @endcan
