@@ -216,8 +216,9 @@
                                 <tr>
                                     <th>Sr no.</th>
                                     <th>Meeting</th>
-                                    <th>Agenda Subject</th>
+
                                     <th>Department</th>
+                                    <th>Agenda Subject</th>
                                     {{-- <th>Goshwara Subject</th> --}}
                                     <th>Agenda File</th>
                                     <th>Date</th>
