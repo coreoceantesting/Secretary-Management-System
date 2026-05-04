@@ -113,12 +113,14 @@ class AgendaRepository
                 $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
                     ->where('agenda_id', $agenda->id)->get();
                 $pdf = PDF::loadView('agenda.pdf2', compact('agenda', 'goshwaras'));
-                $name = 'public/pdf/'.'agenda-'.time().'.pdf';
+                $filename = 'agenda-'.time().'.pdf';
+
+                $name = 'public/pdf/'.$filename;
 
                 Storage::put($name, $pdf->output());
 
                 Agenda::where('id', $agenda->id)->update([
-                    'pdf' => 'pdf/'.'agenda-'.time().'.pdf',
+                    'pdf' => 'pdf/'.$filename,
                 ]);
                 // end of code to generate pdf
             }
