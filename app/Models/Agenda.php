@@ -11,7 +11,7 @@ class Agenda extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['is_meeting_schedule', 'meeting_id', 'subject', 'file', 'date', 'time', 'place', 'is_mayor_finalised'];
+    protected $fillable = ['is_meeting_schedule', 'meeting_id', 'subject', 'file', 'pdf', 'date', 'time', 'place', 'is_mayor_finalised'];
 
     public function assignGoshwaraToAgenda()
     {
