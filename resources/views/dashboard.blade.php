@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="row h-100">
 
-                <div class="col-xl-4 col-lg-4 col-sm-12 col-12">
+                <div class="col-xl-7 col-lg-7 col-sm-12 col-12">
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-12 col-lg-6">
                             <div class="card card-animate bg-info">
@@ -228,7 +228,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-8 col-lg-8 col-sm-12 col-12">
+                <div class="col-xl-5 col-lg-5 col-sm-12 col-12">
                     <div class="card card-h-100">
                         <div class="card-body">
                             <div id="calendar"></div>
