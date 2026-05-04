@@ -115,7 +115,7 @@ class AgendaRepository
                 $pdf = PDF::loadView('agenda.pdf2', compact('agenda', 'goshwaras'));
                 $filename = 'agenda-'.time().'.pdf';
 
-                $name = 'public/pdf/'.$filename;
+                $name = 'pdf/'.$filename;
 
                 Storage::put($name, $pdf->output());
 
