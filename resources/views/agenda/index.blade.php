@@ -295,7 +295,7 @@
                                                         $hasTharav = $agenda->latestScheduleMeeting && $agenda->latestScheduleMeeting->tharav;
 
                                                     @endphp
-                                                    @if(Auth::user()->hasRole('Secretary'))
+                                                    @if(Auth::user()->hasRole('Home Department'))
                                                     <button class="btn btn-primary btn-sm add-proceeding-btn"
                                                         data-agenda-id="{{ $agenda->id }}"
                                                         data-meeting-id="{{ $agenda->meeting_id }}"
