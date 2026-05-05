@@ -242,8 +242,12 @@ class AgendaRepository
                     Agenda::where('id', $id)->update(['is_mayor_finalised' => 1]);
 
                     // Auto-create schedule meeting when Mayor finalizes agenda
-                    $uniqueId = time();
-                    ScheduleMeeting::create([
+                    // Generate unique_id based on meeting name and count
+                    $meetingCount = ScheduleMeeting::where('meeting_id', $agenda->meeting_id)->count() + 1;
+                    $meetingName = $agenda->meeting->name ?? 'Meeting';
+                    $uniqueId = $meetingName . ' क्र. ' . $meetingCount;
+                    
+                    $scheduleMeeting = ScheduleMeeting::create([
                         'agenda_id' => $id,
                         'meeting_id' => $agenda->meeting_id,
                         'place' => $agenda->place,
@@ -254,6 +258,9 @@ class AgendaRepository
                         'is_meeting_reschedule' => 0,
                         'is_meeting_completed' => 0,
                     ]);
+                    
+                    // Update parent_id to self
+                    ScheduleMeeting::where('id', $scheduleMeeting->id)->update(['parent_id' => $scheduleMeeting->id]);
 
                     // Mark agenda as scheduled
                     Agenda::where('id', $id)->update(['is_meeting_schedule' => 1]);
