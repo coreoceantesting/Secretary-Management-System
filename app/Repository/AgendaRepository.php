@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use setasign\Fpdi\Fpdi;
+use Jurosh\PDFMerge\PDFMerger;
 
 class AgendaRepository
 {
@@ -140,32 +140,20 @@ class AgendaRepository
                 // Merge PDFs if there are goshwara PDFs
                 if (!empty($goshwaraPaths)) {
                     try {
-                        $fpdi = new Fpdi();
-
-                        // Add agenda PDF pages
-                        $pageCount = $fpdi->setSourceFile($tempAgendaPdf);
-                        for ($i = 1; $i <= $pageCount; $i++) {
-                            $template = $fpdi->importPage($i);
-                            $size = $fpdi->getTemplateSize($template);
-                            $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
-                            $fpdi->useTemplate($template);
-                        }
-
-                        // Add goshwara PDF pages
+                        $pdfMerger = new PDFMerger();
+                        
+                        // Add agenda PDF
+                        $pdfMerger->addPDF($tempAgendaPdf, 'all');
+                        
+                        // Add goshwara PDFs
                         foreach ($goshwaraPaths as $goshwaraPath) {
-                            $pageCount = $fpdi->setSourceFile($goshwaraPath);
-                            for ($i = 1; $i <= $pageCount; $i++) {
-                                $template = $fpdi->importPage($i);
-                                $size = $fpdi->getTemplateSize($template);
-                                $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
-                                $fpdi->useTemplate($template);
-                            }
+                            $pdfMerger->addPDF($goshwaraPath, 'all');
                         }
-
-                        // Save merged PDF
-                        $mergedPdfContent = $fpdi->Output('S');
-                        Storage::disk('public')->put('pdf/'.$filename, $mergedPdfContent);
-
+                        
+                        // Merge and save
+                        $finalPdfPath = storage_path('app/public/pdf/'.$filename);
+                        $pdfMerger->merge('file', $finalPdfPath);
+                        
                     } catch (\Exception $e) {
                         Log::error('PDF Merge Error: ' . $e->getMessage());
                         // Fallback: save only agenda PDF
@@ -294,32 +282,20 @@ class AgendaRepository
                 // Merge PDFs if there are goshwara PDFs
                 if (!empty($goshwaraPaths)) {
                     try {
-                        $fpdi = new Fpdi();
-
-                        // Add agenda PDF pages
-                        $pageCount = $fpdi->setSourceFile($tempAgendaPdf);
-                        for ($i = 1; $i <= $pageCount; $i++) {
-                            $template = $fpdi->importPage($i);
-                            $size = $fpdi->getTemplateSize($template);
-                            $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
-                            $fpdi->useTemplate($template);
-                        }
-
-                        // Add goshwara PDF pages
+                        $pdfMerger = new PDFMerger();
+                        
+                        // Add agenda PDF
+                        $pdfMerger->addPDF($tempAgendaPdf, 'all');
+                        
+                        // Add goshwara PDFs
                         foreach ($goshwaraPaths as $goshwaraPath) {
-                            $pageCount = $fpdi->setSourceFile($goshwaraPath);
-                            for ($i = 1; $i <= $pageCount; $i++) {
-                                $template = $fpdi->importPage($i);
-                                $size = $fpdi->getTemplateSize($template);
-                                $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
-                                $fpdi->useTemplate($template);
-                            }
+                            $pdfMerger->addPDF($goshwaraPath, 'all');
                         }
-
-                        // Save merged PDF
-                        $mergedPdfContent = $fpdi->Output('S');
-                        Storage::disk('public')->put('pdf/'.$pdfName, $mergedPdfContent);
-
+                        
+                        // Merge and save
+                        $finalPdfPath = storage_path('app/public/pdf/'.$pdfName);
+                        $pdfMerger->merge('file', $finalPdfPath);
+                        
                     } catch (\Exception $e) {
                         Log::error('PDF Merge Error: ' . $e->getMessage());
                         // Fallback: save only agenda PDF

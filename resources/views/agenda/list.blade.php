@@ -55,7 +55,7 @@
                                         @canany(['agenda.edit', 'agenda.delete'])
                                             <td>
                                                 @if ($agenda->is_meeting_schedule == 0)
-                                                    @can('agenda.edit')
+                                                    {{-- @can('agenda.edit')
                                                         @if (Auth::user()->hasRole('Mayor'))
                                                             <button class="edit-element btn btn-secondary btn-sm px-2 py-1"
                                                                 title="Edit Agenda" data-id="{{ $agenda->id }}">Select
@@ -75,7 +75,7 @@
                                                                 title="Delete Agenda" data-id="{{ $agenda->id }}"><i
                                                                     data-feather="trash-2"></i> </button>
                                                         @endcan
-                                                    @endif
+                                                    @endif --}}
                                                 @else
                                                     @php
                                                         $hasProceedingRecord = $agenda->latestScheduleMeeting && $agenda->latestScheduleMeeting->proceedingRecord;
