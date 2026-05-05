@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="mr">
+
 <head>
     <meta charset="UTF-8">
     <title>सर्वसाधारण सभा सूचना</title>
@@ -10,14 +11,33 @@
             line-height: 1.7;
             font-size: 16px;
         }
-        .center { text-align: center; }
-        .right { text-align: right; }
-        .bold { font-weight: bold; }
-        .underline { text-decoration: underline; }
-        .mt-20 { margin-top: 20px; }
-        .mt-30 { margin-top: 30px; }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mt-30 {
+            margin-top: 30px;
+        }
     </style>
 </head>
+
 <body>
 
     <!-- Header -->
@@ -49,7 +69,8 @@
     </div>
 
     <div class="mt-20">
-        पनवेल महानगरपालिकेची {{ $agenda->meeting->name ?? 'सर्वसाधारण सभा' }} {{ date('d/m/Y', strtotime($agenda->date)) }} रोजी
+        पनवेल महानगरपालिकेची {{ $agenda->meeting->name ?? 'सर्वसाधारण सभा' }}
+        {{ date('d/m/Y', strtotime($agenda->date)) }} रोजी
         {{ date('h:i A', strtotime($agenda->time)) }} वाजता, "{{ $agenda->place }}" येथे आयोजित करण्यात आली असून,
         त्यामध्ये खालील विषयांवर विचार विनिमय करण्यात येणार आहे.
     </div>
@@ -70,12 +91,36 @@
         ३. मा. आयुक्त महोदयांकडील कार्यालीन कामकाज :<br><br>
 
         @php $count = 1; @endphp
-        @foreach($goshwaras as $goshwara)
-            @if($goshwara->goshwara?->is_mayor_selected)
-            &nbsp;&nbsp;&nbsp;&nbsp;{{ $count++ }}. {{ $goshwara->goshwara->subject }}<br><br>
+        @foreach ($goshwaras as $goshwara)
+            @if ($goshwara->goshwara?->is_mayor_selected)
+                &nbsp;&nbsp;&nbsp;&nbsp;{{ $count++ }}. {{ $goshwara->goshwara->subject }}<br><br>
             @endif
         @endforeach
     </div>
 
+    <div class="mt-30">
+        (मा. महापौर महोदय यांच्या मंजुरीने व आदेशानुसार)
+    </div>
+
+    <div class="right mt-20">
+        @php
+            $signature = \App\Models\Signature::getActive();
+        @endphp
+        @if($signature && $signature->image)
+            <img src="{{ public_path('storage/'.$signature->image) }}" alt="Signature" style="height: 60px;"><br>
+        @endif
+        <span class="bold">{{ $signature->name ?? 'मिलिंद कानडे' }}</span><br>
+        {{ $signature->role ?? 'महापालिका सचिव' }}<br>
+        पनवेल महानगरपालिका
+    </div>
+
+    <div class="mt-30">
+        महापालिका भवन, पनवेल<br>
+        दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}<br><br>
+
+        सोबत : विषयांचे गोषवारे.
+    </div>
+
 </body>
+
 </html>

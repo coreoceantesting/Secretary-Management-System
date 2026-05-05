@@ -116,6 +116,14 @@
                                             data-key="t-horizontal">Election Meeting(निवडणूक बैठक)</a>
                                     </li>
                                 @endcan
+
+                                @can('signature.view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('master.signature.index') }}"
+                                            class="nav-link {{ request()->routeIs('master.signature.*') ? 'active' : '' }}"
+                                            data-key="t-horizontal">Signature(स्वाक्षरी)</a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>

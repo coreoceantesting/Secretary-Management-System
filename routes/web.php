@@ -36,6 +36,7 @@ use App\Http\Controllers\ElectionProceedingRecordController;
 use App\Http\Controllers\ElectionReportController;
 use App\Http\Controllers\ElectionSuplimentryAgendaController;
 use App\Http\Controllers\ElectionDocumentHistoryController;
+use App\Http\Controllers\SignatureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,6 +108,8 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::resource('setting', SettingController::class);
         Route::resource('party', PartyController::class);
         Route::resource('reservation-category', ReservationCategoryController::class);
+        Route::resource('signature', SignatureController::class);
+        Route::post('signature/{signature}/activate', [SignatureController::class, 'activate'])->name('signature.activate');
     });
     // end of route for master
 

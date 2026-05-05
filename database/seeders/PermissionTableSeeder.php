@@ -584,6 +584,27 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'election-suplimentry-agenda.delete',
                 'group' => 'election-suplimentry-agenda',
             ],
+
+              [
+                'id' => 125,
+                'name' => 'signatures.index',
+                'group' => 'signature',
+            ],
+            [
+                'id' => 126,
+                'name' => 'signature.create',
+                'group' => 'signature',
+            ],
+            [
+                'id' => 127,
+                'name' => 'signature.edit',
+                'group' => 'signature',
+            ],
+            [
+                'id' => 128,
+                'name' => 'signature.delete',
+                'group' => 'signature',
+            ],
         ];
 
         foreach ($permissions as $permission) {
@@ -597,3 +618,4 @@ class PermissionTableSeeder extends Seeder
         }
     }
 }
+election-
