@@ -35,8 +35,8 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        'binary' => env('SNAPPY_LIB_PATH'),
-       //'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"',
+        //'binary' => env('SNAPPY_LIB_PATH'),
+       'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"',
         'options' => [],
         'env'     => [],
     ],

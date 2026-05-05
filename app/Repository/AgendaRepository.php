@@ -130,7 +130,11 @@ class AgendaRepository
                 $goshwaraPaths = [];
                 foreach ($goshwaras as $goshwara) {
                     if ($goshwara->goshwara && $goshwara->goshwara->file) {
+                        // Check both storage/app/public and storage/app paths
                         $goshwaraPath = storage_path('app/public/' . $goshwara->goshwara->file);
+                        if (!file_exists($goshwaraPath)) {
+                            $goshwaraPath = storage_path('app/' . $goshwara->goshwara->file);
+                        }
                         if (file_exists($goshwaraPath) && strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION)) === 'pdf') {
                             $goshwaraPaths[] = $goshwaraPath;
                         }
@@ -141,19 +145,19 @@ class AgendaRepository
                 if (!empty($goshwaraPaths)) {
                     try {
                         $pdfMerger = new PDFMerger();
-                        
+
                         // Add agenda PDF
                         $pdfMerger->addPDF($tempAgendaPdf, 'all');
-                        
+
                         // Add goshwara PDFs
                         foreach ($goshwaraPaths as $goshwaraPath) {
                             $pdfMerger->addPDF($goshwaraPath, 'all');
                         }
-                        
+
                         // Merge and save
                         $finalPdfPath = storage_path('app/public/pdf/'.$filename);
                         $pdfMerger->merge('file', $finalPdfPath);
-                        
+
                     } catch (\Exception $e) {
                         Log::error('PDF Merge Error: ' . $e->getMessage());
                         // Fallback: save only agenda PDF
@@ -179,7 +183,7 @@ class AgendaRepository
 
             return true;
         } catch (\Exception $e) {
-                
+
             Log::info($e);
             DB::rollback();
 
@@ -271,10 +275,23 @@ class AgendaRepository
                 // Get all goshwara PDF paths
                 $goshwaraPaths = [];
                 foreach ($goshwaras as $goshwara) {
+
                     if ($goshwara->goshwara && $goshwara->goshwara->file) {
+                        // Check both storage/app/public and storage/app paths
                         $goshwaraPath = storage_path('app/public/' . $goshwara->goshwara->file);
-                        if (file_exists($goshwaraPath) && strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION)) === 'pdf') {
-                            $goshwaraPaths[] = $goshwaraPath;
+
+                        if (!file_exists($goshwaraPath)) {
+                            $goshwaraPath = storage_path('app/' . $goshwara->goshwara->file);
+                        }
+
+                        if (file_exists($goshwaraPath)) {
+                            $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
+                            dd($extension);
+                            if ($extension === 'pdf') {
+                                dd(1);
+                                $goshwaraPaths[] = $goshwaraPath;
+                            }
+                            dd(2);
                         }
                     }
                 }
@@ -283,19 +300,19 @@ class AgendaRepository
                 if (!empty($goshwaraPaths)) {
                     try {
                         $pdfMerger = new PDFMerger();
-                        
+
                         // Add agenda PDF
                         $pdfMerger->addPDF($tempAgendaPdf, 'all');
-                        
+
                         // Add goshwara PDFs
                         foreach ($goshwaraPaths as $goshwaraPath) {
                             $pdfMerger->addPDF($goshwaraPath, 'all');
                         }
-                        
+
                         // Merge and save
                         $finalPdfPath = storage_path('app/public/pdf/'.$pdfName);
                         $pdfMerger->merge('file', $finalPdfPath);
-                        
+
                     } catch (\Exception $e) {
                         Log::error('PDF Merge Error: ' . $e->getMessage());
                         // Fallback: save only agenda PDF

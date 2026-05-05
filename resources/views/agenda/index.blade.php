@@ -206,7 +206,7 @@
                                     <th>Department</th>
                                     <th>Agenda Subject</th>
                                     {{-- <th>Goshwara Subject</th> --}}
-                                    <th>Agenda File</th>
+                                    {{-- <th>Agenda File</th> --}}
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Meeting Venue</th>
@@ -237,8 +237,8 @@
                                                 <br>
                                             @endforeach --}}
                                         </td>
-                                        <td><a href="{{ asset('storage/' . $agenda->file) }}"
-                                                class="btn btn-primary btn-sm">View File</a></td>
+                                        {{-- <td><a href="{{ asset('storage/' . $agenda->file) }}"
+                                                class="btn btn-primary btn-sm">View File</a></td> --}}
                                         <td>{{ date('d-m-Y', strtotime($agenda->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($agenda->time)) }}</td>
                                         <td>{{ $agenda->place }}</td>
@@ -314,7 +314,7 @@
         cursor: not-allowed;
         opacity: 0.6;
     }
-    
+
     /* Fixed width for Agenda Subject column with text wrapping */
     #buttons-datatables tbody td:nth-child(4) {
         max-width: 250px;

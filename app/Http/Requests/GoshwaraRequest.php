@@ -24,13 +24,13 @@ class GoshwaraRequest extends FormRequest
         if ($this->edit_model_id) {
             $rule = [
                 'outward_no' => 'required',
-                'goshwarafile' => "nullable|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG",
+                'goshwarafile' => "nullable|mimes:pdf,PDF",
                 'subject' => 'required'
             ];
         } else {
             $rule = [
                 'outward_no' => 'required',
-                'goshwarafile' => 'required|mimes:pdf,PDF,doc,DOC,docx,DOCX,png,PNG,jpg,JPG,jpeg,JPEG',
+                'goshwarafile' => 'required|mimes:pdf,PDF',
                 'subject' => 'required'
             ];
         }
@@ -43,7 +43,7 @@ class GoshwaraRequest extends FormRequest
         return [
             'outward_no.required' => 'Please enter outward no',
             'goshwarafile.required' => 'Please select file',
-            'goshwarafile.mimes' => 'Only image, pdf and doc file supported',
+            'goshwarafile.mimes' => 'Only PDF file is supported',
             'subject.required' => 'Please enter remark'
         ];
     }
