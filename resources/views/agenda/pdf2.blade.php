@@ -21,18 +21,18 @@
 <body>
 
     <!-- Header -->
-    <div class="center bold underline">
+    <div class="center bold underline" style="font-size: 24px;">
         पनवेल महानगरपालिका, पनवेल
     </div>
 
     <div class="right mt-20">
-        जा. क्र. मनपा/सर्वसाधारण/२०२५-२६/ _______<br>
-        पनवेल महानगरपालिका,<br>
+        जा. क्र. पमपा/सचिव/२०-२६/प्र.क्र.०४/१२४/२६<br>
+        महापालिका सचिव कार्यालय,<br>
         दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}
     </div>
 
     <div class="center bold underline mt-30">
-        पनवेल महानगरपालिकेच्या सर्वसाधारण सभेसंबंधी सूचना
+        पनवेल महानगरपालिकेच्या {{ $agenda->meeting->name ?? 'सर्वसाधारण सभा' }} संबंधी सूचना
     </div>
 
     <!-- Address -->
@@ -49,20 +49,21 @@
     </div>
 
     <div class="mt-20">
-        पनवेल महानगरपालिकेची सर्वसाधारण सभा {{ date('d/m/Y', strtotime($agenda->date)) }} रोजी
-        {{ date('h:i A', strtotime($agenda->time)) }} वाजता, {{ $agenda->place }} येथे आयोजित करण्यात आली असून,
+        पनवेल महानगरपालिकेची {{ $agenda->meeting->name ?? 'सर्वसाधारण सभा' }} {{ date('d/m/Y', strtotime($agenda->date)) }} रोजी
+        {{ date('h:i A', strtotime($agenda->time)) }} वाजता, "{{ $agenda->place }}" येथे आयोजित करण्यात आली असून,
         त्यामध्ये खालील विषयांवर विचार विनिमय करण्यात येणार आहे.
     </div>
 
     <!-- Subject -->
-    <div class="center bold underline mt-30">
+    <div class="center bold underline mt-30" style="font-size: 20px;">
         {{ $agenda->meeting->name ?? '' }}, दिनांक {{ date('d/m/Y', strtotime($agenda->date)) }} ची<br>
-        विषय पत्रिका
+        विषय पत्रिका<br>
+        विषय
     </div>
 
     <!-- Points -->
     <div class="mt-20">
-        १. मागील सर्वसाधारण सभेचे इतिवृत्त कायम करणे.<br><br>
+        १. मागील {{ $agenda->meeting->name ?? 'सर्वसाधारण सभा' }} चे इतिवृत्त कायम करणे.<br><br>
 
         २. प्रश्नोत्तरे.<br><br>
 

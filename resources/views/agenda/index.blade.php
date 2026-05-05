@@ -228,13 +228,14 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            @foreach ($agenda?->assignGoshwaraToAgenda as $subject)
+                                            {{ $agenda->subject }}
+                                            {{-- @foreach ($agenda?->assignGoshwaraToAgenda as $subject)
                                                 @if ($subject?->goshwara?->file)
                                                     <a target="_blank"
                                                         href="{{ asset('storage/' . $subject?->goshwara?->file) }}">{{ $loop->iteration . '. ' . $subject?->goshwara?->subject }}</a>
                                                 @endif
                                                 <br>
-                                            @endforeach
+                                            @endforeach --}}
                                         </td>
                                         <td><a href="{{ asset('storage/' . $agenda->file) }}"
                                                 class="btn btn-primary btn-sm">View File</a></td>
@@ -312,6 +313,14 @@
     .btn:disabled {
         cursor: not-allowed;
         opacity: 0.6;
+    }
+    
+    /* Fixed width for Agenda Subject column with text wrapping */
+    #buttons-datatables tbody td:nth-child(4) {
+        max-width: 250px;
+        word-wrap: break-word;
+        white-space: normal;
+        overflow-wrap: break-word;
     }
 </style>
 

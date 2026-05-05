@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use setasign\Fpdi\Fpdi;
 
 class AgendaRepository
 {
@@ -112,16 +113,73 @@ class AgendaRepository
                     ]);
                 }
 
-                // code to generate pdf
+                // code to generate pdf with appended goshwara PDFs
                 $agenda->load('meeting');
                 $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
                     ->where('agenda_id', $agenda->id)->get();
+
+                // Generate main agenda PDF
                 $pdf = PDF::loadView('agenda.pdf2', compact('agenda', 'goshwaras'));
                 $filename = 'agenda-'.time().'.pdf';
+                $tempAgendaPdf = storage_path('app/temp_agenda_'.time().'.pdf');
 
-                $name = 'pdf/'.$filename;
+                // Save temporary agenda PDF
+                file_put_contents($tempAgendaPdf, $pdf->output());
 
-                Storage::disk('public')->put($name, $pdf->output());
+                // Get all goshwara PDF paths
+                $goshwaraPaths = [];
+                foreach ($goshwaras as $goshwara) {
+                    if ($goshwara->goshwara && $goshwara->goshwara->file) {
+                        $goshwaraPath = storage_path('app/public/' . $goshwara->goshwara->file);
+                        if (file_exists($goshwaraPath) && strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION)) === 'pdf') {
+                            $goshwaraPaths[] = $goshwaraPath;
+                        }
+                    }
+                }
+
+                // Merge PDFs if there are goshwara PDFs
+                if (!empty($goshwaraPaths)) {
+                    try {
+                        $fpdi = new Fpdi();
+
+                        // Add agenda PDF pages
+                        $pageCount = $fpdi->setSourceFile($tempAgendaPdf);
+                        for ($i = 1; $i <= $pageCount; $i++) {
+                            $template = $fpdi->importPage($i);
+                            $size = $fpdi->getTemplateSize($template);
+                            $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
+                            $fpdi->useTemplate($template);
+                        }
+
+                        // Add goshwara PDF pages
+                        foreach ($goshwaraPaths as $goshwaraPath) {
+                            $pageCount = $fpdi->setSourceFile($goshwaraPath);
+                            for ($i = 1; $i <= $pageCount; $i++) {
+                                $template = $fpdi->importPage($i);
+                                $size = $fpdi->getTemplateSize($template);
+                                $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
+                                $fpdi->useTemplate($template);
+                            }
+                        }
+
+                        // Save merged PDF
+                        $mergedPdfContent = $fpdi->Output('S');
+                        Storage::disk('public')->put('pdf/'.$filename, $mergedPdfContent);
+
+                    } catch (\Exception $e) {
+                        Log::error('PDF Merge Error: ' . $e->getMessage());
+                        // Fallback: save only agenda PDF
+                        Storage::disk('public')->put('pdf/'.$filename, file_get_contents($tempAgendaPdf));
+                    }
+                } else {
+                    // No goshwara PDFs, save only agenda PDF
+                    Storage::disk('public')->put('pdf/'.$filename, file_get_contents($tempAgendaPdf));
+                }
+
+                // Clean up temporary file
+                if (file_exists($tempAgendaPdf)) {
+                    unlink($tempAgendaPdf);
+                }
 
                 Agenda::where('id', $agenda->id)->update([
                     'pdf' => 'pdf/'.$filename,
@@ -133,7 +191,7 @@ class AgendaRepository
 
             return true;
         } catch (\Exception $e) {
-            
+                
             Log::info($e);
             DB::rollback();
 
@@ -209,15 +267,73 @@ class AgendaRepository
                     Agenda::where('id', $id)->update(['is_meeting_schedule' => 1]);
                 }
 
-                // code to generate pdf
+                // code to generate pdf with appended goshwara PDFs
                 $agenda->load('meeting');
                 $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
                     ->where('agenda_id', $agenda->id)->get();
+
+                // Generate main agenda PDF
                 $pdf = PDF::loadView('agenda.pdf2', compact('agenda', 'goshwaras'));
                 $pdfName = $agenda->id.'-'.time().'.pdf';
-                $name = 'pdf/'.$pdfName;
+                $tempAgendaPdf = storage_path('app/temp_agenda_'.time().'.pdf');
 
-                Storage::disk('public')->put($name, $pdf->output());
+                // Save temporary agenda PDF
+                file_put_contents($tempAgendaPdf, $pdf->output());
+
+                // Get all goshwara PDF paths
+                $goshwaraPaths = [];
+                foreach ($goshwaras as $goshwara) {
+                    if ($goshwara->goshwara && $goshwara->goshwara->file) {
+                        $goshwaraPath = storage_path('app/public/' . $goshwara->goshwara->file);
+                        if (file_exists($goshwaraPath) && strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION)) === 'pdf') {
+                            $goshwaraPaths[] = $goshwaraPath;
+                        }
+                    }
+                }
+
+                // Merge PDFs if there are goshwara PDFs
+                if (!empty($goshwaraPaths)) {
+                    try {
+                        $fpdi = new Fpdi();
+
+                        // Add agenda PDF pages
+                        $pageCount = $fpdi->setSourceFile($tempAgendaPdf);
+                        for ($i = 1; $i <= $pageCount; $i++) {
+                            $template = $fpdi->importPage($i);
+                            $size = $fpdi->getTemplateSize($template);
+                            $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
+                            $fpdi->useTemplate($template);
+                        }
+
+                        // Add goshwara PDF pages
+                        foreach ($goshwaraPaths as $goshwaraPath) {
+                            $pageCount = $fpdi->setSourceFile($goshwaraPath);
+                            for ($i = 1; $i <= $pageCount; $i++) {
+                                $template = $fpdi->importPage($i);
+                                $size = $fpdi->getTemplateSize($template);
+                                $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
+                                $fpdi->useTemplate($template);
+                            }
+                        }
+
+                        // Save merged PDF
+                        $mergedPdfContent = $fpdi->Output('S');
+                        Storage::disk('public')->put('pdf/'.$pdfName, $mergedPdfContent);
+
+                    } catch (\Exception $e) {
+                        Log::error('PDF Merge Error: ' . $e->getMessage());
+                        // Fallback: save only agenda PDF
+                        Storage::disk('public')->put('pdf/'.$pdfName, file_get_contents($tempAgendaPdf));
+                    }
+                } else {
+                    // No goshwara PDFs, save only agenda PDF
+                    Storage::disk('public')->put('pdf/'.$pdfName, file_get_contents($tempAgendaPdf));
+                }
+
+                // Clean up temporary file
+                if (file_exists($tempAgendaPdf)) {
+                    unlink($tempAgendaPdf);
+                }
 
                 Agenda::where('id', $agenda->id)->update([
                     'pdf' => 'pdf/'.$pdfName,
