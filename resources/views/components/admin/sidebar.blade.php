@@ -170,7 +170,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('agenda.index') }}"
                                             class="nav-link {{ request()->routeIs('agenda.index') ? 'active' : '' }}"
-                                            data-key="t-horizontal">Received Goshwara</a>
+                                            data-key="t-horizontal">Goshwara List</a>
                                     </li>
                                 @else
                                 <li class="nav-item">
@@ -280,6 +280,27 @@
                         </div>
                     </li>
                 @endcan
+
+                    @can('proceeding-record.view')
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->routeIs('proceeding-record.*') ? 'active' : '' }}"
+                            href="{{ route('proceeding-record.index') }}">
+                            <i class="bx bxs-coin-stack"></i>
+                            <span data-key="t-dashboards">Proceeding Records</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('tharav.view')
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->routeIs('tharav.*') ? 'active' : '' }}"
+                            href="{{ route('tharav.index') }}">
+                            <i class="bx bx-info-circle"></i>
+                            <span data-key="t-dashboards">Tharav</span>
+                        </a>
+                    </li>
+                @endcan
+
 
 
                 @canany(['election-agenda.index', 'election-suplimentry-agenda.index',
@@ -411,25 +432,6 @@
                     </li>
                 @endcan
 
-                @can('proceeding-record.view')
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->routeIs('proceeding-record.*') ? 'active' : '' }}"
-                            href="{{ route('proceeding-record.index') }}">
-                            <i class="bx bxs-coin-stack"></i>
-                            <span data-key="t-dashboards">Proceeding Records</span>
-                        </a>
-                    </li>
-                @endcan
-
-                @can('tharav.view')
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->routeIs('tharav.*') ? 'active' : '' }}"
-                            href="{{ route('tharav.index') }}">
-                            <i class="bx bx-info-circle"></i>
-                            <span data-key="t-dashboards">Tharav</span>
-                        </a>
-                    </li>
-                @endcan
 
 
                 <li class="nav-item">

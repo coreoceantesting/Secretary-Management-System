@@ -151,9 +151,10 @@ class AgendaController extends Controller
 
     public function agendaList()
     {
-       
-
         $agendas = $this->agendaRepository->finalAgendaList();
+        
+        // Load latest schedule meeting with proceeding record and tharav relationships
+        $agendas->load(['latestScheduleMeeting.proceedingRecord', 'latestScheduleMeeting.tharav']);
 
         return view('agenda.list')->with([
             'agendas' => $agendas
