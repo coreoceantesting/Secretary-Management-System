@@ -246,7 +246,7 @@ class AgendaRepository
                     $meetingCount = ScheduleMeeting::where('meeting_id', $agenda->meeting_id)->count() + 1;
                     $meetingName = $agenda->meeting->name ?? 'Meeting';
                     $uniqueId = $meetingName . ' क्र. ' . $meetingCount;
-                    
+
                     $scheduleMeeting = ScheduleMeeting::create([
                         'agenda_id' => $id,
                         'meeting_id' => $agenda->meeting_id,
@@ -258,7 +258,7 @@ class AgendaRepository
                         'is_meeting_reschedule' => 0,
                         'is_meeting_completed' => 0,
                     ]);
-                    
+
                     // Update parent_id to self
                     ScheduleMeeting::where('id', $scheduleMeeting->id)->update(['parent_id' => $scheduleMeeting->id]);
 
