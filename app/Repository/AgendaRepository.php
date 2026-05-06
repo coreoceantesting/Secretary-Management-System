@@ -272,11 +272,14 @@ class AgendaRepository
                     ->where('agenda_id', $agenda->id)->get();
 
                 // Generate main agenda PDF
+
                 $pdf = PDF::loadView('agenda.pdf2', compact('agenda', 'goshwaras'));
+
                 $pdfName = $agenda->id.'-'.time().'.pdf';
                 $tempAgendaPdf = storage_path('app/temp_agenda_'.time().'.pdf');
 
                 // Save temporary agenda PDF
+                //dd($pdf->output());
                 file_put_contents($tempAgendaPdf, $pdf->output());
 
                 // Get all goshwara PDF paths
@@ -287,19 +290,19 @@ class AgendaRepository
                         // Check both storage/app/public and storage/app paths
                         $goshwaraPath = storage_path('app/public/' . $goshwara->goshwara->file);
 
-                        if (!file_exists($goshwaraPath)) {
-                            $goshwaraPath = storage_path('app/' . $goshwara->goshwara->file);
-                        }
+                        // if (!file_exists($goshwaraPath)) {
+                        //     $goshwaraPath = storage_path('app/' . $goshwara->goshwara->file);
+                        // }
 
-                        if (file_exists($goshwaraPath)) {
-                            $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
+                        // if (file_exists($goshwaraPath)) {
+                        //     $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
 
-                            if ($extension === 'pdf') {
+                        //     if ($extension === 'pdf') {
 
-                                $goshwaraPaths[] = $goshwaraPath;
-                            }
-                           
-                        }
+                        //         $goshwaraPaths[] = $goshwaraPath;
+                        //     }
+
+                        // }
                     }
                 }
 
@@ -326,6 +329,7 @@ class AgendaRepository
                         Storage::disk('public')->put('pdf/'.$pdfName, file_get_contents($tempAgendaPdf));
                     }
                 } else {
+                    //dd(1);
                     // No goshwara PDFs, save only agenda PDF
                     Storage::disk('public')->put('pdf/'.$pdfName, file_get_contents($tempAgendaPdf));
                 }
@@ -345,6 +349,7 @@ class AgendaRepository
 
             return true;
         } catch (\Exception $e) {
+            dd($e);
             Log::info($e);
             DB::rollback();
 

@@ -41,14 +41,16 @@
 <body>
 
     <!-- Header -->
-    <div class="center bold underline" style="font-size: 24px;">
+    <div class="center bold underline" style="font-size: 26px;">
         पनवेल महानगरपालिका, पनवेल
     </div>
 
     <div class="right mt-20">
-        जा. क्र. पमपा/सचिव/२०-२६/प्र.क्र.०४/१२४/२६<br>
-        महापालिका सचिव कार्यालय,<br>
-        दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}
+         <div style="display: inline-block; text-align: left; style="font-size: 20px;">
+            जा. क्र. पमपा/सचिव/२०-२६/प्र.क्र.०४/१२४/२६<br>
+            महापालिका सचिव कार्यालय,<br>
+            दिनांक : {{ date('d/m/Y', strtotime($agenda->date)) }}
+         </div>
     </div>
 
     <div class="center bold underline mt-30">
@@ -102,16 +104,27 @@
         (मा. महापौर महोदय यांच्या मंजुरीने व आदेशानुसार)
     </div>
 
-    <div class="right mt-20">
+    <div class="mt-20" style="text-align: right;">
         @php
             $signature = \App\Models\Signature::getActive();
+            $imageData = null;
+            if($signature && $signature->image) {
+                $fullPath = storage_path('app/public/'.$signature->image);
+                if(file_exists($fullPath)) {
+                    $imageContent = file_get_contents($fullPath);
+                    $imageType = pathinfo($fullPath, PATHINFO_EXTENSION);
+                    $imageData = 'data:image/' . $imageType . ';base64,' . base64_encode($imageContent);
+                }
+            }
         @endphp
-        @if($signature && $signature->image)
-            <img src="{{ public_path('storage/'.$signature->image) }}" alt="Signature" style="height: 60px;"><br>
-        @endif
-        <span class="bold">{{ $signature->name ?? 'मिलिंद कानडे' }}</span><br>
-        {{ $signature->role ?? 'महापालिका सचिव' }}<br>
-        पनवेल महानगरपालिका
+        <div style="display: inline-block; text-align: center;">
+            @if($imageData)
+                <img src="{{ $imageData }}" alt="Signature" style="height: 60px;"><br>
+            @endif
+            <span class="bold">{{ $signature->name ?? 'मिलिंद कानडे' }}</span><br>
+            {{ $signature->role ?? 'महापालिका सचिव' }}<br>
+            पनवेल महानगरपालिका
+        </div>
     </div>
 
     <div class="mt-30">
