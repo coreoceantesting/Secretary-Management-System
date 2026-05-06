@@ -293,12 +293,12 @@ class AgendaRepository
 
                         if (file_exists($goshwaraPath)) {
                             $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
-                            dd($extension);
+
                             if ($extension === 'pdf') {
-                                dd(1);
+
                                 $goshwaraPaths[] = $goshwaraPath;
                             }
-                            dd(2);
+                           
                         }
                     }
                 }
