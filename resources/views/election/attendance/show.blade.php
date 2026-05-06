@@ -42,7 +42,7 @@
                                                 <td>{{ $attendance->electionAgenda?->subject }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Agenda File(अजेंडा फाइल)</th>
+                                                <th>Agenda Fil(अजेंडा फाइल)</th>
                                                 <th>{{$attendance->electionAgenda?->pdf}}</th>
                                                 <td><a target="_blank" href="{{ asset('storage/'. $attendance->electionAgenda?->pdf) }}" class="btn btn-primary btn-sm">View File</a></td>
                                             </tr>
