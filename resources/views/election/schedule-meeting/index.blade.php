@@ -116,7 +116,7 @@
                                         <td>{{ $electionScheduleMeeting->electionMeeting?->name }}</td>
                                         <td>{{ $electionScheduleMeeting->unique_id }}</td>
                                         <td>{{ $electionScheduleMeeting->electionAgenda?->subject }}</td>
-                                        <td><a href="{{ asset('storage/'.$electionScheduleMeeting->electionAgenda->file) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
+                                        <td><a href="{{ asset('storage/'.$electionScheduleMeeting->electionAgenda->pdf) }}" class="btn btn-primary btn-sm" target="_blank">View File</a></td>
                                         <td>{{ date('d-m-Y', strtotime($electionScheduleMeeting->date)) }}</td>
                                         <td>{{ date('h:i A', strtotime($electionScheduleMeeting->time)) }}</td>
                                         <td>{{ $electionScheduleMeeting->place }}</td>
