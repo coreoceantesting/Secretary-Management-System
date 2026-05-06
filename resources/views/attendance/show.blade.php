@@ -22,7 +22,7 @@
                                 <button type="button" class="btn btn-warning m-3 @if(!$attendance->is_sms_send) d-none @endif" id="pauseMeeting">Pause Meeting</button>
                                 <button type="button" class="btn btn-success m-3  @if($attendance->is_sms_send) d-none @endif" id="startMeeting">Send Remainder SMS</button>
                             </div>
-                                
+
                             <div class="mb-3 row">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
@@ -43,7 +43,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Agenda File(अजेंडा फाइल)</th>
-                                                <td><a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->file) }}" class="btn btn-primary btn-sm">View File</a></td>
+                                                <td><a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->pdf) }}" class="btn btn-primary btn-sm">View File</a></td>
                                             </tr>
                                             {{-- <tr>
                                                 <th>Suplimentry Agenda(पूरक अजेंडा)</th>

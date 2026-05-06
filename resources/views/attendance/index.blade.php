@@ -32,7 +32,7 @@
                                         <td>{{ date('d-m-Y h:i A', strtotime($attendance->datetime)) }}</td>
                                         <td>{{ $attendance->place }}</td>
                                         <td>
-                                            <a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->file) }}" class="btn btn-primary btn-sm">View File</a>
+                                            <a target="_blank" href="{{ asset('storage/'. $attendance->agenda?->pdf) }}" class="btn btn-primary btn-sm">View File</a>
                                         </td>
                                         <td>
                                             @php
