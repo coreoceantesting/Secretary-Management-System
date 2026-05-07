@@ -285,24 +285,21 @@ class AgendaRepository
                 // Get all goshwara PDF paths
                 $goshwaraPaths = [];
                 foreach ($goshwaras as $goshwara) {
-
                     if ($goshwara->goshwara && $goshwara->goshwara->file) {
                         // Check both storage/app/public and storage/app paths
                         $goshwaraPath = storage_path('app/public/' . $goshwara->goshwara->file);
 
-                        // if (!file_exists($goshwaraPath)) {
-                        //     $goshwaraPath = storage_path('app/' . $goshwara->goshwara->file);
-                        // }
+                        if (!file_exists($goshwaraPath)) {
+                            $goshwaraPath = storage_path('app/' . $goshwara->goshwara->file);
+                        }
 
-                        // if (file_exists($goshwaraPath)) {
-                        //     $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
+                        if (file_exists($goshwaraPath)) {
+                            $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
 
-                        //     if ($extension === 'pdf') {
-
-                        //         $goshwaraPaths[] = $goshwaraPath;
-                        //     }
-
-                        // }
+                            if ($extension === 'pdf') {
+                                $goshwaraPaths[] = $goshwaraPath;
+                            }
+                        }
                     }
                 }
 
