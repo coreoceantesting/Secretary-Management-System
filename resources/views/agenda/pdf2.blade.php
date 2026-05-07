@@ -53,7 +53,7 @@
          </div>
     </div>
 
-    <div class="center bold underline mt-30">
+    <div class="center bold underline mt-30 style="font-size: 20px;">
         पनवेल महानगरपालिकेच्या {{ $agenda->meeting->name ?? 'सर्वसाधारण सभा' }} संबंधी सूचना
     </div>
 
