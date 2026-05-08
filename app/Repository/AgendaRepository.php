@@ -288,8 +288,9 @@ class AgendaRepository
                     if ($goshwara->goshwara && $goshwara->goshwara->file) {
                         // Check both storage/app/public and storage/app paths
                         $goshwaraPath = storage_path('app/public/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
-                        dd($goshwaraPath);
+                        
                         if (! file_exists($goshwaraPath)) {
+                            dd(8);
                             $goshwaraPath = storage_path('app/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
 
                         }
