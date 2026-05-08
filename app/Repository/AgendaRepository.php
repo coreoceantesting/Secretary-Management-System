@@ -6,8 +6,8 @@ use App\Models\Agenda;
 use App\Models\AssignGoshwaraToAgenda;
 use App\Models\Goshwara;
 use App\Models\Meeting;
-use App\Models\UserMeeting;
 use App\Models\ScheduleMeeting;
+use App\Models\UserMeeting;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -131,9 +131,9 @@ class AgendaRepository
                 foreach ($goshwaras as $goshwara) {
                     if ($goshwara->goshwara && $goshwara->goshwara->file) {
                         // Check both storage/app/public and storage/app paths
-                        $goshwaraPath = storage_path('app/public/' . $goshwara->goshwara->file);
-                        if (!file_exists($goshwaraPath)) {
-                            $goshwaraPath = storage_path('app/' . $goshwara->goshwara->file);
+                        $goshwaraPath = storage_path('app/public/'.$goshwara->goshwara->file);
+                        if (! file_exists($goshwaraPath)) {
+                            $goshwaraPath = storage_path('app/'.$goshwara->goshwara->file);
                         }
                         if (file_exists($goshwaraPath) && strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION)) === 'pdf') {
                             $goshwaraPaths[] = $goshwaraPath;
@@ -142,7 +142,7 @@ class AgendaRepository
                 }
 
                 // Merge PDFs if there are goshwara PDFs
-                if (!empty($goshwaraPaths)) {
+                if (! empty($goshwaraPaths)) {
                     try {
                         $pdfMerger = new PDFMerger();
 
@@ -159,7 +159,7 @@ class AgendaRepository
                         $pdfMerger->merge('file', $finalPdfPath);
 
                     } catch (\Exception $e) {
-                        Log::error('PDF Merge Error: ' . $e->getMessage());
+                        Log::error('PDF Merge Error: '.$e->getMessage());
                         // Fallback: save only agenda PDF
                         Storage::disk('public')->put('pdf/'.$filename, file_get_contents($tempAgendaPdf));
                     }
@@ -245,7 +245,7 @@ class AgendaRepository
                     // Generate unique_id based on meeting name and count
                     $meetingCount = ScheduleMeeting::where('meeting_id', $agenda->meeting_id)->count() + 1;
                     $meetingName = $agenda->meeting->name ?? 'Meeting';
-                    $uniqueId = $meetingName . ' क्र. ' . $meetingCount;
+                    $uniqueId = $meetingName.' क्र. '.$meetingCount;
 
                     $scheduleMeeting = ScheduleMeeting::create([
                         'agenda_id' => $id,
@@ -253,7 +253,7 @@ class AgendaRepository
                         'place' => $agenda->place,
                         'date' => $agenda->date,
                         'time' => $agenda->time,
-                        'datetime' => $agenda->date . ' ' . $agenda->time,
+                        'datetime' => $agenda->date.' '.$agenda->time,
                         'unique_id' => $uniqueId,
                         'is_meeting_reschedule' => 0,
                         'is_meeting_completed' => 0,
@@ -287,24 +287,27 @@ class AgendaRepository
                 foreach ($goshwaras as $goshwara) {
                     if ($goshwara->goshwara && $goshwara->goshwara->file) {
                         // Check both storage/app/public and storage/app paths
-                        $goshwaraPath = storage_path('app/public/' . $goshwara->goshwara->file);
+                        $goshwaraPath = storage_path('app/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
 
-                        if (!file_exists($goshwaraPath)) {
-                            $goshwaraPath = storage_path('app/' . $goshwara->goshwara->file);
+                        if (! file_exists($goshwaraPath)) {
+                            $goshwaraPath = storage_path('app/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
+
                         }
-
+                        //dd($goshwaraPath);
                         if (file_exists($goshwaraPath)) {
+                           
                             $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
-
+                            
                             if ($extension === 'pdf') {
                                 $goshwaraPaths[] = $goshwaraPath;
                             }
                         }
+                       
                     }
                 }
 
                 // Merge PDFs if there are goshwara PDFs
-                if (!empty($goshwaraPaths)) {
+                if (! empty($goshwaraPaths)) {
                     try {
                         $pdfMerger = new PDFMerger();
 
@@ -321,7 +324,7 @@ class AgendaRepository
                         $pdfMerger->merge('file', $finalPdfPath);
 
                     } catch (\Exception $e) {
-                        Log::error('PDF Merge Error: ' . $e->getMessage());
+                        Log::error('PDF Merge Error: '.$e->getMessage());
                         // Fallback: save only agenda PDF
                         Storage::disk('public')->put('pdf/'.$pdfName, file_get_contents($tempAgendaPdf));
                     }
