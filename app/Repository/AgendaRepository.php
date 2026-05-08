@@ -308,7 +308,7 @@ class AgendaRepository
                 }
 
                 // Merge PDFs if there are goshwara PDFs
-                dd($goshwaraPaths); 
+               
                 if (! empty($goshwaraPaths)) {
                     try {
                         $pdfMerger = new PDFMerger();
