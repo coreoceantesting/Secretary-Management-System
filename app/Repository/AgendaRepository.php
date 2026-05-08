@@ -308,6 +308,7 @@ class AgendaRepository
                 }
 
                 // Merge PDFs if there are goshwara PDFs
+                dd($goshwaraPaths); 
                 if (! empty($goshwaraPaths)) {
                     try {
                         $pdfMerger = new PDFMerger();
@@ -316,6 +317,7 @@ class AgendaRepository
                         $pdfMerger->addPDF($tempAgendaPdf, 'all');
 
                         // Add goshwara PDFs
+                        dd(1);  
                         foreach ($goshwaraPaths as $goshwaraPath) {
                             $pdfMerger->addPDF($goshwaraPath, 'all');
                         }
@@ -325,6 +327,7 @@ class AgendaRepository
                         $pdfMerger->merge('file', $finalPdfPath);
 
                     } catch (\Exception $e) {
+                        dd($e);
                         Log::error('PDF Merge Error: '.$e->getMessage());
                         // Fallback: save only agenda PDF
                         Storage::disk('public')->put('pdf/'.$pdfName, file_get_contents($tempAgendaPdf));
