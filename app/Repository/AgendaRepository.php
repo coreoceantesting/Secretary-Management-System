@@ -317,8 +317,9 @@ class AgendaRepository
                         $pdfMerger->addPDF($tempAgendaPdf, 'all');
 
                         // Add goshwara PDFs
-                        dd(1);  
+                     
                         foreach ($goshwaraPaths as $goshwaraPath) {
+                            dd($goshwaraPath);
                             $pdfMerger->addPDF($goshwaraPath, 'all');
                         }
 
