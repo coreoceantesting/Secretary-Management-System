@@ -41,10 +41,48 @@ class GoshwaraRepository
         try {
             $file = null;
             if ($request->hasFile('goshwarafile')) {
-                $originalName = pathinfo($request->goshwarafile->getClientOriginalName(), PATHINFO_FILENAME);
-                $extension = $request->goshwarafile->getClientOriginalExtension();
+                // Validate the uploaded file
+                $uploadedFile = $request->goshwarafile;
+                
+                // Check if it's a valid PDF
+                if ($uploadedFile->getMimeType() !== 'application/pdf') {
+                    Log::warning('Invalid file type uploaded: ' . $uploadedFile->getMimeType());
+                    DB::rollback();
+                    return false;
+                }
+                
+                // Check file size (minimum 100 bytes)
+                if ($uploadedFile->getSize() < 100) {
+                    Log::warning('File too small: ' . $uploadedFile->getSize() . ' bytes');
+                    DB::rollback();
+                    return false;
+                }
+                
+                // Validate PDF header before storing
+                $tempPath = $uploadedFile->getRealPath();
+                $handle = fopen($tempPath, 'rb');
+                $header = fread($handle, 5);
+                fclose($handle);
+                
+                if (strpos($header, '%PDF') !== 0) {
+                    Log::warning('Invalid PDF header in uploaded file');
+                    DB::rollback();
+                    return false;
+                }
+                
+                $originalName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $uploadedFile->getClientOriginalExtension();
                 $fileName = 'goshwara_' . time() . '_' . str_replace(' ', '_', $originalName) . '.' . $extension;
-                $file = $request->goshwarafile->storeAs('goshwara', $fileName);
+                $file = $uploadedFile->storeAs('goshwara', $fileName);
+                
+                // Verify file was stored correctly
+                if (!Storage::exists($file)) {
+                    Log::error('File storage failed for: ' . $fileName);
+                    DB::rollback();
+                    return false;
+                }
+                
+                Log::info('Goshwara file stored successfully: ' . $file);
             }
             $request['file'] = $file;
             $request['department_id'] = Auth::user()->department_id;
@@ -53,7 +91,7 @@ class GoshwaraRepository
             DB::commit();
             return true;
         } catch (\Exception $e) {
-            Log::info($e);
+            Log::error('Goshwara store error: ' . $e->getMessage());
             DB::rollback();
             return false;
         }
@@ -73,12 +111,53 @@ class GoshwaraRepository
             $goshwara = Goshwara::find($id);
             $file = $goshwara->file;
             if ($request->hasFile('goshwarafile')) {
+                // Validate the uploaded file
+                $uploadedFile = $request->goshwarafile;
+                
+                // Check if it's a valid PDF
+                if ($uploadedFile->getMimeType() !== 'application/pdf') {
+                    Log::warning('Invalid file type uploaded: ' . $uploadedFile->getMimeType());
+                    DB::rollback();
+                    return false;
+                }
+                
+                // Check file size (minimum 100 bytes)
+                if ($uploadedFile->getSize() < 100) {
+                    Log::warning('File too small: ' . $uploadedFile->getSize() . ' bytes');
+                    DB::rollback();
+                    return false;
+                }
+                
+                // Validate PDF header before storing
+                $tempPath = $uploadedFile->getRealPath();
+                $handle = fopen($tempPath, 'rb');
+                $header = fread($handle, 5);
+                fclose($handle);
+                
+                if (strpos($header, '%PDF') !== 0) {
+                    Log::warning('Invalid PDF header in uploaded file');
+                    DB::rollback();
+                    return false;
+                }
+                
                 if ($goshwara->file != "") {
                     if (Storage::exists($goshwara->file)) {
                         Storage::delete($goshwara->file);
                     }
                 }
-                $file = $request->goshwarafile->store('goshwara');
+                $originalName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $uploadedFile->getClientOriginalExtension();
+                $fileName = 'goshwara_' . time() . '_' . str_replace(' ', '_', $originalName) . '.' . $extension;
+                $file = $uploadedFile->storeAs('goshwara', $fileName);
+                
+                // Verify file was stored correctly
+                if (!Storage::exists($file)) {
+                    Log::error('File storage failed for: ' . $fileName);
+                    DB::rollback();
+                    return false;
+                }
+                
+                Log::info('Goshwara file updated successfully: ' . $file);
             }
             $request['file'] = $file;
             $goshwara->update($request->all());
@@ -86,9 +165,8 @@ class GoshwaraRepository
             DB::commit();
             return true;
         } catch (\Exception $e) {
-            Log::info($e);
+            Log::error('Goshwara update error: ' . $e->getMessage());
             DB::rollback();
-
             return false;
         }
     }
