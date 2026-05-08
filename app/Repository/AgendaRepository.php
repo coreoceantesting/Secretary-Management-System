@@ -290,13 +290,13 @@ class AgendaRepository
                         $goshwaraPath = storage_path('app/public/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
                         
                         if (! file_exists($goshwaraPath)) {
-                            dd(8);
+                            
                             $goshwaraPath = storage_path('app/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
 
                         }
                         //dd($goshwaraPath);
                         if (file_exists($goshwaraPath)) {
-                            dd(2);
+                            
                             $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
                             dd($extension);
                             if ($extension === 'pdf') {
