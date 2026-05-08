@@ -298,7 +298,7 @@ class AgendaRepository
                         if (file_exists($goshwaraPath)) {
                             
                             $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
-                            dd($extension);
+                           
                             if ($extension === 'pdf') {
                                 $goshwaraPaths[] = $goshwaraPath;
                             }
