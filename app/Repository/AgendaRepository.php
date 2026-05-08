@@ -321,6 +321,7 @@ class AgendaRepository
                         foreach ($goshwaraPaths as $goshwaraPath) {
                            
                             $pdfMerger->addPDF($goshwaraPath, 'all');
+                            dd(2);
                         }
 
                         // Merge and save
