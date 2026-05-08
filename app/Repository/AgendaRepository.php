@@ -330,7 +330,7 @@ class AgendaRepository
                         $pdfMerger->merge('file', $finalPdfPath);
 
                     } catch (\Exception $e) {
-                        dd($e);
+                        
                         Log::error('PDF Merge Error: '.$e->getMessage());
                         // Fallback: save only agenda PDF
                         Storage::disk('public')->put('pdf/'.$pdfName, file_get_contents($tempAgendaPdf));

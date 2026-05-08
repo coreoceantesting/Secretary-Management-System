@@ -41,7 +41,10 @@ class GoshwaraRepository
         try {
             $file = null;
             if ($request->hasFile('goshwarafile')) {
-                $file = $request->goshwarafile->store('goshwara');
+                $originalName = pathinfo($request->goshwarafile->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $request->goshwarafile->getClientOriginalExtension();
+                $fileName = 'goshwara_' . time() . '_' . str_replace(' ', '_', $originalName) . '.' . $extension;
+                $file = $request->goshwarafile->storeAs('goshwara', $fileName);
             }
             $request['file'] = $file;
             $request['department_id'] = Auth::user()->department_id;
