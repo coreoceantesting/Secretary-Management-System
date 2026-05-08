@@ -326,7 +326,7 @@ class AgendaRepository
 
                         // Merge and save
                         $finalPdfPath = storage_path('app/public/pdf/'.$pdfName);
-                        dd($finalPdfPath);
+                        //dd($finalPdfPath);
                         $pdfMerger->merge('file', $finalPdfPath);
 
                     } catch (\Exception $e) {
