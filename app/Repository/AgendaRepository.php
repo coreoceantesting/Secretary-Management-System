@@ -287,7 +287,7 @@ class AgendaRepository
                 foreach ($goshwaras as $goshwara) {
                     if ($goshwara->goshwara && $goshwara->goshwara->file) {
                         // Check both storage/app/public and storage/app paths
-                        $goshwaraPath = storage_path('app/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
+                        $goshwaraPath = storage_path('app/public/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
 
                         if (! file_exists($goshwaraPath)) {
                             $goshwaraPath = storage_path('app/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
