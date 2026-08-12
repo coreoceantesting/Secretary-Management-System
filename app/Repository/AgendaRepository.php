@@ -262,6 +262,20 @@ class AgendaRepository
                     // Update parent_id to self
                     ScheduleMeeting::where('id', $scheduleMeeting->id)->update(['parent_id' => $scheduleMeeting->id]);
 
+                    // Assign departments from goshwaras to schedule meeting
+                    $departments = [];
+                    foreach ($goshwaras as $goshwara) {
+                        if ($goshwara->goshwara && $goshwara->goshwara->department_id) {
+                            if (!in_array($goshwara->goshwara->department_id, $departments)) {
+                                $departments[] = $goshwara->goshwara->department_id;
+                                \App\Models\AssignScheduleMeetingDepartment::create([
+                                    'schedule_meeting_id' => $scheduleMeeting->id,
+                                    'department_id' => $goshwara->goshwara->department_id,
+                                ]);
+                            }
+                        }
+                    }
+
                     // Mark agenda as scheduled
                     Agenda::where('id', $id)->update(['is_meeting_schedule' => 1]);
                 }
@@ -288,27 +302,27 @@ class AgendaRepository
                     if ($goshwara->goshwara && $goshwara->goshwara->file) {
                         // Check both storage/app/public and storage/app paths
                         $goshwaraPath = storage_path('app/public/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
-                        
+
                         if (! file_exists($goshwaraPath)) {
-                            
+
                             $goshwaraPath = storage_path('app/'.str_replace('/', DIRECTORY_SEPARATOR, trim($goshwara->goshwara->file)));
 
                         }
                         //dd($goshwaraPath);
                         if (file_exists($goshwaraPath)) {
-                            
+
                             $extension = strtolower(pathinfo($goshwaraPath, PATHINFO_EXTENSION));
-                           
+
                             if ($extension === 'pdf') {
                                 $goshwaraPaths[] = $goshwaraPath;
                             }
                         }
-                       
+
                     }
                 }
 
                 // Merge PDFs if there are goshwara PDFs
-               
+
                 if (! empty($goshwaraPaths)) {
                     try {
                         $pdfMerger = new PDFMerger();
@@ -317,11 +331,11 @@ class AgendaRepository
                         $pdfMerger->addPDF($tempAgendaPdf, 'all');
 
                         // Add goshwara PDFs
-                     
+
                         foreach ($goshwaraPaths as $goshwaraPath) {
-                           
+
                             $pdfMerger->addPDF($goshwaraPath, 'all');
-                           
+
                         }
 
                         // Merge and save
@@ -330,7 +344,7 @@ class AgendaRepository
                         $pdfMerger->merge('file', $finalPdfPath);
 
                     } catch (\Exception $e) {
-                     
+
                         Log::error('PDF Merge Error: '.$e->getMessage());
                         // Fallback: save only agenda PDF
                         Storage::disk('public')->put('pdf/'.$pdfName, file_get_contents($tempAgendaPdf));

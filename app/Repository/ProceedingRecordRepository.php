@@ -29,7 +29,7 @@ class ProceedingRecordRepository
 
         $schedule =  ScheduleMeeting::where('meeting_id', $id)->where([
             'is_meeting_reschedule' => 0,
-            'is_meeting_completed' => 1,
+           'is_meeting_completed' => 1,
             'is_meeting_cancel' => 0,
             'is_record_proceeding' => 0
         ])->when(Auth::user()->hasRole('Clerk'), function ($query) {
