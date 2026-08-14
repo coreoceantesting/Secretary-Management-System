@@ -316,12 +316,12 @@
                     'election-reschedule-meeting.index', 'election-proceeding-record.view',
                     'election-document-history.index', 'report.election-meeting', 'report.election-attendance'])
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->routeIs('election.*') ? 'active' : '' }}"
+                        {{-- <a class="nav-link menu-link {{ request()->routeIs('election.*') ? 'active' : '' }}"
                             href="#sidebarElection" data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="sidebarElection">
                             <i class="bx bx-user-circle"></i>
                             <span data-key="t-layouts">Election</span>
-                        </a>
+                        </a> --}}
                         <div class="collapse menu-dropdown {{ request()->routeIs('election.*') ? 'show' : '' }}"
                             id="sidebarElection">
                             <ul class="nav nav-sm flex-column">
@@ -410,7 +410,7 @@
                     </li>
                 @endcan
 
-                @can('question.view')
+                {{-- @can('question.view')
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->routeIs('prastav-suchana.*') ? 'active' : '' }}"
                             href="{{ route('prastav-suchana.index') }}">
@@ -418,9 +418,9 @@
                             <span data-key="t-dashboards">Prastav Suchana</span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
 
-                @can('question.view')
+                {{-- @can('question.view')
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->routeIs('laxvadi.*') ? 'active' : '' }}"
                             href="{{ route('laxvadi.index') }}">
@@ -428,7 +428,7 @@
                             <span data-key="t-dashboards">Laxvedhi</span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
 
                 @can('attendance.view')
                     <li class="nav-item">
