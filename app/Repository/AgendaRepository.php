@@ -105,7 +105,7 @@ class AgendaRepository
             }
             $agenda = Agenda::create($request->all());
 
-            if (isset($request->goshwara_id)) {
+            if ($request->has('goshwara_id')) {
                 for ($i = 0; $i < count($request->goshwara_id); $i++) {
                     AssignGoshwaraToAgenda::create([
                         'agenda_id' => $agenda->id,
@@ -238,6 +238,10 @@ class AgendaRepository
                     }
                 }
 
+                $goshwaras = AssignGoshwaraToAgenda::with(['goshwara'])
+                    ->where('agenda_id', $id)
+                    ->get();
+
                 if (Auth::user()->roles[0]->name == 'Mayor') {
                     Agenda::where('id', $id)->update(['is_mayor_finalised' => 1]);
 
@@ -266,7 +270,7 @@ class AgendaRepository
                     $departments = [];
                     foreach ($goshwaras as $goshwara) {
                         if ($goshwara->goshwara && $goshwara->goshwara->department_id) {
-                            if (!in_array($goshwara->goshwara->department_id, $departments)) {
+                            if (! in_array($goshwara->goshwara->department_id, $departments)) {
                                 $departments[] = $goshwara->goshwara->department_id;
                                 \App\Models\AssignScheduleMeetingDepartment::create([
                                     'schedule_meeting_id' => $scheduleMeeting->id,
